@@ -1,0 +1,38 @@
+{
+    "name": "slick",
+    "title": "slick",
+    "description": "A jQuery responsive touch carousel",
+    "keywords": [
+        "responsive",
+        "slider",
+        "carousel",
+        "touch",
+        "mobile"
+    ],
+    "version": "1.0.0",
+    "author": {
+        "name": "Ken Wheeler",
+        "url": "http://kenwheeler.github.io"
+    },
+    "maintainers": [
+        {
+            "name": "Ken Wheeler",
+            "email": "dubmediagroup@gmail.com",
+            "url": "http://www.dubmediagroup.com"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "GPLv2",
+            "url": "http://www.example.com/licenses/gpl.html"
+        }
+    ],
+    "demo": "http://kenwheeler.github.io/slick/",
+    "bugs": "https://github.com/kenwheeler/slick/issues",
+    "homepage": "https://github.com/kenwheeler/slick/",
+    "docs": "https://github.com/kenwheeler/slick/",
+    "download": "https://github.com/kenwheeler/slick/archive/master.zip",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}

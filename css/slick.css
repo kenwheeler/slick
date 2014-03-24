@@ -1,0 +1,38 @@
+/* slick */
+
+/* Slider */
+
+.slick-slider { position: relative; display: block; margin-bottom: 30px;}
+.slick-slider .slick-list { overflow: hidden; display: block; margin: 0px; padding: 0px; }
+.slick-slider .slick-track { position: relative; left: 0px; top: 0px; }
+.slick-slider .slide { float: left; min-height: 1px; }
+.slick-slider .slide img { display: block; }
+.slick-slider .slide { display: none; }
+.slick-initialized .slide { display: block; }
+
+/* Loading States */
+
+.slick-loading .slick-track { visibility: hidden; }
+.slick-loading .slick-list { background: #fff url(../img/ajax-loader.gif) center center no-repeat; }
+.slick-loading .slide { visibility: hidden; }
+
+/* Arrows */
+
+.slick-slider .slick-prev { position: absolute; background: url('../img/sprite.png') -50px -40px no-repeat; display: block; height: 40px; width: 30px; text-indent: -9999px; top: 50%; margin-top: -20px; left: -25px; padding: 0px; }
+.slick-slider .slick-next { position: absolute; background: url('../img/sprite.png') -90px -40px no-repeat; display: block; height: 40px; width: 30px; text-indent: -9999px; top: 50%; margin-top: -20px; right: -25px; padding: 0px; }
+.slick-slider .slick-next.disabled { background-position: -90px -90px }
+.slick-slider .slick-prev.disabled { background-position: -40px -90px }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
+    .slick-slider .slick-next { background: url('../img/sprite@2x.png') -90px -40px no-repeat; background-size: 900px 200px; }
+    .slick-slider .slick-prev { background: url('../img/sprite@2x.png') -50px -40px no-repeat; background-size: 900px 200px; -webkit-background-size: 900px 200px; }
+}
+
+/* Dots */
+
+.slick-dots { position: absolute; bottom: -30px; list-style: none; display: block; text-align: center; padding: 0px; width: 100%;}
+.slick-dots li { position: relative; display: inline-block; background: url('../img/sprite.png') -200px -50px no-repeat; height: 5px; width: 5px; text-indent: -9999px; margin: 0px 10px; padding: 0px; }
+.slick-dots li.active { background-position: -150px -50px }
+.slick-dots li a { display: block; height: 10px; width: 10px; }
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
+    .slick-dots li { background: url('../img/sprite@2x.png') -200px -50px no-repeat; background-size: 900px 200px; }
+}
