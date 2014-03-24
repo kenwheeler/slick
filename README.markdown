@@ -1,19 +1,13 @@
-Roundabout
+slick
 -------
 
-[1]: <https://github.com/kdubbicles/roundabout>
+[1]: <https://github.com/kenwheeler/slick>
 
-## A Responsive Swipeable Carousel
-
-Author: Ken Wheeler
-
-Date: 06/18/13
-
-Version: 1.0b
+_the last carousel you'll ever need_
 
 ### Demo
 
-[Demo](http://www.dubmediagroup.com/roundabout/)
+[Demo](http://kenwheeler.github.io/slick/)
 
 ### Options
 
@@ -27,24 +21,37 @@ arrows: true | false - (default: true) - Next/Prev arrows
 
 infinite: true | false - (default: true) - Infinite looping
 
+onBeforeChange : function - Before slide change callback
+
+onAfterChange : function - After slide change callback
+
+slide: string (default: 'div') - Slide element query
+
+slidesToShow : int - (default: 1) - # of slides to show at a time
+
+slidesToScroll : int - (default: 1) # of slides to scroll at a time
+
 speed: int - (default: 300) - Transition speed
 
 swipe: true | false - (default: true) - Enables touch swipe  
+touchMove: boolean - (default: true) - Enables slide moving with touch
 
-list: string - (default: ul:first) - A string containing a selector expression
-
-slide: string - (default: 'li') - A string containing a selector expression
+touchMoveThreshold: int - (default: 5) - Swipe distance threshold
 
 
 ### Example
 
-`$(element).carousel({dots: true, speed: 500});`
+Initialize with:
 
+`$(element).slick({dots: true, speed: 500});`
 
+Destroy with:
+
+`$(element).unslick();`
 
 ### License
 
-Copyright (c) 2012 Ken Wheeler
+Copyright (c) 2014 Ken Wheeler
 
 Dual licensed under the MIT and GPL licenses.
 
