@@ -25,6 +25,8 @@ onBeforeChange : function - Before slide change callback
 
 onAfterChange : function - After slide change callback
 
+responsive : object - Breakpoint triggered settings
+
 slide: string (default: 'div') - Slide element query
 
 slidesToShow : int - (default: 1) - # of slides to show at a time
