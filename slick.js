@@ -145,6 +145,7 @@ var mobileDetect = function() {
                 this.startLoad();
                 this.loadSlider();
                 this.intializeEvents();
+                this.checkResponsive();
             }
 
         };
@@ -425,7 +426,6 @@ var mobileDetect = function() {
 
         slider.prototype.setPosition = function() {
 
-            this.checkResponsive();
             this.setValues();
             this.setDimensions();
 
@@ -485,7 +485,10 @@ var mobileDetect = function() {
 
             $(window).on('orientationchange', this.setPosition);
 
-            $(window).on('resize', this.setPosition);
+            $(window).on('resize', function(){
+                self.checkResponsive();
+                self.setPosition();
+            });
 
             $(window).on('load', this.setPosition);
 
@@ -956,7 +959,21 @@ var mobileDetect = function() {
             this.slideOffset = 0;
             this.swipeLeft = null;
             this.list = null;
-            this.init();
+            this.touchObject = {};
+            this.transformsEnabled = false;
+
+            if (!$(this.slider).hasClass('slick-initialized')) {
+
+                $(this.slider).addClass('slick-initialized');
+                this.buildOut();
+                this.setValues();
+                this.getAnimType();
+                this.setPosition();
+                this.startLoad();
+                this.loadSlider();
+                this.intializeEvents();
+
+            }
 
         }
 
