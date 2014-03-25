@@ -1,0 +1,25 @@
+{
+  "name": "slick",
+  "main": "slick.js",
+  "version": "1.0.1",
+  "homepage": "https://github.com/kenwheeler/slick",
+  "authors": [
+    "Ken Wheeler <ken_wheeler@me.com>"
+  ],
+  "description": "the last carousel you'll ever need",
+  "keywords": [
+    "responsive",
+    "carousel",
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "index.html",
+    "fonts"
+  ]
+}
