@@ -54,6 +54,52 @@ $('.multiple-items').slick({
 });
 				</code></pre>
 				<hr/>
+				<h2>Responsive Display</h2>
+				<div class="slider responsive">
+					<div class="multiple"><h3>1</h3></div>
+					<div class="multiple"><h3>2</h3></div>
+					<div class="multiple"><h3>3</h3></div>
+					<div class="multiple"><h3>4</h3></div>
+					<div class="multiple"><h3>5</h3></div>
+					<div class="multiple"><h3>6</h3></div>
+					<div class="multiple"><h3>7</h3></div>
+					<div class="multiple"><h3>8</h3></div>
+				</div>
+				<pre><code>
+$('.responsive').slick({
+  dots: true,
+  infinite: true,
+  speed: 300,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
+});
+				</code></pre>
+				<hr/>
 				<h2>One At A Time</h2>
 				<div class="slider one-time">
 					<div class="multiple"><h3>1</h3></div>

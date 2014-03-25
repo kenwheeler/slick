@@ -1,3 +1,4 @@
+// Slick
 /*
 
  slick.js
@@ -64,9 +65,9 @@ var mobileDetect = function() {
     slick.slider = (function() {
         'use strict';
 
-        function slider(element, options) {
+        function slider(element, settings) {
 
-            var defaults = {
+            this.defaults = {
                 autoplay: false,
                 autoplaySpeed: 3000,
                 dots: false,
@@ -74,6 +75,7 @@ var mobileDetect = function() {
                 infinite: true,
                 onBeforeChange: null,
                 onAfterChange: null,
+                responsive: null,
                 slide: 'div',
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -83,8 +85,11 @@ var mobileDetect = function() {
                 touchThreshold: 5
             };
 
+            this.activeBreakpoint = null;
             this.animType = null;
             this.autoPlayTimer = null;
+            this.breakpoints = [];
+            this.breakpointSettings = [];
             this.currentSlide = 0;
             this.currentLeft = null;
             this.direction = 1;
@@ -105,7 +110,18 @@ var mobileDetect = function() {
             this.touchObject = {};
             this.transformsEnabled = false;
 
-            this.options = $.extend({}, defaults, options);
+            this.options = $.extend({}, this.defaults, settings);
+
+            this.originalSettings = this.options;
+            var responsiveSettings = this.options.responsive || null;
+
+            if(responsiveSettings && responsiveSettings.length > -1) {
+                for(var breakpoint in responsiveSettings) {
+                    this.breakpoints.push(responsiveSettings[breakpoint].breakpoint);
+                    this.breakpointSettings[responsiveSettings[breakpoint].breakpoint] = responsiveSettings[breakpoint].settings;
+                }
+                this.breakpoints.sort(function(a,b){return b-a});
+            }
 
             this.changeSlide = functionBinder(this.changeSlide, this);
             this.setPosition = functionBinder(this.setPosition, this);
@@ -199,6 +215,41 @@ var mobileDetect = function() {
 
             }
 
+        };
+
+        slider.prototype.checkResponsive = function() {
+
+            if(this.originalSettings.responsive && this.originalSettings.responsive.length > -1) {
+
+                var targetBreakpoint = null;
+
+                for(var breakpoint in this.breakpoints) {
+                    if($(window).width() < this.breakpoints[breakpoint]) {
+                        targetBreakpoint = this.breakpoints[breakpoint];
+                    }
+                }
+
+                if(targetBreakpoint !== null) {
+                    if(this.activeBreakpoint !== null) {
+                        if(targetBreakpoint !== this.activeBreakpoint) {
+                            this.activeBreakpoint = targetBreakpoint;
+                            this.options = $.extend({}, this.defaults, this.breakpointSettings[targetBreakpoint]);
+                            this.refresh();
+                        }
+                    } else {
+                        this.activeBreakpoint = targetBreakpoint;
+                        this.options = $.extend({}, this.defaults, this.breakpointSettings[targetBreakpoint]);
+                        this.refresh();
+                    }
+                } else {
+                    if(this.activeBreakpoint !== null) {
+                        this.activeBreakpoint = null;
+                        this.options = $.extend({}, this.defaults, this.originalSettings);
+                        this.refresh();
+                    }
+                }
+
+            }
         };
 
         slider.prototype.startLoad = function() {
@@ -303,7 +354,7 @@ var mobileDetect = function() {
 
                 var placeholders = Math.abs(this.options.slidesToScroll - (this.slideCount % this.options.slidesToScroll));
                 for(i=0; i<placeholders; i++) {
-                    $('<div/>').appendTo(this.slider).addClass('slide');
+                    $('<div/>').appendTo(this.slider).addClass('slide placeholder');
                 }
                 this.slides = $('.slide:not(.cloned)', this.slider);
                 this.slideCount = this.slides.length;
@@ -374,6 +425,7 @@ var mobileDetect = function() {
 
         slider.prototype.setPosition = function() {
 
+            this.checkResponsive();
             this.setValues();
             this.setDimensions();
 
@@ -552,6 +604,9 @@ var mobileDetect = function() {
                         }, this.options.speed);
                     }
 
+                    this.slides.removeClass('active');
+                    $(this.slides.get(targetSlide)).addClass('active');
+
                 } else {
 
                     return false;
@@ -624,6 +679,9 @@ var mobileDetect = function() {
                             self.options.onAfterChange.call();
                         }, this.options.speed);
                     }
+
+                    this.slides.removeClass('active');
+                    $(this.slides.get(targetSlide)).addClass('active');
 
                 } else {
 
@@ -712,6 +770,9 @@ var mobileDetect = function() {
                         self.options.onAfterChange.call();
                     }, this.options.speed);
                 }
+
+                this.slides.removeClass('active');
+                $(this.slides.get(targetSlide)).addClass('active');
 
             }
 
@@ -875,16 +936,41 @@ var mobileDetect = function() {
 
         };
 
+        slider.prototype.refresh = function() {
+
+            this.destroy();
+            this.autoPlayTimer = null;
+            this.currentSlide = 0;
+            this.currentLeft = null;
+            this.direction = 1;
+            this.dots = null;
+            this.listWidth = null;
+            this.loadIndex = 0;
+            this.nextArrow = null;
+            this.prevArrow = null;
+            this.slideCount = null;
+            this.slideWidth = null;
+            this.slideTrack = null;
+            this.slides = null;
+            this.sliding = false;
+            this.slideOffset = 0;
+            this.swipeLeft = null;
+            this.list = null;
+            this.init();
+
+        }
+
         slider.prototype.destroy = function() {
-            this.slider.find('.cloned').remove();
-            this.slides.unwrap().unwrap();
-            if(this.options.dots == true) {
+            $('.cloned', this.slider).remove();
+            $('.placeholder', this.slider).remove();
+            if(this.dots) {
                 this.dots.remove();
             }
-            if(this.options.arrows == true) {
+            if(this.prevArrow) {
                 this.prevArrow.remove();
                 this.nextArrow.remove();
             }
+            this.slides.unwrap().unwrap();
             this.slides.removeClass('slide').width('');
             this.slider.removeClass('slick-slider');
             this.slider.removeClass('slick-initialized');
