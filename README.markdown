@@ -40,7 +40,6 @@ touchMove: boolean - (default: true) - Enables slide moving with touch
 
 touchMoveThreshold: int - (default: 5) - Swipe distance threshold
 
-
 ### Example
 
 Initialize with:
@@ -50,6 +49,10 @@ Initialize with:
 Destroy with:
 
 `$(element).unslick();`
+
+### Dependencies
+
+jQuery 1.7
 
 ### License
 
