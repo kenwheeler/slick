@@ -21,5 +21,8 @@
     "tests",
     "index.html",
     "fonts"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "~1.7"
+  },
 }
