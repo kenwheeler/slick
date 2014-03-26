@@ -71,6 +71,7 @@ var mobileDetect = function() {
                 autoplay: false,
                 autoplaySpeed: 3000,
                 dots: false,
+                draggable: true,
                 arrows: true,
                 infinite: true,
                 onBeforeChange: null,
@@ -86,6 +87,7 @@ var mobileDetect = function() {
             };
 
             this.activeBreakpoint = null;
+            this.animating = false;
             this.animType = null;
             this.autoPlayTimer = null;
             this.breakpoints = [];
@@ -126,6 +128,7 @@ var mobileDetect = function() {
             this.changeSlide = functionBinder(this.changeSlide, this);
             this.setPosition = functionBinder(this.setPosition, this);
             this.swipeHandler = functionBinder(this.swipeHandler, this);
+            this.dragHandler = functionBinder(this.dragHandler, this);
             this.autoPlayIterator = functionBinder(this.autoPlayIterator, this);
 
             this.init();
@@ -144,7 +147,7 @@ var mobileDetect = function() {
                 this.setPosition();
                 this.startLoad();
                 this.loadSlider();
-                this.intializeEvents();
+                this.initializeEvents();
                 this.checkResponsive();
             }
 
@@ -401,6 +404,10 @@ var mobileDetect = function() {
 
             }
 
+            if (this.options.draggable == true) {
+                this.list.addClass('draggable');
+            }
+
             if (this.options.infinite === true) {
 
                 var slideIndex = null;
@@ -444,7 +451,7 @@ var mobileDetect = function() {
 
         };
 
-        slider.prototype.intializeEvents = function() {
+        slider.prototype.initializeEvents = function() {
 
             var self = this;
 
@@ -483,6 +490,13 @@ var mobileDetect = function() {
 
             }
 
+            if (this.options.draggable === true) {
+                this.list.on('mousedown', {action: 'start'}, this.dragHandler);
+                this.list.on('mousemove', {action: 'move'}, this.dragHandler);
+                this.list.on('mouseup', {action: 'end'}, this.dragHandler);
+                this.list.on('mouseout', {action: 'cancel'}, this.dragHandler);
+            }
+
             $(window).on('orientationchange', this.setPosition);
 
             $(window).on('resize', function(){
@@ -496,18 +510,32 @@ var mobileDetect = function() {
 
         slider.prototype.changeSlide = function(event) {
 
+            var self = this;
+
             switch (event.data.message) {
 
                 case 'previous':
-                    this.slideHandler(this.currentSlide - this.options.slidesToScroll);
+                    if(this.animating == false) {
+                        self.slideHandler(self.currentSlide - self.options.slidesToScroll);
+                    } else {
+                        return false;
+                    }
                     break;
 
                 case 'next':
-                    this.slideHandler(this.currentSlide + this.options.slidesToScroll);
+                    if(self.animating == false) {
+                        self.slideHandler(self.currentSlide + self.options.slidesToScroll);
+                    } else {
+                        return false;
+                    }
                     break;
 
                 case 'index':
-                    this.slideHandler($(event.target).parent().index());
+                    if(self.animating == false) {
+                        self.slideHandler($(event.target).parent().index());
+                    } else {
+                        return false;
+                    }
                     break;
 
                 default:
@@ -522,6 +550,43 @@ var mobileDetect = function() {
             $(this.dots.find('li').get(this.currentSlide)).addClass('active');
 
         };
+
+        slider.prototype.animateSlide = function(targetLeft, callback) {
+
+            var animProps = {}, self = this;
+
+            if(this.options.onBeforeChange !== null) {
+                this.options.onBeforeChange.call();
+            }
+
+            if (this.transformsEnabled === false) {
+
+                this.slideTrack.animate({
+                    left: targetLeft
+                }, self.options.speed, callback);
+
+            } else {
+
+                $({
+                    animStart: this.currentLeft
+                }).animate({
+                    animStart: targetLeft
+                }, {
+                    duration: self.options.speed,
+                    step: function(now) {
+                        animProps[self.animType] = "translate(" + now + "px, 0px)";
+                        self.slideTrack.css(animProps);
+                    },
+                    complete: function() {
+                        if(callback) {
+                            callback.call();
+                        }
+                    }
+                });
+
+            }
+
+        }
 
         slider.prototype.slideHandler = function(index) {
 
@@ -544,166 +609,21 @@ var mobileDetect = function() {
 
             if (targetSlide < 0) {
 
-                if(this.options.onBeforeChange !== null) {
-                    this.options.onBeforeChange.call();
-                }
-
                 if (this.options.infinite === true) {
 
-                    if (this.transformsEnabled === false) {
+                    this.animating = true;
 
-                        this.slideTrack.animate({
-                            left: targetLeft
-                        }, self.options.speed, function() {
-                            self.currentSlide = self.slideCount - self.options.slidesToScroll;
-                            self.setPosition();
+                    this.animateSlide(targetLeft, function(){
 
-                            if (self.options.dots) {
-                                self.updateDots();
-                            }
+                        self.animating = false;
 
-                            if (self.options.autoplay === true) {
-                                self.autoPlay();
-                            }
-                        });
+                        self.currentSlide = self.slideCount - self.options.slidesToScroll;
 
-                    } else {
+                        self.setPosition();
 
-                        $({
-                            animStart: this.currentLeft
-                        }).animate({
-                            animStart: targetLeft
-                        }, {
-                            duration: self.options.speed,
-                            step: function(now) {
-                                animProps[self.animType] = "translate(" + now + "px, 0px)";
-                                self.slideTrack.css(animProps);
-                            },
-                            complete: function() {
-
-                                self.currentSlide = self.slideCount - self.options.slidesToScroll;
-
-                                self.setPosition();
-
-                                if (self.swipeLeft !== null) {
-                                    self.swipeLeft = null;
-                                }
-
-                                if (self.options.dots) {
-                                    self.updateDots();
-                                }
-
-                                if (self.options.autoplay === true) {
-                                    self.autoPlay();
-                                }
-                            }
-                        });
-
-                    }
-
-                    if(this.options.onAfterChange !== null) {
-                        setTimeout(function(){
-                            self.options.onAfterChange.call();
-                        }, this.options.speed);
-                    }
-
-                    this.slides.removeClass('active');
-                    $(this.slides.get(targetSlide)).addClass('active');
-
-                } else {
-
-                    return false;
-
-                }
-
-            } else if (targetSlide > (this.slideCount - 1)) {
-
-                if(this.options.onBeforeChange !== null) {
-                    this.options.onBeforeChange.call();
-                }
-
-                if (this.options.infinite === true) {
-
-                    if (this.transformsEnabled === false) {
-
-                        this.slideTrack.animate({
-                            left: targetLeft
-                        }, self.options.speed, function() {
-
-                            self.currentSlide = 0;
-                            self.setPosition();
-
-                            if (self.options.dots) {
-                                self.updateDots();
-                            }
-
-                            if (self.options.autoplay === true) {
-                                self.autoPlay();
-                            }
-
-                        });
-
-                    } else {
-
-                        $({
-                            animStart: this.currentLeft
-                        }).animate({
-                            animStart: targetLeft
-                        }, {
-                            duration: self.options.speed,
-                            step: function(now) {
-                                animProps[self.animType] = "translate(" + now + "px, 0px)";
-                                self.slideTrack.css(animProps);
-                            },
-                            complete: function() {
-
-                                self.currentSlide = 0;
-
-                                self.setPosition();
-
-                                if (self.swipeLeft !== null) {
-                                    self.swipeLeft = null;
-                                }
-
-                                if (self.options.dots) {
-                                    self.updateDots();
-                                }
-
-                                if (self.options.autoplay === true) {
-                                    self.autoPlay();
-                                }
-                            }
-                        });
-
-                    }
-
-                    if(this.options.onAfterChange !== null) {
-                        setTimeout(function(){
-                            self.options.onAfterChange.call();
-                        }, this.options.speed);
-                    }
-
-                    this.slides.removeClass('active');
-                    $(this.slides.get(targetSlide)).addClass('active');
-
-                } else {
-
-                    return false;
-
-                }
-
-            } else {
-
-                if(this.options.onBeforeChange !== null) {
-                    this.options.onBeforeChange.call();
-                }
-
-                if (this.transformsEnabled === false) {
-
-                    this.slideTrack.animate({
-                        left: targetLeft
-                    }, self.options.speed, function() {
-                        self.currentSlide = targetSlide;
+                        if (self.swipeLeft !== null) {
+                            self.swipeLeft = null;
+                        }
 
                         if (self.options.dots) {
                             self.updateDots();
@@ -713,73 +633,240 @@ var mobileDetect = function() {
                             self.autoPlay();
                         }
 
-                        if (self.options.arrows === true && self.options.infinite !== true) {
-                            if (self.currentSlide === 0) {
-                                self.prevArrow.addClass('disabled');
-                            } else if (self.currentSlide === self.slideCount - 1) {
-                                self.nextArrow.addClass('disabled');
-                            } else {
-                                self.prevArrow.removeClass('disabled');
-                                self.nextArrow.removeClass('disabled');
-                            }
+                        if(self.options.onAfterChange !== null) {
+                            self.options.onAfterChange.call();
                         }
+
+                        self.slides.removeClass('active');
+                        $(self.slides.get(targetSlide)).addClass('active');
+
                     });
 
                 } else {
 
-                    $({
-                        animStart: this.currentLeft
-                    }).animate({
-                        animStart: targetLeft
-                    }, {
-                        duration: self.options.speed,
-                        step: function(now) {
-                            animProps[self.animType] = "translate(" + now + "px, 0px)";
-                            self.slideTrack.css(animProps);
-                        },
-                        complete: function() {
+                    this.animateSlide(slideLeft);
 
-                            self.currentSlide = targetSlide;
+                    return false;
 
-                            if (self.swipeLeft !== null) {
-                                self.swipeLeft = null;
-                            }
+                }
 
-                            if (self.options.dots) {
-                                self.updateDots();
-                            }
+            } else if (targetSlide > (this.slideCount - 1)) {
 
-                            if (self.options.autoplay === true) {
-                                self.autoPlay();
-                            }
+                if (this.options.infinite === true) {
 
-                            if (self.options.arrows === true && self.options.infinite !== true) {
-                                if (self.currentSlide === 0) {
-                                    self.prevArrow.addClass('disabled');
-                                } else if (self.currentSlide === self.slideCount - 1) {
-                                    self.nextArrow.addClass('disabled');
-                                } else {
-                                    self.prevArrow.removeClass('disabled');
-                                    self.nextArrow.removeClass('disabled');
-                                }
-                            }
+                    this.animating = true;
+
+                    this.animateSlide(targetLeft, function(){
+
+                        self.animating = false;
+
+                        self.currentSlide = 0;
+
+                        self.setPosition();
+
+                        if (self.swipeLeft !== null) {
+                            self.swipeLeft = null;
                         }
+
+                        if (self.options.dots) {
+                            self.updateDots();
+                        }
+
+                        if (self.options.autoplay === true) {
+                            self.autoPlay();
+                        }
+
+                        if(self.options.onAfterChange !== null) {
+                            self.options.onAfterChange.call();
+                        }
+
+                        self.slides.removeClass('active');
+                        $(self.slides.get(targetSlide)).addClass('active');
+
                     });
 
+                } else {
+
+                    this.animateSlide(slideLeft);
+
+                    return false;
+
                 }
 
-                if(this.options.onAfterChange !== null) {
-                    setTimeout(function(){
+            } else {
+
+                this.animating = true;
+
+                this.animateSlide(targetLeft, function(){
+
+                    self.animating = false;
+
+                    self.currentSlide = targetSlide;
+
+                    self.setPosition();
+
+                    if (self.swipeLeft !== null) {
+                        self.swipeLeft = null;
+                    }
+
+                    if (self.options.dots) {
+                        self.updateDots();
+                    }
+
+                    if (self.options.autoplay === true) {
+                        self.autoPlay();
+                    }
+
+                    if(self.options.onAfterChange !== null) {
                         self.options.onAfterChange.call();
-                    }, this.options.speed);
-                }
+                    }
 
-                this.slides.removeClass('active');
-                $(this.slides.get(targetSlide)).addClass('active');
+                    self.slides.removeClass('active');
+                    $(self.slides.get(targetSlide)).addClass('active');
+
+                    if (self.options.arrows === true && self.options.infinite !== true) {
+                        if (self.currentSlide === 0) {
+                            self.prevArrow.addClass('disabled');
+                            self.nextArrow.removeClass('disabled');
+                        } else if (self.currentSlide >= (self.slideCount / self.options.slidesToScroll * self.options.slidesToShow) - self.options.slidesToScroll) {
+                            self.nextArrow.addClass('disabled');
+                            self.prevArrow.removeClass('disabled');
+                        } else {
+                            self.prevArrow.removeClass('disabled');
+                            self.nextArrow.removeClass('disabled');
+                        }
+                    }
+
+                });
 
             }
 
         };
+
+        slider.prototype.dragHandler = function(event) {
+
+            var animProps = {}, curLeft, newLeft = null;
+
+            curLeft = ((this.currentSlide * this.slideWidth) * -1) + this.slideOffset;
+
+            this.touchObject.minSwipe = this.slideWidth / this.options.touchThreshold;
+
+            switch (event.data.action) {
+
+                case 'start':
+
+
+                    this.list.addClass('dragging');
+
+                    this.touchObject.startX = event.clientX;
+                    this.touchObject.startY = event.clientY;
+                    this.touchObject.curX = event.clientX;
+                    this.touchObject.curY = event.clientY;
+
+                    break;
+
+                case 'move':
+
+                    this.touchObject.curX = event.clientX;
+                    this.touchObject.curY = event.clientY;
+
+                    this.touchObject.swipeLength = Math.round(Math.sqrt(Math.pow(this.touchObject.curX - this.touchObject.startX, 2)));
+
+                    if (this.swipeDirection() !== 'up' && this.swipeDirection() !== 'down') {
+
+                        event.originalEvent.preventDefault();
+
+                        if (this.touchObject.curX > this.touchObject.startX) {
+
+                            if(this.options.touchMove == true) {
+
+                                newLeft = curLeft + this.touchObject.swipeLength;
+                                if (this.transformsEnabled === false) {
+                                    this.slideTrack.css('left', newLeft);
+                                } else {
+                                    animProps[this.animType] = "translate(" + newLeft + "px, 0px)";
+                                    this.slideTrack.css(animProps);
+                                    this.swipeLeft = newLeft;
+                                }
+
+                            }
+
+                        } else {
+
+                            if(this.options.touchMove == true) {
+
+                                newLeft = curLeft - this.touchObject.swipeLength;
+                                if (this.transformsEnabled === false) {
+                                    this.slideTrack.css('left', newLeft);
+                                } else {
+                                    animProps[this.animType] = "translate(" + newLeft + "px, 0px)";
+                                    this.slideTrack.css(animProps);
+                                    this.swipeLeft = newLeft;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    break;
+
+                case 'end':
+
+                    this.list.removeClass('dragging');
+
+                    if (this.touchObject.curX !== 0) {
+
+                        if (this.touchObject.swipeLength >= this.touchObject.minSwipe) {
+
+                            switch (this.swipeDirection()) {
+
+                                case 'left':
+
+                                    this.slideHandler(this.currentSlide + this.options.slidesToScroll);
+                                    this.touchObject = {};
+
+                                    break;
+
+                                case 'right':
+
+                                    this.slideHandler(this.currentSlide - this.options.slidesToScroll);
+                                    this.touchObject = {};
+
+                                    break;
+
+                            }
+
+                        } else {
+
+                            this.slideHandler(this.currentSlide);
+                            this.touchObject = {};
+
+                        }
+
+                    } else {
+
+                        this.touchObject = {};
+
+                    }
+
+                    break;
+
+                case 'cancel':
+
+                    this.list.removeClass('dragging');
+
+                    if(this.touchObject.startX) {
+                        this.slideHandler(this.currentSlide);
+                        this.touchObject = {};
+                    }
+
+                    break;
+
+            }
+
+        }
 
         slider.prototype.swipeHandler = function(event) {
 
@@ -971,7 +1058,7 @@ var mobileDetect = function() {
                 this.setPosition();
                 this.startLoad();
                 this.loadSlider();
-                this.intializeEvents();
+                this.initializeEvents();
 
             }
 

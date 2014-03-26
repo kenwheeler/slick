@@ -49,6 +49,7 @@ $('.single-item').slick();
 				</div>
 				<pre><code>
 $('.multiple-items').slick({
+  infinite: false,
   slidesToShow: 3,
   slidesToScroll: 3
 });
@@ -68,7 +69,7 @@ $('.multiple-items').slick({
 				<pre><code>
 $('.responsive').slick({
   dots: true,
-  infinite: true,
+  infinite: false,
   speed: 300,
   slidesToShow: 4,
   slidesToScroll: 4,
@@ -216,6 +217,11 @@ $('.your-class').slick({
 							<td>arrows</td>
 							<td>boolean, default: true</td>
 							<td>Prev/Next Arrows</td>
+						</tr>
+						<tr>
+							<td>draggable</td>
+							<td>boolean, default: true</td>
+							<td>Enable mouse dragging</td>
 						</tr>
 						<tr>
 							<td>infinite</td>
