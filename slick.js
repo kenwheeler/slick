@@ -1,15 +1,23 @@
-// Slick
 /*
 
  slick.js
 
  Author: Ken Wheeler
  Date: 03/23/14
- Version: 1.0
 
  */
 
 /*global window, document, $, setInterval, clearInterval */
+
+(function (factory) {
+
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(jQuery);
+    }
+
+}(function ($) {
 
 var slick = window.slick || {};
 
@@ -34,31 +42,6 @@ var mobileDetect = function() {
     })(navigator.userAgent || navigator.vendor || window.opera);
     return check;
 };
-
-// Helpers
-
-    function throttle(fn, threshhold, scope) {
-        threshhold || (threshhold = 250);
-        var last,
-            deferTimer;
-        return function() {
-            var context = scope || this;
-
-            var now = +new Date,
-                args = arguments;
-            if (last && now < last + threshhold) {
-                // hold on to it
-                clearTimeout(deferTimer);
-                deferTimer = setTimeout(function() {
-                    last = now;
-                    fn.apply(context, args);
-                }, threshhold);
-            } else {
-                last = now;
-                fn.apply(context, args);
-            }
-        };
-    }
 
     /********** End Helpers *********/
 
@@ -478,15 +461,15 @@ var mobileDetect = function() {
 
                 this.list.on('touchstart', {
                     action: 'start'
-                }, throttle(this.swipeHandler, 20));
+                }, this.swipeHandler);
 
                 this.list.on('touchmove', {
                     action: 'move'
-                }, throttle(this.swipeHandler, 20));
+                }, this.swipeHandler);
 
                 this.list.on('touchend', {
                     action: 'end'
-                }, throttle(this.swipeHandler, 20));
+                }, this.swipeHandler);
 
             }
 
@@ -1102,3 +1085,5 @@ $.fn.unslick = function(){
 
     });
 }
+
+}));

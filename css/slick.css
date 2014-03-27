@@ -4,17 +4,19 @@
 
 .slick-slider { position: relative; display: block; margin-bottom: 30px;}
 .slick-slider .slick-list { overflow: hidden; display: block; margin: 0px; padding: 0px; }
-.slick-slider .slick-track { position: relative; left: 0px; top: 0px; }
-.slick-slider .slide { float: left; min-height: 1px; }
+.slick-slider .slick-track { position: relative; left: 0px; top: 0px; display: table;}
+.slick-slider .slick-track:after { content: ""; display: table; clear: both; }
+.slick-slider .slide { float: left; height: 100%; min-height: 1px; }
 .slick-slider .slide img { display: block; }
 .slick-slider .slide { display: none; }
-.slick-initialized .slide { display: block; }
+.slick-initialized .slide { display: table-cell; }
 
 /* Loading States */
 
 .slick-loading .slick-track { visibility: hidden; }
 .slick-loading .slick-list { background: #fff url(../img/ajax-loader.gif) center center no-repeat; }
 .slick-loading .slide { visibility: hidden; }
+.slide.loading { background:  url(../img/ajax-loader.gif) center center no-repeat; position: relative;}
 
 /* Arrows */
 
