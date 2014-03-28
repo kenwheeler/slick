@@ -1022,9 +1022,9 @@
 
     $.fn.slick = function (options) {
         var _ = this;
-        return _.each(function () {
+        return _.each(function (index,element) {
 
-            _.slider = new slick.slider(_, options);
+            _.slider = new slick.slider(element, options);
 
         });
     };
