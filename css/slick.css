@@ -20,8 +20,8 @@
 
 /* Arrows */
 
-.slick-slider .slick-prev { position: absolute; background: url('../img/sprite.png') -50px -40px no-repeat; display: block; height: 40px; width: 30px; text-indent: -9999px; top: 50%; margin-top: -20px; left: -25px; padding: 0px; }
-.slick-slider .slick-next { position: absolute; background: url('../img/sprite.png') -90px -40px no-repeat; display: block; height: 40px; width: 30px; text-indent: -9999px; top: 50%; margin-top: -20px; right: -25px; padding: 0px; }
+.slick-slider .slick-prev { position: absolute; background: url('../img/sprite.png') -50px -40px no-repeat; display: block; height: 40px; width: 30px; line-height: 0; font-size: 0; color: transparent;  top: 50%; margin-top: -20px; left: -25px; padding: 0px; }
+.slick-slider .slick-next { position: absolute; background: url('../img/sprite.png') -90px -40px no-repeat; display: block; height: 40px; width: 30px; line-height: 0; font-size: 0; color: transparent; top: 50%; margin-top: -20px; right: -25px; padding: 0px; }
 .slick-slider .slick-prev:focus { outline: none }
 .slick-slider .slick-next:focus { outline: none }
 .slick-slider .slick-next.slick-disabled { background-position: -90px -90px }
