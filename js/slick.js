@@ -1029,6 +1029,15 @@
         });
     };
 
+    $.fn.changeSlickSlide = function (index) {
+        var _ = this;
+        return _.each(function () {
+
+            _.slider.slideHandler(index);
+
+        });
+    };
+
     $.fn.unslick = function (index, element) {
         var _ = this;
         return _.each(function () {
