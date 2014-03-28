@@ -1022,18 +1022,18 @@
 
     $.fn.slick = function (options) {
         var _ = this;
-        return _.each(function (index,element) {
+        return _.each(function (index, element) {
 
-            _.slider = new slick.slider(element, options);
+            element.slider = new slick.slider(element, options);
 
         });
     };
 
-    $.fn.unslick = function () {
+    $.fn.unslick = function (index, element) {
         var _ = this;
         return _.each(function () {
 
-            _.slider.destroy();
+            element.slider.destroy();
 
         });
     };
