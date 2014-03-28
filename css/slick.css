@@ -16,28 +16,39 @@
 .slick-loading .slick-slide { visibility: hidden; }
 .slick-slide.loading { background:  url(../img/ajax-loader.gif) center center no-repeat; position: relative;}
 
+/* Icons */
+
+@charset "UTF-8";
+
+@font-face {
+  font-family: "slick";
+  src:url("../fonts/slick.eot");
+  src:url("../fonts/slick.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/slick.woff") format("woff"),
+    url("../fonts/slick.ttf") format("truetype"),
+    url("../fonts/slick.svg#slick") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Arrows */
 
-.slick-prev { position: absolute; background: url('../img/sprite.png') 0px 0px no-repeat; display: block; height: 20px; width: 20px; line-height: 0; font-size: 0; color: transparent;  top: 50%; margin-top: -10px; left: -25px; padding: 0px; }
-.slick-next { position: absolute; background: url('../img/sprite.png') -20px 0px no-repeat; display: block; height: 20px; width: 20px; line-height: 0; font-size: 0; color: transparent; top: 50%; margin-top: -10px; right: -25px; padding: 0px; }
+.slick-prev { position: absolute; display: block; height: 20px; width: 20px; line-height: 0; font-size: 0; color: transparent;  top: 50%; margin-top: -10px; left: -25px; padding: 0px; }
+.slick-next { position: absolute; display: block; height: 20px; width: 20px; line-height: 0; font-size: 0; color: transparent; top: 50%; margin-top: -10px; right: -25px; padding: 0px; }
+.slick-prev:before { content: '\8592'; font-family: "slick"; font-size: 20px; line-height: 1; color: white; opacity: 0.85; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.slick-next:before { content: '\8594'; font-family: "slick"; font-size: 20px; line-height: 1; color: white; opacity: 0.85; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 .slick-prev:focus { outline: none }
 .slick-next:focus { outline: none }
-.slick-prev.slick-disabled { background-position: 0px -20px }
-.slick-next.slick-disabled { background-position: -20px -20px }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
-    .slick-next { background: url('../img/sprite@2x.png') -20px 0px no-repeat; background-size: 40px 60px; }
-    .slick-prev { background: url('../img/sprite@2x.png') 0px 0px no-repeat; background-size: 40px 60px; }
-}
+.slick-prev.slick-disabled:before { opacity: 0.25; }
+.slick-next.slick-disabled:before { opacity: 0.25; }
 
 /* Dots */
 
 .slick-dots { position: absolute; bottom: -35px; list-style: none; display: block; text-align: center; padding: 0px; width: 100%;}
-.slick-dots li { position: relative; display: inline-block; background: url('../img/sprite.png') -20px -40px no-repeat; height: 20px; width: 20px; text-indent: -9999px; margin: 0px 5px; padding: 0px; }
-.slick-dots li.slick-active { background-position: 0px -40px }
-.slick-dots li a { display: block; height: 20px; width: 20px; outline: none }
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
-    .slick-dots li { background: url('../img/sprite@2x.png') -20px -40px no-repeat; background-size: 40px 60px; }
-}
+.slick-dots li { position: relative; display: inline-block; height: 20px; width: 20px; margin: 0px 5px; padding: 0px; }
+.slick-dots li a { display: block; height: 20px; width: 20px; outline: none; line-height: 0; font-size: 0; color: transparent; padding: 5px; }
+.slick-dots li a:before { content: '\8226'; font-family: "slick"; font-size: 6px; line-height: 2; color: black; opacity: 0.25; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.slick-dots li.slick-active a:before { opacity: 0.75; }
 
 /* Draggable */
 
