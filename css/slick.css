@@ -25,8 +25,8 @@
 .slick-prev.slick-disabled { background-position: 0px -20px }
 .slick-next.slick-disabled { background-position: -20px -20px }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
-    .slick-next { background: url('../img/sprite@2x.png') -90px -40px no-repeat; background-size: 40px 60px; }
-    .slick-prev { background: url('../img/sprite@2x.png') -50px -40px no-repeat; background-size: 40px 60px; }
+    .slick-next { background: url('../img/sprite@2x.png') -20px 0px no-repeat; background-size: 40px 60px; }
+    .slick-prev { background: url('../img/sprite@2x.png') 0px 0px no-repeat; background-size: 40px 60px; }
 }
 
 /* Dots */
@@ -36,7 +36,7 @@
 .slick-dots li.slick-active { background-position: 0px -40px }
 .slick-dots li a { display: block; height: 20px; width: 20px; outline: none }
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-resolution: 240dpi) {
-    .slick-dots li { background: url('../img/sprite@2x.png') -200px -50px no-repeat; background-size: 40px 60px; }
+    .slick-dots li { background: url('../img/sprite@2x.png') -20px -40px no-repeat; background-size: 40px 60px; }
 }
 
 /* Draggable */
