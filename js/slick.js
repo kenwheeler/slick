@@ -1029,18 +1029,18 @@
         });
     };
 
-    $.fn.changeSlickSlide = function (index) {
+    $.fn.changeSlickSlide = function (slide) {
         var _ = this;
-        return _.each(function () {
+        return _.each(function (index, element) {
 
-            _.slider.slideHandler(index);
+           element.slider.slideHandler(slide);
 
         });
     };
 
-    $.fn.unslick = function (index, element) {
+    $.fn.unslick = function () {
         var _ = this;
-        return _.each(function () {
+        return _.each(function (index, element) {
 
             element.slider.destroy();
 
