@@ -38,6 +38,7 @@
                 autoplay: false,
                 autoplaySpeed: 3000,
                 dots: false,
+                slideTriggerSelector: null,
                 draggable: true,
                 arrows: true,
                 infinite: true,
@@ -510,6 +511,12 @@
                 }, _.changeSlide);
             }
 
+            if (_.options.slideTriggerSelector !== null) {
+                $(_.options.slideTriggerSelector).on('click.slick', {
+                    message: 'slideTrigger'
+                }, _.changeSlide);
+            }
+
             if (_.options.swipe === true) {
                 _.list.on('touchstart.slick', {
                     action: 'start',
@@ -582,6 +589,14 @@
             case 'index':
                 if (_.animating === false) {
                     _.slideHandler($(event.target).parent().index());
+                } else {
+                    return false;
+                }
+                break;
+
+            case 'slideTrigger':
+                if (_.animating === false) {
+                    _.slideHandler($(event.currentTarget).data('slickTarget'));
                 } else {
                     return false;
                 }
