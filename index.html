@@ -1,10 +1,24 @@
-<html>
+<html lang="en">
 <head>
-	<title>slick</title>
+	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+	<title>slick - the last carousel you'll ever need</title>
 	<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/monokai.min.css">
 	<link rel="stylesheet" type="text/css" href="css/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<meta name="description" content="slick is a responsive carousel jQuery plugin that supports multiple breakpoints, CSS3 transitions, touch events/swiping &amp; much more!">
+	<meta name="keywords" content="slick, responsive, carousel, slider, jQuery, plugin, CSS3, swipe, touch">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-4390117-9', 'kenwheeler.github.io');
+	  ga('send', 'pageview');
+
+	</script>
 </head>
 <body>
 
@@ -16,8 +30,10 @@
 				<h2>Features</h2>
 				<ul class="features">
 					<li>Fully responsive. Scales with it's container.</li>
+					<li>Separate settings per breakpoint</li>
 					<li>Uses CSS3 when available. Fully functional when not.</li>
 					<li>Swipe enabled. Or disabled, if you prefer.</li>
+					<li>Desktop mouse dragging</li>
 					<li>Infinite looping.</li>
 					<li>Autoplay, dots, arrows, callbacks, etc...</li>
 				</ul>
@@ -178,7 +194,7 @@ $('.your-slider').unslick();
 &lt;link rel="stylesheet" type="text/css" href="slick.css"/&gt;
 				</code></pre>
 				<hr/>
-				<p>Add slick.js before your closing &lt;body&gt; tag</p>
+				<p>Add slick.js before your closing &lt;body&gt; tag (requires >= jQuery 1.7)</p>
 				<pre><code>
 &lt;script type="text/javascript" src="slick.min.js"&gt;&lt;/script&gt;
 				</code></pre>
@@ -239,6 +255,11 @@ $('.your-class').slick({
 							<td>After slide callback</td>
 						</tr>
 						<tr>
+							<td>responsive</td>
+							<td>object, default: null</td>
+							<td>Object containing breakpoints as keys and settings objects as values</td>
+						</tr>
+						<tr>
 							<td>slide</td>
 							<td>element, default: 'div'</td>
 							<td>Slide element</td>
@@ -282,7 +303,7 @@ $('.your-class').slick({
 			<div class="content">
 				<h2>Go Get It</h2>
 				<a class="button first" href="https://github.com/kenwheeler/slick/archive/master.zip">Download Now</a>
-				<a class="button" href="https://github.com/kenwheeler/slick/">View On Github</a>
+				<a class="button last" href="https://github.com/kenwheeler/slick/">View On Github</a>
 			</div>
 		</section>
 

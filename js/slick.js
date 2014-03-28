@@ -1022,18 +1022,27 @@
 
     $.fn.slick = function (options) {
         var _ = this;
-        return _.each(function () {
+        return _.each(function (index, element) {
 
-            _.slider = new slick.slider(_, options);
+            element.slider = new slick.slider(element, options);
 
         });
     };
 
-    $.fn.unslick = function () {
+    $.fn.changeSlickSlide = function (index) {
         var _ = this;
         return _.each(function () {
 
-            _.slider.destroy();
+            _.slider.slideHandler(index);
+
+        });
+    };
+
+    $.fn.unslick = function (index, element) {
+        var _ = this;
+        return _.each(function () {
+
+            element.slider.destroy();
 
         });
     };
