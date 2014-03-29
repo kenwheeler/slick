@@ -538,7 +538,7 @@
                     action: 'end',
                     kind: 'drag'
                 }, _.swipeHandler);
-                _.list.on('mouseout.slick', {
+                _.list.on('mouseleave.slick', {
                     action: 'cancel',
                     kind: 'drag'
                 }, _.swipeHandler);
