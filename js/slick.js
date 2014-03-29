@@ -84,6 +84,7 @@
             _.breakpoints = [];
             _.breakpointSettings = [];
             _.slider = $(element);
+            _.slidesCache = null;
 
             _.options = $.extend({}, _.defaults, settings);
 
@@ -142,6 +143,70 @@
             _.loadSlider();
             _.initializeEvents();
             _.checkResponsive();
+        }
+
+    };
+
+    Slick.prototype.addSlide = function (markup) {
+
+        var _ = this;
+
+        _.unload();
+
+        $(markup).appendTo(_.slideTrack);
+
+        _.reinit();
+
+    };
+
+    Slick.prototype.removeSlide = function (index) {
+
+        var _ = this;
+
+        _.unload();
+
+        if(_.slideCount < 1) {
+            return false;
+        }
+
+        $(_.slideTrack.find(this.options.slide).get(index)).remove();
+
+        _.reinit();
+
+    };
+
+    Slick.prototype.filterSlides = function (filter) {
+
+        var _ = this;
+
+        if(filter !== null) {
+
+            _.unload();
+
+            _.slideTrack.find(this.options.slide).remove();
+
+            _.slidesCache.filter(filter).appendTo(_.slideTrack);
+
+            _.reinit();
+
+        }
+
+    };
+
+    Slick.prototype.unfilterSlides = function () {
+
+        var _ = this;
+
+        if(_.slidesCache !== null) {
+
+            _.unload();
+
+            _.slideTrack.find(this.options.slide).remove();
+
+            _.slidesCache.appendTo(_.slideTrack);
+
+            _.reinit();
+
         }
 
     };
@@ -335,10 +400,8 @@
 
         _.setPosition();
 
-        _.slideTrack.animate({
+        _.slideTrack.css({
             opacity: 1
-        }, _.options.speed, function () {
-            _.setPosition();
         });
 
         if (document.readyState !== "complete") {
@@ -452,14 +515,10 @@
 
     };
 
-    Slick.prototype.buildOut = function () {
+    Slick.prototype.setupPlaceholders = function () {
 
-        var i, _ = this, placeholders;
+        var _ = this, i, placeholders;
 
-        _.slides = $(_.options.slide +
-            ':not(.slick-cloned)', _.slider).addClass(
-            'slick-slide');
-        _.slideCount = _.slides.length;
         if ((_.slideCount % _.options.slidesToScroll) !==
             0 && _.options.slidesToShow !== 1) {
 
@@ -467,14 +526,25 @@
                 (_.slideCount % _.options.slidesToScroll)
             );
             for (i = 0; i < placeholders; i += 1) {
-                $('<div/>').appendTo(_.slider).addClass(
+                $('<div/>').appendTo(_.slideTrack).addClass(
                     'slick-slide slick-placeholder');
             }
             _.slides = $('.slick-slide:not(.slick-cloned)',
                 _.slider);
             _.slideCount = _.slides.length;
-
         }
+
+    };
+
+    Slick.prototype.buildOut = function () {
+
+        var _ = this;
+
+        _.slides = $(_.options.slide +
+            ':not(.slick-cloned)', _.slider).addClass(
+            'slick-slide');
+        _.slideCount = _.slides.length;
+        _.slidesCache = _.slides;
 
         _.slider.addClass("slick-slider");
         _.slideTrack = _.slides.wrapAll(
@@ -486,6 +556,8 @@
         _.buildArrows();
 
         _.buildDots();
+
+        _.setupPlaceholders();
 
         _.setupInfinite();
 
@@ -528,7 +600,7 @@
 
     };
 
-    Slick.prototype.initializeEvents = function () {
+    Slick.prototype.initArrowEvents = function () {
 
         var _ = this;
 
@@ -541,11 +613,27 @@
             }, _.changeSlide);
         }
 
+    };
+
+    Slick.prototype.initDotEvents = function () {
+
+        var _ = this;
+
         if (_.options.dots === true) {
             $('li a', _.dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
         }
+
+    };
+
+    Slick.prototype.initializeEvents = function () {
+
+        var _ = this;
+
+        _.initArrowEvents();
+
+        _.initDotEvents();
 
         if (_.options.swipe === true) {
             _.list.on('touchstart.slick', {
@@ -637,6 +725,28 @@
 
     };
 
+    Slick.prototype.updateArrows = function () {
+
+        var _ = this;
+
+        if (_.options.arrows === true && _.options.infinite !==
+            true) {
+            if (_.currentSlide === 0) {
+                _.prevArrow.addClass('slick-disabled');
+                _.nextArrow.removeClass('slick-disabled');
+            } else if (_.currentSlide >= (_.slideCount /
+                _.options.slidesToScroll * _.options.slidesToShow
+            ) - _.options.slidesToScroll) {
+                _.nextArrow.addClass('slick-disabled');
+                _.prevArrow.removeClass('slick-disabled');
+            } else {
+                _.prevArrow.removeClass('slick-disabled');
+                _.nextArrow.removeClass('slick-disabled');
+            }
+        }
+
+    };
+
     Slick.prototype.animateSlide = function (targetLeft,
         callback) {
 
@@ -696,28 +806,14 @@
 
         _.updateDots();
 
+        _.updateArrows();
+
         if (_.options.autoplay === true) {
             _.autoPlay();
         }
 
         if (_.options.onAfterChange !== null) {
             _.options.onAfterChange.call();
-        }
-
-        if (_.options.arrows === true && _.options.infinite !==
-            true) {
-            if (_.currentSlide === 0) {
-                _.prevArrow.addClass('slick-disabled');
-                _.nextArrow.removeClass('slick-disabled');
-            } else if (_.currentSlide >= (_.slideCount /
-                _.options.slidesToScroll * _.options.slidesToShow
-            ) - _.options.slidesToScroll) {
-                _.nextArrow.addClass('slick-disabled');
-                _.prevArrow.removeClass('slick-disabled');
-            } else {
-                _.prevArrow.removeClass('slick-disabled');
-                _.nextArrow.removeClass('slick-disabled');
-            }
         }
 
         _.setSlideClasses(_.currentSlide);
@@ -1063,6 +1159,53 @@
 
     };
 
+    Slick.prototype.unload = function () {
+        var _ = this;
+        $('.slick-cloned', _.slider).remove();
+        $('.slick-placeholder', _.slider).remove();
+        if (_.dots) {
+            _.dots.remove();
+        }
+        if (_.prevArrow) {
+            _.prevArrow.remove();
+            _.nextArrow.remove();
+        }
+        _.slides.removeClass(
+            'slick-slide slick-active slick-visible').width('');
+    };
+
+    Slick.prototype.reinit = function () {
+
+        var _ = this;
+
+        _.slides = $(_.options.slide +
+            ':not(.slick-cloned)', _.slideTrack).addClass(
+            'slick-slide');
+
+        _.slideCount = _.slides.length;
+
+        _.buildArrows();
+
+        _.updateArrows();
+
+        _.initArrowEvents();
+
+        _.buildDots();
+
+        _.updateDots();
+
+        _.initDotEvents();
+
+        _.setupPlaceholders();
+
+        _.setupInfinite();
+
+        _.setSlideClasses(0);
+
+        _.setPosition();
+
+    };
+
     Slick.prototype.destroy = function () {
         var _ = this;
         $('.slick-cloned', _.slider).remove();
@@ -1086,6 +1229,42 @@
         return _.each(function (index, element) {
 
             element.slick = new Slick(element, options);
+
+        });
+    };
+
+    $.fn.slickAdd = function (slide) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.addSlide(slide);
+
+        });
+    };
+
+    $.fn.slickRemove = function (slide) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.removeSlide(slide);
+
+        });
+    };
+
+    $.fn.slickFilter = function (filter) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.filterSlides(filter);
+
+        });
+    };
+
+    $.fn.slickUnfilter = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.unfilterSlides();
 
         });
     };
