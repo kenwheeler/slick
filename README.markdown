@@ -55,6 +55,10 @@ slickNext() - Triggers next slide
 
 slickPrev() - Triggers previous slide
 
+slickPause() - Pause Autoplay
+
+slickPlay() - Start Autoplay
+
 slickGoTo(index : int) - Goes to slide by index
 
 slickAdd(element) - Adds a slide. Accepts HTML String || Object
