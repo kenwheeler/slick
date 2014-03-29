@@ -43,6 +43,7 @@
                 infinite: true,
                 onBeforeChange: null,
                 onAfterChange: null,
+                pauseOnHover: true,
                 responsive: null,
                 slide: 'div',
                 slidesToShow: 1,
@@ -105,6 +106,10 @@
                 });
             }
 
+            _.autoPlay = functionBinder(_.autoPlay,
+                _);
+            _.autoPlayClear = functionBinder(_.autoPlayClear,
+                _);
             _.changeSlide = functionBinder(_.changeSlide,
                 _);
             _.setPosition = functionBinder(_.setPosition,
@@ -181,6 +186,16 @@
 
         _.autoPlayTimer = setInterval(_.autoPlayIterator,
             _.options.autoplaySpeed);
+
+    };
+
+    Slick.prototype.autoPlayClear = function () {
+
+        var _ = this;
+
+        if (_.autoPlayTimer) {
+            clearInterval(_.autoPlayTimer);
+        }
 
     };
 
@@ -564,6 +579,11 @@
                 action: 'cancel',
                 kind: 'drag'
             }, _.swipeHandler);
+        }
+
+        if (_.options.pauseOnHover === true && _.options.autoplay === true) {
+            _.list.on('mouseenter.slick', _.autoPlayClear);
+            _.list.on('mouseleave.slick', _.autoPlay);
         }
 
         $(window).on('orientationchange.slick', _.setPosition);
@@ -1070,11 +1090,47 @@
         });
     };
 
-    $.fn.changeSlickSlide = function (slide) {
+    $.fn.slickGoTo = function (slide) {
         var _ = this;
         return _.each(function (index, element) {
 
            element.slick.slideHandler(slide);
+
+        });
+    };
+
+    $.fn.slickNext = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.changeSlide({data: {message: 'next'}});
+
+        });
+    };
+
+    $.fn.slickPrev = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.changeSlide({data: {message: 'previous'}});
+
+        });
+    };
+
+    $.fn.slickPause = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.autoPlayClear();
+
+        });
+    };
+
+    $.fn.slickPlay = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.autoPlay();
 
         });
     };
