@@ -71,6 +71,14 @@ $(document).ready(function(){
     autoplaySpeed: 2000
   });
 
+  $('.fade').slick({
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    fade: true,
+    slide: '.multiple'
+  });
+
   $('.add-remove').slick({
     dots: true,
     slidesToShow: 3,

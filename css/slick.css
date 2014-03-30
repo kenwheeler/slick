@@ -9,6 +9,7 @@
 .slick-slide { float: left; height: 100%; min-height: 1px; }
 .slick-slide img { display: block; }
 .slick-slide { display: none; }
+.slick-slide img { pointer-events: none; }
 .slick-initialized .slick-slide { display: table-cell; }
 
 /* Loading States */
@@ -46,7 +47,7 @@
 
 /* Dots */
 
-.slick-dots { position: absolute; top: 90%; list-style: none; display: block; text-align: center; padding: 0px; width: 100%;}
+.slick-dots { position: absolute; bottom: -45px; list-style: none; display: block; text-align: center; padding: 0px; width: 100%;}
 .slick-dots li { position: relative; display: inline-block; height: 20px; width: 20px; margin: 0px 5px; padding: 0px; }
 .slick-dots li a { display: block; height: 20px; width: 20px; outline: none; line-height: 0; font-size: 0; color: transparent; padding: 5px; }
 .slick-dots li a:before { content: '\8226'; font-family: "slick"; font-size: 6px; line-height: 2; color: black; opacity: 0.25; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }

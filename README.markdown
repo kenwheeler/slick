@@ -25,6 +25,8 @@ draggable: true | false - (default:  true) - Enables desktop dragging
 
 easing: string - (default:  'linear') - animate() easing
 
+fade: true | false - (default: false) - Enables fade
+
 arrows: true | false - (default: true) - Next/Prev arrows
 
 infinite: true | false - (default: true) - Infinite looping

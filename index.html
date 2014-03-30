@@ -35,6 +35,8 @@
 					<li>Swipe enabled. Or disabled, if you prefer.</li>
 					<li>Desktop mouse dragging</li>
 					<li>Infinite looping.</li>
+					<li>Fully accessible with arrow key navigation</li>
+					<li>Add, remove, filter & unfilter slides</li>
 					<li>Autoplay, dots, arrows, callbacks, etc...</li>
 				</ul>
 				<hr/>
@@ -169,6 +171,22 @@ $('.autoplay').slick({
 });
 				</code></pre>
 				<hr/>
+				<h2>Fade</h2>
+				<div class="slider fade">
+					<div class="multiple"><div class="image"><img src="img/fonz1.png"/></div></div>
+					<div class="multiple"><div class="image"><img src="img/fonz2.png"/></div></div>
+					<div class="multiple"><div class="image"><img src="img/fonz3.png"/></div></div>
+				</div>
+			<pre><code>
+$('.fade').slick({
+  fade: true,
+  speed: 1000,
+  dots: true,
+  infinite: true,
+  slide: '.multiple'
+});
+				</code></pre>
+				<hr/>
 				<h2>Add & Remove</h2>
 				<div class="slider add-remove">
 					<div class="multiple"><h3>1</h3></div>
@@ -284,6 +302,11 @@ $('.your-class').slick({
 					</thead>
 					<tbody>
 						<tr>
+							<td>accessibility</td>
+							<td>boolean, default: true</td>
+							<td>Enables tabbing and arrow key navigation</td>
+						</tr>
+						<tr>
 							<td>autoplay</td>
 							<td>boolean, default: false</td>
 							<td>Enables Autoplay</td>
@@ -299,6 +322,11 @@ $('.your-class').slick({
 							<td>Prev/Next Arrows</td>
 						</tr>
 						<tr>
+							<td>cssEase</td>
+							<td>string, default: 'ease'</td>
+							<td>CSS3 Animation Easing</td>
+						</tr>
+						<tr>
 							<td>dots</td>
 							<td>boolean, default: false</td>
 							<td>Show dot indicators</td>
@@ -307,6 +335,11 @@ $('.your-class').slick({
 							<td>draggable</td>
 							<td>boolean, default: true</td>
 							<td>Enable mouse dragging</td>
+						</tr>
+						<tr>
+							<td>fade</td>
+							<td>boolean, default: false</td>
+							<td>Enable fade</td>
 						</tr>
 						<tr>
 							<td>easing</td>
@@ -445,6 +478,8 @@ $('.your-class').slick({
 				<h2>Go Get It</h2>
 				<a class="button first" href="https://github.com/kenwheeler/slick/archive/master.zip">Download Now</a>
 				<a class="button last" href="https://github.com/kenwheeler/slick/">View On Github</a>
+				<hr/>
+				<div id="disqus_thread"></div>
 			</div>
 		</section>
 
@@ -452,6 +487,18 @@ $('.your-class').slick({
 		<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
 		<script type="text/javascript" src="js/slick.js"></script>
 		<script type="text/javascript" src="js/scripts.js"></script>
+
 		<script>hljs.initHighlightingOnLoad();</script>
+
+		<script type="text/javascript">
+        var disqus_shortname = 'slickcarousel';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+
 </body>
 </html>

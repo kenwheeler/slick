@@ -153,6 +153,9 @@ td {
     padding: 10px;
     border: 1px solid #fff;
     width: 33%}
+a {
+    color: #3498db;
+}
 .button.first {
     margin-top:  40px;
 }
@@ -171,6 +174,16 @@ td {
   padding: 0px 20px 20px;
 }
 
+.slick-slide img {
+    width: 100%;
+    display: block;
+    border: 5px solid white;
+}
+
+.slick-slide .image {
+    padding: 10px;
+}
+
 .buttons::after  {
      content:  "";
      display:  table;
@@ -187,6 +200,10 @@ td {
 .filter .button {
   background: white;
   color: #3498db;
+}
+
+#disqus_thread {
+    margin-top: 20px;
 }
 
 @media only screen and (min-width:769px) {
