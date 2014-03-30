@@ -253,7 +253,7 @@
 
         var _ = this, transition,origin;
 
-        transition = 'all ' + _.options.speed + ' ' + _.options.cssEase;
+        transition = 'all ' + _.options.speed + 'ms ' + _.options.cssEase;
         origin = (_.listWidth / 2) + ' 50%';
 
         _.slideTrack.css({
