@@ -5,11 +5,11 @@ slick
 
 _the last carousel you'll ever need_
 
-### Demo
+#### Demo
 
-[Demo](http://kenwheeler.github.io/slick/)
+[http://kenwheeler.github.io/slick](http://kenwheeler.github.io/slick/)
 
-### Options
+#### Options
 
 
 Option | Type | Default | Description
@@ -36,7 +36,7 @@ swipe | boolean | true | Enables touch swipe
 touchMove | boolean | true | Enables slide moving with touch
 touchMoveThreshold | int | 5 | Swipe distance threshold
 
-### Methods
+#### Methods
 
 Method | Argument | Description
 ------ | -------- | -----------
@@ -52,7 +52,7 @@ slideRemove() | index: int | Removes a slide by index
 slickFilter() | filter : selector or function | Filters slides using jQuery .filter syntax
 slickUnfilter() | | Removes applied filter
 
-### Example
+#### Example
 
 Initialize with:
 
@@ -69,11 +69,11 @@ Destroy with:
 $(element).unslick();
 ```
 
-### Dependencies
+#### Dependencies
 
 jQuery 1.7
 
-### License
+#### License
 
 Copyright (c) 2014 Ken Wheeler
 
