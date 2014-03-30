@@ -37,6 +37,7 @@
             _.defaults = {
                 autoplay: false,
                 autoplaySpeed: 3000,
+                cssEase: 'ease',
                 dots: false,
                 draggable: true,
                 easing: 'linear',
@@ -86,6 +87,7 @@
             _.breakpointSettings = [];
             _.slider = $(element);
             _.slidesCache = null;
+            _.cssTransitions = false;
 
             _.options = $.extend({}, _.defaults, settings);
 
@@ -140,6 +142,7 @@
             $(_.slider).addClass('slick-initialized');
             _.buildOut();
             _.getAnimType();
+            _.checkTransition();
             _.startLoad();
             _.loadSlider();
             _.initializeEvents();
@@ -221,6 +224,52 @@
             _.reinit();
 
         }
+
+    };
+
+    Slick.prototype.checkTransition = function () {
+
+        var _ = this;
+
+        if (document.body.style.WebkitTransition !== undefined) {
+
+            _.cssTransitions = true;
+
+        } else if (document.body.style.MozTransition !==
+            undefined) {
+
+            _.cssTransitions = true;
+
+        } else if (document.body.style.msTransition !==
+            undefined) {
+
+            _.cssTransitions = true;
+
+        }
+
+    };
+
+    Slick.prototype.applyTransition = function () {
+
+        var _ = this, transition,origin;
+
+        transition = 'all ' + _.options.speed + ' ' + _.options.cssEase;
+        origin = (_.listWidth / 2) + ' 50%';
+
+        _.slideTrack.css({
+            transition: transition,
+            transformOrigin: origin
+        });
+    };
+
+    Slick.prototype.disableTransition = function () {
+
+        var _ = this;
+
+        _.slideTrack.css({
+            transition: '',
+            transformOrigin: ''
+        });
 
     };
 
@@ -606,9 +655,15 @@
         if (_.transformsEnabled === false) {
             _.slideTrack.css('left', targetLeft);
         } else {
-            animProps[_.animType] = "translate(" +
-                targetLeft + "px, 0px)";
-            _.slideTrack.css(animProps);
+            if(_.cssTransitions === false) {
+                animProps[_.animType] = "translate(" +
+                    targetLeft + "px, 0px)";
+                _.slideTrack.css(animProps);
+            } else {
+                animProps[_.animType] = "translate3d(" +
+                targetLeft + "px, 0px,0px)";
+                _.slideTrack.css(animProps);
+            }
         }
 
     };
@@ -658,6 +713,10 @@
                 kind: 'touch'
             }, _.swipeHandler);
             _.list.on('touchend.slick', {
+                action: 'end',
+                kind: 'touch'
+            }, _.swipeHandler);
+            _.list.on('touchcancel.slick', {
                 action: 'end',
                 kind: 'touch'
             }, _.swipeHandler);
@@ -777,24 +836,44 @@
 
         } else {
 
-            $({
-                animStart: _.currentLeft
-            }).animate({
-                animStart: targetLeft
-            }, {
-                duration: _.options.speed,
-                easing: _.options.easing,
-                step: function (now) {
-                    animProps[_.animType] = "translate(" +
-                        now + "px, 0px)";
-                    _.slideTrack.css(animProps);
-                },
-                complete: function () {
-                    if (callback) {
-                        callback.call();
+            if(_.cssTransitions === false) {
+
+                $({
+                    animStart: _.currentLeft
+                }).animate({
+                    animStart: targetLeft
+                }, {
+                    duration: _.options.speed,
+                    easing: _.options.easing,
+                    step: function (now) {
+                        animProps[_.animType] = "translate(" +
+                            now + "px, 0px)";
+                        _.slideTrack.css(animProps);
+                    },
+                    complete: function () {
+                        if (callback) {
+                            callback.call();
+                        }
                     }
+                });
+
+            } else {
+
+                _.applyTransition();
+
+                animProps[_.animType] = "translate3d(" + targetLeft + "px, 0px, 0px)";
+                _.slideTrack.css(animProps);
+
+                if(callback) {
+                    setTimeout(function(){
+
+                    _.disableTransition();
+
+                    callback.call();
+                    }, _.options.speed);
                 }
-            });
+
+            }
 
         }
 
@@ -986,11 +1065,19 @@
                             _.slideTrack.css('left',
                                 newLeft);
                         } else {
-                            animProps[_.animType] =
-                                "translate(" + newLeft +
-                                "px, 0px)";
-                            _.slideTrack.css(animProps);
-                            _.swipeLeft = newLeft;
+                            if(_.cssTransitions === false) {
+                                animProps[_.animType] =
+                                    "translate(" + newLeft +
+                                    "px, 0px)";
+                                _.slideTrack.css(animProps);
+                                _.swipeLeft = newLeft;
+                            } else {
+                                animProps[_.animType] =
+                                    "translate3d(" + newLeft +
+                                    "px, 0px, 0px)";
+                                _.slideTrack.css(animProps);
+                                _.swipeLeft = newLeft;
+                            }
                         }
 
                     }
@@ -1006,11 +1093,19 @@
                             _.slideTrack.css('left',
                                 newLeft);
                         } else {
-                            animProps[_.animType] =
-                                "translate(" + newLeft +
-                                "px, 0px)";
-                            _.slideTrack.css(animProps);
-                            _.swipeLeft = newLeft;
+                            if(_.cssTransitions === false) {
+                                animProps[_.animType] =
+                                    "translate(" + newLeft +
+                                    "px, 0px)";
+                                _.slideTrack.css(animProps);
+                                _.swipeLeft = newLeft;
+                            } else {
+                                animProps[_.animType] =
+                                    "translate3d(" + newLeft +
+                                    "px, 0px, 0px)";
+                                _.slideTrack.css(animProps);
+                                _.swipeLeft = newLeft;
+                            }
                         }
 
                     }
@@ -1198,7 +1293,7 @@
 
         _.slideCount = _.slides.length;
 
-        if(_.currentSlide >= _.slideCount) {
+        if(_.currentSlide >= _.slideCount && _.currentSlide !== 0) {
             _.currentSlide = _.currentSlide - _.options.slidesToScroll;
         }
 
