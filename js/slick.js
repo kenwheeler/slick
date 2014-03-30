@@ -35,6 +35,7 @@
             var _ = this, responsiveSettings, breakpoint;
 
             _.defaults = {
+                accessibility: true,
                 autoplay: false,
                 autoplaySpeed: 3000,
                 cssEase: 'ease',
@@ -121,6 +122,8 @@
             _.swipeHandler = functionBinder(_.swipeHandler,
                 _);
             _.dragHandler = functionBinder(_.dragHandler,
+                _);
+            _.keyHandler = functionBinder(_.keyHandler,
                 _);
             _.autoPlayIterator = functionBinder(_.autoPlayIterator,
                 _);
@@ -503,10 +506,10 @@
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.prevArrow = $(
-                '<a href="javascript:void(0)">Previous</a>').appendTo(
+                '<a href="javascript:void(0)" tabIndex="-1">Previous</a>').appendTo(
                 _.slider).addClass('slick-prev');
             _.nextArrow = $(
-                '<a href="javascript:void(0)">Next</a>').appendTo(
+                '<a href="javascript:void(0)" tabIndex="-1">Next</a>').appendTo(
                 _.slider).addClass('slick-next');
 
             if (_.options.infinite !== true) {
@@ -527,7 +530,7 @@
 
             for (i = 1; i <= _.slideCount; i += 1) {
 
-                dotString += '<li><a href="javascript:void(0)">' + i +
+                dotString += '<li><a href="javascript:void(0)" tabIndex="-1">' + i +
                     '</a></li>';
 
             }
@@ -614,6 +617,10 @@
         _.list = _.slideTrack.wrap(
             '<div class="slick-list"/>').parent();
         _.slideTrack.css('opacity', 0);
+
+        if(_.options.accessibility === true) {
+            _.list.prop('tabIndex',0);
+        }
 
         _.setupPlaceholders();
 
@@ -745,6 +752,8 @@
             _.list.on('mouseenter.slick', _.autoPlayClear);
             _.list.on('mouseleave.slick', _.autoPlay);
         }
+
+        _.list.on('keydown.slick', _.keyHandler);
 
         $(window).on('orientationchange.slick', _.setPosition);
 
@@ -1180,6 +1189,18 @@
         if (_.touchObject.startX) {
             _.slideHandler(_.currentSlide);
             _.touchObject = {};
+        }
+
+    };
+
+    Slick.prototype.keyHandler = function (event) {
+
+        var _ = this;
+
+        if (event.keyCode === 37) {
+            _.changeSlide({data: {message: 'previous'}});
+        } else if (event.keyCode === 39) {
+            _.changeSlide({data: {message: 'next'}});
         }
 
     };
