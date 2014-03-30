@@ -11,6 +11,8 @@ _the last carousel you'll ever need_
 
 ### Options
 
+accessibility: true | false - (default: true)- Enables tabbing and arrow key navigation
+
 autoplay: true | false - (default: false)- Enables auto play of slides
 
 autoplaySpeed: int - (default:  3000) - Auto play change interval
