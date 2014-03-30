@@ -879,12 +879,11 @@
 
         } else {
 
-            $(_.slides.get(slideIndex)).css({zIndex: 1000});
-
             _.applyTransition(slideIndex);
 
             $(_.slides.get(slideIndex)).css({
-                opacity: 1
+                opacity: 1,
+                zIndex: 1000
             });
 
             if(callback) {
@@ -1185,20 +1184,19 @@
                     .startX, 2)));
 
             if (_.swipeDirection() !== 'up' && _.swipeDirection() !==
-                'down' && _.options.touchMove === true &&
-                _.options.fade === false) {
+                'down' && _.options.touchMove === true) {
 
                 event.originalEvent.preventDefault();
 
                 if (_.touchObject.curX > _.touchObject
-                    .startX) {
+                    .startX && _.options.fade === false) {
 
                     _.setLeft(curLeft + _.touchObject
                             .swipeLength);
 
                     _.swipeLeft = newLeft;
 
-                } else {
+                } else if(_.options.fade === false){
 
                     _.setLeft(curLeft - _.touchObject
                             .swipeLength);
@@ -1274,7 +1272,7 @@
 
         _.list.removeClass('dragging');
 
-        if (_.touchObject.startX) {
+        if (_.touchObject.startX && _.options.fade === false) {
             _.slideHandler(_.currentSlide);
             _.touchObject = {};
         }
