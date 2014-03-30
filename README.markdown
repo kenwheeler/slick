@@ -15,9 +15,13 @@ autoplay: true | false - (default: false)- Enables auto play of slides
 
 autoplaySpeed: int - (default:  3000) - Auto play change interval
 
+cssEase: string - (default:  'ease') - CSS3 easing
+
 dots: true | false - (default:  false) - Current slide indicator dots
 
 draggable: true | false - (default:  true) - Enables desktop dragging
+
+easing: string - (default:  'linear') - animate() easing
 
 arrows: true | false - (default: true) - Next/Prev arrows
 
