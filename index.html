@@ -169,6 +169,70 @@ $('.autoplay').slick({
 });
 				</code></pre>
 				<hr/>
+				<h2>Add & Remove</h2>
+				<div class="slider add-remove">
+					<div class="multiple"><h3>1</h3></div>
+				</div>
+				<div class="buttons">
+					<a href="javascript:void(0)" class="button js-add-slide">Add Slide</a>
+					<a href="javascript:void(0)" class="button js-remove-slide">Remove Slide</a>
+				</div>
+			<pre><code>
+$('.add-remove').slick({
+  slidesToShow: 3,
+  slidesToScroll: 3
+});
+var slideIndex = 1;
+$('.js-add-slide').on('click', function(){
+  slideIndex++;
+  $('.add-remove').slickAdd('&lt;div class="multiple"&gt;&lt;h3&gt;'+slideIndex+'&lt;/h3&gt;&lt;/div&gt;');
+});
+
+$('.js-remove-slide').on('click', function(){
+  $('.add-remove').slickRemove(slideIndex - 1);
+  slideIndex--;
+});
+				</code></pre>
+				<hr/>
+				<h2>Filtering</h2>
+				<div class="slider filtering">
+					<div class="multiple"><h3>1</h3></div>
+					<div class="multiple"><h3>2</h3></div>
+					<div class="multiple"><h3>3</h3></div>
+					<div class="multiple"><h3>4</h3></div>
+					<div class="multiple"><h3>5</h3></div>
+					<div class="multiple"><h3>6</h3></div>
+					<div class="multiple"><h3>7</h3></div>
+					<div class="multiple"><h3>8</h3></div>
+					<div class="multiple"><h3>9</h3></div>
+					<div class="multiple"><h3>10</h3></div>
+					<div class="multiple"><h3>11</h3></div>
+					<div class="multiple"><h3>12</h3></div>
+				</div>
+				<div class="filter">
+					<a href="javascript:void(0)" class="button js-filter">Filter Slides</a>
+				</div>
+			<pre><code>
+$('.filtering').slick({
+  slidesToShow: 4,
+  slidesToScroll: 4
+});
+
+var filtered = false;
+
+$('.js-filter').on('click', function(){
+  if(filtered === false) {
+    $('.filtering').slickFilter(':even');
+    $(this).text('Unfilter Slides');
+    filtered = true;
+  } else {
+    $('.filtering').slickUnfilter();
+    $(this).text('Filter Slides');
+    filtered = false;
+  }
+});
+				</code></pre>
+				<hr/>
 				<h2>Destroy</h2>
 				<p class="destroy">If you really want to be that guy...</p>
 				<pre><code>
@@ -225,9 +289,9 @@ $('.your-class').slick({
 							<td>Enables Autoplay</td>
 						</tr>
 						<tr>
-							<td>dots</td>
-							<td>boolean, default: false</td>
-							<td>Show dot indicators</td>
+							<td>autoplaySpeed</td>
+							<td>int(ms), default: 3000</td>
+							<td>Autoplay Speed in milliseconds</td>
 						</tr>
 						<tr>
 							<td>arrows</td>
@@ -235,9 +299,19 @@ $('.your-class').slick({
 							<td>Prev/Next Arrows</td>
 						</tr>
 						<tr>
+							<td>dots</td>
+							<td>boolean, default: false</td>
+							<td>Show dot indicators</td>
+						</tr>
+						<tr>
 							<td>draggable</td>
 							<td>boolean, default: true</td>
 							<td>Enable mouse dragging</td>
+						</tr>
+						<tr>
+							<td>easing</td>
+							<td>string, default: 'linear'</td>
+							<td>Add easing for jQuery animate. Use with easing libraries or default easing methods</td>
 						</tr>
 						<tr>
 							<td>infinite</td>
@@ -253,6 +327,11 @@ $('.your-class').slick({
 							<td>onAfterChange</td>
 							<td>function, default: null</td>
 							<td>After slide callback</td>
+						</tr>
+						<tr>
+							<td>pauseOnHover</td>
+							<td>boolean, default: true</td>
+							<td>Pause Autoplay On Hover</td>
 						</tr>
 						<tr>
 							<td>responsive</td>
@@ -293,6 +372,68 @@ $('.your-class').slick({
 							<td>touchThreshold</td>
 							<td>int, default: 5</td>
 							<td>Swipe distance threshold</td>
+						</tr>
+					</tbody>
+				</table>
+				<h2>Methods</h2>
+				<table>
+					<thead>
+						<tr>
+							<th>Method</th>
+							<th>Arguments</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>slickGoTo</td>
+							<td>int : slide number</td>
+							<td>Navigates to a slide by index</td>
+						</tr>
+						<tr>
+							<td>slickNext</td>
+							<td>none</td>
+							<td>Navigates to the next slide</td>
+						</tr>
+						<tr>
+							<td>slickPrev</td>
+							<td>none</td>
+							<td>Navigates to the previous slide</td>
+						</tr>
+						<tr>
+							<td>slickPause</td>
+							<td>none</td>
+							<td>Pauses autoplay</td>
+						</tr>
+						<tr>
+							<td>slickPlay</td>
+							<td>none</td>
+							<td>Starts autoplay</td>
+						</tr>
+						<tr>
+							<td>slickAdd</td>
+							<td>HTML or Object</td>
+							<td>Adds slide</td>
+						</tr>
+						<tr>
+							<td>slickRemove</td>
+							<td>index</td>
+							<td>Removes slide by index</td>
+						</tr>
+						<tr>
+							<td>slickFilter</td>
+							<td>Selector or Function</td>
+							<td>Filters slides using jQuery .filter()</td>
+						</tr>
+						<tr>
+							<td>slickUnfilter</td>
+							<td>index</td>
+							<td>Removes applied filtering</td>
+						</tr>
+						<tr>
+							<td>unslick</td>
+							<td>none</td>
+							<td>Deconstructs slick</td>
 						</tr>
 					</tbody>
 				</table>

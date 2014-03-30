@@ -39,6 +39,7 @@
                 autoplaySpeed: 3000,
                 dots: false,
                 draggable: true,
+                easing: 'linear',
                 arrows: true,
                 infinite: true,
                 onBeforeChange: null,
@@ -155,6 +156,12 @@
 
         $(markup).appendTo(_.slideTrack);
 
+        _.slides = _.slideTrack.find(this.options.slide);
+
+        _.slideTrack.find(this.options.slide).remove();
+
+        _.slideTrack.append(_.slides);
+
         _.reinit();
 
     };
@@ -170,6 +177,12 @@
         }
 
         $(_.slideTrack.find(this.options.slide).get(index)).remove();
+
+        _.slides = _.slideTrack.find(this.options.slide);
+
+        _.slideTrack.find(this.options.slide).remove();
+
+        _.slideTrack.append(_.slides);
 
         _.reinit();
 
@@ -352,14 +365,14 @@
 
         var _ = this;
 
-        if (_.options.arrows === true) {
+        if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.prevArrow.hide();
             _.nextArrow.hide();
 
         }
 
-        if (_.options.dots === true) {
+        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
             _.dots.hide();
 
@@ -373,14 +386,14 @@
 
         var _ = this;
 
-        if (_.options.arrows === true) {
+        if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.prevArrow.show();
             _.nextArrow.show();
 
         }
 
-        if (_.options.dots === true) {
+        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
             _.dots.show();
 
@@ -438,7 +451,7 @@
 
         var _ = this;
 
-        if (_.options.arrows === true) {
+        if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.prevArrow = $(
                 '<a href="javascript:void(0)">Previous</a>').appendTo(
@@ -459,7 +472,7 @@
 
         var _ = this, i, dotString;
 
-        if (_.options.dots === true) {
+        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
             dotString = '<ul class="slick-dots">';
 
@@ -553,13 +566,13 @@
             '<div class="slick-list"/>').parent();
         _.slideTrack.css('opacity', 0);
 
-        _.buildArrows();
-
-        _.buildDots();
-
         _.setupPlaceholders();
 
         _.setupInfinite();
+
+        _.buildArrows();
+
+        _.buildDots();
 
         _.setSlideClasses(0);
 
@@ -604,7 +617,7 @@
 
         var _ = this;
 
-        if (_.options.arrows === true) {
+        if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
             _.prevArrow.on('click.slick', {
                 message: 'previous'
             }, _.changeSlide);
@@ -619,7 +632,7 @@
 
         var _ = this;
 
-        if (_.options.dots === true) {
+        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
             $('li a', _.dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
@@ -730,7 +743,7 @@
         var _ = this;
 
         if (_.options.arrows === true && _.options.infinite !==
-            true) {
+            true && _.slideCount > _.options.slidesToShow) {
             if (_.currentSlide === 0) {
                 _.prevArrow.addClass('slick-disabled');
                 _.nextArrow.removeClass('slick-disabled');
@@ -760,7 +773,7 @@
 
             _.slideTrack.animate({
                 left: targetLeft
-            }, _.options.speed, callback);
+            }, _.options.speed,_.options.easing, callback);
 
         } else {
 
@@ -770,6 +783,7 @@
                 animStart: targetLeft
             }, {
                 duration: _.options.speed,
+                easing: _.options.easing,
                 step: function (now) {
                     animProps[_.animType] = "translate(" +
                         now + "px, 0px)";
@@ -907,8 +921,8 @@
 
         touches = event.originalEvent.touches;
 
-        if (_.touchObject.fingerCount === 1 || event.data
-            .kind === 'drag') {
+        if ((_.touchObject.fingerCount === 1 || event.data
+            .kind === 'drag') &&  _.slideCount > _.options.slidesToShow) {
 
             if (event.data.kind === 'touch') {
                 _.touchObject.startX = _.touchObject.
@@ -1184,6 +1198,14 @@
 
         _.slideCount = _.slides.length;
 
+        if(_.currentSlide >= _.slideCount) {
+            _.currentSlide = _.currentSlide - _.options.slidesToScroll;
+        }
+
+        _.setupPlaceholders();
+
+        _.setupInfinite();
+
         _.buildArrows();
 
         _.updateArrows();
@@ -1195,10 +1217,6 @@
         _.updateDots();
 
         _.initDotEvents();
-
-        _.setupPlaceholders();
-
-        _.setupInfinite();
 
         _.setSlideClasses(0);
 
