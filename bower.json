@@ -19,8 +19,7 @@
     "bower_components",
     "test",
     "tests",
-    "index.html",
-    "fonts"
+    "index.html"
   ],
   "dependencies": {
     "jquery": "~1.7"
