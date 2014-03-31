@@ -73,6 +73,7 @@ section {
     margin: 10px;
     padding: 2%;
     text-align: center;
+    position: relative;
 }
 pre {
     margin: 0 10px 20px;

@@ -13,6 +13,12 @@ $(document).ready(function(){
     slidesToShow: 3,
     slidesToScroll: 3
   });
+  $('.vertical').slick({
+    dots: true,
+    infinite: true,
+    speed: 300,
+    vertical: true
+  });
   $('.one-time').slick({
     dots: false,
     infinite: true,
