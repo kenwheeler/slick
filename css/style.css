@@ -94,6 +94,7 @@ pre {
 p {
     font-weight: 700;
     text-align: center;
+    line-height: 1.5;
     margin-bottom: 40px;
 }
 .destroy {
