@@ -92,6 +92,7 @@
             _.slider = $(element);
             _.slidesCache = null;
             _.cssTransitions = false;
+            _.windowWidth = 0;
 
             _.options = $.extend({}, _.defaults, settings);
 
@@ -390,7 +391,7 @@
         var _ = this, breakpoint, targetBreakpoint;
 
         if (_.originalSettings.responsive && _.originalSettings
-            .responsive.length > -1) {
+            .responsive.length > -1 && _.originalSettings.responsive !== null) {
 
             targetBreakpoint = null;
 
@@ -809,11 +810,19 @@
 
         _.list.on('keydown.slick', _.keyHandler);
 
-        $(window).on('orientationchange.slick', _.setPosition);
-
-        $(window).on('resize.slick', function () {
+        $(window).on('orientationchange.slick', function(){
             _.checkResponsive();
-            _.setPosition();
+            _.setPosition()
+        });
+
+        $(window).resize(function () {
+            if(window.orientation == undefined) {
+                if ($(window).width !== _.windowWidth) {
+                    _.windowWidth = $(window).width();
+                    _.checkResponsive();
+                    _.setPosition();
+                }
+            }
         });
 
         $(window).on('load.slick', _.setPosition);
@@ -1149,14 +1158,12 @@
         var _ = this, animProps = {};
 
         _.slideTrack.css({
-            'position': 'absolute',
             'display' : 'block'
         });
 
         _.slideTrack.find(_.options.slide).css({
             'height': 'auto',
             'display': 'block',
-            'float': 'none',
             'border' : '1px solid transparent'
         });
 
