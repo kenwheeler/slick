@@ -166,9 +166,9 @@
 
         $(markup).appendTo(_.slideTrack);
 
-        _.slides = _.slideTrack.find(this.options.slide);
+        _.slides = _.slideTrack.children(this.options.slide);
 
-        _.slideTrack.find(this.options.slide).remove();
+        _.slideTrack.children(this.options.slide).remove();
 
         _.slideTrack.append(_.slides);
 
@@ -186,11 +186,11 @@
             return false;
         }
 
-        $(_.slideTrack.find(this.options.slide).get(index)).remove();
+        $(_.slideTrack.children(this.options.slide).get(index)).remove();
 
-        _.slides = _.slideTrack.find(this.options.slide);
+        _.slides = _.slideTrack.children(this.options.slide);
 
-        _.slideTrack.find(this.options.slide).remove();
+        _.slideTrack.children(this.options.slide).remove();
 
         _.slideTrack.append(_.slides);
 
@@ -206,7 +206,7 @@
 
             _.unload();
 
-            _.slideTrack.find(this.options.slide).remove();
+            _.slideTrack.children(this.options.slide).remove();
 
             _.slidesCache.filter(filter).appendTo(_.slideTrack);
 
@@ -224,7 +224,7 @@
 
             _.unload();
 
-            _.slideTrack.find(this.options.slide).remove();
+            _.slideTrack.children(this.options.slide).remove();
 
             _.slidesCache.appendTo(_.slideTrack);
 
@@ -335,8 +335,12 @@
 
         }
 
-        _.autoPlayTimer = setInterval(_.autoPlayIterator,
-            _.options.autoplaySpeed);
+        if(_.slideCount >= _.options.slidesToShow) {
+
+            _.autoPlayTimer = setInterval(_.autoPlayIterator,
+                _.options.autoplaySpeed);
+
+        }
 
     };
 
@@ -1255,6 +1259,10 @@
                 _.listHeight;
         }
 
+        if(!_.list.hasClass('dragging') && event.data.kind === 'drag'){
+            return false;
+        }
+
         if ((touches && touches.length === 1) || event.
             data.kind ==='drag') {
 
@@ -1524,7 +1532,13 @@
     };
 
     Slick.prototype.destroy = function () {
+
         var _ = this;
+
+        _.autoPlayClear();
+
+        _.touchObject = {};
+
         $('.slick-cloned', _.slider).remove();
         $('.slick-placeholder', _.slider).remove();
         if (_.dots) {
@@ -1539,6 +1553,7 @@
             'slick-slide slick-active slick-visible').removeAttr('style');
         _.slider.removeClass('slick-slider');
         _.slider.removeClass('slick-initialized');
+
     };
 
     $.fn.slick = function (options) {
