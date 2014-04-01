@@ -1467,6 +1467,17 @@
         });
     };
 
+    $.fn.slickSetOption = function (option, value) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.options[option] = value;
+           element.slick.unload();
+           element.slick.reinit();
+
+        });
+    };
+
     $.fn.unslick = function () {
         var _ = this;
         return _.each(function (index, element) {
