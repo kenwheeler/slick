@@ -788,7 +788,7 @@
                 kind: 'drag'
             }, _.swipeHandler);
             _.list.on('mouseleave.slick', {
-                action: 'cancel',
+                action: 'end',
                 kind: 'drag'
             }, _.swipeHandler);
         }
@@ -1013,7 +1013,7 @@
 
         _.updateArrows();
 
-        if (_.options.autoplay === true && _.options.paused === false) {
+        if (_.options.autoplay === true && _.paused === false) {
             _.autoPlay();
         }
 
@@ -1203,19 +1203,6 @@
 
     };
 
-    Slick.prototype.swipeCancel = function () {
-
-        var _ = this;
-
-        _.list.removeClass('dragging');
-
-        if (_.touchObject.startX && _.options.fade === false) {
-            _.slideHandler(_.currentSlide);
-            _.touchObject = {};
-        }
-
-    };
-
     Slick.prototype.keyHandler = function (event) {
 
         var _ = this;
@@ -1250,10 +1237,6 @@
 
         case 'end':
             _.swipeEnd(event);
-            break;
-
-        case 'cancel':
-            _.swipeCancel();
             break;
 
         }
