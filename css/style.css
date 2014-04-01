@@ -14,6 +14,7 @@ body, html {
     -moz-osx-font-smoothing: grayscale;
 }
 code  {
+    color: black;
     word-wrap:  break-word;
 }
 h1 {
@@ -254,15 +255,14 @@ a {
     margin-top: 20px;
 }
 
-@media only screen and (min-width:769px) {
-    .content {
+.content {
     width: 600px;
     margin: auto;
     padding: 20px;
 }
 .fixed-header .header-content { width: 600px; margin: auto; }
 
-}@media only screen and (max-width:420px) {
+@media only screen and (max-width:420px) {
     table {
     margin: 40px auto 20px;
     font-size: 10px;
@@ -272,9 +272,12 @@ a {
 ul.nav li a {
     font-size: 10px;
 }
-}@media only screen and (max-width:768px) {
-    .content {
-     margin: auto;
+}
+@media only screen and (max-width:768px) {
+.fixed-header .header-content { width: 100%; margin: auto; }
+.content {
+    width: 100%;
+    margin: auto;
     padding: 20px 40px;
 }
 .blue h3 {

@@ -24,8 +24,8 @@ easing | string |  'linear' | animate() fallback easing
 fade | boolean | false | Enables fade
 arrows | boolean | true | Enable Next/Prev arrows
 infinite | boolean | true | Infinite looping
-onBeforeChange | method | null | Before slide change callback
-onAfterChange | method | null | After slide change callback
+onBeforeChange(this, index) | method | null | Before slide change callback
+onAfterChange(this, index) | method | null | After slide change callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
 responsive | object | null | Breakpoint triggered settings
 slide | string | 'div' | Slide element query
@@ -78,6 +78,6 @@ jQuery 1.7
 
 Copyright (c) 2014 Ken Wheeler
 
-Dual licensed under the MIT and GPL licenses.
+Licensed under the MIT license.
 
 Free as in Bacon.

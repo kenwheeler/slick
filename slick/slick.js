@@ -1115,15 +1115,18 @@
 
         var _ = this, touches;
 
-        touches = event.originalEvent.touches;
 
         if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
             _.touchObject = {};
             return false;
         }
 
-        _.touchObject.startX = _.touchObject.curX = touches !== undefined ? touches[0].pageX : event.clientX;
-        _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches[0].pageY : event.clientY;
+        if(event.originalEvent !== undefined && event.originalEvent.touches !== undefined) {
+            touches = event.originalEvent.touches[0];
+        }
+
+        _.touchObject.startX = _.touchObject.curX = touches !== undefined ? touches.pageX : event.clientX;
+        _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches.pageY : event.clientY;
 
         _.list.addClass('dragging');
 
@@ -1133,7 +1136,7 @@
 
         var _ = this, curLeft, swipeDirection, positionOffset, touches;
 
-        touches = event.originalEvent.touches;
+        touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
 
         curLeft = _.options.vertical === false ? ((_.currentSlide * _.slideWidth) * -1) +
                 _.slideOffset : ((_.currentSlide * _.listHeight) * -1) -
@@ -1156,7 +1159,9 @@
             return false;
         }
 
-        event.originalEvent.preventDefault();
+        if(event.originalEvent !== undefined) {
+            event.preventDefault();
+        }
 
         positionOffset = _.touchObject.curX > _.touchObject.startX ? 1 : -1;
 
@@ -1227,8 +1232,10 @@
 
         var _ = this;
 
-        _.touchObject.fingerCount = event.originalEvent.touches !== undefined ?
-            event.originalEvent.touches.length : 1;
+        if(event.originalEvent !== undefined) {
+            _.touchObject.fingerCount = event.originalEvent.touches !== undefined ?
+                event.originalEvent.touches.length : 1;
+        }
 
         _.touchObject.minSwipe = _.listWidth / _.options
             .touchThreshold;
