@@ -299,7 +299,7 @@
             clearInterval(_.autoPlayTimer);
         }
 
-        if(_.slideCount >= _.options.slidesToShow && _.paused !== true) {
+        if(_.slideCount > _.options.slidesToShow && _.paused !== true) {
             _.autoPlayTimer = setInterval(_.autoPlayIterator,
                 _.options.autoplaySpeed);
         }
@@ -1005,6 +1005,10 @@
 
         var _ = this;
 
+        if (_.options.onAfterChange !== null && index !== _.currentSlide) {
+            _.options.onAfterChange.call(_, index);
+        }
+
         _.animating = false;
 
         _.currentSlide = index;
@@ -1019,10 +1023,6 @@
 
         if (_.options.autoplay === true && _.paused === false) {
             _.autoPlay();
-        }
-
-        if (_.options.onAfterChange !== null) {
-            _.options.onAfterChange.call(_, index);
         }
 
         _.setSlideClasses(_.currentSlide);
@@ -1071,7 +1071,7 @@
 
         _.animating = true;
 
-        if (_.options.onBeforeChange !== null) {
+        if (_.options.onBeforeChange !== null && index !== _.currentSlide) {
             _.options.onBeforeChange.call(_, animSlide);
         }
 
