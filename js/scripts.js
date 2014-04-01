@@ -115,7 +115,7 @@ $(document).ready(function(){
   });
 
   $(window).on('scroll', function(){
-    if($(window).scrollTop() > 200) {
+    if($(window).scrollTop() > 166) {
         $('.fixed-header').show();
     } else {
         $('.fixed-header').hide();
