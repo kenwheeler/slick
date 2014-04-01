@@ -690,9 +690,9 @@
                 _.cssTransitions = true;
         }
 
-        _.animType = document.body.style.MozTransform !== undefined ? 'MozTransform' : null;
-        _.animType = document.body.style.webkitTransform !== undefined ? 'webkitTransform' : null;
-        _.animType = document.body.style.msTransform !== undefined ? 'msTransform' : null;
+        if (document.body.style.MozTransform !== undefined) _.animType = 'MozTransform';
+        if (document.body.style.webkitTransform !== undefined) _.animType = 'webkitTransform';
+        if (document.body.style.msTransform !== undefined) _.animType = 'msTransform';
 
         _.transformsEnabled = (_.animType !== null);
 
@@ -1075,14 +1075,15 @@
 
         var _ = this, positionProps = {}, x, y;
 
-        x = _.positionProp == 'left' ? position : '0px';
-        y = _.positionProp == 'top' ? position : '0px';
+        x = _.positionProp == 'left' ? position + 'px' : '0px';
+        y = _.positionProp == 'top' ? position + 'px' : '0px';
 
         positionProps[_.positionProp] = position;
 
         if (_.transformsEnabled === false) {
             _.slideTrack.css(positionProps);
         } else {
+            positionProps = {};
             if(_.cssTransitions === false) {
                 positionProps[_.animType] = "translate(" + x + ", " + y + ")";
                 _.slideTrack.css(positionProps);
