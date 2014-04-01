@@ -552,16 +552,20 @@
 
             slideIndex = null;
 
-            for (i = _.slideCount; i > (_.slideCount -
-                _.options.slidesToShow); i -= 1) {
-                slideIndex = i - 1;
-                $(_.slides[slideIndex]).clone().prependTo(
-                    _.slideTrack).addClass('slick-cloned');
-            }
-            for (i = 0; i < _.options.slidesToShow; i += 1) {
-                slideIndex = i;
-                $(_.slides[slideIndex]).clone().appendTo(
-                    _.slideTrack).addClass('slick-cloned');
+            if (_.slideCount > _.options.slidesToShow) {
+
+                for (i = _.slideCount; i > (_.slideCount -
+                    _.options.slidesToShow); i -= 1) {
+                    slideIndex = i - 1;
+                    $(_.slides[slideIndex]).clone().prependTo(
+                        _.slideTrack).addClass('slick-cloned');
+                }
+                for (i = 0; i < _.options.slidesToShow; i += 1) {
+                    slideIndex = i;
+                    $(_.slides[slideIndex]).clone().appendTo(
+                        _.slideTrack).addClass('slick-cloned');
+                }
+
             }
 
         }
@@ -578,7 +582,7 @@
         }
 
         if ((_.slideCount % _.options.slidesToScroll) !==
-            0 && _.options.slidesToShow !== 1) {
+            0 && _.slideCount > _.options.slidesToShow) {
 
             placeholders = Math.abs(_.options.slidesToScroll -
                 (_.slideCount % _.options.slidesToScroll)
@@ -654,8 +658,12 @@
         _.setValues();
         _.setDimensions();
 
+        _.slideOffset = 0;
+
         if (_.options.infinite === true) {
-            _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
+            if(_.slideCount > _.options.slidesToShow) {
+                _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
+            }
         }
 
         if (_.options.fade === false) {
