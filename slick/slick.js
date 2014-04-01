@@ -921,10 +921,6 @@
 
         var animProps = {}, _ = this;
 
-        if (_.options.onBeforeChange !== null) {
-            _.options.onBeforeChange.call();
-        }
-
         if (_.transformsEnabled === false) {
             if (_.options.vertical === false) {
                 _.slideTrack.animate({
@@ -1018,7 +1014,7 @@
         }
 
         if (_.options.onAfterChange !== null) {
-            _.options.onAfterChange.call(this, index);
+            _.options.onAfterChange.call(_, index);
         }
 
         _.setSlideClasses(_.currentSlide);
@@ -1066,6 +1062,10 @@
         }
 
         _.animating = true;
+
+        if (_.options.onBeforeChange !== null) {
+            _.options.onBeforeChange.call(_, animSlide);
+        }
 
         if (_.options.fade === true) {
             _.fadeSlide(animSlide, function(){
