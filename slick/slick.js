@@ -1043,6 +1043,14 @@
             slideLeft = ((_.currentSlide * _.listHeight) * -1) - _.listHeight;
         }
 
+        if (_.options.infinite === false && (index < 0 || index > (_.slideCount -1))) {
+            targetSlide = _.currentSlide;
+            _.animateSlide(slideLeft, function () {
+                _.postSlide(targetSlide);
+            });
+            return false;
+        }
+
         if (_.options.autoplay === true) {
             clearInterval(_.autoPlayTimer);
         }
