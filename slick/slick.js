@@ -1,9 +1,22 @@
 /*
- slick.js
- Author: Ken Wheeler
- Date: 03/23/14
+     _ _      _       _
+ ___| (_) ___| | __  (_)___
+/ __| | |/ __| |/ /  | / __|
+\__ \ | | (__|   < _ | \__ \
+|___/_|_|\___|_|\_(_)/ |___/
+                   |__/
+
+  Author: Ken Wheeler
+ Website: http://kenwheeler.github.io
+    Date: 03/23/14
+    Docs: http://kenwheeler.github.io/slick
+    Repo: http://github.com/kenwheeler/slick
+  Issues: http://github.com/kenwheeler/slick/issues
+
  */
-/*global window, document, define, jQuery, setInterval, clearInterval */
+
+/* global window, document, define, jQuery, setInterval, clearInterval */
+
 (function (factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {

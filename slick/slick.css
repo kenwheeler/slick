@@ -15,9 +15,9 @@
 /* Loading States */
 
 .slick-loading .slick-track { visibility: hidden; }
-.slick-loading .slick-list { background: #fff url(../img/ajax-loader.gif) center center no-repeat; }
+.slick-loading .slick-list { background: #fff url(./ajax-loader.gif) center center no-repeat; }
 .slick-loading .slick-slide { visibility: hidden; }
-.slick-slide.loading { background:  url(../img/ajax-loader.gif) center center no-repeat; position: relative;}
+.slick-slide.loading { background:  url(./ajax-loader.gif) center center no-repeat; position: relative;}
 
 /* Icons */
 
@@ -25,11 +25,11 @@
 
 @font-face {
   font-family: "slick";
-  src:url("../fonts/slick.eot");
-  src:url("../fonts/slick.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/slick.woff") format("woff"),
-    url("../fonts/slick.ttf") format("truetype"),
-    url("../fonts/slick.svg#slick") format("svg");
+  src:url("./fonts/slick.eot");
+  src:url("./fonts/slick.eot?#iefix") format("embedded-opentype"),
+    url("./fonts/slick.woff") format("woff"),
+    url("./fonts/slick.ttf") format("truetype"),
+    url("./fonts/slick.svg#slick") format("svg");
   font-weight: normal;
   font-style: normal;
 }

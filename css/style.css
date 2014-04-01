@@ -17,7 +17,7 @@ code  {
     word-wrap:  break-word;
 }
 h1 {
-    margin: 30px auto 10px;
+    margin: 0px auto 10px;
     font-family: Pacifico;
     text-align: center;
     font-size: 72px;
@@ -40,12 +40,50 @@ h4 {
     text-align: center;
     font-size: 28px;
 }
+
+.header {
+    padding: 20px 0px;
+}
+
+.fixed-header {
+    display: none;
+    position: fixed;
+    width: 100%;
+    padding: 10px;
+    top: 0px;
+    background: white;
+    z-index: 10000;
+    box-shadow: 2px 0px 5px rgba(0,0,0,0.5);
+}
+.fixed-header .subheading { display: none; }
+.fixed-header .header-content { width: 100%; margin: auto; }
+.fixed-header h1.title { font-size: 24px; margin: 0; float: left; }
+.fixed-header ul.nav { margin: 0; padding: 5px; float: right;}
+.fixed-header ul.nav li { margin: 0; margin-left: 10px; }
+
+ul.nav {
+    text-align: center;
+    padding-left: 0;
+    margin-bottom: 0px;
+}
+
+ul.nav li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0 20px;
+}
+
+ul.nav li a {
+    text-decoration: none;
+    font-size: 14px;
+}
+
 .more {
     margin-top: 40px;
 }
 .subheading {
     font-size: 12px;
-    margin: 10px auto 40px;
+    margin: 10px auto 10px;
     font-weight: 400;
     font-style: italic;
     color: #555;
@@ -96,7 +134,11 @@ p {
     font-weight: 700;
     text-align: center;
     line-height: 1.5;
+    font-size: 18px;
     margin-bottom: 40px;
+}
+p.guff {
+    font-size: 16px;
 }
 .destroy {
     font-weight:  normal;
@@ -123,7 +165,7 @@ hr {
 table {
     width: 96%;
     margin: 40px 2% 40px;
-    text-align: center;
+    text-align: left;
     border-spacing: 0;
     border-collapse: collapse;
 }
@@ -217,9 +259,16 @@ a {
     margin: auto;
     padding: 20px;
 }
+.fixed-header .header-content { width: 600px; margin: auto; }
+
 }@media only screen and (max-width:420px) {
     table {
     margin: 40px auto 20px;
+    font-size: 10px;
+    line-height: 14px;
+
+}
+ul.nav li a {
     font-size: 10px;
 }
 }@media only screen and (max-width:768px) {

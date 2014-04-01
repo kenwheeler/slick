@@ -3,7 +3,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 	<title>slick - the last carousel you'll ever need</title>
 	<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/monokai.min.css">
-	<link rel="stylesheet" type="text/css" href="css/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta name="description" content="slick is a responsive carousel jQuery plugin that supports multiple breakpoints, CSS3 transitions, touch events/swiping &amp; much more!">
 	<meta name="keywords" content="slick, responsive, carousel, slider, jQuery, plugin, CSS3, swipe, touch">
@@ -22,10 +22,33 @@
 </head>
 <body>
 
-		<h1 class="title">slick</h1>
-		<p class="subheading">the last carousel you'll ever need</p>
+		<div class="header">
+			<div class="header-content">
+				<h1 class="title">slick</h1>
+				<p class="subheading">the last carousel you'll ever need</p>
+				<ul class="nav">
+					<li><a href="#features">features</a></li>
+					<li><a href="#getting-started">usage</a></li>
+					<li><a href="#settings">settings</a></li>
+					<li><a href="#go-get-it">get it now</a></li>
+				</ul>
+			</div>
+		</div>
 
-		<section class="blue">
+		<div class="fixed-header">
+			<div class="header-content">
+				<h1 class="title">slick</h1>
+				<p class="subheading">the last carousel you'll ever need</p>
+				<ul class="nav">
+					<li><a href="#features">features</a></li>
+					<li><a href="#getting-started">usage</a></li>
+					<li><a href="#settings">settings</a></li>
+					<li><a href="#go-get-it">get it now</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<section id="features" class="blue">
 			<div class="content">
 				<h2>Features</h2>
 				<ul class="features">
@@ -260,7 +283,7 @@ $('.your-slider').unslick();
 				<h4 class="more">and a whole lot more...</h4>
 				</div>
 		</section>
-		<section class="white">
+		<section id="getting-started" class="white">
 			<div class="content">
 				<h2 class="margin-40">Getting Started</h2>
 				<p>Set up your HTML</p>
@@ -274,12 +297,12 @@ $('.your-slider').unslick();
 				<hr/>
 				<p>Add slick.css in your &lt;head&gt;</p>
 				<pre><code>
-&lt;link rel="stylesheet" type="text/css" href="slick.css"/&gt;
+&lt;link rel="stylesheet" type="text/css" href="slick/slick.css"/&gt;
 				</code></pre>
 				<hr/>
-				<p>Add slick.js before your closing &lt;body&gt; tag (requires >= jQuery 1.7)</p>
+				<p>Add slick.js before your closing &lt;body&gt; tag, after jQuery (requires jQuery 1.7 +)</p>
 				<pre><code>
-&lt;script type="text/javascript" src="slick.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="slick/slick.min.js"&gt;&lt;/script&gt;
 				</code></pre>
 				<hr/>
 				<p>Initialize your slider in your scripts.js</p>
@@ -290,9 +313,9 @@ $('.your-class').slick({
 				</code></pre>
 			</div>
 		</section>
-		<section class="blue">
+		<section id="settings" class="blue">
 			<div class="content">
-				<h2>Settings</h2>
+				<h2 >Settings</h2>
 				<table>
 					<thead>
 						<tr>
@@ -407,6 +430,11 @@ $('.your-class').slick({
 							<td>int, default: 5</td>
 							<td>Swipe distance threshold</td>
 						</tr>
+						<tr>
+							<td>vertical</td>
+							<td>boolean, default: false</td>
+							<td>Vertical slide direction</td>
+						</tr>
 					</tbody>
 				</table>
 				<h2>Methods</h2>
@@ -474,13 +502,13 @@ $('.your-class').slick({
 			</div>
 		</section>
 
-		<section class="white">
+		<section id="go-get-it" class="white">
 			<div class="content">
 				<h2>Go Get It</h2>
 				<a class="button first" href="https://github.com/kenwheeler/slick/archive/master.zip">Download Now</a>
 				<a class="button last" href="https://github.com/kenwheeler/slick/">View On Github</a>
 				<hr/>
-				<p>If you like slick, and also like Sass, try my <a href="http://kenwheeler.github.io/guff">Guff</a> mixin library!</p>
+				<p class="guff">If you like slick, and also like Sass, try my <a href="http://kenwheeler.github.io/guff">Guff</a> mixin library!</p>
  				<hr/>
 				<div id="disqus_thread"></div>
 			</div>
@@ -488,7 +516,7 @@ $('.your-class').slick({
 
 		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
-		<script type="text/javascript" src="js/slick.js"></script>
+		<script type="text/javascript" src="slick/slick.js"></script>
 		<script type="text/javascript" src="js/scripts.js"></script>
 
 		<script>hljs.initHighlightingOnLoad();</script>
