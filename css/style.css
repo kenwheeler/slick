@@ -59,7 +59,7 @@ h4 {
 .fixed-header .header-content { width: 100%; margin: auto; }
 .fixed-header h1.title { font-size: 24px; margin: 0; float: left; }
 .fixed-header ul.nav { margin: 0; padding: 5px; float: right;}
-.fixed-header ul.nav li { margin: 0; margin-left: 10px; }
+.fixed-header ul.nav li { margin: 0; margin-left: 10px;}
 
 ul.nav {
     text-align: center;
@@ -75,7 +75,7 @@ ul.nav li {
 
 ul.nav li a {
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .more {
@@ -145,7 +145,8 @@ p.guff {
      margin-top:  40px;
 }
 .features {
-    padding: 10px 0 0;
+    padding: 0;
+    margin-top: 30px;
     text-align: center;
     display: block;
     list-style-type: none;
