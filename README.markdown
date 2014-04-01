@@ -52,7 +52,7 @@ slickAdd() | element : html or DOM object | Adds a slide. Accepts HTML String ||
 slideRemove() | index: int | Removes a slide by index
 slickFilter() | filter : selector or function | Filters slides using jQuery .filter syntax
 slickUnfilter() | | Removes applied filter
-slickSetOption(option,value) | option : string(option name), value : depends on option
+slickSetOption(option,value,refresh) | option : string(option name), value : depends on option | Sets an option live. Use refresh if it is an option that changes the display
 
 
 #### Example

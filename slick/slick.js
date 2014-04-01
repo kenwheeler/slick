@@ -1467,13 +1467,16 @@
         });
     };
 
-    $.fn.slickSetOption = function (option, value) {
+    $.fn.slickSetOption = function (option, value, refresh) {
         var _ = this;
         return _.each(function (index, element) {
 
-           element.slick.options[option] = value;
-           element.slick.unload();
-           element.slick.reinit();
+        element.slick.options[option] = value;
+
+        if(refresh === true) {
+            element.slick.unload();
+            element.slick.reinit();
+        }
 
         });
     };
