@@ -1166,6 +1166,7 @@
 
         if (_.animating === true) {
             _.swipeLeft = null;
+            return false;
         }
 
         _.setCSS(_.swipeLeft);
@@ -1449,8 +1450,8 @@
         var _ = this;
         return _.each(function (index, element) {
 
-           element.slick.autoPlay();
            element.slick.paused = false;
+           element.slick.autoPlay();
 
         });
     };
