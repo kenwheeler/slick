@@ -27,19 +27,7 @@
 
 }(function ($) {
     'use strict';
-    var Slick = window.Slick || {}, functionBinder;
-
-    /************ Helpers ***********/
-
-    // Function Binder
-
-    functionBinder = function (fn, me) {
-        return function () {
-            return fn.apply(me, arguments);
-        };
-    };
-
-    /********** End Helpers *********/
+    var Slick = window.Slick || {};
 
     Slick = (function () {
 
@@ -132,21 +120,21 @@
                 });
             }
 
-            _.autoPlay = functionBinder(_.autoPlay,
+            _.autoPlay = $.proxy(_.autoPlay,
                 _);
-            _.autoPlayClear = functionBinder(_.autoPlayClear,
+            _.autoPlayClear = $.proxy(_.autoPlayClear,
                 _);
-            _.changeSlide = functionBinder(_.changeSlide,
+            _.changeSlide = $.proxy(_.changeSlide,
                 _);
-            _.setPosition = functionBinder(_.setPosition,
+            _.setPosition = $.proxy(_.setPosition,
                 _);
-            _.swipeHandler = functionBinder(_.swipeHandler,
+            _.swipeHandler = $.proxy(_.swipeHandler,
                 _);
-            _.dragHandler = functionBinder(_.dragHandler,
+            _.dragHandler = $.proxy(_.dragHandler,
                 _);
-            _.keyHandler = functionBinder(_.keyHandler,
+            _.keyHandler = $.proxy(_.keyHandler,
                 _);
-            _.autoPlayIterator = functionBinder(_.autoPlayIterator,
+            _.autoPlayIterator = $.proxy(_.autoPlayIterator,
                 _);
 
             _.init();
