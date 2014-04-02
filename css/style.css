@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 body, html {
     background: #fff;
@@ -16,6 +17,7 @@ body, html {
 code  {
     color: black;
     word-wrap:  break-word;
+    white-space: pre-wrap;
 }
 h1 {
     margin: 0px auto 10px;
@@ -271,12 +273,13 @@ a {
 }
 ul.nav li a {
     font-size: 10px;
+    display: block;
 }
 }
 @media only screen and (max-width:768px) {
-.fixed-header .header-content { width: 100%; margin: auto; }
+.fixed-header .header-content { width: auto;}
 .content {
-    width: 100%;
+    width: auto;
     margin: auto;
     padding: 20px 40px;
 }
