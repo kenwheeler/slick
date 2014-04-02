@@ -8,7 +8,7 @@
 
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
-    Date: 03/23/14
+    Date: 04/02/14
     Docs: http://kenwheeler.github.io/slick
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
@@ -482,10 +482,10 @@
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.prevArrow = $(
-                '<a href="javascript:void(0)" tabIndex="-1">Previous</a>').appendTo(
+                '<button type="button" tabIndex="-1">Previous</button>').appendTo(
                 _.slider).addClass('slick-prev');
             _.nextArrow = $(
-                '<a href="javascript:void(0)" tabIndex="-1">Next</a>').appendTo(
+                '<button type="button" tabIndex="-1">Next</button>').appendTo(
                 _.slider).addClass('slick-next');
 
             if (_.options.infinite !== true) {

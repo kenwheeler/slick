@@ -117,12 +117,15 @@
     width: 20px;
     line-height: 0;
     font-size: 0;
+    cursor: pointer;
+    background: transparent;
     color: transparent;
     top: 50%;
     margin-top: -10px;
     padding: 0;
+    border: none;
     &:focus {
-        outline: none
+        outline: none;
     }
     &.slick-disabled:before {
         opacity: 0.25;
