@@ -77,7 +77,7 @@ $(document).ready(function(){
     infinite: true,
     speed: 500,
     fade: true,
-    slide: '.multiple',
+    slide: '> div',
     cssEase: 'linear'
   });
 
@@ -89,7 +89,7 @@ $(document).ready(function(){
   var slideIndex = 1;
   $('.js-add-slide').on('click', function(){
     slideIndex++;
-    $('.add-remove').slickAdd('<div class="multiple"><h3>'+slideIndex+'</h3></div>');
+    $('.add-remove').slickAdd('<div><h3>'+slideIndex+'</h3></div>');
   });
 
   $('.js-remove-slide').on('click', function(){
