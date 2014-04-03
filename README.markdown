@@ -27,7 +27,7 @@ infinite | boolean | true | Infinite looping
 onBeforeChange(this, index) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
-placeholders | boolean | true | Enable placeholders to enforce slidesToScroll with uneven slide counts
+placeholders | boolean | true | Enable placeholders to enforce slidesToScroll with uneven slide counts (Doesn't work with infinite: true)
 responsive | object | null | Breakpoint triggered settings
 slide | string | 'div' | Slide element query
 slidesToShow | int | 1 | # of slides to show at a time

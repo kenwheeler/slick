@@ -510,7 +510,7 @@
                 dotString += '<li><a href="javascript:void(0)" tabIndex="-1">' + i +
                     '</a></li>';
                 if (_.options.placeholders === false && i +
-                _.options.slidesToShow > _.slideCount) {
+                _.options.slidesToShow - (_.options.slidesToScroll - 1) > _.slideCount) {
                     break;
                 }
             }
@@ -574,6 +574,7 @@
         }
 
         if(_.options.placeholders === false) {
+            _.options.infinite === false;
             return false;
         }
 
@@ -649,7 +650,9 @@
 
     Slick.prototype.setPosition = function () {
 
-        var _ = this, targetPosition;
+        var _ = this, targetPosition, targetSlide;
+
+        targetSlide = _.currentSlide;
 
         _.setValues();
         _.setDimensions();
@@ -662,12 +665,17 @@
             }
         }
 
+        if (_.options.placeholders === false && _.currentSlide +
+            _.options.slidesToScroll >= _.slideCount) {
+            targetSlide = _.slideCount - _.options.slidesToShow;
+        }
+
         if (_.options.fade === false) {
             if (_.options.vertical === false) {
-                targetPosition = ((_.currentSlide *
+                targetPosition = ((targetSlide *
                         _.slideWidth) * -1) + _.slideOffset;
             } else {
-                targetPosition = ((_.currentSlide *
+                targetPosition = ((targetSlide *
                         _.listHeight) * -1) - _.listHeight;
             }
             _.setCSS(targetPosition);
@@ -841,7 +849,7 @@
                 return false;
             }
             _.slideHandler(_.currentSlide + _.options
-                .slidesToScroll);
+            .slidesToScroll);
             break;
 
         case 'index':
@@ -1046,9 +1054,17 @@
         if(_.options.vertical === false) {
             targetLeft = ((targetSlide * _.slideWidth) * -1) + _.slideOffset;
             slideLeft = ((_.currentSlide * _.slideWidth) * -1) + _.slideOffset;
+            if (_.options.placeholders === false && targetSlide +
+            _.options.slidesToShow >= _.slideCount) {
+            targetLeft = (((_.slideCount - _.options.slidesToShow) * _.slideWidth) * -1) + _.slideOffset;
+            }
         } else {
             targetLeft = ((targetSlide * _.listHeight) * -1) - _.listHeight;
             slideLeft = ((_.currentSlide * _.listHeight) * -1) - _.listHeight;
+            if (_.options.placeholders === false && targetSlide +
+            _.options.slidesToShow >= _.slideCount) {
+            targetLeft = (((_.slideCount - _.options.slidesToShow) * _.listHeight) * -1) - _.listHeight;
+            }
         }
 
         if (_.options.infinite === false && (index < 0 || index > (_.slideCount -1))) {
@@ -1069,6 +1085,9 @@
             animSlide = _.slideCount - _.options.slidesToScroll;
         } else if (targetSlide > (_.slideCount - 1)) {
             animSlide = 0;
+        } else if (_.options.placeholders === false && targetSlide +
+            _.options.slidesToShow >= _.slideCount) {
+            animSlide = _.slideCount - _.options.slidesToShow;
         } else {
             animSlide = targetSlide;
         }
@@ -1146,6 +1165,11 @@
                 _.slideOffset : ((_.currentSlide * _.listHeight) * -1) -
                 _.listHeight;
 
+        if (_.options.placeholders === false && _.currentSlide +
+            _.options.slidesToShow >= _.slideCount) {
+            curLeft = (((_.slideCount - _.options.slidesToShow) * _.slideWidth) * -1) + _.slideOffset;
+        }
+
         if((!_.list.hasClass('dragging') && event.data.kind === 'drag') ||
             touches && touches.length !== 1){
             return false;
@@ -1204,14 +1228,8 @@
 
             switch (_.swipeDirection()) {
                 case 'left':
-                    if ((_.options.placeholders === false && _.currentSlide +
-                _.options.slidesToShow >= _.slideCount)) {
-                        _.slideHandler(_.currentSlide);
-                        _.touchObject = {};
-                    } else {
-                        _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-                        _.touchObject = {};
-                    }
+                    _.slideHandler(_.currentSlide + _.options.slidesToScroll);
+                    _.touchObject = {};
                 break;
 
                 case 'right':
