@@ -14,8 +14,9 @@ $(document).ready(function(){
     slidesToScroll: 3
   });
   $('.one-time').slick({
-    dots: false,
-    infinite: true,
+    dots: true,
+    infinite: false,
+    placeholders: false,
     speed: 300,
     slidesToShow: 5,
     touchMove: false,

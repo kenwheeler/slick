@@ -49,6 +49,7 @@
                 onBeforeChange: null,
                 onAfterChange: null,
                 pauseOnHover: true,
+                placeholders: true,
                 responsive: null,
                 slide: 'div',
                 slidesToShow: 1,
@@ -508,7 +509,10 @@
 
                 dotString += '<li><a href="javascript:void(0)" tabIndex="-1">' + i +
                     '</a></li>';
-
+                if (_.options.placeholders === false && i +
+                _.options.slidesToShow > _.slideCount) {
+                    break;
+                }
             }
 
             dotString += "</ul>";
@@ -567,6 +571,10 @@
         if(_.options.fade === true || _.options.vertical === true) {
             _.options.slidesToShow = 1;
             _.options.slidesToScroll = 1;
+        }
+
+        if(_.options.placeholders === false) {
+            return false;
         }
 
         if ((_.slideCount % _.options.slidesToScroll) !==
@@ -828,6 +836,10 @@
             break;
 
         case 'next':
+            if ((_.options.placeholders === false && _.currentSlide +
+                _.options.slidesToShow >= _.slideCount)) {
+                return false;
+            }
             _.slideHandler(_.currentSlide + _.options
                 .slidesToScroll);
             break;
@@ -868,6 +880,10 @@
             } else if (_.currentSlide >= (_.slideCount /
                 _.options.slidesToScroll * _.options.slidesToShow
             ) - _.options.slidesToScroll) {
+                _.nextArrow.addClass('slick-disabled');
+                _.prevArrow.removeClass('slick-disabled');
+            } else if (_.options.placeholders === false && _.currentSlide +
+                _.options.slidesToShow >= _.slideCount) {
                 _.nextArrow.addClass('slick-disabled');
                 _.prevArrow.removeClass('slick-disabled');
             } else {
@@ -1188,8 +1204,14 @@
 
             switch (_.swipeDirection()) {
                 case 'left':
-                    _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-                    _.touchObject = {};
+                    if ((_.options.placeholders === false && _.currentSlide +
+                _.options.slidesToShow >= _.slideCount)) {
+                        _.slideHandler(_.currentSlide);
+                        _.touchObject = {};
+                    } else {
+                        _.slideHandler(_.currentSlide + _.options.slidesToScroll);
+                        _.touchObject = {};
+                    }
                 break;
 
                 case 'right':

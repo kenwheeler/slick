@@ -155,10 +155,13 @@ $('.responsive').slick({
 				</div>
 				<pre><code>
 $('.one-time').slick({
-  dots: false,
+  dots: true,
+  infinite: false,
+  placeholders: false,
+  speed: 300,
   slidesToShow: 5,
-  slidesToScroll: 1,
-  touchMove: false
+  touchMove: false,
+  slidesToScroll: 1
 });
 				</code></pre>
 				<hr/>
@@ -391,6 +394,11 @@ $('.your-class').slick({
 							<td>pauseOnHover</td>
 							<td>boolean, default: true</td>
 							<td>Pause Autoplay On Hover</td>
+						</tr>
+						<tr>
+							<td>placeholders</td>
+							<td>boolean, default: true</td>
+							<td>Enable placeholders to enforce slidesToScroll with uneven slide counts</td>
 						</tr>
 						<tr>
 							<td>responsive</td>
