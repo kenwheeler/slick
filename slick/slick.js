@@ -606,8 +606,11 @@
         _.slidesCache = _.slides;
 
         _.slider.addClass("slick-slider");
-        _.slideTrack = _.slides.wrapAll(
-            '<div class="slick-track"/>').parent();
+
+        _.slideTrack = (_.slideCount === 0) ?
+            $('<div class="slick-track"/>').appendTo(_.slider) :
+            _.slides.wrapAll('<div class="slick-track"/>').parent();
+
         _.list = _.slideTrack.wrap(
             '<div class="slick-list"/>').parent();
         _.slideTrack.css('opacity', 0);
