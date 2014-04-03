@@ -1212,6 +1212,13 @@
 
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
 
+            $(event.target).on("click.slick", function (event) {
+                event.stopImmediatePropagation();
+                event.stopPropagation();
+                event.preventDefault();
+                $(event.target).off("click.slick");
+            });
+
             switch (_.swipeDirection()) {
                 case 'left':
                     _.slideHandler(_.currentSlide + _.options.slidesToScroll);
@@ -1323,7 +1330,6 @@
 
         var _ = this, touches;
 
-
         if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
             _.touchObject = {};
             return false;
@@ -1434,29 +1440,11 @@
         });
     };
 
-    $.fn.slickRemove = function (slide) {
-        var _ = this;
-        return _.each(function (index, element) {
-
-           element.slick.removeSlide(slide);
-
-        });
-    };
-
     $.fn.slickFilter = function (filter) {
         var _ = this;
         return _.each(function (index, element) {
 
            element.slick.filterSlides(filter);
-
-        });
-    };
-
-    $.fn.slickUnfilter = function () {
-        var _ = this;
-        return _.each(function (index, element) {
-
-           element.slick.unfilterSlides();
 
         });
     };
@@ -1475,15 +1463,6 @@
         return _.each(function (index, element) {
 
            element.slick.changeSlide({data: {message: 'next'}});
-
-        });
-    };
-
-    $.fn.slickPrev = function () {
-        var _ = this;
-        return _.each(function (index, element) {
-
-           element.slick.changeSlide({data: {message: 'previous'}});
 
         });
     };
@@ -1508,6 +1487,24 @@
         });
     };
 
+    $.fn.slickPrev = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.changeSlide({data: {message: 'previous'}});
+
+        });
+    };
+
+    $.fn.slickRemove = function (slide) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.removeSlide(slide);
+
+        });
+    };
+
     $.fn.slickSetOption = function (option, value, refresh) {
         var _ = this;
         return _.each(function (index, element) {
@@ -1518,6 +1515,15 @@
             element.slick.unload();
             element.slick.reinit();
         }
+
+        });
+    };
+
+    $.fn.slickUnfilter = function () {
+        var _ = this;
+        return _.each(function (index, element) {
+
+           element.slick.unfilterSlides();
 
         });
     };

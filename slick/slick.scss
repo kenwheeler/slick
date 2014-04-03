@@ -1,5 +1,6 @@
 /* Slider */
- .slick-slider {
+
+.slick-slider {
     position: relative;
     display: block;
     box-sizing: border-box;
@@ -47,21 +48,21 @@
     position: relative;
     left: 0;
     top: 0;
-    display: table;
+    display: block;
+    zoom: 1;
+
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
 
     &:after {
-        content:"";
-        display: table;
         clear: both;
     }
 
     .slick-loading & {
         visibility: hidden;
-    }
-
-    /* Vertical */
-    .slick-vertical & {
-        display: block;
     }
 }
 .slick-slide {
@@ -84,7 +85,7 @@
     }
 
     .slick-initialized & {
-        display: table-cell;
+        display: block;
     }
 
     .slick-loading & {
@@ -97,7 +98,9 @@
         border: 1px solid transparent;
     }
 }
+
 /* Icons */
+
  @charset"UTF-8";
  @font-face {
     font-family:"slick";
@@ -107,8 +110,8 @@
     font-style: normal;
 }
 
-
 /* Arrows */
+
 .slick-prev,
 .slick-next {
     position: absolute;
@@ -157,7 +160,9 @@
         -moz-osx-font-smoothing: grayscale;
     }
 }
+
 /* Dots */
+
 .slick-slider {
     margin-bottom: 30px;
 }
