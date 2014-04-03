@@ -23,8 +23,8 @@
     ],
     "licenses": [
         {
-            "type": "GPLv2",
-            "url": "http://www.example.com/licenses/gpl.html"
+            "type": "MIT",
+            "url": "https://github.com/kenwheeler/slick/blob/master/LICENSE"
         }
     ],
     "demo": "http://kenwheeler.github.io/slick/",
