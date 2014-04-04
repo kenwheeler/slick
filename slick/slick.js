@@ -79,6 +79,7 @@
                 slides : null,
                 sliding : false,
                 slideOffset : 0,
+                placeholderOffset : 0,
                 swipeLeft : null,
                 list : null,
                 touchObject : {},
@@ -482,10 +483,6 @@
             break;
 
         case 'next':
-            if ((_.options.placeholders === false && _.currentSlide +
-                _.options.slidesToShow >= _.slideCount)) {
-                return false;
-            }
             _.slideHandler(_.currentSlide + _.options
             .slidesToScroll);
             break;
@@ -957,9 +954,10 @@
             }
         }
 
-        if (_.options.placeholders === false && _.currentSlide +
-            _.options.slidesToScroll >= _.slideCount) {
-            targetSlide = _.slideCount - _.options.slidesToShow;
+        if (_.options.placeholders === false) {
+            if(_.currentSlide + _.options.slidesToScroll >= _.slideCount - _.options.slidesToScroll) {
+                _.slideOffset = _.slideOffset - ((_.slideWidth * _.placeholderOffset) * -1);
+            }
         }
 
         if (_.options.fade === false) {
@@ -1061,7 +1059,8 @@
         }
 
         if(_.options.placeholders === false) {
-            _.options.infinite === false;
+            _.options.infinite = false;
+            _.placeholderOffset = _.slideCount % _.options.slidesToScroll;
             return false;
         }
 
@@ -1084,28 +1083,35 @@
 
     Slick.prototype.slideHandler = function (index) {
 
-        var targetSlide, animSlide, slideLeft, targetLeft = null, _ = this;
+        var targetSlide, animSlide, slideLeft, targetLeft = null,
+            targetOffset, _ = this;
 
         if(_.animating === true) {
             return false;
         }
 
         targetSlide = index;
+        targetOffset = _.slideOffset;
+
+        if(_.options.placeholders === false) {
+            if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
+                if (targetSlide >= _.slideCount - _.options.slidesToShow) {
+                    targetSlide = _.currentSlide;
+                } else {
+                    targetOffset = 0;
+                }
+            } else if (targetSlide + _.options.slidesToScroll >= _.slideCount -
+                _.options.slidesToScroll) {
+                targetOffset = ((_.placeholderOffset * _.slideWidth));
+            }
+        }
 
         if(_.options.vertical === false) {
-            targetLeft = ((targetSlide * _.slideWidth) * -1) + _.slideOffset;
-            slideLeft = ((_.currentSlide * _.slideWidth) * -1) + _.slideOffset;
-            if (_.options.placeholders === false && targetSlide +
-            _.options.slidesToShow >= _.slideCount) {
-            targetLeft = (((_.slideCount - _.options.slidesToShow) * _.slideWidth) * -1) + _.slideOffset;
-            }
+            targetLeft = ((targetSlide * _.slideWidth) * -1) + targetOffset;
+            slideLeft = ((_.currentSlide * _.slideWidth) * -1) + targetOffset;
         } else {
             targetLeft = ((targetSlide * _.listHeight) * -1) - _.listHeight;
             slideLeft = ((_.currentSlide * _.listHeight) * -1) - _.listHeight;
-            if (_.options.placeholders === false && targetSlide +
-            _.options.slidesToShow >= _.slideCount) {
-            targetLeft = (((_.slideCount - _.options.slidesToShow) * _.listHeight) * -1) - _.listHeight;
-            }
         }
 
         if (_.options.infinite === false && (index < 0 || index > (_.slideCount -1))) {
@@ -1123,12 +1129,11 @@
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
         if (targetSlide < 0) {
-            animSlide = _.slideCount - _.options.slidesToScroll;
+            if (_.currentSlide + _.options.slidesToScroll >= _.slideCount) {
+                animSlide = _.slideCount - _.options.slidesToScroll;
+            }
         } else if (targetSlide > (_.slideCount - 1)) {
             animSlide = 0;
-        } else if (_.options.placeholders === false && targetSlide +
-            _.options.slidesToShow >= _.slideCount) {
-            animSlide = _.slideCount - _.options.slidesToShow;
         } else {
             animSlide = targetSlide;
         }
@@ -1205,6 +1210,10 @@
 
         _.list.removeClass('dragging');
 
+        if(_.touchObject.curX === undefined) {
+            return false;
+        }
+
         if ((_.touchObject.fingerCount !== 0) && event.data.kind !== 'drag') {
             _.touchObject = {};
             return false;
@@ -1280,7 +1289,7 @@
 
         if (_.options.placeholders === false && _.currentSlide +
             _.options.slidesToShow >= _.slideCount) {
-            curLeft = (((_.slideCount - _.options.slidesToShow) * _.slideWidth) * -1) + _.slideOffset;
+            curLeft = ((_.currentSlide * _.slideWidth) * -1) + _.slideOffset;
         }
 
         if((!_.list.hasClass('dragging') && event.data.kind === 'drag') ||
