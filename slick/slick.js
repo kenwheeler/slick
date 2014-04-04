@@ -1129,9 +1129,7 @@
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
         if (targetSlide < 0) {
-            if (_.currentSlide + _.options.slidesToScroll >= _.slideCount) {
-                animSlide = _.slideCount - _.options.slidesToScroll;
-            }
+            animSlide = _.slideCount - _.options.slidesToScroll;
         } else if (targetSlide > (_.slideCount - 1)) {
             animSlide = 0;
         } else {
