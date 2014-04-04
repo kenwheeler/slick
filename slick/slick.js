@@ -386,8 +386,8 @@
 
         var _ = this;
 
-        _.slides = $(_.options.slide +
-            ':not(.slick-cloned)', _.slider).addClass(
+        _.slides = _.slider.children(_.options.slide +
+            ':not(.slick-cloned)').addClass(
             'slick-slide');
         _.slideCount = _.slides.length;
         _.slidesCache = _.slides;
