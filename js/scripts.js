@@ -93,7 +93,7 @@ $(document).ready(function(){
   });
 
   $('.js-remove-slide').on('click', function(){
-    $('.add-remove').slickRemove(slideIndex - 1);
+    $('.add-remove').slickRemove();
     slideIndex--;
   });
 
