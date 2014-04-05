@@ -37,6 +37,7 @@
 
             _.defaults = {
                 accessibility: true,
+                appendToFront: false,
                 autoplay: false,
                 autoplaySpeed: 3000,
                 cssEase: 'ease',
@@ -147,13 +148,33 @@
 
     }());
 
-    Slick.prototype.addSlide = function (markup) {
+    Slick.prototype.addSlide = function (markup, reverseAdd) {
+
+        var _ = this,
+            index = 0;
+
+        _.unload();
+
+        if ( (_.options.appendToFront && reverseAdd) ||
+            (!_.options.appendToFront && !reverseAdd)){
+            index = $(_.slideTrack.children(this.options.slide)).length;
+        }
+
+        this.addSlideAt(markup, index);
+
+    };
+
+    Slick.prototype.addSlideAt = function (markup, index) {
 
         var _ = this;
 
         _.unload();
 
-        $(markup).appendTo(_.slideTrack);
+        if (index >= $(_.slideTrack.children(this.options.slide)).length) {
+            $(markup).appendTo(_.slideTrack);
+        } else {
+            $(markup).insertBefore($(_.slideTrack.children(this.options.slide).get(index)));
+        }
 
         _.slides = _.slideTrack.children(this.options.slide);
 
@@ -853,13 +874,28 @@
 
     };
 
-    Slick.prototype.removeSlide = function (index) {
+    Slick.prototype.removeSlide = function (reverseRemove) {
+
+        var _ = this,
+            index = 0;
+
+        _.unload();
+
+        if( (_.options.appendToFront && reverseRemove) ||
+            (!_.options.appendToFront && !reverseRemove) ) {
+            index = index || ($(_.slideTrack.children(this.options.slide)).length - 1);
+        }
+
+        this.removeSlideAt(index);
+    };
+
+    Slick.prototype.removeSlideAt = function (index) {
 
         var _ = this;
 
         _.unload();
 
-        if(_.slideCount < 1) {
+        if (_.slideCount < 1) {
             return false;
         }
 
@@ -874,6 +910,7 @@
         _.reinit();
 
     };
+
 
     Slick.prototype.setCSS = function (position) {
 
@@ -1438,11 +1475,20 @@
         });
     };
 
-    $.fn.slickAdd = function (slide) {
+    $.fn.slickAdd = function (slide, reverseAdd) {
         var _ = this;
         return _.each(function (index, element) {
 
-           element.slick.addSlide(slide);
+           element.slick.addSlide(slide, reverseAdd);
+
+        });
+    };
+
+    $.fn.slickAddAt = function (slide, slideIndex) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+            element.slick.addSlideAt(slide, slideIndex);
 
         });
     };
@@ -1503,11 +1549,20 @@
         });
     };
 
-    $.fn.slickRemove = function (slide) {
+    $.fn.slickRemove = function (reverseRemove) {
         var _ = this;
         return _.each(function (index, element) {
 
-           element.slick.removeSlide(slide);
+           element.slick.removeSlide(reverseRemove);
+
+        });
+    };
+
+    $.fn.slickRemoveAt = function (slideIndex) {
+        var _ = this;
+        return _.each(function (index, element) {
+
+            element.slick.removeSlideAt(slideIndex);
 
         });
     };
