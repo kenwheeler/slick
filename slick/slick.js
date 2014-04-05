@@ -147,13 +147,38 @@
 
     }());
 
-    Slick.prototype.addSlide = function (markup) {
+    Slick.prototype.addSlide = function (markup, index, addBefore) {
 
-        var _ = this;
+        var _ = this,
+            slideTrackChildren;
+
+        if (typeof(index) === "boolean") {
+            addBefore = index;
+            index = null;
+        }
 
         _.unload();
 
-        $(markup).appendTo(_.slideTrack);
+        slideTrackChildren = _.slideTrack.children(this.options.slide);
+
+        if (typeof(index) === "number") {
+            if (index === 0 && $(slideTrackChildren).length === 0) {
+                $(markup).appendTo(_.slideTrack);
+            } else if (index < 0 || (index >= $(slideTrackChildren).length && $(slideTrackChildren).length != 0) ) {
+                _.reinit();
+                return false;
+            } else if (addBefore) {
+                $(markup).insertBefore($(slideTrackChildren.get(index)));
+            } else {
+                $(markup).insertAfter($(slideTrackChildren.get(index)));
+            }
+        } else {
+            if (addBefore === true) {
+                $(markup).prependTo(_.slideTrack);
+            } else {
+                $(markup).appendTo(_.slideTrack);
+            }
+        }
 
         _.slides = _.slideTrack.children(this.options.slide);
 
@@ -853,13 +878,37 @@
 
     };
 
-    Slick.prototype.removeSlide = function (index) {
+    Slick.prototype.removeSlide = function (index, removeBefore) {
 
         var _ = this;
 
+        if (typeof(index) === "boolean") {
+            removeBefore = index;
+            index = null;
+        }
+
         _.unload();
 
-        if(_.slideCount < 1) {
+        if (_.slideCount < 1) {
+            return false;
+        }
+
+        if (typeof(index) === "number") {
+            if (removeBefore === true) {
+                --index;
+            } else if (removeBefore === false) {
+               ++index;
+            }
+        } else {
+            if (removeBefore === true) {
+                index = 0;
+            } else {
+                index = $(_.slideTrack.children(this.options.slide)).length - 1;
+            }
+        }
+
+        if (index < 0 || index >= $(_.slideTrack.children(this.options.slide)).length) {
+            _.reinit();
             return false;
         }
 
@@ -1438,11 +1487,11 @@
         });
     };
 
-    $.fn.slickAdd = function (slide) {
+    $.fn.slickAdd = function (slide, slideIndex, addBefore) {
         var _ = this;
         return _.each(function (index, element) {
 
-           element.slick.addSlide(slide);
+           element.slick.addSlide(slide, slideIndex, addBefore);
 
         });
     };
@@ -1503,11 +1552,11 @@
         });
     };
 
-    $.fn.slickRemove = function (slide) {
+    $.fn.slickRemove = function (slideIndex, removeBefore) {
         var _ = this;
         return _.each(function (index, element) {
 
-           element.slick.removeSlide(slide);
+           element.slick.removeSlide(slideIndex, removeBefore);
 
         });
     };
