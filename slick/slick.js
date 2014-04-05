@@ -485,7 +485,62 @@
 
     };
 
-    Slick.prototype.checkResponsive = function() {
+    Slick.prototype.respondToBreakpoint = function (breakpoint) {
+        var _ = this;
+
+        if (breakpoint !== null) {
+            if (_.activeBreakpoint !== null) {
+                if (breakpoint !== _.activeBreakpoint) {
+                    _.activeBreakpoint = breakpoint;
+                    _.options = $.extend(
+                        {}, 
+                        _.defaults,
+                        _.breakpointSettings[breakpoint]
+                    );
+                    _.refresh();
+                }
+            } else {
+                _.activeBreakpoint = breakpoint;
+                _.options = $.extend(
+                    {}, 
+                    _.defaults,
+                    _.breakpointSettings[breakpoint]
+                );
+                _.refresh();
+            }
+        } else if (_.activeBreakpoint !== null) {
+            _.activeBreakpoint = null;
+            _.options = $.extend(
+                {}, 
+                _.defaults,
+                _.originalSettings
+                );
+            _.refresh();
+        }
+    };
+
+    Slick.prototype.handleMediaQueryBreakpoint = function (mql) {
+        var breakpoint, mq,
+            _ = this,
+            media = mql.media;
+                        
+        if (!mql.matches) {
+            _.respondToBreakpoint(null);
+        }
+
+        for (breakpoint in _.breakpoints) {
+            if (_.breakpoints.hasOwnProperty(breakpoint)) {
+                mq = _.breakpoints[breakpoint]; 
+                if (mq === media || mq === ("all and "+ media)){
+                    if (mql.matches) {
+                        _.respondToBreakpoint(mq);
+                    }
+                } 
+            }
+        }
+    };
+
+    Slick.prototype.checkPixelBreakpoints = function () {
 
         var _ = this,
             breakpoint, targetBreakpoint;
@@ -497,42 +552,45 @@
 
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
-                    if ($(window).width() < _.breakpoints[
-                        breakpoint]) {
-                        targetBreakpoint = _.breakpoints[
-                            breakpoint];
-                    }
+                    if (typeof _.breakpoints[breakpoint] == "number") {
+                        if ($(window).width() < _.breakpoints[
+                            breakpoint]) {
+                            targetBreakpoint = _.breakpoints[
+                                breakpoint];
+                        }                        
+                    } 
                 }
             }
 
-            if (targetBreakpoint !== null) {
-                if (_.activeBreakpoint !== null) {
-                    if (targetBreakpoint !== _.activeBreakpoint) {
-                        _.activeBreakpoint =
-                            targetBreakpoint;
-                        _.options = $.extend({}, _.options,
-                            _.breakpointSettings[
-                                targetBreakpoint]);
-                        _.refresh();
-                    }
-                } else {
-                    _.activeBreakpoint = targetBreakpoint;
-                    _.options = $.extend({}, _.options,
-                        _.breakpointSettings[
-                            targetBreakpoint]);
-                    _.refresh();
-                }
-            } else {
-                if (_.activeBreakpoint !== null) {
-                    _.activeBreakpoint = null;
-                    _.options = $.extend({}, _.options,
-                        _.originalSettings);
-                    _.refresh();
-                }
+            if (targetBreakpoint) {
+                this.respondToBreakpoint(targetBreakpoint);
             }
-
         }
+    };
 
+    Slick.prototype.checkMediaQueryBreakpoints= function () {
+
+        var _ = this, breakpoint, targetBreakpoint;
+
+        if (_.originalSettings.responsive && _.originalSettings
+            .responsive.length > -1 && _.originalSettings.responsive !== null) {
+
+            targetBreakpoint = null;
+
+            for (breakpoint in _.breakpoints) {
+                if (_.breakpoints.hasOwnProperty(breakpoint)) {
+                    if (typeof _.breakpoints[breakpoint] == "string"){
+                        if (window.matchMedia && window.matchMedia(_.breakpoints[breakpoint]).matches) {
+                            targetBreakpoint = _.breakpoints[breakpoint];
+                        }
+                    }
+                }
+            }
+
+            if (targetBreakpoint) {
+                this.respondToBreakpoint(targetBreakpoint);
+            }
+        }
     };
 
     Slick.prototype.changeSlide = function(event) {
@@ -576,7 +634,8 @@
 
     Slick.prototype.destroy = function() {
 
-        var _ = this;
+        var breakpoint, mql,
+            _ = this;
 
         _.autoPlayClear();
 
@@ -600,7 +659,22 @@
 
         _.$list.off('.slick');
         $(window).off('.slick-' + _.instanceUid);
-        $(document).off('.slick-' + _.instanceUid);
+		$(document).off('.slick-' + _.instanceUid);
+		
+        if (_.originalSettings.responsive && 
+            _.originalSettings.responsive.length) {
+
+            for (breakpoint in _.breakpoints) {
+                if (_.breakpoints.hasOwnProperty(breakpoint)) {
+                    if (typeof _.breakpoints[breakpoint] == "string"){
+                        if (window.matchMedia && window.matchMedia("all").removeListener) {
+                            mql = window.matchMedia(_.breakpoints[breakpoint]);
+                            mql.removeListener($.proxy(_, "handleMediaQueryBreakpoint"));
+                        }
+                    }
+                }
+            }
+        }
 
     };
 
@@ -795,7 +869,8 @@
             _.startLoad();
             _.loadSlider();
             _.initializeEvents();
-            _.checkResponsive();
+            _.checkPixelBreakpoints();
+            _.checkMediaQueryBreakpoints();
         }
 
         if (_.options.onInit !== null) {
@@ -839,7 +914,7 @@
 
     Slick.prototype.initializeEvents = function() {
 
-        var _ = this;
+        var _ = this, breakpoint, mql;
 
         _.initArrowEvents();
 
@@ -872,7 +947,7 @@
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
-            _.checkResponsive();
+			_.checkPixelBreakpoints();
             _.setPosition();
         });
 
@@ -881,16 +956,31 @@
                 clearTimeout(_.windowDelay);
                 _.windowDelay = window.setTimeout(function() {
                     _.windowWidth = $(window).width();
-                    _.checkResponsive();
+                    _.checkPixelBreakpoints();
                     _.setPosition();
                 }, 50);
             }
         });
 
-        $(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
-        $(document).on('ready.slick.slick-' + _.instanceUid, _.setPosition);
+		if (_.originalSettings.responsive &&
+			_.originalSettings.responsive.length) {
 
-    };
+			for (breakpoint in _.breakpoints) {
+				if (_.breakpoints.hasOwnProperty(breakpoint)) {
+					if (typeof _.breakpoints[breakpoint] == "string"){
+						if (window.matchMedia && window.matchMedia("all").addListener) {
+							mql = window.matchMedia(_.breakpoints[breakpoint]);
+							mql.addListener($.proxy(_, "handleMediaQueryBreakpoint"));
+						}
+					}
+				}
+			}
+		}
+
+		$(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
+		$(document).on('ready.slick.slick-' + _.instanceUid, _.setPosition);
+
+	};
 
     Slick.prototype.initUI = function() {
 
