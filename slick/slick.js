@@ -48,6 +48,7 @@
                 infinite: true,
                 onBeforeChange: null,
                 onAfterChange: null,
+                onReinitialization : null,
                 pauseOnHover: true,
                 placeholders: true,
                 responsive: null,
@@ -850,6 +851,10 @@
         _.setSlideClasses(0);
 
         _.setPosition();
+
+        if (_.options.onReinitialization !== null) {
+            _.options.onReinitialization.call(this, _);
+        }
 
     };
 
