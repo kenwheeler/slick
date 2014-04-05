@@ -335,6 +335,11 @@ $('.your-class').slick({
 							<td>boolean, default: true</td>
 							<td>Enables tabbing and arrow key navigation</td>
 						</tr>
+                        <tr>
+                            <td>appendToFront</td>
+                            <td>boolean, default: false</td>
+                            <td>Determines the end of the list at which slide addition and removal occur</td>
+                        </tr>
 						<tr>
 							<td>autoplay</td>
 							<td>boolean, default: false</td>
@@ -484,14 +489,24 @@ $('.your-class').slick({
 						</tr>
 						<tr>
 							<td>slickAdd</td>
-							<td>HTML or Object</td>
-							<td>Adds slide</td>
+							<td>HTML or Object, reverseAdd: boolean</td>
+							<td>Adds slide at list end as determeind by appendToFront setting. If reverseAdd is set, then adds slide at opposite end</td>
 						</tr>
+                        <tr>
+                            <td>slickAddAt</td>
+                            <td>HTML or Object, index</td>
+                            <td>Adds slide at specified index</td>
+                        </tr>
 						<tr>
 							<td>slickRemove</td>
-							<td>index</td>
-							<td>Removes slide by index</td>
+							<td>reverseRemove: boolean</td>
+							<td>Removes slide at list end as determined by appendToFront setting. If reverseRemove is set, then removes slide at opposite end</td>
 						</tr>
+                        <tr>
+                            <td>slickRemoveAt</td>
+                            <td>index</td>
+                            <td>Removes slide by index</td>
+                        </tr>
 						<tr>
 							<td>slickFilter</td>
 							<td>Selector or Function</td>
