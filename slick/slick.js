@@ -39,6 +39,8 @@
                 accessibility: true,
                 autoplay: false,
                 autoplaySpeed: 3000,
+                centerMode: false,
+                centerPadding: 50,
                 cssEase: 'ease',
                 dots: false,
                 draggable: true,
@@ -429,6 +431,14 @@
 
         if(_.options.accessibility === true) {
             _.list.prop('tabIndex',0);
+        }
+
+        if(_.options.centerMode === true) {
+            _.options.infinite = true;
+            _.options.slidesToScroll = 1;
+            if(_.options.slidesToShow % 2 === 0) {
+                _.options.slidesToShow = 3;
+            }
         }
 
         _.setupPlaceholders();
@@ -952,14 +962,26 @@
 
         var _ = this;
 
-        _.list.find('.slick-slide').width(_.slideWidth);
+        if(_.options.centerMode === true) {
+            _.list.find('.slick-slide').width(_.slideWidth);
+        } else {
+            _.list.find('.slick-slide').width(_.slideWidth);
+        }
+
+
         if (_.options.vertical === false) {
             _.slideTrack.width(Math.ceil((_.slideWidth * _
                 .slider.find('.slick-slide').length)));
+            if(_.options.centerMode ===  true) {
+                _.list.css({padding: ('0px ' + _.options.centerPadding + 'px')});
+            }
         } else {
             _.list.height(_.slides.first().outerHeight());
             _.slideTrack.height(Math.ceil((_.listHeight * _
                 .slider.find('.slick-slide').length)));
+                if(_.options.centerMode ===  true) {
+                _.list.css({padding: (_.options.centerPadding + 'px 0px')});
+            }
         }
 
     };
@@ -1001,6 +1023,10 @@
             if(_.slideCount > _.options.slidesToShow) {
                 _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
             }
+        }
+
+        if (_.options.centerMode === true) {
+            _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
         }
 
         if (_.options.placeholders === false) {
@@ -1063,10 +1089,30 @@
 
     Slick.prototype.setSlideClasses = function (index) {
 
-        var _ = this;
+        var _ = this, centerOffset, allSlides, indexOffset;
 
-        _.slides.removeClass('slick-active');
-        $(_.slides.get(index)).addClass('slick-active');
+        _.slider.find('.slick-slide').removeClass('slick-active');
+        _.slides.removeClass('slick-center');
+
+        if (_.options.centerMode === true) {
+
+            centerOffset = Math.floor(_.options.slidesToShow / 2);
+
+            if(index >= centerOffset && index <= (_.slideCount - 1) -  centerOffset) {
+                _.slides.slice(index - centerOffset, index + centerOffset + 1).addClass('slick-active');
+            } else {
+                allSlides = _.slider.find('.slick-slide');
+                indexOffset = _.options.slidesToShow + index;
+                allSlides.slice(indexOffset - centerOffset, indexOffset + centerOffset + 1).addClass('slick-active');
+            }
+
+           $(_.slides.get(index)).addClass('slick-center');
+
+        } else {
+
+           _.slides.slice(index, index + _.options.slidesToShow).addClass('slick-active');
+
+        }
 
     };
 
@@ -1105,6 +1151,7 @@
         if(_.options.fade === true || _.options.vertical === true) {
             _.options.slidesToShow = 1;
             _.options.slidesToScroll = 1;
+            _.options.centerMode = false;
         }
 
         if(_.options.placeholders === false) {
