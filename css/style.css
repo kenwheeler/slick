@@ -249,7 +249,7 @@ a {
 }
 
 .center h3 {
-    transition: all 500ms ease;
+    transition: all 300ms ease;
     opacity: 0.8;
 }
 
@@ -296,6 +296,26 @@ ul.nav li a {
 .center {
     margin-left: -40px;
     margin-right: -40px;
+}
+
+.center h3 {
+    transition: all 300ms ease;
+    -webkit-transform: scale(0.95);
+    -moz-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    -o-transform: scale(0.95);
+    transform: scale(0.95);
+    opacity: 0.8;
+}
+
+.center .slick-center h3 {
+    color: #e67e22;
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
 }
 
 .fixed-header .header-content { width: auto;}
