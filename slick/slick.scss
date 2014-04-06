@@ -134,30 +134,25 @@
         opacity: 0.25;
     }
 }
+.slick-prev:before, .slick-next:before {
+    font-family:"slick";
+    font-size: 20px;
+    line-height: 1;
+    color: white;
+    opacity: 0.85;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 .slick-prev {
     left: -25px;
     &:before {
         content:'\8592';
-        font-family:"slick";
-        font-size: 20px;
-        line-height: 1;
-        color: white;
-        opacity: 0.85;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
     }
 }
 .slick-next {
     right: -25px;
     &:before {
         content:'\8594';
-        font-family:"slick";
-        font-size: 20px;
-        line-height: 1;
-        color: white;
-        opacity: 0.85;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
     }
 }
 
