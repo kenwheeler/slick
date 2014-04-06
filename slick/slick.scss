@@ -1,5 +1,7 @@
 /* Slider */
 
+@import "variables";
+
 .slick-slider {
     position: relative;
     display: block;
@@ -27,7 +29,7 @@
     }
 
     .slick-loading & {
-        background: #fff url(./ajax-loader.gif) center center no-repeat;
+        background: $loading-bg $loading-img center center no-repeat;
     }
 
     &.dragging {
@@ -77,7 +79,7 @@
     display: none;
 
     &.loading {
-        background: url(./ajax-loader.gif) center center no-repeat;
+        background: $loading-img center center no-repeat;
         position: relative;
     }
 
@@ -117,15 +119,15 @@
 .slick-next {
     position: absolute;
     display: block;
-    height: 20px;
-    width: 20px;
+    height: $arrow-size;
+    width: $arrow-size;
     line-height: 0;
     font-size: 0;
     cursor: pointer;
     background: transparent;
     color: transparent;
     top: 50%;
-    margin-top: -10px;
+    margin-top: ($arrow-size * -.5);
     padding: 0;
     border: none;
     &:focus {
@@ -136,26 +138,26 @@
     }
 }
 .slick-prev {
-    left: -25px;
+    left: -($arrow-size + 5);
     &:before {
         content:'\8592';
         font-family:"slick";
-        font-size: 20px;
+        font-size: $arrow-size;
         line-height: 1;
-        color: white;
+        color: $arrow-color;
         opacity: 0.85;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
 }
 .slick-next {
-    right: -25px;
+    right: -($arrow-size + 5);
     &:before {
         content:'\8594';
         font-family:"slick";
-        font-size: 20px;
+        font-size: $arrow-size;
         line-height: 1;
-        color: white;
+        color: $arrow-color;
         opacity: 0.85;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -197,9 +199,9 @@
             &:before {
                 content:'\8226';
                 font-family:"slick";
-                font-size: 6px;
+                font-size: $dot-size;
                 line-height: 2;
-                color: black;
+                color: $dot-color;
                 opacity: 0.25;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
