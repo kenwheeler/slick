@@ -328,7 +328,7 @@ $('.your-slider').unslick();
 		<section id="getting-started" class="white">
 			<div class="content">
 				<h2 class="margin-40">Getting Started</h2>
-				<p>Set up your HTML</p>
+				<p>Set up your HTML.</p>
 				<pre><code>
 &lt;div class="your-class"&gt;
   &lt;div&gt;your content&lt;/div&gt;
@@ -337,6 +337,8 @@ $('.your-slider').unslick();
 &lt;/div&gt;
 				</code></pre>
 				<hr/>
+				<p>Move the /slick folder into your project</p>
+				<hr/>
 				<p>Add slick.css in your &lt;head&gt;</p>
 				<pre><code>
 &lt;link rel="stylesheet" type="text/css" href="slick/slick.css"/&gt;
@@ -344,13 +346,17 @@ $('.your-slider').unslick();
 				<hr/>
 				<p>Add slick.js before your closing &lt;body&gt; tag, after jQuery (requires jQuery 1.7 +)</p>
 				<pre><code>
+&lt;script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="slick/slick.min.js"&gt;&lt;/script&gt;
 				</code></pre>
 				<hr/>
-				<p>Initialize your slider in your scripts.js</p>
+				<p>Initialize your slider in your script file or an inline script tag</p>
 				<pre><code>
-$('.your-class').slick({
-  setting-name: setting-value
+$(document).ready(function(){
+	$('.your-class').slick({
+	  setting-name: setting-value
+	});
 });
 				</code></pre>
 			</div>
@@ -358,149 +364,175 @@ $('.your-class').slick({
 		<section id="settings" class="blue">
 			<div class="content">
 				<h2 >Settings</h2>
-				<table>
+				<table class="settings">
 					<thead>
 						<tr>
-							<th>Setting</th>
-							<th>Value</th>
-							<th>Description</th>
+							<th class="first">Setting</th>
+							<th class="type">Type</th>
+							<th class="default">Default</th>
+							<th class="last">Description</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>accessibility</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Enables tabbing and arrow key navigation</td>
 						</tr>
 						<tr>
 							<td>autoplay</td>
-							<td>boolean, default: false</td>
+							<td>boolean</td>
+							<td>false</td>
 							<td>Enables Autoplay</td>
 						</tr>
 						<tr>
 							<td>autoplaySpeed</td>
-							<td>int(ms), default: 3000</td>
+							<td>int(ms)</td>
+							<td>3000</td>
 							<td>Autoplay Speed in milliseconds</td>
 						</tr>
 						<tr>
 							<td>arrows</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Prev/Next Arrows</td>
 						</tr>
 						<tr>
 							<td>centerMode</td>
-							<td>boolean, default: false</td>
+							<td>boolean</td>
+							<td>false</td>
 							<td>Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.</td>
 						</tr>
 						<tr>
 							<td>centerPadding</td>
-							<td>int, default: 50</td>
+							<td>int</td>
+							<td>50</td>
 							<td>Side padding when in center mode</td>
 						</tr>
 						<tr>
 							<td>cssEase</td>
-							<td>string, default: 'ease'</td>
+							<td>string</td>
+							<td>'ease'</td>
 							<td>CSS3 Animation Easing</td>
 						</tr>
 						<tr>
 							<td>dots</td>
-							<td>boolean, default: false</td>
+							<td>boolean</td>
+							<td>false</td>
 							<td>Show dot indicators</td>
 						</tr>
 						<tr>
 							<td>draggable</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Enable mouse dragging</td>
 						</tr>
 						<tr>
 							<td>fade</td>
-							<td>boolean, default: false</td>
+							<td>boolean</td>
+							<td>false</td>
 							<td>Enable fade</td>
 						</tr>
 						<tr>
 							<td>easing</td>
-							<td>string, default: 'linear'</td>
+							<td>string</td>
+							<td>'linear'</td>
 							<td>Add easing for jQuery animate. Use with easing libraries or default easing methods</td>
 						</tr>
 						<tr>
 							<td>infinite</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Infinite loop sliding</td>
 						</tr>
 						<tr>
 							<td>onBeforeChange</td>
-							<td>function, default: null</td>
+							<td>function</td>
+							<td>none</td>
 							<td>Before slide callback</td>
 						</tr>
 						<tr>
 							<td>onAfterChange</td>
-							<td>function, default: null</td>
+							<td>function</td>
+							<td>none</td>
 							<td>After slide callback</td>
 						</tr>
 						<tr>
 							<td>pauseOnHover</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Pause Autoplay On Hover</td>
 						</tr>
 						<tr>
 							<td>placeholders</td>
-							<td>boolean, default: true</td>
-							<td>Enable placeholders to enforce slidesToScroll with uneven slide counts. (Doesn't work with infinite: true)</td>
+							<td>boolean</td>
+							<td>true</td>
+							<td>Enable placeholders to enforce slidesToScroll with uneven slide counts. (false doesn't work with infinite: true)</td>
 						</tr>
 						<tr>
 							<td>responsive</td>
-							<td>object, default: null</td>
-							<td>Object containing breakpoints as keys and settings objects as values</td>
+							<td>object</td>
+							<td>none</td>
+							<td>Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width.</td>
 						</tr>
 						<tr>
 							<td>slide</td>
-							<td>element, default: 'div'</td>
-							<td>Slide element</td>
+							<td>element</td>
+							<td>'div'</td>
+							<td>Element query to use as slide</td>
 						</tr>
 						<tr>
 							<td>slidesToShow</td>
-							<td>int, default: 1</td>
+							<td>int</td>
+							<td>1</td>
 							<td># of slides to show</td>
 						</tr>
 						<tr>
 							<td>slidesToScroll</td>
-							<td>int, default: 1</td>
+							<td>int</td>
+							<td>1</td>
 							<td># of slides to scroll</td>
 						</tr>
 						<tr>
 							<td>speed</td>
-							<td>int(ms), default: 300</td>
-							<td>Slide speed</td>
+							<td>int(ms)</td>
+							<td>300</td>
+							<td>Slide/Fade animation speed</td>
 						</tr>
 						<tr>
 							<td>swipe</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Enable swiping</td>
 						</tr>
 						<tr>
 							<td>touchMove</td>
-							<td>boolean, default: true</td>
+							<td>boolean</td>
+							<td>true</td>
 							<td>Enable slide motion with touch</td>
 						</tr>
 						<tr>
 							<td>touchThreshold</td>
-							<td>int, default: 5</td>
+							<td>int</td>
+							<td>5</td>
 							<td>Swipe distance threshold</td>
 						</tr>
 						<tr>
 							<td>vertical</td>
-							<td>boolean, default: false</td>
-							<td>Vertical slide direction</td>
+							<td>boolean</td>
+							<td>false</td>
+							<td>Vertical slide mode</td>
 						</tr>
 					</tbody>
 				</table>
 				<h2>Methods</h2>
-				<table>
+				<table class="methods">
 					<thead>
 						<tr>
-							<th>Method</th>
+							<th class="first">Method</th>
 							<th>Arguments</th>
-							<th>Description</th>
+							<th class="last">Description</th>
 						</tr>
 					</thead>
 					<tbody>
