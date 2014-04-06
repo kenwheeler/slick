@@ -48,7 +48,8 @@
                 infinite: true,
                 onBeforeChange: null,
                 onAfterChange: null,
-                onReinitialization : null,
+                onInit : null,
+                onReInit : null,
                 pauseOnHover: true,
                 placeholders: true,
                 responsive: null,
@@ -607,6 +608,10 @@
             _.checkResponsive();
         }
 
+        if (_.options.onInit !== null) {
+            _.options.onInit.call(this, _);
+        }
+
     };
 
     Slick.prototype.initArrowEvents = function () {
@@ -852,8 +857,8 @@
 
         _.setPosition();
 
-        if (_.options.onReinitialization !== null) {
-            _.options.onReinitialization.call(this, _);
+        if (_.options.onReInit !== null) {
+            _.options.onReInit.call(this, _);
         }
 
     };

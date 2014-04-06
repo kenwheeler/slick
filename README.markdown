@@ -24,6 +24,8 @@ easing | string |  'linear' | animate() fallback easing
 fade | boolean | false | Enables fade
 arrows | boolean | true | Enable Next/Prev arrows
 infinite | boolean | true | Infinite looping
+onInit(this) | method | null | When Slick initializes for the first time callback
+onReInit(this) | method | null | Every time Slick (re-)initializes callback
 onBeforeChange(this, index) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
