@@ -1,7 +1,7 @@
 {
   "name": "slick-carousel",
   "main": "js/slick.js",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "homepage": "https://github.com/kenwheeler/slick",
   "authors": [
     "Ken Wheeler <ken_wheeler@me.com>"

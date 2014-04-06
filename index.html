@@ -218,6 +218,28 @@ $('.center').slick({
 });
 				</code></pre>
 				<hr/>
+				<h2>Lazy Loading</h2>
+				<div class="slider lazy">
+					<div><div class="image"><img data-lazy="img/lazyfonz1.png"/></div></div>
+					<div><div class="image"><img data-lazy="img/lazyfonz2.png"/></div></div>
+					<div><div class="image"><img data-lazy="img/lazyfonz3.png"/></div></div>
+					<div><div class="image"><img data-lazy="img/lazyfonz4.png"/></div></div>
+					<div><div class="image"><img data-lazy="img/lazyfonz5.png"/></div></div>
+					<div><div class="image"><img data-lazy="img/lazyfonz6.png"/></div></div>
+				</div>
+				<pre><code>
+// To use lazy loading, set a data-lazy attribute
+// on your img tags and leave off the src
+
+&lt;img data-lazy="img/lazyfonz1.png"/&gt;
+
+$('.lazy').slick({
+  lazyLoad: 'ondemand',
+  slidesToShow: 3,
+  slidesToScroll: 1
+});
+				</code></pre>
+				<hr/>
 				<h2>Autoplay</h2>
 				<div class="slider autoplay">
 					<div><h3>1</h3></div>
@@ -445,6 +467,12 @@ $(document).ready(function(){
 							<td>boolean</td>
 							<td>true</td>
 							<td>Infinite loop sliding</td>
+						</tr>
+						<tr>
+							<td>lazyLoad</td>
+							<td>string</td>
+							<td>'ondemand'</td>
+							<td>Set lazy loading technique. Accepts 'ondemand' or 'progressive'.</td>
 						</tr>
 						<tr>
 							<td>onBeforeChange</td>

@@ -26,6 +26,7 @@ easing | string |  'linear' | animate() fallback easing
 fade | boolean | false | Enables fade
 arrows | boolean | true | Enable Next/Prev arrows
 infinite | boolean | true | Infinite looping
+lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
 onBeforeChange(this, index) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
