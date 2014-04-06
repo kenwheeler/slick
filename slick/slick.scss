@@ -13,6 +13,7 @@
     user-select: none;
     -ms-touch-action: none;
     touch-action: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .slick-list {
     position: relative;
