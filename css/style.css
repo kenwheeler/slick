@@ -256,11 +256,11 @@ a {
 .center .slick-center h3 {
     color: #e67e22;
     opacity: 1;
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transform: scale(1.1);
+    -webkit-transform: scale(1.08);
+    -moz-transform: scale(1.08);
+    -ms-transform: scale(1.08);
+    -o-transform: scale(1.08);
+    transform: scale(1.08);
 }
 
 .filter .button {
@@ -292,6 +292,12 @@ ul.nav li a {
 }
 }
 @media only screen and (max-width:768px) {
+
+.center {
+    margin-left: -40px;
+    margin-right: -40px;
+}
+
 .fixed-header .header-content { width: auto;}
 .content {
     width: auto;

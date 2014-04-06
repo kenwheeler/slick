@@ -68,8 +68,18 @@ $(document).ready(function(){
     slidesToShow: 3,
     responsive: [
       {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          centerPadding: 40,
+          slidesToShow: 3
+        }
+      },
+      {
         breakpoint: 480,
         settings: {
+          arrows: false,
           centerMode: true,
           centerPadding: 40,
           slidesToShow: 1
