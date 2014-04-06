@@ -62,6 +62,22 @@ $(document).ready(function(){
     ]
   });
 
+  $('.center').slick({
+    centerMode: true,
+    centerPadding: 60,
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          centerMode: true,
+          centerPadding: 40,
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
+
   $('.autoplay').slick({
     dots: true,
     infinite: true,

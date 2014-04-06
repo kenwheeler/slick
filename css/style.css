@@ -248,6 +248,21 @@ a {
   margin: 5px;
 }
 
+.center h3 {
+    transition: all 500ms ease;
+    opacity: 0.8;
+}
+
+.center .slick-center h3 {
+    color: #e67e22;
+    opacity: 1;
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
 .filter .button {
   background: white;
   color: #3498db;

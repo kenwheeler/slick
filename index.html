@@ -181,6 +181,33 @@ $('.uneven').slick({
 });
 				</code></pre>
 				<hr/>
+				<h2>Center Mode</h2>
+				<div class="slider center">
+					<div><h3>1</h3></div>
+					<div><h3>2</h3></div>
+					<div><h3>3</h3></div>
+					<div><h3>4</h3></div>
+					<div><h3>5</h3></div>
+					<div><h3>6</h3></div>
+				</div>
+				<pre><code>
+$('.center').slick({
+  centerMode: true,
+  centerPadding: 60,
+  slidesToShow: 3,
+  responsive: [
+    {
+      breakpoint: 480,
+      settings: {
+        centerMode: true,
+        centerPadding: 40,
+        slidesToShow: 1
+      }
+    }
+  ]
+});
+				</code></pre>
+				<hr/>
 				<h2>Autoplay</h2>
 				<div class="slider autoplay">
 					<div><h3>1</h3></div>
@@ -349,6 +376,16 @@ $('.your-class').slick({
 							<td>arrows</td>
 							<td>boolean, default: true</td>
 							<td>Prev/Next Arrows</td>
+						</tr>
+						<tr>
+							<td>centerMode</td>
+							<td>boolean, default: false</td>
+							<td>Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.</td>
+						</tr>
+						<tr>
+							<td>centerPadding</td>
+							<td>int, default: 50</td>
+							<td>Side padding when in center mode</td>
 						</tr>
 						<tr>
 							<td>cssEase</td>
