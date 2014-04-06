@@ -29,10 +29,10 @@
 .slick-prev:focus, .slick-next:focus { outline: none; }
 .slick-prev.slick-disabled:before, .slick-next.slick-disabled:before { opacity: 0.25; }
 
-.slick-prev { right: 101%; }
+.slick-prev { left: -25px; }
 .slick-prev:before { content: '\8592'; font-family: "slick"; font-size: 20px; line-height: 1; color: white; opacity: 0.85; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-.slick-next { left: 101%; }
+.slick-next { right: -25px; }
 .slick-next:before { content: '\8594'; font-family: "slick"; font-size: 20px; line-height: 1; color: white; opacity: 0.85; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 /* Dots */

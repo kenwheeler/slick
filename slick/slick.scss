@@ -138,7 +138,7 @@
     }
 }
 .slick-prev {
-    right: 101%;
+    left: -($arrow-size + 5);
     &:before {
         content:'\8592';
         font-family:"slick";
@@ -151,7 +151,7 @@
     }
 }
 .slick-next {
-    left: 101%;
+    right: -($arrow-size + 5);
     &:before {
         content:'\8594';
         font-family:"slick";
