@@ -65,16 +65,16 @@ slickSetOption(option,value,refresh) | option : string(option name), value : dep
 
 Initialize with:
 
-```
+```javascript
 $(element).slick({
-    dots: true,
-    speed: 500
- });
+  dots: true,
+  speed: 500
+});
  ```
 
 Destroy with:
 
-```
+```javascript
 $(element).unslick();
 ```
 
