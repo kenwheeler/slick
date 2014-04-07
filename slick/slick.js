@@ -119,6 +119,7 @@
             _.animProp = null;
             _.breakpoints = [];
             _.breakpointSettings = [];
+            _.mqBreakpointListeners = {};
             _.cssTransitions = false;
             _.paused = false;
             _.positionProp = null;
@@ -488,6 +489,11 @@
     Slick.prototype.respondToBreakpoint = function (breakpoint) {
         var _ = this;
 
+        if (!$(_.$slider).hasClass('slick-initialized')) {
+          // Bail if the slider is not initialized
+          return;
+        }
+
         if (breakpoint !== null) {
             if (_.activeBreakpoint !== null) {
                 if (breakpoint !== _.activeBreakpoint) {
@@ -523,7 +529,12 @@
         var breakpoint, mq,
             _ = this,
             media = mql.media;
-                        
+
+        if (!$(_.$slider).hasClass('slick-initialized')) {
+          // Bail if the slider is not initialized
+          return;
+        }
+
         if (!mql.matches) {
             _.respondToBreakpoint(null);
         }
@@ -634,7 +645,7 @@
 
     Slick.prototype.destroy = function() {
 
-        var breakpoint, mql,
+        var breakpoint, mq, mql,
             _ = this;
 
         _.autoPlayClear();
@@ -666,10 +677,15 @@
 
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
-                    if (typeof _.breakpoints[breakpoint] == "string"){
+                    if (typeof _.breakpoints[breakpoint] == "string") {
                         if (window.matchMedia && window.matchMedia("all").removeListener) {
-                            mql = window.matchMedia(_.breakpoints[breakpoint]);
-                            mql.removeListener($.proxy(_, "handleMediaQueryBreakpoint"));
+                            mq = _.breakpoints[breakpoint];
+                            mql = window.matchMedia(mq);
+                            if (_.mqBreakpointListeners[mq]) {
+                                while (_.mqBreakpointListeners[mq].length) {
+                                    mql.removeListener(_.mqBreakpointListeners[mq].pop());
+                                }
+                            }
                         }
                     }
                 }
@@ -914,7 +930,7 @@
 
     Slick.prototype.initializeEvents = function() {
 
-        var _ = this, breakpoint, mql;
+        var _ = this, breakpoint, handler, mq, mql;
 
         _.initArrowEvents();
 
@@ -962,20 +978,26 @@
             }
         });
 
-		if (_.originalSettings.responsive &&
-			_.originalSettings.responsive.length) {
+        if (_.originalSettings.responsive &&
+            _.originalSettings.responsive.length) {
 
-			for (breakpoint in _.breakpoints) {
-				if (_.breakpoints.hasOwnProperty(breakpoint)) {
-					if (typeof _.breakpoints[breakpoint] == "string"){
-						if (window.matchMedia && window.matchMedia("all").addListener) {
-							mql = window.matchMedia(_.breakpoints[breakpoint]);
-							mql.addListener($.proxy(_, "handleMediaQueryBreakpoint"));
-						}
-					}
-				}
-			}
-		}
+            for (breakpoint in _.breakpoints) {
+                if (_.breakpoints.hasOwnProperty(breakpoint)) {
+                    if (typeof _.breakpoints[breakpoint] == "string"){
+                        if (window.matchMedia && window.matchMedia("all").addListener) {
+                            mq = _.breakpoints[breakpoint];
+                            mql = window.matchMedia(mq);
+                            if (!_.mqBreakpointListeners[mq]) {
+                                _.mqBreakpointListeners[mq] = [];
+                            }
+                            handler = function(mql) { _.handleMediaQueryBreakpoint(mql); };
+                            _.mqBreakpointListeners[mq].push(handler);
+                            mql.addListener(handler);
+                        }
+                    }
+                }
+            }
+        }
 
 		$(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
 		$(document).on('ready.slick.slick-' + _.instanceUid, _.setPosition);
