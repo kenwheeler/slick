@@ -29,6 +29,8 @@ infinite | boolean | true | Infinite looping
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
 onBeforeChange(this, index) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
+onInit(this) | method | null | When Slick initializes for the first time callback
+onReInit(this) | method | null | Every time Slick (re-)initializes callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
 placeholders | boolean | true | Enable placeholders to enforce slidesToScroll with uneven slide counts (Doesn't work with infinite: true)
 responsive | object | null | Breakpoint triggered settings

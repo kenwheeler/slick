@@ -51,6 +51,8 @@
                 lazyLoad: 'ondemand',
                 onBeforeChange: null,
                 onAfterChange: null,
+                onInit : null,
+                onReInit : null,
                 pauseOnHover: true,
                 placeholders: true,
                 responsive: null,
@@ -647,6 +649,10 @@
             _.checkResponsive();
         }
 
+        if (_.options.onInit !== null) {
+            _.options.onInit.call(this, _);
+        }
+
     };
 
     Slick.prototype.initArrowEvents = function () {
@@ -945,6 +951,10 @@
         _.setSlideClasses(0);
 
         _.setPosition();
+
+        if (_.options.onReInit !== null) {
+            _.options.onReInit.call(this, _);
+        }
 
     };
 
