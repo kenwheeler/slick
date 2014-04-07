@@ -29,6 +29,7 @@
     var Slick = window.Slick || {};
 
     Slick = (function () {
+        var instanceUid = 0;
 
         function Slick(element, settings) {
 
@@ -141,6 +142,7 @@
             _.autoPlayIterator = $.proxy(_.autoPlayIterator,
                 _);
 
+            _.instanceUid = instanceUid++;
             _.init();
 
         }
@@ -557,6 +559,8 @@
         _.slider.removeClass('slick-slider');
         _.slider.removeClass('slick-initialized');
 
+        _.list.off('.slick');
+        $(window).off('.slick'+_.instanceUid);
     };
 
     Slick.prototype.disableTransition = function (slide) {
@@ -725,24 +729,23 @@
 
         _.list.on('keydown.slick', _.keyHandler);
 
-        $(window).on('orientationchange.slick', function(){
+        $(window).on('orientationchange.slick.slick'+_.instanceUid, function(){
             _.checkResponsive();
             _.setPosition();
         });
 
-        $(window).resize(function () {
-                if ($(window).width !== _.windowWidth) {
-                    clearTimeout(_.windowDelay);
-                    _.windowDelay = window.setTimeout(function () {
-                        _.windowWidth = $(window).width();
-                        _.checkResponsive();
-                        _.setPosition();
-                    }, 50);
-                }
+        $(window).on('resize.slick.slick'+_.instanceUid, function () {
+            if ($(window).width !== _.windowWidth) {
+                clearTimeout(_.windowDelay);
+                _.windowDelay = window.setTimeout(function () {
+                    _.windowWidth = $(window).width();
+                    _.checkResponsive();
+                    _.setPosition();
+                }, 50);
+            }
         });
 
-        $(window).on('load.slick', _.setPosition);
-
+		$(window).on('load.slick.slick'+_.instanceUid, _.setPosition);
     };
 
     Slick.prototype.initUI = function () {
