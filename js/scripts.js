@@ -56,6 +56,32 @@ $(document).ready(function() {
         }]
     });
 
+    $('.responsive-mq').slick({
+        dots: true,
+        infinite: false,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 'all and (min-width: 48em)',
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 'all and (min-width: 60em)',
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+        ]
+    });
+    
     $('.center').slick({
         centerMode: true,
         infinite: true,
