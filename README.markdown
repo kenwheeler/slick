@@ -40,7 +40,7 @@ slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
 swipe | boolean | true | Enables touch swipe
 touchMove | boolean | true | Enables slide moving with touch
-touchMoveThreshold | int | 5 | Swipe distance threshold
+touchThreshold | int | 5 | Swipe distance threshold
 vertical | boolean | false | Vertical slide direction
 
 #### Methods
