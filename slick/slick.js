@@ -667,6 +667,7 @@
         if (_.options.vertical === false) {
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
+            _.listHeight = _.$list.height();
             if (_.options.infinite === true) {
                 targetLeft = ((slideIndex * _.listHeight) * -1) - _.listHeight;
             } else {
