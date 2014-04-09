@@ -1,23 +1,23 @@
 {
-  "name": "slick-carousel",
-  "version": "1.3.3",
-  "description": "the last carousel you'll ever need",
-  "main": "js/slick.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kenwheeler/slick.git"
-  },
-  "keywords": [
-    "carousel",
-    "slick",
-    "responsive"
-  ],
-  "author": "Ken Wheeler",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kenwheeler/slick/issues"
-  }
+    "name": "slick-carousel",
+    "version": "1.3.4",
+    "description": "the last carousel you'll ever need",
+    "main": "js/slick.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/kenwheeler/slick.git"
+    },
+    "keywords": [
+        "carousel",
+        "slick",
+        "responsive"
+    ],
+    "author": "Ken Wheeler",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/kenwheeler/slick/issues"
+    }
 }

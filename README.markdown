@@ -18,7 +18,7 @@ accessibility | boolean | true | Enables tabbing and arrow key navigation
 autoplay | boolean | false | Enables auto play of slides
 autoplaySpeed | int  | 3000 | Auto play change interval
 centerMode | boolean | false | Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.
-centerPadding | int | 50 | Side padding when in center mode.
+centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing
 dots | boolean | false | Current slide indicator dots
 draggable | boolean | true | Enables desktop dragging
@@ -32,7 +32,6 @@ onAfterChange(this, index) | method | null | After slide change callback
 onInit(this) | method | null | When Slick initializes for the first time callback
 onReInit(this) | method | null | Every time Slick (re-)initializes callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
-placeholders | boolean | true | Enable placeholders to enforce slidesToScroll with uneven slide counts (Doesn't work with infinite: true)
 responsive | object | null | Breakpoint triggered settings
 slide | string | 'div' | Slide element query
 slidesToShow | int | 1 | # of slides to show at a time

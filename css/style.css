@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'Pacifico';
+  src: url('pacifico.eot');
+  src: url('pacifico.eot?#iefix') format('embedded-opentype'),
+       url('pacifico.woff') format('woff'),
+       url('pacifico.ttf') format('truetype'),
+       url('pacifico.svg#Pacifico') format('svg');
+}
+
 #disqus_thread{margin-top:20px;}
 *{-moz-box-sizing:border-box;box-sizing:border-box;}
 .blue{background:#3498db;color:#fff;}

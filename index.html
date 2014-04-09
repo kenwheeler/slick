@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 	<title>slick - the last carousel you'll ever need</title>
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.0/styles/monokai.min.css">
 	<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
@@ -174,7 +173,6 @@ $('.responsive').slick({
 $('.one-time').slick({
   dots: true,
   infinite: false,
-  placeholders: false,
   speed: 300,
   slidesToShow: 5,
   touchMove: false,
@@ -210,7 +208,7 @@ $('.uneven').slick({
 				<pre><code>
 $('.center').slick({
   centerMode: true,
-  centerPadding: 60,
+  centerPadding: '60px',
   slidesToShow: 3,
   responsive: [
     {
@@ -218,7 +216,7 @@ $('.center').slick({
       settings: {
         arrows: false,
         centerMode: true,
-        centerPadding: 40,
+        centerPadding: '40px',
         slidesToShow: 3
       }
     },
@@ -227,7 +225,7 @@ $('.center').slick({
       settings: {
         arrows: false,
         centerMode: true,
-        centerPadding: 40,
+        centerPadding: '40px',
         slidesToShow: 1
       }
     }
@@ -445,9 +443,9 @@ $(document).ready(function(){
 						</tr>
 						<tr>
 							<td>centerPadding</td>
-							<td>int</td>
-							<td>50</td>
-							<td>Side padding when in center mode</td>
+							<td>string</td>
+							<td>'50px'</td>
+							<td>Side padding when in center mode (px or %)</td>
 						</tr>
 						<tr>
 							<td>cssEase</td>
@@ -520,12 +518,6 @@ $(document).ready(function(){
 							<td>boolean</td>
 							<td>true</td>
 							<td>Pause Autoplay On Hover</td>
-						</tr>
-						<tr>
-							<td>placeholders</td>
-							<td>boolean</td>
-							<td>true</td>
-							<td>Enable placeholders to enforce slidesToScroll with uneven slide counts. (false doesn't work with infinite: true)</td>
 						</tr>
 						<tr>
 							<td>responsive</td>
