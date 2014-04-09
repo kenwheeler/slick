@@ -150,7 +150,7 @@ $(document).ready(function() {
         event.preventDefault();
         var targetID = $(this).attr('href');
         var targetST = $(targetID).offset().top - 48;
-        $('body').animate({
+        $('body, html').animate({
             scrollTop: targetST + 'px'
         }, 300);
     });
