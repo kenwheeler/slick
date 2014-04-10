@@ -45,6 +45,9 @@
                 centerMode: false,
                 centerPadding: '50px',
                 cssEase: 'ease',
+                customPaging: function(slider, i) {
+                    return '<button type="button">' + (i + 1) + '</button>';
+                },
                 dots: false,
                 draggable: true,
                 easing: 'linear',
@@ -103,6 +106,7 @@
             _.positionProp = null;
             _.$slider = $(element);
             _.$slidesCache = null;
+            _.transformType = null;
             _.transitionType = null;
             _.windowWidth = 0;
             _.windowTimer = null;
@@ -259,29 +263,18 @@
     Slick.prototype.applyTransition = function(slide) {
 
         var _ = this,
-            transition, origin;
+            transition = {};
 
         if (_.options.fade === false) {
-            transition = _.transitionType + ' ' + _.options.speed + 'ms ' + _.options.cssEase;
+            transition[_.transitionType] = _.transformType + ' ' + _.options.speed + 'ms ' + _.options.cssEase;
         } else {
-            transition = 'opacity ' + _.options.speed + 'ms ' + _.options.cssEase;
-        }
-
-        if (_.options.vertical === false) {
-            origin = (_.listWidth / 2) + ' 50%';
-        } else {
-            origin = '';
+            transition[_.transitionType] = 'opacity ' + _.options.speed + 'ms ' + _.options.cssEase;
         }
 
         if (_.options.fade === false) {
-            _.$slideTrack.css({
-                transition: transition,
-                transformOrigin: origin
-            });
+            _.$slideTrack.css(transition);
         } else {
-            _.$slides.eq(slide).css({
-                transition: transition
-            });
+            _.$slides.eq(slide).css(transition);
         }
 
     };
@@ -355,10 +348,10 @@
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.$prevArrow = $(
-                '<button type="button" class="slick-prev" tabIndex="-1">Previous</button>').appendTo(
+                '<button type="button" class="slick-prev">Previous</button>').appendTo(
                 _.$slider);
             _.$nextArrow = $(
-                '<button type="button" class="slick-next" tabIndex="-1">Next</button>').appendTo(
+                '<button type="button" class="slick-next">Next</button>').appendTo(
                 _.$slider);
 
             if (_.options.infinite !== true) {
@@ -379,8 +372,7 @@
             dotString = '<ul class="slick-dots">';
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
-                dotString += '<li><a href="javascript:void(0)" tabIndex="-1">' + i +
-                    '</a></li>';
+                dotString += '<li>' + _.options.customPaging.call(this, _, i) + '</li>';
             }
 
             dotString += '</ul>';
@@ -415,10 +407,6 @@
             '<div class="slick-list"/>').parent();
         _.$slideTrack.css('opacity', 0);
 
-        if (_.options.accessibility === true) {
-            _.$list.prop('tabIndex', 0);
-        }
-
         if (_.options.centerMode === true) {
             _.options.infinite = true;
             _.options.slidesToScroll = 1;
@@ -434,6 +422,10 @@
         _.buildArrows();
 
         _.buildDots();
+
+        if (_.options.accessibility === true) {
+            _.$list.prop('tabIndex', 0);
+        }
 
         _.setSlideClasses(0);
 
@@ -547,17 +539,15 @@
 
     Slick.prototype.disableTransition = function(slide) {
 
-        var _ = this;
+        var _ = this,
+            transition = {};
+
+        transition[_.transitionType] = "";
 
         if (_.options.fade === false) {
-            _.$slideTrack.css({
-                transition: '',
-                transformOrigin: ''
-            });
+            _.$slideTrack.css(transition);
         } else {
-            _.$slides.eq(slide).css({
-                transition: ''
-            });
+            _.$slides.eq(slide).css(transition);
         }
 
     };
@@ -720,7 +710,7 @@
         var _ = this;
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
-            $('li a', _.$dots).on('click.slick', {
+            $('li', _.$dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
         }
@@ -1135,15 +1125,18 @@
 
         if (document.body.style.MozTransform !== undefined) {
             _.animType = 'MozTransform';
-            _.transitionType = '-moz-transform';
+            _.transformType = "-moz-transform";
+            _.transitionType = 'MozTransition';
         }
         if (document.body.style.webkitTransform !== undefined) {
             _.animType = 'webkitTransform';
-            _.transitionType = '-webkit-transform';
+            _.transformType = "-webkit-transform";
+            _.transitionType = 'webkitTransition';
         }
         if (document.body.style.msTransform !== undefined) {
             _.animType = 'msTransform';
-            _.transitionType = '-ms-transform';
+            _.transformType = "-ms-transform";
+            _.transitionType = 'mstransition';
         }
 
         _.transformsEnabled = (_.animType !== null);
@@ -1231,14 +1224,17 @@
                 for (i = _.slideCount; i > (_.slideCount -
                     infiniteCount); i -= 1) {
                     slideIndex = i - 1;
-                    $(_.$slides[slideIndex]).clone().prependTo(
+                    $(_.$slides[slideIndex]).clone().attr('id', '').prependTo(
                         _.$slideTrack).addClass('slick-cloned');
                 }
                 for (i = 0; i < infiniteCount; i += 1) {
                     slideIndex = i;
-                    $(_.$slides[slideIndex]).clone().appendTo(
+                    $(_.$slides[slideIndex]).clone().attr('id', '').appendTo(
                         _.$slideTrack).addClass('slick-cloned');
                 }
+                _.$slideTrack.find('.slick-cloned').find('[id]').each(function() {
+                    $(this).attr('id', '');
+                });
 
             }
 

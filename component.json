@@ -1,0 +1,17 @@
+{
+    "name": "slick",
+    "repo": "kenwheeler/slick",
+    "description": "the last carousel you'll ever need",
+    "version": "1.3.4",
+    "keywords": ["ui", "jquery", "carousel", "responsive", "slider"],
+    "dependencies": {
+        "component/jquery": "*"
+    },
+    "development": {},
+    "scripts": {
+        "slick/slick.js": "slick.js"
+    },
+    "styles": {
+        "slick/slick.css": "slick.css"
+    }
+}

@@ -127,6 +127,7 @@
     margin-top: -10px;
     padding: 0;
     border: none;
+    outline: none;
     &:focus {
         outline: none;
     }
@@ -177,8 +178,11 @@
         width: 20px;
         margin: 0px 5px;
         padding: 0px;
+        cursor: pointer;
 
-        a {
+        button {
+            border: 0;
+            background: transparent;
             display: block;
             height: 20px;
             width: 20px;
@@ -187,6 +191,11 @@
             font-size: 0;
             color: transparent;
             padding: 5px;
+            cursor: pointer;
+            outline: none;
+            &:focus {
+                outline: none;
+            }
 
             &:before {
                 position: absolute;
@@ -207,7 +216,7 @@
 
         }
 
-        &.slick-active a:before {
+        &.slick-active button:before {
             opacity: 0.75;
         }
     }
