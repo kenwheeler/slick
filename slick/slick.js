@@ -1134,9 +1134,9 @@
             _.transitionType = 'webkitTransition';
         }
         if (document.body.style.msTransform !== undefined) {
-            _.animType = 'msTransform';
-            _.transformType = "-ms-transform";
-            _.transitionType = 'mstransition';
+            _.animType = 'transform';
+            _.transformType = "transform";
+            _.transitionType = 'transition';
         }
 
         _.transformsEnabled = (_.animType !== null);
