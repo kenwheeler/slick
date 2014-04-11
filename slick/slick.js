@@ -1394,9 +1394,9 @@
 
         var _ = this;
 
-        if (event.originalEvent && event.originalEvent.touches && _.options.swipe === false) {
+        if ('ontouchend' in document && _.options.swipe === false) {
             return false;
-        } else if (_.options.draggable === false) {
+        } else if (_.options.draggable === false && !event.originalEvent.touches) {
             return false;
         }
 
