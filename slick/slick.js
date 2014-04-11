@@ -185,6 +185,8 @@
 
         _.$slideTrack.append(_.$slides);
 
+        _.$slidesCache = _.$slides;
+
         _.reinit();
 
     };
@@ -1005,6 +1007,8 @@
         _.$slideTrack.children(this.options.slide).remove();
 
         _.$slideTrack.append(_.$slides);
+
+        _.$slidesCache = _.$slides;
 
         _.reinit();
 
