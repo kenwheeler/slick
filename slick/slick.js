@@ -1248,7 +1248,7 @@
 
     Slick.prototype.slideHandler = function(index) {
 
-        var targetSlide, animSlide, slideLeft, targetLeft = null,
+        var targetSlide, animSlide, slideLeft, unevenOffset, targetLeft = null,
             _ = this;
 
         if (_.animating === true) {
@@ -1259,7 +1259,9 @@
         targetLeft = _.getLeft(targetSlide);
         slideLeft = _.getLeft(_.currentSlide);
 
-        if (_.options.infinite === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow))) {
+        unevenOffset = _.slideCount % _.options.slidesToScroll !== 0 ? _.options.slidesToScroll : 0;
+
+        if (_.options.infinite === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
             targetSlide = _.currentSlide;
             _.animateSlide(slideLeft, function() {
                 _.postSlide(targetSlide);
