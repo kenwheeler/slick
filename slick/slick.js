@@ -893,15 +893,9 @@
 
         _.animating = false;
 
-        _.currentSlide = index;
-
         _.setPosition();
 
         _.swipeLeft = null;
-
-        _.updateDots();
-
-        _.updateArrows();
 
         if (_.options.autoplay === true && _.paused === false) {
             _.autoPlay();
@@ -1288,6 +1282,10 @@
         if (_.options.onBeforeChange !== null && index !== _.currentSlide) {
             _.options.onBeforeChange.call(this, _, _.currentSlide);
         }
+
+        _.currentSlide = animSlide;
+        _.updateDots();
+        _.updateArrows();
 
         if (_.options.fade === true) {
             _.fadeSlide(animSlide, function() {
