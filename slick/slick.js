@@ -855,30 +855,12 @@
             opacity: 1
         });
 
-        if (document.readyState !== 'complete') {
+        _.$slider.removeClass('slick-loading');
 
-            $(window).load(function() {
+        _.initUI();
 
-                _.$slider.removeClass('slick-loading');
-
-                _.initUI();
-
-                if (_.options.lazyLoad === 'progressive') {
-                    _.progressiveLazyLoad();
-                }
-
-            });
-
-        } else {
-
-            _.$slider.removeClass('slick-loading');
-
-            _.initUI();
-
-            if (_.options.lazyLoad === 'progressive') {
-                _.progressiveLazyLoad();
-            }
-
+        if (_.options.lazyLoad === 'progressive') {
+            _.progressiveLazyLoad();
         }
 
     };
