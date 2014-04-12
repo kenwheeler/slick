@@ -740,10 +740,6 @@
             action: 'end'
         }, _.swipeHandler);
 
-        _.$list.on('dragstart.slick', function(e) {
-            e.preventDefault();
-        });
-
         if (_.options.pauseOnHover === true && _.options.autoplay === true) {
             _.$list.on('mouseenter.slick', _.autoPlayClear);
             _.$list.on('mouseleave.slick', _.autoPlay);
@@ -1365,7 +1361,6 @@
         }
 
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
-
             $(event.target).on('click.slick', function(event) {
                 event.stopImmediatePropagation();
                 event.stopPropagation();
@@ -1384,10 +1379,11 @@
                     _.touchObject = {};
                     break;
             }
-
         } else {
-            _.slideHandler(_.currentSlide);
-            _.touchObject = {};
+            if(_.touchObject.startX !== _.touchObject.curX) {
+                _.slideHandler(_.currentSlide);
+                _.touchObject = {};
+            }
         }
 
     };
