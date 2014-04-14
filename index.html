@@ -311,7 +311,9 @@ $('.js-add-slide').on('click', function(){
 
 $('.js-remove-slide').on('click', function(){
   $('.add-remove').slickRemove(slideIndex - 1);
-  slideIndex--;
+  if (slideIndex !== 0) {
+  	slideIndex--;
+  }
 });
 				</code></pre>
 				<hr/>

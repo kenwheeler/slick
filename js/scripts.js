@@ -117,7 +117,9 @@ $(document).ready(function() {
 
     $('.js-remove-slide').on('click', function() {
         $('.add-remove').slickRemove(slideIndex - 1);
-        slideIndex--;
+        if (slideIndex !== 0){
+            slideIndex--;
+        } 
     });
 
     $('.filtering').slick({
