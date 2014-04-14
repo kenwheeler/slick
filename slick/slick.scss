@@ -147,13 +147,13 @@
 .slick-prev {
     left: -25px;
     &:before {
-        content:'\8592';
+        content:'\2190';
     }
 }
 .slick-next {
     right: -25px;
     &:before {
-        content:'\8594';
+        content:'\2192';
     }
 }
 
@@ -201,7 +201,7 @@
                 position: absolute;
                 top: 0;
                 left: 0;
-                content:'\8226';
+                content:'\2022';
                 width: 20px;
                 height: 20px;
                 font-family:"slick";
