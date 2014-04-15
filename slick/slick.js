@@ -869,7 +869,7 @@
 
         var _ = this;
 
-        if (_.options.onAfterChange !== null && index !== _.currentSlide) {
+        if (_.options.onAfterChange !== null) {
             _.options.onAfterChange.call(this, _, index);
         }
 
