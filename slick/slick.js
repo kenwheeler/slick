@@ -417,7 +417,7 @@
             }
         }
 
-        $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('img[data-lazy], iframe[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -827,18 +827,18 @@
 
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
 
-        $('img[data-lazy]', loadRange).not('[src]').each(function() {
+        $('img[data-lazy], iframe[data-lazy]', loadRange).not('[src]').each(function() {
             $(this).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading');
         });
 
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
-            $('img[data-lazy]', cloneRange).not('[src]').each(function() {
+            $('img[data-lazy], iframe[data-lazy]', cloneRange).not('[src]').each(function() {
                 $(this).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading');
             });
         } else if (_.currentSlide === 0) {
             cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
-            $('img[data-lazy]', cloneRange).not('[src]').each(function() {
+            $('img[data-lazy], iframe[data-lazy]', cloneRange).not('[src]').each(function() {
                 $(this).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading');
             });
         }
@@ -869,7 +869,7 @@
 
         var _ = this;
 
-        if (_.options.onAfterChange !== null) {
+        if (_.options.onAfterChange !== null && index !== _.currentSlide) {
             _.options.onAfterChange.call(this, _, index);
         }
 
@@ -892,10 +892,10 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]').not('[src]').length;
+        imgCount = $('img[data-lazy], iframe[data-lazy]').not('[src]').length;
 
         if (imgCount > 0) {
-            targetImage = $($('img[data-lazy]', _.$slider).not('[src]').get(0));
+            targetImage = $($('img[data-lazy], iframe[data-lazy]', _.$slider).not('[src]').get(0));
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                 _.progressiveLazyLoad();
             });
