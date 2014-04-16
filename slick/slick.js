@@ -1016,15 +1016,15 @@
         var _ = this;
 
         if (_.options.centerMode === true) {
-            _.$list.find('.slick-slide').width(_.slideWidth);
+            _.$slideTrack.children('.slick-slide').width(_.slideWidth);
         } else {
-            _.$list.find('.slick-slide').width(_.slideWidth);
+            _.$slideTrack.children('.slick-slide').width(_.slideWidth);
         }
 
 
         if (_.options.vertical === false) {
             _.$slideTrack.width(Math.ceil((_.slideWidth * _
-                .$slider.find('.slick-slide').length)));
+                .$slideTrack.children('.slick-slide').length)));
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: ('0px ' + _.options.centerPadding)
@@ -1033,7 +1033,7 @@
         } else {
             _.$list.height(_.$slides.first().outerHeight());
             _.$slideTrack.height(Math.ceil((_.listHeight * _
-                .$slider.find('.slick-slide').length)));
+                .$slideTrack.children('.slick-slide').length)));
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
