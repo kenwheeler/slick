@@ -745,7 +745,9 @@
             _.$list.on('mouseleave.slick', _.autoPlay);
         }
 
-        _.$list.on('keydown.slick', _.keyHandler);
+        if(_.options.accessibility === true) {
+            _.$list.on('keydown.slick', _.keyHandler); 
+        }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
             _.checkResponsive();
