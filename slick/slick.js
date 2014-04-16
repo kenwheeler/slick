@@ -225,7 +225,7 @@
                             _.$slideTrack.css(animProps);
                         } else {
                             animProps[_.animType] = 'translate(0px,' +
-                                now + 'px,0px)';
+                                now + 'px)';
                             _.$slideTrack.css(animProps);
                         }
                     },
