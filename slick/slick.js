@@ -225,7 +225,7 @@
                             _.$slideTrack.css(animProps);
                         } else {
                             animProps[_.animType] = 'translate(0px,' +
-                                now + 'px,0px)';
+                                now + 'px)';
                             _.$slideTrack.css(animProps);
                         }
                     },
@@ -745,7 +745,9 @@
             _.$list.on('mouseleave.slick', _.autoPlay);
         }
 
-        _.$list.on('keydown.slick', _.keyHandler);
+        if(_.options.accessibility === true) {
+            _.$list.on('keydown.slick', _.keyHandler); 
+        }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
             _.checkResponsive();
@@ -1022,15 +1024,15 @@
         var _ = this;
 
         if (_.options.centerMode === true) {
-            _.$list.find('.slick-slide').width(_.slideWidth);
+            _.$slideTrack.children('.slick-slide').width(_.slideWidth);
         } else {
-            _.$list.find('.slick-slide').width(_.slideWidth);
+            _.$slideTrack.children('.slick-slide').width(_.slideWidth);
         }
 
 
         if (_.options.vertical === false) {
             _.$slideTrack.width(Math.ceil((_.slideWidth * _
-                .$slider.find('.slick-slide').length)));
+                .$slideTrack.children('.slick-slide').length)));
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: ('0px ' + _.options.centerPadding)
@@ -1039,7 +1041,7 @@
         } else {
             _.$list.height(_.$slides.first().outerHeight());
             _.$slideTrack.height(Math.ceil((_.listHeight * _
-                .$slider.find('.slick-slide').length)));
+                .$slideTrack.children('.slick-slide').length)));
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
