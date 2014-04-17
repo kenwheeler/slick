@@ -1270,7 +1270,7 @@
         _.animating = true;
 
         if (_.options.onBeforeChange !== null && index !== _.currentSlide) {
-            _.options.onBeforeChange.call(this, _, _.currentSlide);
+            _.options.onBeforeChange.call(this, _, _.currentSlide, animSlide);
         }
 
         _.currentSlide = animSlide;
