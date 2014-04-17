@@ -828,18 +828,24 @@
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
 
         $('img[data-lazy]', loadRange).not('[src]').each(function() {
-            $(this).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading');
+            $(this).css({opacity: 0}).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading').load(function(){
+                $(this).animate({ opacity: 1 }, 200);
+            });
         });
 
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
             $('img[data-lazy]', cloneRange).not('[src]').each(function() {
-                $(this).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading');
+                $(this).css({opacity: 0}).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading').load(function(){
+                    $(this).animate({ opacity: 1 }, 200);
+                });
             });
         } else if (_.currentSlide === 0) {
             cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
             $('img[data-lazy]', cloneRange).not('[src]').each(function() {
-                $(this).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading');
+                $(this).css({opacity: 0}).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading').load(function(){
+                    $(this).animate({ opacity: 1 }, 200);
+                });
             });
         }
 
