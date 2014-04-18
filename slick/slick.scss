@@ -1,3 +1,9 @@
+@charset"UTF-8";
+
+$slick-fonts-path: "./fonts" !default;
+$slick-loader-path: "." !default;
+$stick-controls-size: 20px !default;
+
 /* Slider */
 
 .slick-slider {
@@ -27,7 +33,7 @@
     }
 
     .slick-loading & {
-        background: #fff url(./ajax-loader.gif) center center no-repeat;
+        background: #fff url("#{$slick-loader-path}/ajax-loader.gif") center center no-repeat;
     }
 
     &.dragging {
@@ -73,7 +79,7 @@
     img {
         display: block;
         &.slick-loading {
-            background: white url(./ajax-loader.gif) center center no-repeat;
+            background: white url("#{$slick-loader-path}/ajax-loader.gif") center center no-repeat;
             padding-bottom: 100%;
         }
     }
@@ -100,12 +106,10 @@
 }
 
 /* Icons */
-
- @charset"UTF-8";
  @font-face {
     font-family:"slick";
-    src:url("./fonts/slick.eot");
-    src:url("./fonts/slick.eot?#iefix") format("embedded-opentype"), url("./fonts/slick.woff") format("woff"), url("./fonts/slick.ttf") format("truetype"), url("./fonts/slick.svg#slick") format("svg");
+    src:url("#{$slick-fonts-path}/slick.eot");
+    src:url("#{$slick-fonts-path}/slick.eot?#iefix") format("embedded-opentype"), url("#{$slick-fonts-path}/slick.woff") format("woff"), url("#{$slick-fonts-path}/slick.ttf") format("truetype"), url("#{$slick-fonts-path}/slick.svg#slick") format("svg");
     font-weight: normal;
     font-style: normal;
 }
@@ -116,15 +120,15 @@
 .slick-next {
     position: absolute;
     display: block;
-    height: 20px;
-    width: 20px;
+    height: $stick-controls-size;
+    width: $stick-controls-size;
     line-height: 0;
     font-size: 0;
     cursor: pointer;
     background: transparent;
     color: transparent;
     top: 50%;
-    margin-top: -10px;
+    margin-top: -($stick-controls-size / 2);
     padding: 0;
     border: none;
     outline: none;
@@ -137,7 +141,7 @@
 }
 .slick-prev:before, .slick-next:before {
     font-family:"slick";
-    font-size: 20px;
+    font-size: $stick-controls-size;
     line-height: 1;
     color: white;
     opacity: 0.85;
@@ -145,13 +149,13 @@
     -moz-osx-font-smoothing: grayscale;
 }
 .slick-prev {
-    left: -25px;
+    left: -($stick-controls-size + 5px);
     &:before {
         content:'\2190';
     }
 }
 .slick-next {
-    right: -25px;
+    right: -($stick-controls-size + 5px);
     &:before {
         content:'\2192';
     }
