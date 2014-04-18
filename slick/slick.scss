@@ -72,10 +72,6 @@
     min-height: 1px;
     img {
         display: block;
-        &.slick-loading {
-            background: white url(./ajax-loader.gif) center center no-repeat;
-            padding-bottom: 100%;
-        }
     }
 
     display: none;
