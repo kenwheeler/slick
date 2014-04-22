@@ -1241,6 +1241,8 @@
 
         unevenOffset = _.slideCount % _.options.slidesToScroll !== 0 ? _.options.slidesToScroll : 0;
 
+        _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
+
         if (_.options.infinite === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
             targetSlide = _.currentSlide;
             _.animateSlide(slideLeft, function() {
@@ -1252,8 +1254,6 @@
         if (_.options.autoplay === true) {
             clearInterval(_.autoPlayTimer);
         }
-
-        _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
         if (targetSlide < 0) {
             if (_.slideCount % _.options.slidesToScroll !== 0) {
