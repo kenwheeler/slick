@@ -35,7 +35,8 @@
         function Slick(element, settings) {
 
             var _ = this,
-                responsiveSettings, breakpoint;
+                responsiveSettings, breakpoint,
+                 initialOverrides = (settings && settings.initials)? settings.initials:{};
 
             _.defaults = {
                 accessibility: true,
@@ -94,7 +95,7 @@
                 transformsEnabled: false
             };
 
-            $.extend(_, _.initials);
+            $.extend(_, _.initials, initialOverrides);
 
             _.activeBreakpoint = null;
             _.animType = null;
