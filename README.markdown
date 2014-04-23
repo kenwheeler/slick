@@ -54,6 +54,7 @@ slickPrev() | | Triggers previous slide
 slickPause() | | Pause Autoplay
 slickPlay() | | Start Autoplay
 slickGoTo() | index : int | Goes to slide by index
+slickCurrentSlide() |  |  Returns the current slide index
 slickAdd() | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
 slideRemove() | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
 slickFilter() | filter : selector or function | Filters slides using jQuery .filter syntax

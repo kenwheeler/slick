@@ -608,6 +608,14 @@
 
     };
 
+    Slick.prototype.getCurrent = function() {
+
+        var _ = this;
+
+        return _.currentSlide;
+
+    };
+
     Slick.prototype.getDotCount = function() {
 
         var _ = this,
@@ -1566,6 +1574,11 @@
             element.slick.addSlide(slide, slideIndex, addBefore);
 
         });
+    };
+
+    $.fn.slickCurrentSlide = function() {
+        var _ = this;
+        return _.get(0).slick.getCurrent();
     };
 
     $.fn.slickFilter = function(filter) {
