@@ -935,7 +935,7 @@
 
         var _ = this;
 
-        _.$slides = $(_.options.slide +
+        _.$slides = $('> '+_.options.slide +
             ':not(.slick-cloned)', _.$slideTrack).addClass(
             'slick-slide');
 
