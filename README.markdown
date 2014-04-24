@@ -41,6 +41,7 @@ speed | int | 300 | Transition speed
 swipe | boolean | true | Enables touch swipe
 touchMove | boolean | true | Enables slide moving with touch
 touchThreshold | int | 5 | Swipe distance threshold
+useCSS | boolean | true | Enable/Disable CSS Transitions
 vertical | boolean | false | Vertical slide direction
 
 #### Methods

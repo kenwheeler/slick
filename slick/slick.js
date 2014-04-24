@@ -67,6 +67,7 @@
                 swipe: true,
                 touchMove: true,
                 touchThreshold: 5,
+                useCSS: true,
                 vertical: false
             };
 
@@ -935,8 +936,7 @@
 
         var _ = this;
 
-        _.$slides = $(_.options.slide +
-            ':not(.slick-cloned)', _.$slideTrack).addClass(
+        _.$slides = _.$slideTrack.children(_.options.slide).addClass(
             'slick-slide');
 
         _.slideCount = _.$slides.length;
@@ -1112,7 +1112,9 @@
         if (document.body.style.WebkitTransition !== undefined ||
             document.body.style.MozTransition !== undefined ||
             document.body.style.msTransition !== undefined) {
-            _.cssTransitions = true;
+            if(_.options.useCSS === true) {
+                _.cssTransitions = true;
+            }
         }
 
         if (document.body.style.MozTransform !== undefined) {
