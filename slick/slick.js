@@ -900,8 +900,6 @@
             _.autoPlay();
         }
 
-        _.setSlideClasses(_.currentSlide);
-
     };
 
     Slick.prototype.progressiveLazyLoad = function() {
@@ -1180,7 +1178,7 @@
             if (index > 0 && index < (_.slideCount - _.options.slidesToShow)) {
                 _.$slides.slice(index, index + _.options.slidesToShow).addClass('slick-active');
             } else {
-                indexOffset = _.options.slidesToShow + index;
+                indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
                 allSlides.slice(indexOffset, indexOffset + _.options.slidesToShow).addClass('slick-active');
             }
 
@@ -1284,6 +1282,9 @@
         }
 
         _.currentSlide = animSlide;
+
+        _.setSlideClasses(_.currentSlide);
+
         _.updateDots();
         _.updateArrows();
 
