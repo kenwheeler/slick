@@ -67,7 +67,8 @@
                 swipe: true,
                 touchMove: true,
                 touchThreshold: 5,
-                vertical: false
+                vertical: false,
+                useCSS: true
             };
 
             _.initials = {
@@ -1109,26 +1110,28 @@
             _.$slider.removeClass('slick-vertical');
         }
 
-        if (document.body.style.WebkitTransition !== undefined ||
-            document.body.style.MozTransition !== undefined ||
-            document.body.style.msTransition !== undefined) {
-            _.cssTransitions = true;
-        }
-
-        if (document.body.style.MozTransform !== undefined) {
-            _.animType = 'MozTransform';
-            _.transformType = "-moz-transform";
-            _.transitionType = 'MozTransition';
-        }
-        if (document.body.style.webkitTransform !== undefined) {
-            _.animType = 'webkitTransform';
-            _.transformType = "-webkit-transform";
-            _.transitionType = 'webkitTransition';
-        }
-        if (document.body.style.msTransform !== undefined) {
-            _.animType = 'transform';
-            _.transformType = "transform";
-            _.transitionType = 'transition';
+        if (_.options.useCSS === true) {
+             if (document.body.style.WebkitTransition !== undefined ||
+                 document.body.style.MozTransition !== undefined ||
+                 document.body.style.msTransition !== undefined) {
+                 _.cssTransitions = true;
+             }
+     
+             if (document.body.style.MozTransform !== undefined) {
+                 _.animType = 'MozTransform';
+                 _.transformType = "-moz-transform";
+                 _.transitionType = 'MozTransition';
+             }
+             if (document.body.style.webkitTransform !== undefined) {
+                 _.animType = 'webkitTransform';
+                 _.transformType = "-webkit-transform";
+                 _.transitionType = 'webkitTransition';
+             }
+             if (document.body.style.msTransform !== undefined) {
+                 _.animType = 'transform';
+                 _.transformType = "transform";
+                 _.transitionType = 'transition';
+             }
         }
 
         _.transformsEnabled = (_.animType !== null);
