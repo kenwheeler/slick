@@ -43,6 +43,7 @@
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
+                mouseAction: 'click',
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
@@ -720,7 +721,7 @@
         var _ = this;
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
-            $('li', _.$dots).on('click.slick', {
+            $('li', _.$dots).on(_.options.mouseAction + '.slick', {
                 message: 'index'
             }, _.changeSlide);
         }

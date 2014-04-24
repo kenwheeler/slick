@@ -100,6 +100,7 @@ $(document).ready(function() {
         infinite: true,
         speed: 500,
         fade: true,
+        mouseAction: 'hover',
         slide: 'div',
         cssEase: 'linear'
     });
