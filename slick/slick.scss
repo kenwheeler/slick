@@ -10,6 +10,25 @@ $slick-prev-character: '\2190' !default;
 $slick-next-character: '\2192' !default;
 $slick-dot-character: '\2022' !default;
 
+
+@function slick-image-url($url) {
+  @if function-exists(image-url) {
+    @return image-url($url);
+  }
+  @else  {  
+    @return url($slick-loader-path + $url);  
+  }  
+}
+
+@function slick-font-url($url) {
+  @if function-exists(font-url) {
+    @return imag-url($url);
+  }
+  @else  {  
+    @return url($slick-font-path + $url);  
+  }  
+}
+
 /* Slider */
 
 .slick-slider {
@@ -39,7 +58,7 @@ $slick-dot-character: '\2022' !default;
     }
 
     .slick-loading & {
-        background: #fff url(#{$slick-loader-path}ajax-loader.gif) center center no-repeat;
+        background: #fff slick-image-url("ajax-loader.gif") center center no-repeat;
     }
 
     &.dragging {
@@ -114,11 +133,11 @@ $slick-dot-character: '\2022' !default;
 
 @font-face {
     font-family:"slick";
-    src:    url("#{$slick-font-path}slick.eot");
-    src:    url("#{$slick-font-path}slick.eot?#iefix") format("embedded-opentype"),
-            url("#{$slick-font-path}slick.woff") format("woff"),
-            url("#{$slick-font-path}slick.ttf") format("truetype"),
-            url("#{$slick-font-path}slick.svg#slick") format("svg");
+    src:    slick-font-url("slick.eot");
+    src:    slick-font-url("slick.eot?#iefix") format("embedded-opentype"),
+            slick-font-url("slick.woff") format("woff"),
+            slick-font-url("slick.ttf") format("truetype"),
+            slick-font-url("slick.svg#slick") format("svg");
     font-weight: normal;
     font-style: normal;
 }
