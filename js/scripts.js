@@ -144,7 +144,8 @@ $(document).ready(function() {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        fade: true
+        fade: true,
+        asNavFor: '.slider-nav'
     });
     $('.slider-nav').slick({
         slidesToShow: 3,

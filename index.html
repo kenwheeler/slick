@@ -362,7 +362,7 @@ $('.js-filter').on('click', function(){
 $('.your-slider').unslick();
 				</code></pre>
 				<hr/>
-				<h2>Slider as Nav For</h2>
+				<h2>Slider as Nav For / sync</h2>
 				<div class="slider slider-for">
 					<div><h3>1</h3></div>
 					<div><h3>2</h3></div>
@@ -382,7 +382,8 @@ $('.slider-for').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: false,
-    fade: true
+    fade: true,
+    asNavFor: '.slider-nav'
 });
 $('.slider-nav').slick({
     slidesToShow: 3,
