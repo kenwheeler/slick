@@ -53,6 +53,7 @@
                 draggable: true,
                 easing: 'linear',
                 fade: false,
+                focusOnSelect: false,
                 infinite: true,
                 lazyLoad: 'ondemand',
                 onBeforeChange: null,
@@ -140,6 +141,7 @@
             _.swipeHandler = $.proxy(_.swipeHandler, _);
             _.dragHandler = $.proxy(_.dragHandler, _);
             _.keyHandler = $.proxy(_.keyHandler, _);
+            _.selectHandler = $.proxy(_.selectHandler, _);
             _.autoPlayIterator = $.proxy(_.autoPlayIterator, _);
 
             _.instanceUid = instanceUid++;
@@ -186,6 +188,10 @@
         _.$slideTrack.children(this.options.slide).remove();
 
         _.$slideTrack.append(_.$slides);
+        
+        _.$slides.each(function(index, element) {
+            $(element).attr("index",index);
+        });
 
         _.$slidesCache = _.$slides;
 
@@ -401,6 +407,11 @@
             ':not(.slick-cloned)').addClass(
             'slick-slide');
         _.slideCount = _.$slides.length;
+        
+        _.$slides.each(function(index, element) {
+            $(element).attr("index",index);
+        });
+        
         _.$slidesCache = _.$slides;
 
         _.$slider.addClass('slick-slider');
@@ -494,24 +505,24 @@
     Slick.prototype.changeSlide = function(event) {
 
         var _ = this;
-        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor) : null;
+        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
 
         switch (event.data.message) {
 
             case 'previous':
                 _.slideHandler(_.currentSlide - _.options.slidesToScroll);
-                if(asNavFor != null) asNavFor.slickPrev();
+                if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
                 break;
 
             case 'next':
                 _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-                if(asNavFor != null) asNavFor.slickNext();
+                if(asNavFor != null)  asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
                 break;
 
             case 'index':
                 var index = $(event.target).parent().index() * _.options.slidesToScroll;
                 _.slideHandler(index);
-                if(asNavFor != null) asNavFor.slickGoTo(index);
+                if(asNavFor != null)  asNavFor.slideHandler(index);
                 break;
 
             default:
@@ -763,6 +774,10 @@
 
         if(_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler); 
+        }
+        
+        if(_.options.focusOnSelect === true) {
+            $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
@@ -1240,6 +1255,18 @@
             }
 
         }
+
+    };
+    
+    Slick.prototype.selectHandler = function(event) {
+
+        var _ = this;
+        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
+        
+        var index = $(event.target).parent().attr("index");
+        
+        _.slideHandler(index);
+        if(asNavFor != null) asNavFor.slideHandler(index);
 
     };
 

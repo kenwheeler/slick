@@ -152,7 +152,8 @@ $(document).ready(function() {
         slidesToScroll: 1,
         asNavFor: '.slider-for',
         dots: true,
-        centerMode: true
+        centerMode: true,
+        focusOnSelect: true
     });
 
     $(window).on('scroll', function() {
