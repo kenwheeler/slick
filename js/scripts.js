@@ -139,6 +139,21 @@ $(document).ready(function() {
             filtered = false;
         }
     });
+    
+    $('.slider-for').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.slider-nav'
+    });
+    $('.slider-nav').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        asNavFor: '.slider-for',
+        dots: true,
+        centerMode: true
+    });
 
     $(window).on('scroll', function() {
         if ($(window).scrollTop() > 166) {
