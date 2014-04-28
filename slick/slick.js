@@ -776,7 +776,7 @@
             _.$list.on('keydown.slick', _.keyHandler); 
         }
         
-        if(_.options.focusOnSelect === true && _.slideCount > _.options.slidesToShow) {
+        if(_.options.focusOnSelect === true) {
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
         }
 
@@ -980,6 +980,10 @@
         _.updateDots();
 
         _.initDotEvents();
+        
+        if(_.options.focusOnSelect === true) {
+            $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
+        }
 
         _.setSlideClasses(0);
 
@@ -1262,16 +1266,20 @@
 
         var _ = this;
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
-        
         var index = parseInt($(event.target).parent().attr("index"));
         if(!index) index = 0;
         
+        if(_.slideCount <= _.options.slidesToShow){
+            return;
+        }
         _.slideHandler(index);
         
-        if(asNavFor != null) asNavFor.slideHandler(index);
-        
-        _.currentSlide = index;
-        asNavFor.currentSlide = index;
+        if(asNavFor != null){
+            if(asNavFor.slideCount <= asNavFor.options.slidesToShow){
+                return;
+            }
+            asNavFor.slideHandler(index);
+        }
     };
 
     Slick.prototype.slideHandler = function(index) {
@@ -1598,8 +1606,7 @@
         if (_.$dots !== null) {
 
             _.$dots.find('li').removeClass('slick-active');
-            _.$dots.find('li').eq(_.currentSlide / _.options.slidesToScroll).addClass(
-                'slick-active');
+            _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass('slick-active');
 
         }
 
