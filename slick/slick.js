@@ -137,11 +137,11 @@
             _.autoPlay = $.proxy(_.autoPlay, _);
             _.autoPlayClear = $.proxy(_.autoPlayClear, _);
             _.changeSlide = $.proxy(_.changeSlide, _);
+            _.selectHandler = $.proxy(_.selectHandler, _);
             _.setPosition = $.proxy(_.setPosition, _);
             _.swipeHandler = $.proxy(_.swipeHandler, _);
             _.dragHandler = $.proxy(_.dragHandler, _);
             _.keyHandler = $.proxy(_.keyHandler, _);
-            _.selectHandler = $.proxy(_.selectHandler, _);
             _.autoPlayIterator = $.proxy(_.autoPlayIterator, _);
 
             _.instanceUid = instanceUid++;
@@ -776,7 +776,7 @@
             _.$list.on('keydown.slick', _.keyHandler); 
         }
         
-        if(_.options.focusOnSelect === true) {
+        if(_.options.focusOnSelect === true && _.slideCount > _.options.slidesToShow) {
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
         }
 
@@ -1263,11 +1263,11 @@
         var _ = this;
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
         
-        var index = $(event.target).parent().attr("index");
+        var index = parseInt($(event.target).parent().attr("index"));
         
         _.slideHandler(index);
+        
         if(asNavFor != null) asNavFor.slideHandler(index);
-
     };
 
     Slick.prototype.slideHandler = function(index) {
