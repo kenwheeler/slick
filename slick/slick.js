@@ -1264,14 +1264,14 @@
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
         
         var index = parseInt($(event.target).parent().attr("index"));
-		if(!index) index = 0;
+        if(!index) index = 0;
         
         _.slideHandler(index);
         
         if(asNavFor != null) asNavFor.slideHandler(index);
-		
-		_.currentSlide = index;
-		asNavFor.currentSlide = index;
+        
+        _.currentSlide = index;
+        asNavFor.currentSlide = index;
     };
 
     Slick.prototype.slideHandler = function(index) {
