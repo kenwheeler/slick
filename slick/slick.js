@@ -647,7 +647,7 @@
         } else {
             if (_.slideCount % _.options.slidesToShow !== 0) {
                 if (slideIndex + _.options.slidesToScroll > _.slideCount && _.slideCount > _.options.slidesToShow) {
-                    _.slideOffset = ((_.slideCount % _.options.slidesToShow) * _.slideWidth);
+                    _.slideOffset = (_.options.slidesToShow * _.slideWidth) - ((_.slideCount % _.options.slidesToShow) * _.slideWidth);
                 }
             }
         }
