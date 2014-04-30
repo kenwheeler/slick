@@ -1036,6 +1036,7 @@
             _.$slideTrack.children('.slick-slide').width(_.slideWidth);
         }
 
+        _.$list.css("max-width", _.slideWidth * _.options.slidesToShow);
 
         if (_.options.vertical === false) {
             _.$slideTrack.width(Math.ceil((_.slideWidth * _
