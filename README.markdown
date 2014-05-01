@@ -34,6 +34,7 @@ onInit(this) | method | null | When Slick initializes for the first time callbac
 onReInit(this) | method | null | Every time Slick (re-)initializes callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
 responsive | object | null | Breakpoint triggered settings
+rtlMode | boolean | false | Place carousel in right-to-left mode
 slide | string | 'div' | Slide element query
 slidesToShow | int | 1 | # of slides to show at a time
 slidesToScroll | int | 1 | # of slides to scroll at a time
