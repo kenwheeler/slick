@@ -627,6 +627,7 @@
 
         dotLimit = _.options.infinite === true ? _.slideCount + _.options.slidesToShow - _.options.slidesToScroll : _.slideCount;
 
+
         while (breaker < dotLimit) {
             dotCount++;
             dotCounter += _.options.slidesToScroll;
@@ -678,6 +679,14 @@
         }
 
         return targetLeft;
+
+    };
+
+    Slick.prototype.getSlideCount = function() {
+
+        var _ = this;
+
+        return _.slideCount;
 
     };
 
@@ -756,7 +765,7 @@
         }
 
         if(_.options.accessibility === true) {
-            _.$list.on('keydown.slick', _.keyHandler); 
+            _.$list.on('keydown.slick', _.keyHandler);
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
@@ -1672,6 +1681,11 @@
             }
 
         });
+    };
+
+    $.fn.slickTotalPages = function() {
+        var _ = this;
+        return _.get(0).slick.getSlideCount() ? _.get(0).slick.getDotCount() + 1 : 0;
     };
 
     $.fn.slickUnfilter = function() {
