@@ -6,6 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
+ Version: 1.3.6
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -678,7 +679,7 @@
         } else {
             if (_.slideCount % _.options.slidesToShow !== 0) {
                 if (slideIndex + _.options.slidesToScroll > _.slideCount && _.slideCount > _.options.slidesToShow) {
-                    _.slideOffset = ((_.slideCount % _.options.slidesToShow) * _.slideWidth);
+                    _.slideOffset = (_.options.slidesToShow * _.slideWidth) - ((_.slideCount % _.options.slidesToShow) * _.slideWidth);
                     verticalOffset = ((_.slideCount % _.options.slidesToShow) * verticalHeight);
                 }
             }
@@ -1300,10 +1301,12 @@
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
         if (_.options.infinite === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
-            targetSlide = _.currentSlide;
-            _.animateSlide(slideLeft, function() {
-                _.postSlide(targetSlide);
-            });
+            if(_.options.fade === false) {
+                targetSlide = _.currentSlide;
+                _.animateSlide(slideLeft, function() {
+                    _.postSlide(targetSlide);
+                });
+            }
             return false;
         }
 
@@ -1446,7 +1449,7 @@
         if ('ontouchend' in document && _.options.swipe === false) {
             return false;
         } else if (_.options.draggable === false && !event.originalEvent.touches) {
-            return false;
+            return true;
         }
 
         _.touchObject.fingerCount = event.originalEvent && event.originalEvent.touches !== undefined ?
