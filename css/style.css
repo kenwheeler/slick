@@ -48,6 +48,8 @@ h2{font-family:Pacifico;font-size:36px;margin:20px auto;text-align:center;}
 h4{font-family:Pacifico;font-size:28px;margin:20px auto;text-align:center;}
 hr{background:#fff;border:0;height:1px;margin:40px 0;}
 p{font-size:18px;font-weight:700;line-height:1.5;margin-bottom:40px;text-align:center;}
+p.note{font-size: 12px;}
+p.cdn{font-size: 14px;}
 p.guff{font-size:16px;}
 pre{background:#fff;margin:0 10px 20px;padding:10px;}
 section{width:100%;}
