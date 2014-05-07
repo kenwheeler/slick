@@ -1255,10 +1255,12 @@
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
         if (_.options.infinite === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
-            targetSlide = _.currentSlide;
-            _.animateSlide(slideLeft, function() {
-                _.postSlide(targetSlide);
-            });
+            if(_.options.fade === false) {
+                targetSlide = _.currentSlide;
+                _.animateSlide(slideLeft, function() {
+                    _.postSlide(targetSlide);
+                });
+            }
             return false;
         }
 
