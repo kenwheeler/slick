@@ -1397,7 +1397,7 @@
         if ('ontouchend' in document && _.options.swipe === false) {
             return false;
         } else if (_.options.draggable === false && !event.originalEvent.touches) {
-            return false;
+            return true;
         }
 
         _.touchObject.fingerCount = event.originalEvent && event.originalEvent.touches !== undefined ?
