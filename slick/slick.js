@@ -941,11 +941,12 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]').not('[src]').length;
+        imgCount = $('img[data-lazy]').length;
 
         if (imgCount > 0) {
-            targetImage = $($('img[data-lazy]', _.$slider).not('[src]').get(0));
+            targetImage = $('img[data-lazy]', _.$slider).first();
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
+                targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
             });
         }
