@@ -830,7 +830,21 @@
         var _ = this,
             loadRange, cloneRange, rangeStart, rangeEnd;
 
-	    if (_.options.centerMode === true || _.options.fade === true ) {
+        function loadImages(imagesScope) {
+            $('img[data-lazy]', imagesScope).each(function() {
+                var image = $(this),
+                    imageSource = $(this).attr('data-lazy');
+
+                image
+                  .css({ opacity: 0 })
+                  .attr('src', imageSource)
+                  .removeAttr('data-lazy')
+                  .removeClass('slick-loading')
+                  .load(function() { image.animate({ opacity: 1 }, 200); });
+            });
+        }
+
+        if (_.options.centerMode === true || _.options.fade === true ) {
             rangeStart = _.options.slidesToShow + _.currentSlide - 1;
             rangeEnd = rangeStart + _.options.slidesToShow + 2;
         } else {
@@ -839,27 +853,14 @@
         }
 
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
-
-        $('img[data-lazy]', loadRange).not('[src]').each(function() {
-            $(this).css({opacity: 0}).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading').load(function(){
-                $(this).animate({ opacity: 1 }, 200);
-            });
-        });
+        loadImages(loadRange);
 
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
-            $('img[data-lazy]', cloneRange).not('[src]').each(function() {
-                $(this).css({opacity: 0}).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading').load(function(){
-                    $(this).animate({ opacity: 1 }, 200);
-                });
-            });
+            loadImages(cloneRange)
         } else if (_.currentSlide === 0) {
             cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
-            $('img[data-lazy]', cloneRange).not('[src]').each(function() {
-                $(this).css({opacity: 0}).attr('src', $(this).attr('data-lazy')).removeClass('slick-loading').load(function(){
-                    $(this).animate({ opacity: 1 }, 200);
-                });
-            });
+            loadImages(cloneRange);
         }
 
     };
