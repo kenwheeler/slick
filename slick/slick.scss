@@ -13,7 +13,7 @@ $slick-dot-character: '\2022' !default;
 
 @function slick-image-url($url) {
   @if function-exists(image-url) {
-    @return image-url($url);
+    @return image-url($slick-loader-path + $url);
   }
   @else  {  
     @return url($slick-loader-path + $url);  
@@ -22,7 +22,7 @@ $slick-dot-character: '\2022' !default;
 
 @function slick-font-url($url) {
   @if function-exists(font-url) {
-    @return imag-url($url);
+    @return font-url($slick-font-path + $url);
   }
   @else  {  
     @return url($slick-font-path + $url);  
