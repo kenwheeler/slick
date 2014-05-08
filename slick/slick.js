@@ -795,7 +795,7 @@
 
         var _ = this, loadRange, cloneRange, rangeStart, rangeEnd;
 
-	    if (_.options.centerMode === true || _.options.fade ) {
+	    if (_.options.centerMode === true || _.options.fade === true ) {
             rangeStart = _.options.slidesToShow + _.currentSlide - 1;
             rangeEnd = rangeStart + _.options.slidesToShow + 2;
         } else {
