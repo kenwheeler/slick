@@ -22,7 +22,7 @@ $slick-dot-character: '\2022' !default;
 
 @function slick-font-url($url) {
   @if function-exists(font-url) {
-    @return imag-url($url);
+    @return font-url($url);
   }
   @else  {  
     @return url($slick-font-path + $url);  
