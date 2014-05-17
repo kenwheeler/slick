@@ -1397,10 +1397,10 @@
 
         var _ = this;
 
-        if ('ontouchend' in document && _.options.swipe === false) {
-            return false;
-        } else if (_.options.draggable === false && !event.originalEvent.touches) {
-            return true;
+        if ((_.options.swipe === false) || ('ontouchend' in document && _.options.swipe === false)) {
+           return undefined;
+        } else if ((_.options.draggable === false) || (_.options.draggable === false && !event.originalEvent.touches)) {
+           return undefined;
         }
 
         _.touchObject.fingerCount = event.originalEvent && event.originalEvent.touches !== undefined ?
