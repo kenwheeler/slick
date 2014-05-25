@@ -3,6 +3,7 @@
 // Default Variables
 
 $slick-font-path: "./fonts/" !default;
+$slick-font-family: "slick" !default;
 $slick-loader-path: "./" !default;
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
@@ -168,7 +169,7 @@ $slick-dot-character: '\2022' !default;
     }
 }
 .slick-prev:before, .slick-next:before {
-    font-family:"slick";
+    font-family: $slick-font-family;
     font-size: 20px;
     line-height: 1;
     color: $slick-arrow-color;
@@ -235,7 +236,7 @@ $slick-dot-character: '\2022' !default;
                 content: $slick-dot-character;
                 width: 20px;
                 height: 20px;
-                font-family:"slick";
+                font-family: $slick-font-family;
                 font-size: 6px;
                 line-height: 20px;
                 text-align: center;
