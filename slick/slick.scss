@@ -3,6 +3,7 @@
 // Default Variables
 
 $slick-font-path: "./fonts/" !default;
+$slick-font-family: "slick" !default;
 $slick-loader-path: "./" !default;
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
@@ -13,20 +14,20 @@ $slick-dot-character: '\2022' !default;
 
 @function slick-image-url($url) {
   @if function-exists(image-url) {
-    @return image-url($slick-loader-path + $url);
+    @return image-url($url, false, false);
   }
-  @else  {  
-    @return url($slick-loader-path + $url);  
-  }  
+  @else  {
+    @return url($slick-loader-path + $url);
+  }
 }
 
 @function slick-font-url($url) {
   @if function-exists(font-url) {
-    @return font-url($slick-font-path + $url);
+    @return font-url($url);
   }
-  @else  {  
-    @return url($slick-font-path + $url);  
-  }  
+  @else  {
+    @return url($slick-font-path + $url);
+  }
 }
 
 /* Slider */
@@ -44,7 +45,7 @@ $slick-dot-character: '\2022' !default;
     user-select: none;
     -ms-touch-action: none;
     touch-action: none;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
 }
 .slick-list {
     position: relative;
@@ -168,7 +169,7 @@ $slick-dot-character: '\2022' !default;
     }
 }
 .slick-prev:before, .slick-next:before {
-    font-family:"slick";
+    font-family: $slick-font-family;
     font-size: 20px;
     line-height: 1;
     color: $slick-arrow-color;
@@ -218,14 +219,14 @@ $slick-dot-character: '\2022' !default;
             display: block;
             height: 20px;
             width: 20px;
-            outline: 0;
+            outline: none;
             line-height: 0;
             font-size: 0;
             color: transparent;
             padding: 5px;
             cursor: pointer;
             &:focus {
-                outline: 0;
+                outline: none;
             }
 
             &:before {
@@ -235,7 +236,7 @@ $slick-dot-character: '\2022' !default;
                 content: $slick-dot-character;
                 width: 20px;
                 height: 20px;
-                font-family:"slick";
+                font-family: $slick-font-family;
                 font-size: 6px;
                 line-height: 20px;
                 text-align: center;
