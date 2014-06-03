@@ -60,6 +60,7 @@
                 onInit: null,
                 onReInit: null,
                 pauseOnHover: true,
+                pauseOnDotsHover: false,
                 responsive: null,
                 slide: 'div',
                 slidesToShow: 1,
@@ -728,6 +729,12 @@
             }, _.changeSlide);
         }
 
+        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
+            $('li', _.$dots)
+                .on('mouseenter.slick', _.autoPlayClear)
+                .on('mouseleave.slick', _.autoPlay);
+        }
+
     };
 
     Slick.prototype.initializeEvents = function() {
@@ -757,7 +764,7 @@
         }
 
         if(_.options.accessibility === true) {
-            _.$list.on('keydown.slick', _.keyHandler); 
+            _.$list.on('keydown.slick', _.keyHandler);
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
