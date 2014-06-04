@@ -466,14 +466,14 @@
                     if (targetBreakpoint !== _.activeBreakpoint) {
                         _.activeBreakpoint =
                             targetBreakpoint;
-                        _.options = $.extend({}, _.defaults,
+                        _.options = $.extend({}, _.options,
                             _.breakpointSettings[
                                 targetBreakpoint]);
                         _.refresh();
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
-                    _.options = $.extend({}, _.defaults,
+                    _.options = $.extend({}, _.options,
                         _.breakpointSettings[
                             targetBreakpoint]);
                     _.refresh();
@@ -481,7 +481,7 @@
             } else {
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
-                    _.options = $.extend({}, _.defaults,
+                    _.options = $.extend({}, _.options,
                         _.originalSettings);
                     _.refresh();
                 }
