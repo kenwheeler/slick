@@ -1183,6 +1183,8 @@
 
             if (index > 0 && index < (_.slideCount - _.options.slidesToShow)) {
                 _.$slides.slice(index, index + _.options.slidesToShow).addClass('slick-active');
+            } else if ( allSlides.length <= _.options.slidesToShow ) {
+                allSlides.addClass('slick-active');
             } else {
                 indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
                 allSlides.slice(indexOffset, indexOffset + _.options.slidesToShow).addClass('slick-active');
