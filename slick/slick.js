@@ -431,7 +431,7 @@
             _.$list.prop('tabIndex', 0);
         }
 
-        _.setSlideClasses(0);
+        _.setSlideClasses(typeof this.currentSlide === 'number' ? this.currentSlide : 0);
 
         if (_.options.draggable === true) {
             _.$list.addClass('draggable');
@@ -923,12 +923,14 @@
 
     Slick.prototype.refresh = function() {
 
-        var _ = this;
+        var _ = this,
+            currentSlide = _.currentSlide;
 
         _.destroy();
 
         $.extend(_, _.initials);
 
+        _.currentSlide = currentSlide;
         _.init();
 
     };
