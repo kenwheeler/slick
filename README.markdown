@@ -76,6 +76,7 @@ slickAdd() | element : html or DOM object, index: int, addBefore: bool | Add a s
 slideRemove() | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
 slickFilter() | filter : selector or function | Filters slides using jQuery .filter syntax
 slickUnfilter() | | Removes applied filter
+slickGetOption(option) | option : string(option name) | Gets an option value.
 slickSetOption(option,value,refresh) | option : string(option name), value : depends on option, refresh : boolean | Sets an option live. Set refresh to true if it is an option that changes the display
 
 
