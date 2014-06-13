@@ -41,6 +41,8 @@
             _.defaults = {
                 accessibility: true,
                 arrows: true,
+                prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+                nextArrow: '<button type="button" class="slick-next">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
@@ -351,12 +353,8 @@
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
-            _.$prevArrow = $(
-                '<button type="button" class="slick-prev">Previous</button>').appendTo(
-                _.$slider);
-            _.$nextArrow = $(
-                '<button type="button" class="slick-next">Next</button>').appendTo(
-                _.$slider);
+            _.$prevArrow = $(_.options.prevArrow).appendTo(_.$slider);
+            _.$nextArrow = $(_.options.nextArrow).appendTo(_.$slider);
 
             if (_.options.infinite !== true) {
                 _.$prevArrow.addClass('slick-disabled');
