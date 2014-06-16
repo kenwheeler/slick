@@ -879,8 +879,8 @@
         }
 
         if (_.options.centerMode === true || _.options.fade === true ) {
-            rangeStart = _.options.slidesToShow + _.currentSlide - 1;
-            rangeEnd = rangeStart + _.options.slidesToShow + 2;
+            rangeStart = _.options.slidesToShow + _.currentSlide - Math.ceil(_.options.slidesToShow / 2);
+            rangeEnd = rangeStart + _.options.slidesToShow + Math.floor(_.options.slidesToShow / 2);
         } else {
             rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
             rangeEnd = rangeStart + _.options.slidesToShow;
