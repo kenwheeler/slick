@@ -110,9 +110,11 @@ $slick-font-family | string | "slick" | Font-family for slick icon font
 $slick-loader-path | string | "./" | Directory path for the loader image
 $slick-arrow-color | color | white | Color of the left/right arrow icons
 $slick-dot-color | color | black | Color of the navigation dots
+$slick-dot-color-active | color | $slick-dot-color | Color of the active navigation dot
 $slick-prev-character | string | '\2190' | Unicode character code for the previous arrow icon
 $slick-next-character | string | '\2192' | Unicode character code for the next arrow icon
 $slick-dot-character | string | '\2022' | Unicode character code for the navigation dot icon
+$slick-dot-size | pixels | 6px | Size of the navigation dots
 
 
 #### Dependencies
