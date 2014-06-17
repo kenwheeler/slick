@@ -496,13 +496,17 @@
         switch (event.data.message) {
 
             case 'previous':
-                _.slideHandler(_.currentSlide - _.options
+                if (_.slideCount > _.options.slidesToShow) {
+                  _.slideHandler(_.currentSlide - _.options
                     .slidesToScroll);
+                }
                 break;
 
             case 'next':
-                _.slideHandler(_.currentSlide + _.options
+                if (_.slideCount > _.options.slidesToShow) {
+                  _.slideHandler(_.currentSlide + _.options
                     .slidesToScroll);
+                }
                 break;
 
             case 'index':
