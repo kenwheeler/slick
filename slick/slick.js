@@ -427,6 +427,8 @@
 
         _.buildDots();
 
+        _.updateDots();
+
         if (_.options.accessibility === true) {
             _.$list.prop('tabIndex', 0);
         }
@@ -1582,7 +1584,7 @@
         if (_.$dots !== null) {
 
             _.$dots.find('li').removeClass('slick-active');
-            _.$dots.find('li').eq(_.currentSlide / _.options.slidesToScroll).addClass(
+            _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass(
                 'slick-active');
 
         }
