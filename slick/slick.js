@@ -427,6 +427,8 @@
 
         _.buildDots();
 
+        _.updateDots();
+
         if (_.options.accessibility === true) {
             _.$list.prop('tabIndex', 0);
         }
@@ -757,7 +759,7 @@
         }
 
         if(_.options.accessibility === true) {
-            _.$list.on('keydown.slick', _.keyHandler); 
+            _.$list.on('keydown.slick', _.keyHandler);
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
@@ -831,7 +833,7 @@
         var _ = this,
             loadRange, cloneRange, rangeStart, rangeEnd;
 
-	    if (_.options.centerMode === true || _.options.fade === true ) {
+        if (_.options.centerMode === true || _.options.fade === true ) {
             rangeStart = _.options.slidesToShow + _.currentSlide - 1;
             rangeEnd = rangeStart + _.options.slidesToShow + 2;
         } else {
@@ -1565,7 +1567,7 @@
         if (_.$dots !== null) {
 
             _.$dots.find('li').removeClass('slick-active');
-            _.$dots.find('li').eq(_.currentSlide / _.options.slidesToScroll).addClass(
+            _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass(
                 'slick-active');
 
         }
