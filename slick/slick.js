@@ -352,10 +352,10 @@
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
             _.$prevArrow = $(
-                '<button type="button" class="slick-prev">Previous</button>').appendTo(
+                '<button type="button" data-role="none"  class="slick-prev">Previous</button>').appendTo(
                 _.$slider);
             _.$nextArrow = $(
-                '<button type="button" class="slick-next">Next</button>').appendTo(
+                '<button type="button" data-role="none" class="slick-next">Next</button>').appendTo(
                 _.$slider);
 
             if (_.options.infinite !== true) {
