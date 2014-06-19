@@ -78,6 +78,7 @@
 
             _.initials = {
                 animating: false,
+                dragging: false,
                 autoPlayTimer: null,
                 currentSlide: 0,
                 currentLeft: null,
@@ -1383,7 +1384,7 @@
 
         var _ = this;
 
-        _.$list.removeClass('dragging');
+        _.dragging = false;
 
         if (_.touchObject.curX === undefined) {
             return false;
@@ -1460,7 +1461,7 @@
 
         curLeft = _.getLeft(_.currentSlide);
 
-        if (!_.$list.hasClass('dragging') || touches && touches.length !== 1) {
+        if (!_.dragging || touches && touches.length !== 1) {
             return false;
         }
 
@@ -1519,7 +1520,7 @@
         _.touchObject.startX = _.touchObject.curX = touches !== undefined ? touches.pageX : event.clientX;
         _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches.pageY : event.clientY;
 
-        _.$list.addClass('dragging');
+        _.dragging = true;
 
     };
 
