@@ -412,7 +412,6 @@
         _.$slideTrack.css('opacity', 0);
 
         if (_.options.centerMode === true) {
-            _.options.infinite = true;
             _.options.slidesToScroll = 1;
             if (_.options.slidesToShow % 2 === 0) {
                 _.options.slidesToShow = 3;
@@ -668,7 +667,7 @@
             }
         }
 
-        if (_.options.centerMode === true) {
+        if (_.options.centerMode === true && _.options.infinite === true) {
             _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
         }
 
