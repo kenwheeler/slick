@@ -1691,6 +1691,11 @@
         });
     };
 
+    $.fn.slickGetOption = function(option) {
+        var _ = this;
+        return _.get(0).slick.options[option];
+    };
+
     $.fn.slickSetOption = function(option, value, refresh) {
         var _ = this;
         return _.each(function(index, element) {
