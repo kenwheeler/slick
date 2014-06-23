@@ -60,6 +60,7 @@ $(document).ready(function() {
 
     $('.center').slick({
         centerMode: true,
+        infinite: true,
         centerPadding: '60px',
         slidesToShow: 3,
         responsive: [{
