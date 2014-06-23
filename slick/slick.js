@@ -551,7 +551,9 @@
             _.$prevArrow.remove();
             _.$nextArrow.remove();
         }
-        _.$slides.unwrap().unwrap();
+        if (_.$slides.parent().hasClass('slick-track')) {
+        	_.$slides.unwrap().unwrap();
+        }
         _.$slides.removeClass(
             'slick-slide slick-active slick-visible').removeAttr('style');
         _.$slider.removeClass('slick-slider');
