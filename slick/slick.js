@@ -62,6 +62,7 @@
                 onInit: null,
                 onReInit: null,
                 pauseOnHover: true,
+                pauseOnDotsHover: false,
                 responsive: null,
                 slide: 'div',
                 slidesToShow: 1,
@@ -749,6 +750,12 @@
             $('li', _.$dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
+        }
+
+        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
+            $('li', _.$dots)
+                .on('mouseenter.slick', _.autoPlayClear)
+                .on('mouseleave.slick', _.autoPlay);
         }
 
     };

@@ -50,6 +50,7 @@ onAfterChange(this, index) | method | null | After slide change callback
 onInit(this) | method | null | When Slick initializes for the first time callback
 onReInit(this) | method | null | Every time Slick (re-)initializes callback
 pauseOnHover | boolean | true | Pauses autoplay on hover
+pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 responsive | object | null | Breakpoint triggered settings
 slide | string | 'div' | Slide element query
 slidesToShow | int | 1 | # of slides to show at a time
