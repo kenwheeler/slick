@@ -41,6 +41,8 @@
             _.defaults = {
                 accessibility: true,
                 arrows: true,
+                prevArrow: '<button type="button" class="slick-prev">Previous</button>',
+                nextArrow: '<button type="button" class="slick-next">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
@@ -143,6 +145,11 @@
             _.autoPlayIterator = $.proxy(_.autoPlayIterator, _);
 
             _.instanceUid = instanceUid++;
+
+            // A simple way to check for HTML strings
+            // Strict HTML recognition (must start with <)
+            // Extracted from jQuery v1.11 source
+            _.htmlExpr = /^(?:\s*(<[\w\W]+>)[^>]*)$/;
 
             _.init();
 
@@ -351,12 +358,16 @@
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
 
-            _.$prevArrow = $(
-                '<button type="button" class="slick-prev">Previous</button>').appendTo(
-                _.$slider);
-            _.$nextArrow = $(
-                '<button type="button" class="slick-next">Next</button>').appendTo(
-                _.$slider);
+            _.$prevArrow = $(_.options.prevArrow);
+            _.$nextArrow = $(_.options.nextArrow);
+
+            if (_.htmlExpr.test(_.options.prevArrow)) {
+                _.$prevArrow.appendTo(_.$slider);
+            }
+
+            if (_.htmlExpr.test(_.options.nextArrow)) {
+                _.$nextArrow.appendTo(_.$slider);
+            }
 
             if (_.options.infinite !== true) {
                 _.$prevArrow.addClass('slick-disabled');
@@ -492,7 +503,11 @@
 
     Slick.prototype.changeSlide = function(event) {
 
-        var _ = this;
+        var _ = this,
+            $target = $(event.target);
+
+        // If target is a link, prevent default action.
+        $target.is('a') && event.preventDefault();
 
         switch (event.data.message) {
 
@@ -511,7 +526,7 @@
                 break;
 
             case 'index':
-                _.slideHandler($(event.target).parent().index() * _.options.slidesToScroll);
+                _.slideHandler($target.parent().index() * _.options.slidesToScroll);
                 break;
 
             default:
