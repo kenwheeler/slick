@@ -1216,6 +1216,8 @@
 
                 if (index === 0) {
                     allSlides.eq(allSlides.length - 1 - _.options.slidesToShow).addClass('slick-center');
+                    allSlides.eq(allSlides.length - 2 - _.options.slidesToShow).addClass('slick-center-neighbor');
+                    allSlides.eq(allSlides.length - 0 - _.options.slidesToShow).addClass('slick-center-neighbor');
                 } else if (index === _.slideCount - 1) {
                     allSlides.eq(_.options.slidesToShow).addClass('slick-center');
                     allSlides.eq(_.options.slidesToShow - 1).addClass('slick-center-neighbor');
