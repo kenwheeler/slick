@@ -59,7 +59,7 @@ slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
 swipe | boolean | true | Enables touch swipe
 touchMove | boolean | true | Enables slide moving with touch
-touchThreshold | int | 5 | Swipe distance threshold
+touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.
 useCSS | boolean | true | Enable/Disable CSS Transitions
 vertical | boolean | false | Vertical slide direction
 
