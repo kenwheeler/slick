@@ -40,6 +40,7 @@
 
             _.defaults = {
                 accessibility: true,
+                appendArrows: $(element),
                 arrows: true,
                 prevArrow: '<button type="button" class="slick-prev">Previous</button>',
                 nextArrow: '<button type="button" class="slick-next">Next</button>',
@@ -364,11 +365,11 @@
             _.$nextArrow = $(_.options.nextArrow);
 
             if (_.htmlExpr.test(_.options.prevArrow)) {
-                _.$prevArrow.appendTo(_.$slider);
+                _.$prevArrow.appendTo(_.options.appendArrows);
             }
 
             if (_.htmlExpr.test(_.options.nextArrow)) {
-                _.$nextArrow.appendTo(_.$slider);
+                _.$nextArrow.appendTo(_.options.appendArrows);
             }
 
             if (_.options.infinite !== true) {
