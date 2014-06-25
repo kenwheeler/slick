@@ -121,22 +121,8 @@
             _.options = $.extend({}, _.defaults, settings);
 
             _.originalSettings = _.options;
-            responsiveSettings = _.options.responsive || null;
 
-            if (responsiveSettings && responsiveSettings.length > -1) {
-                for (breakpoint in responsiveSettings) {
-                    if (responsiveSettings.hasOwnProperty(breakpoint)) {
-                        _.breakpoints.push(responsiveSettings[
-                            breakpoint].breakpoint);
-                        _.breakpointSettings[responsiveSettings[
-                            breakpoint].breakpoint] =
-                            responsiveSettings[breakpoint].settings;
-                    }
-                }
-                _.breakpoints.sort(function(a, b) {
-                    return b - a;
-                });
-            }
+            _.setBreakpoints();
 
             _.autoPlay = $.proxy(_.autoPlay, _);
             _.autoPlayClear = $.proxy(_.autoPlayClear, _);
@@ -555,7 +541,7 @@
             _.$nextArrow.remove();
         }
         if (_.$slides.parent().hasClass('slick-track')) {
-        	_.$slides.unwrap().unwrap();
+            _.$slides.unwrap().unwrap();
         }
         _.$slides.removeClass(
             'slick-slide slick-active slick-visible').removeAttr('style');
@@ -985,15 +971,15 @@
 
         _.setProps();
 
+        _.setBreakpoints();
+
         _.setupInfinite();
 
-        _.buildArrows();
+        _.checkResponsive();
 
         _.updateArrows();
 
         _.initArrowEvents();
-
-        _.buildDots();
 
         _.updateDots();
 
@@ -1039,6 +1025,28 @@
         _.reinit();
 
     };
+
+    Slick.prototype.setBreakpoints = function() {
+
+      var _ = this;
+
+      var responsiveSettings = _.options.responsive || null;
+
+      if (responsiveSettings && responsiveSettings.length > -1) {
+          for (var breakpoint in responsiveSettings) {
+              if (responsiveSettings.hasOwnProperty(breakpoint)) {
+                  _.breakpoints.push(responsiveSettings[
+                      breakpoint].breakpoint);
+                  _.breakpointSettings[responsiveSettings[
+                      breakpoint].breakpoint] =
+                      responsiveSettings[breakpoint].settings;
+              }
+          }
+          _.breakpoints.sort(function(a, b) {
+              return b - a;
+          });
+      }
+    }
 
     Slick.prototype.setCSS = function(position) {
 
