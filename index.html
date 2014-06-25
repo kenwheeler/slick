@@ -510,6 +510,24 @@ $(document).ready(function(){
 							<td>Set the slider to be the navigation of other slider (Class or ID Name)</td>
 						</tr>
 						<tr>
+							<td>appendArrows</td>
+							<td>string</td>
+							<td>$(element)</td>
+							<td>Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)</td>
+						</tr>						
+                        <tr>
+                            <td>prevArrow</td>
+                            <td>string (html|jQuery selector) | object (DOM node|jQuery object)</td>
+                            <td>&lt;button type="button" class="slick-prev">Previous&lt;/button&gt;</td>
+                            <td>Allows you to select a node or customize the HTML for the "Previous" arrow.</td>
+                        </tr>
+                        <tr>
+                            <td>nextArrow</td>
+                            <td>string (html|jQuery selector) | object (DOM node|jQuery object)</td>
+                            <td>&lt;button type="button" class="slick-next">Next&lt;/button&gt;</td>
+                            <td>Allows you to select a node or customize the HTML for the "Next" arrow.</td>
+                        </tr>
+						<tr>
 							<td>centerMode</td>
 							<td>boolean</td>
 							<td>false</td>
@@ -606,6 +624,12 @@ $(document).ready(function(){
 							<td>Pause Autoplay On Hover</td>
 						</tr>
 						<tr>
+							<td>pauseOnDotsHover</td>
+							<td>boolean</td>
+							<td>false</td>
+							<td>Pause Autoplay when a dot is hovered</td>
+						</tr>
+						<tr>
 							<td>responsive</td>
 							<td>object</td>
 							<td>none</td>
@@ -651,7 +675,7 @@ $(document).ready(function(){
 							<td>touchThreshold</td>
 							<td>int</td>
 							<td>5</td>
-							<td>Swipe distance threshold</td>
+							<td>To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.</td>
 						</tr>
 						<tr>
 							<td>useCSS</td>
@@ -727,6 +751,11 @@ $(document).ready(function(){
 							<td>index</td>
 							<td>Removes applied filtering</td>
 						</tr>
+                        <tr>
+                            <td>slickGetOption</td>
+                            <td>option : string</td>
+                            <td>Gets an individual option value.</td>
+                        </tr>
 						<tr>
 							<td>slickSetOption</td>
 							<td>option : string, value : depends on option, refresh : boolean</td>
