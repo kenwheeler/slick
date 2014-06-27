@@ -19,7 +19,7 @@ $opacity-not-active: .25;
 
 @function slick-image-url($url) {
   @if function-exists(image-url) {
-    @return image-url($url, false, false);
+    @return image-url($url);
   }
   @else  {
     @return url($slick-loader-path + $url);
