@@ -1711,6 +1711,11 @@
         });
     };
 
+    $.fn.slickIsPaused = function() {
+        var _ = this;
+        return _.get(0).slick.paused;
+    };
+
     $.fn.slickNext = function() {
         var _ = this;
         return _.each(function(index, element) {
