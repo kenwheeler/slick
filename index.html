@@ -361,6 +361,40 @@ $('.js-filter').on('click', function(){
 				<pre><code>
 $('.your-slider').unslick();
 				</code></pre>
+				<hr/>
+				<h2>Slider as Nav For / sync</h2>
+				<div class="slider slider-for">
+					<div><h3>1</h3></div>
+					<div><h3>2</h3></div>
+					<div><h3>3</h3></div>
+					<div><h3>4</h3></div>
+					<div><h3>5</h3></div>
+				</div>
+				<div class="slider slider-nav">
+					<div><h3>1</h3></div>
+					<div><h3>2</h3></div>
+					<div><h3>3</h3></div>
+					<div><h3>4</h3></div>
+					<div><h3>5</h3></div>
+					</div>
+				<pre><code>
+ $('.slider-for').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    asNavFor: '.slider-nav'
+});
+$('.slider-nav').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    asNavFor: '.slider-for',
+    dots: true,
+    centerMode: true,
+    focusOnSelect: true
+});
+				</code></pre>
+				<hr />
 				<h4 class="more">and a whole lot more...</h4>
 				</div>
 		</section>
@@ -469,6 +503,12 @@ $(document).ready(function(){
 							<td>true</td>
 							<td>Prev/Next Arrows</td>
 						</tr>
+                        <tr>
+							<td>asNavFor</td>
+							<td>string</td>
+							<td>null</td>
+							<td>Set the slider to be the navigation of other slider (Class or ID Name)</td>
+						</tr>
 						<tr>
 							<td>appendArrows</td>
 							<td>string</td>
@@ -528,6 +568,12 @@ $(document).ready(function(){
 							<td>boolean</td>
 							<td>false</td>
 							<td>Enable fade</td>
+						</tr>
+                        <tr>
+							<td>focusOnSelect</td>
+							<td>boolean</td>
+							<td>false</td>
+							<td>Enable focus on selected element (click)</td>
 						</tr>
 						<tr>
 							<td>easing</td>
@@ -629,7 +675,7 @@ $(document).ready(function(){
 							<td>touchThreshold</td>
 							<td>int</td>
 							<td>5</td>
-							<td>Swipe distance threshold</td>
+							<td>To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.</td>
 						</tr>
 						<tr>
 							<td>useCSS</td>
@@ -719,6 +765,11 @@ $(document).ready(function(){
 							<td>unslick</td>
 							<td>none</td>
 							<td>Deconstructs slick</td>
+						</tr>
+                        <tr>
+							<td>getSlick</td>
+							<td>none</td>
+							<td>Get Slick Object</td>
 						</tr>
 					</tbody>
 				</table>
