@@ -911,6 +911,10 @@
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
         loadImages(loadRange);
 
+	      if (_.slideCount == 1){
+		      cloneRange = _.$slider.find('.slick-slide')
+		      loadImages(cloneRange)
+	      }else
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
             loadImages(cloneRange)
