@@ -459,7 +459,6 @@
                     }
                 }
             }
-
             if (targetBreakpoint !== null) {
                 if (_.activeBreakpoint !== null) {
                     if (targetBreakpoint !== _.activeBreakpoint) {
@@ -541,7 +540,7 @@
             _.$nextArrow.remove();
         }
         if (_.$slides.parent().hasClass('slick-track')) {
-            _.$slides.unwrap().unwrap();
+          _.$slides.unwrap().unwrap();
         }
         _.$slides.removeClass(
             'slick-slide slick-active slick-visible').removeAttr('style');
@@ -975,15 +974,19 @@
 
         _.setupInfinite();
 
-        _.checkResponsive();
+        _.buildArrows();
 
         _.updateArrows();
 
         _.initArrowEvents();
 
+        _.buildDots();
+
         _.updateDots();
 
         _.initDotEvents();
+
+        _.checkResponsive();
 
         _.setSlideClasses(0);
 
