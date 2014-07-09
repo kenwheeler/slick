@@ -116,6 +116,24 @@ $slick-prev-character | string | '\2190' | Unicode character code for the previo
 $slick-next-character | string | '\2192' | Unicode character code for the next arrow icon
 $slick-dot-character | string | '\2022' | Unicode character code for the navigation dot icon
 $slick-dot-size | pixels | 6px | Size of the navigation dots
+$slick-opacity-default | value | .75 | default opacity for slick dots and arrows
+$slick-opacity-on-hover | value | 1 | opacity on hover for slick dots and arrows
+$slick-opacity-not-active | value | .25 | opacity for disabled arrows and not-active dots
+
+#### Different Icons
+
+If you want to use different icons for the arrows or dots you can easily achieve this by setting the according Slick Sass variables to different values. For example install `FontAwesome` as described [here](http://fontawesome.io/get-started/). 
+
+Then set:
+
+    $slick-font-family: 'FontAwesome';
+    $slick-prev-character: '\f0a8';
+    $slick-next-character: '\f0a9';
+    $slick-dot-character: '\f111';
+
+If you have installed `FontAwesome` locally, you need to also adjust the `$slick-font-path`.
+
+Of course, you can use any other icon font that you like.
 
 
 #### Dependencies
