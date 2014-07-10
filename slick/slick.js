@@ -903,29 +903,30 @@
         if (slides) {
           // The setSlideClasses has already set the .slick-active classes on the slides that are needed to load.
           loadImages(slides);
+          return;
+        }
+
+        if (_.options.centerMode === true || _.options.fade === true ) {
+            rangeStart = _.options.slidesToShow + _.currentSlide - 1;
+            rangeEnd = rangeStart + _.options.slidesToShow + 2;
         } else {
-          if (_.options.centerMode === true || _.options.fade === true ) {
-              rangeStart = _.options.slidesToShow + _.currentSlide - 1;
-              rangeEnd = rangeStart + _.options.slidesToShow + 2;
-          } else {
-              rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
-              rangeEnd = rangeStart + _.options.slidesToShow;
-          }
+            rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
+            rangeEnd = rangeStart + _.options.slidesToShow;
+        }
 
-          loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
-          loadImages(loadRange);
+        loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
+        loadImages(loadRange);
 
-          if (_.slideCount == 1){
-            cloneRange = _.$slider.find('.slick-slide')
+        if (_.slideCount == 1){
+          cloneRange = _.$slider.find('.slick-slide')
+          loadImages(cloneRange)
+        }else
+        if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
+            cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
             loadImages(cloneRange)
-          }else
-          if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-              cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
-              loadImages(cloneRange)
-          } else if (_.currentSlide === 0) {
-              cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
-              loadImages(cloneRange);
-          }
+        } else if (_.currentSlide === 0) {
+            cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
+            loadImages(cloneRange);
         }
 
     };
