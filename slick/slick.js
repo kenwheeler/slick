@@ -64,6 +64,7 @@
                 onAfterChange: null,
                 onInit: null,
                 onReInit: null,
+                onResize: null,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
                 responsive: null,
@@ -827,6 +828,9 @@
                     _.windowWidth = $(window).width();
                     _.checkResponsive();
                     _.setPosition();
+                    if (_.options.onResize) {
+                        _.options.onResize.call(this, _);
+                    }
                 }, 50);
             }
         });
