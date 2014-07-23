@@ -1099,31 +1099,37 @@
 
         var _ = this;
 
-        if (_.options.centerMode === true) {
-            _.$slideTrack.children('.slick-slide').width(_.slideWidth);
-        } else {
-            _.$slideTrack.children('.slick-slide').width(_.slideWidth);
-        }
-
-
         if (_.options.vertical === false) {
-            _.$slideTrack.width(Math.ceil((_.slideWidth * _
-                .$slideTrack.children('.slick-slide').length)));
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: ('0px ' + _.options.centerPadding)
                 });
             }
         } else {
-            _.$list.height(_.$slides.first().outerHeight() * _.options.slidesToShow);
-            _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight() * _
-                .$slideTrack.children('.slick-slide').length)));
+            _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
                 });
             }
         }
+
+        _.listWidth = _.$list.width();
+        _.listHeight = _.$list.height();
+
+
+        if(_.options.vertical === false) {
+            _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
+            _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+        
+        } else {
+            _.slideWidth = Math.ceil(_.listWidth);
+            _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
+        
+        }
+
+        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
+        _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
 
     };
 
@@ -1154,7 +1160,6 @@
 
         var _ = this;
 
-        _.setValues();
         _.setDimensions();
 
         if (_.options.fade === false) {
@@ -1205,20 +1210,6 @@
 
     };
 
-    Slick.prototype.setValues = function() {
-
-        var _ = this;
-
-        _.listWidth = _.$list.width();
-        _.listHeight = _.$list.height();
-        if(_.options.vertical === false) {
-        _.slideWidth = Math.ceil(_.listWidth / _.options
-            .slidesToShow);
-        } else {
-        _.slideWidth = Math.ceil(_.listWidth);
-        }
-
-    };
 
     Slick.prototype.setSlideClasses = function(index) {
 
