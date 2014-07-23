@@ -54,6 +54,7 @@
                     return '<button type="button">' + (i + 1) + '</button>';
                 },
                 dots: false,
+                dotsClass: 'slick-dots',
                 draggable: true,
                 easing: 'linear',
                 fade: false,
@@ -199,7 +200,7 @@
         _.$slideTrack.children(this.options.slide).remove();
 
         _.$slideTrack.append(_.$slides);
-        
+
         _.$slides.each(function(index, element) {
             $(element).attr("index",index);
         });
@@ -352,7 +353,7 @@
 
                 _.slideHandler(_.currentSlide - _.options.slidesToScroll);
                 if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
-                
+
             }
 
         } else {
@@ -396,7 +397,7 @@
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
-            dotString = '<ul class="slick-dots">';
+            dotString = '<ul class="' + _.options.dotsClass + '">';
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
                 dotString += '<li>' + _.options.customPaging.call(this, _, i) + '</li>';
@@ -422,11 +423,11 @@
             ':not(.slick-cloned)').addClass(
             'slick-slide');
         _.slideCount = _.$slides.length;
-        
+
         _.$slides.each(function(index, element) {
             $(element).attr("index",index);
         });
-        
+
         _.$slidesCache = _.$slides;
 
         _.$slider.addClass('slick-slider');
@@ -810,7 +811,7 @@
         if(_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
         }
-        
+
         if(_.options.focusOnSelect === true) {
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
         }
@@ -1024,7 +1025,7 @@
         _.updateDots();
 
         _.initDotEvents();
-        
+
         if(_.options.focusOnSelect === true) {
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
         }
@@ -1302,19 +1303,19 @@
         }
 
     };
-    
+
     Slick.prototype.selectHandler = function(event) {
 
         var _ = this;
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
         var index = parseInt($(event.target).parent().attr("index"));
         if(!index) index = 0;
-        
+
         if(_.slideCount <= _.options.slidesToShow){
             return;
         }
         _.slideHandler(index);
-        
+
         if(asNavFor != null){
             if(asNavFor.slideCount <= asNavFor.options.slidesToShow){
                 return;
@@ -1698,7 +1699,7 @@
     $.fn.slickGoTo = function(slide) {
         var _ = this;
         return _.each(function(index, element) {
-            
+
             var asNavFor = element.slick.options.asNavFor != null ? $(element.slick.options.asNavFor) : null;
             if(asNavFor != null) asNavFor.slickGoTo(slide);
             element.slick.slideHandler(slide);
@@ -1799,14 +1800,14 @@
 
         });
     };
-    
+
     $.fn.getSlick = function() {
         var s = null;
         var _ = this;
         _.each(function(index, element) {
-            s = element.slick
+            s = element.slick;
         });
-        
+
         return s;
     };
 
