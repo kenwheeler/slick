@@ -1244,8 +1244,9 @@
             _.$slides.eq(index).addClass('slick-center');
 
         } else {
-
-            if (index > 0 && index < (_.slideCount - _.options.slidesToShow)) {
+            if(_.options.fade){
+                _.$slides.eq(index).addClass('slick-active');
+            } else if (index > 0 && index < (_.slideCount - _.options.slidesToShow)) {
                 _.$slides.slice(index, index + _.options.slidesToShow).addClass('slick-active');
             } else if ( allSlides.length <= _.options.slidesToShow ) {
                 allSlides.addClass('slick-active');
@@ -1811,4 +1812,11 @@
         return s;
     };
 
+    //Attach Slick to the window so devs can simply overwrite a broken method
+    //and not have to ship to production with a modified slick
+    window.Slick = (function(window, document, undefined){
+        return Slick;
+    })(this, window.document);
+
 }));
+
