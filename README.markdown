@@ -109,6 +109,7 @@ Variable | Type | Default | Description
 $slick-font-path | string | "./fonts/" | Directory path for the slick icon font
 $slick-font-family | string | "slick" | Font-family for slick icon font
 $slick-loader-path | string | "./" | Directory path for the loader image
+$slick-loader-filename | string | "ajax-loader.gif" | Filename of the loader image
 $slick-arrow-color | color | white | Color of the left/right arrow icons
 $slick-dot-color | color | black | Color of the navigation dots
 $slick-dot-color-active | color | $slick-dot-color | Color of the active navigation dot
