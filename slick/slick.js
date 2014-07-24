@@ -35,12 +35,12 @@
 
         function Slick(element, settings) {
 
-            var _ = this,
+            var _ = this, $element = $(element),
                 responsiveSettings, breakpoint;
 
             _.defaults = {
                 accessibility: true,
-                appendArrows: $(element),
+                appendArrows: $element,
                 arrows: true,
                 asNavFor: null,
                 prevArrow: '<button type="button" class="slick-prev">Previous</button>',
@@ -114,14 +114,14 @@
             _.cssTransitions = false;
             _.paused = false;
             _.positionProp = null;
-            _.$slider = $(element);
+            _.$slider = $element;
             _.$slidesCache = null;
             _.transformType = null;
             _.transitionType = null;
             _.windowWidth = 0;
-            _.windowTimer = null;
-
-            _.options = $.extend({}, _.defaults, settings);
+            _.windowTimer = null;            
+                       
+            _.options = $.extend({}, _.defaults, $element.data('slick') || {}, settings);
 
             _.originalSettings = _.options;
             responsiveSettings = _.options.responsive || null;
