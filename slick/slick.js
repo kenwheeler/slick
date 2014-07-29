@@ -68,7 +68,7 @@
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
                 responsive: null,
-				rtl: false,
+                rtl: false,
                 slide: 'div',
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -217,7 +217,7 @@
 
         var animProps = {}, _ = this;
 
-		if (_.options.rtl === true && _.options.vertical === false) {
+        if (_.options.rtl === true && _.options.vertical === false) {
             targetLeft = -targetLeft;
         }
         if (_.transformsEnabled === false) {
@@ -578,7 +578,7 @@
             _.$nextArrow.remove();
         }
         if (_.$slides.parent().hasClass('slick-track')) {
-        	_.$slides.unwrap().unwrap();
+            _.$slides.unwrap().unwrap();
         }
         _.$slides.removeClass(
             'slick-slide slick-active slick-visible').removeAttr('style');
@@ -916,10 +916,10 @@
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
         loadImages(loadRange);
 
-	      if (_.slideCount == 1){
-		      cloneRange = _.$slider.find('.slick-slide')
-		      loadImages(cloneRange)
-	      }else
+          if (_.slideCount == 1){
+              cloneRange = _.$slider.find('.slick-slide')
+              loadImages(cloneRange)
+          }else
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
             loadImages(cloneRange)
