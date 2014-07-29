@@ -68,6 +68,7 @@
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
                 responsive: null,
+				rtl: false,
                 slide: 'div',
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -216,6 +217,9 @@
 
         var animProps = {}, _ = this;
 
+		if (_.options.rtl === true && _.options.vertical === false) {
+            targetLeft = -targetLeft;
+        }
         if (_.transformsEnabled === false) {
             if (_.options.vertical === false) {
                 _.$slideTrack.animate({
@@ -1076,6 +1080,9 @@
         var _ = this,
             positionProps = {}, x, y;
 
+        if (_.options.rtl === true) {
+            position = -position;
+        }
         x = _.positionProp == 'left' ? position + 'px' : '0px';
         y = _.positionProp == 'top' ? position + 'px' : '0px';
 
