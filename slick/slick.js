@@ -882,7 +882,7 @@
 
     };
 
-    Slick.prototype.lazyLoad = function() {
+    Slick.prototype.lazyLoad = function(slides) {
 
         var _ = this,
             loadRange, cloneRange, rangeStart, rangeEnd;
@@ -901,6 +901,12 @@
             });
         }
 
+        if (slides) {
+          // The setSlideClasses has already set the .slick-active classes on the slides that are needed to load.
+          loadImages(slides);
+          return;
+        }
+
         if (_.options.centerMode === true || _.options.fade === true ) {
             rangeStart = _.options.slidesToShow + _.currentSlide - 1;
             rangeEnd = rangeStart + _.options.slidesToShow + 2;
@@ -912,10 +918,10 @@
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
         loadImages(loadRange);
 
-	      if (_.slideCount == 1){
-		      cloneRange = _.$slider.find('.slick-slide')
-		      loadImages(cloneRange)
-	      }else
+        if (_.slideCount == 1){
+          cloneRange = _.$slider.find('.slick-slide')
+          loadImages(cloneRange)
+        }else
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
             loadImages(cloneRange)
@@ -1257,7 +1263,7 @@
         }
 
         if (_.options.lazyLoad === 'ondemand') {
-            _.lazyLoad();
+            _.lazyLoad(allSlides.filter('.slick-active'));
         }
 
     };
