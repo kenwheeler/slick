@@ -211,8 +211,7 @@
 
     };
 
-    Slick.prototype.animateSlide = function(targetLeft,
-        callback) {
+    Slick.prototype.animateSlide = function(targetLeft, callback) {
 
         var animProps = {}, _ = this;
 
