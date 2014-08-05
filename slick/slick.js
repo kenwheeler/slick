@@ -893,11 +893,16 @@
                     imageSource = $(this).attr('data-lazy');
 
                 image
-                  .css({ opacity: 0 })
-                  .attr('src', imageSource)
-                  .removeAttr('data-lazy')
-                  .removeClass('slick-loading')
-                  .load(function() { image.animate({ opacity: 1 }, 200); });
+                    .hide()
+                    .attr('src', imageSource)
+                    .removeAttr('data-lazy')
+                    .removeClass('slick-loading')
+                    .one('load', function () {
+                        image.fadeIn();
+                    })
+                    .each(function () {
+                        if (this.complete) image.trigger('load');
+                    });
             });
         }
 
