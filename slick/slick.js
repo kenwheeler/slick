@@ -890,14 +890,14 @@
         function loadImages(imagesScope) {
             $('img[data-lazy]', imagesScope).each(function() {
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy');
+                    imageSource = $(this).attr('data-lazy') + "?" + new Date().getTime();
 
                 image
+                  .load(function() { image.animate({ opacity: 1 }, 200); })
                   .css({ opacity: 0 })
                   .attr('src', imageSource)
                   .removeAttr('data-lazy')
-                  .removeClass('slick-loading')
-                  .load(function() { image.animate({ opacity: 1 }, 200); });
+                  .removeClass('slick-loading');
             });
         }
 
