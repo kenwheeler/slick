@@ -395,6 +395,43 @@ $('.slider-nav').slick({
 });
 				</code></pre>
 				<hr />
+				<h2>Single Item RTL</h2>
+				<div dir="rtl" class="slider single-item-rtl">
+					<div><h3>1</h3></div>
+					<div><h3>2</h3></div>
+					<div><h3>3</h3></div>
+					<div><h3>4</h3></div>
+					<div><h3>5</h3></div>
+					<div><h3>6</h3></div>
+				</div>
+				<pre><code>
+$('.single-item-rtl').slick({
+	rtl: true
+});
+				</code></pre>
+				<h2>Multiple Items RTL</h2>
+				<div dir="rtl" class="slider multiple-items-rtl">
+					<div><h3>1</h3></div>
+					<div><h3>2</h3></div>
+					<div><h3>3</h3></div>
+					<div><h3>4</h3></div>
+					<div><h3>5</h3></div>
+					<div><h3>6</h3></div>
+					<div><h3>7</h3></div>
+					<div><h3>8</h3></div>
+					<div><h3>9</h3></div>
+				</div>
+				<pre><code>
+$('.multiple-items-rtl').slick({
+  infinite: true,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  rtl: true
+});
+				</code></pre>
+
+				<p><strong>Note:</strong> the HTML tag or the parent of the slider must have the attribute "dir" set to "rtl".</p>
+				<hr />
 				<h4 class="more">and a whole lot more...</h4>
 				</div>
 		</section>
@@ -514,7 +551,7 @@ $(document).ready(function(){
 							<td>string</td>
 							<td>$(element)</td>
 							<td>Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)</td>
-						</tr>						
+						</tr>
                         <tr>
                             <td>prevArrow</td>
                             <td>string (html|jQuery selector) | object (DOM node|jQuery object)</td>
@@ -688,6 +725,12 @@ $(document).ready(function(){
 							<td>boolean</td>
 							<td>false</td>
 							<td>Vertical slide mode</td>
+						</tr>
+						<tr>
+							<td>rtl</td>
+							<td>boolean</td>
+							<td>false</td>
+							<td>Change the slider's direction to become right-to-left</td>
 						</tr>
 					</tbody>
 				</table>

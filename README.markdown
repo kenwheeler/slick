@@ -63,6 +63,7 @@ touchMove | boolean | true | Enables slide moving with touch
 touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.
 useCSS | boolean | true | Enable/Disable CSS Transitions
 vertical | boolean | false | Vertical slide direction
+rtl | boolean | false | Change the slider's direction to become right-to-left
 
 
 #### Methods
