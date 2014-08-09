@@ -1228,7 +1228,7 @@
     Slick.prototype.setSlideClasses = function(index) {
 
         var _ = this,
-            centerOffset, allSlides, indexOffset;
+            centerOffset, allSlides, indexOffset, remainder;
 
         _.$slider.find('.slick-slide').removeClass('slick-active').removeClass('slick-center');
         allSlides = _.$slider.find('.slick-slide');
@@ -1263,8 +1263,13 @@
             } else if ( allSlides.length <= _.options.slidesToShow ) {
                 allSlides.addClass('slick-active');
             } else {
+                remainder = _.slideCount%_.options.slidesToShow;
                 indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
-                allSlides.slice(indexOffset, indexOffset + _.options.slidesToShow).addClass('slick-active');
+                if(_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow) {
+                    allSlides.slice(indexOffset-(_.options.slidesToShow-remainder), indexOffset + remainder).addClass('slick-active');
+                } else {
+                    allSlides.slice(indexOffset, indexOffset + _.options.slidesToShow).addClass('slick-active');
+                }
             }
 
         }
