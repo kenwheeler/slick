@@ -827,7 +827,7 @@
         });
 
         $(window).on('resize.slick.slick-' + _.instanceUid, function() {
-            if ($(window).width !== _.windowWidth) {
+            if ($(window).width() !== _.windowWidth) {
                 clearTimeout(_.windowDelay);
                 _.windowDelay = window.setTimeout(function() {
                     _.windowWidth = $(window).width();
