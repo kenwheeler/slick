@@ -77,7 +77,8 @@
                 touchMove: true,
                 touchThreshold: 5,
                 useCSS: true,
-                vertical: false
+                vertical: false,
+                adaptiveHeight: false
             };
 
             _.initials = {
@@ -166,6 +167,17 @@
         return Slick;
 
     }());
+
+    Slick.prototype.adaptiveHeight = function() {
+
+        var _ = this;
+            
+        if (_.options.adaptiveHeight === true) {
+            _.$slider.animate({
+                height: _.$slides.eq(_.currentSlide).outerHeight() + "px"
+            }, _.options.speed);
+        }
+    };
 
     Slick.prototype.addSlide = function(markup, index, addBefore) {
 
@@ -537,6 +549,7 @@
                 if (_.slideCount > _.options.slidesToShow) {
                   _.slideHandler(_.currentSlide - _.options
                     .slidesToScroll);
+                  _.adaptiveHeight();
                 if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
                 }
                 break;
@@ -545,6 +558,7 @@
                 if (_.slideCount > _.options.slidesToShow) {
                   _.slideHandler(_.currentSlide + _.options
                     .slidesToScroll);
+                  _.adaptiveHeight();
                 if(asNavFor != null)  asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
                 }
                 break;
