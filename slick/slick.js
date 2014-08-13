@@ -549,7 +549,6 @@
                 if (_.slideCount > _.options.slidesToShow) {
                   _.slideHandler(_.currentSlide - _.options
                     .slidesToScroll);
-                  _.adaptiveHeight();
                 if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
                 }
                 break;
@@ -558,7 +557,6 @@
                 if (_.slideCount > _.options.slidesToShow) {
                   _.slideHandler(_.currentSlide + _.options
                     .slidesToScroll);
-                  _.adaptiveHeight();
                 if(asNavFor != null)  asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
                 }
                 break;
@@ -1432,6 +1430,8 @@
         _.animateSlide(targetLeft, function() {
             _.postSlide(animSlide);
         });
+
+        _.adaptiveHeight();
 
     };
 
