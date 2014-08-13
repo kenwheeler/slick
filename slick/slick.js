@@ -78,7 +78,7 @@
                 touchThreshold: 5,
                 useCSS: true,
                 vertical: false,
-                adaptiveHeight: false
+                adaptiveHeight: true
             };
 
             _.initials = {
@@ -962,6 +962,8 @@
         if (_.options.lazyLoad === 'progressive') {
             _.progressiveLazyLoad();
         }
+
+        _.adaptiveHeight();
 
     };
 
