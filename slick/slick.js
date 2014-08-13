@@ -1152,6 +1152,8 @@
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
         _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
 
+        _.adaptiveHeight();
+
     };
 
     Slick.prototype.setFade = function() {
