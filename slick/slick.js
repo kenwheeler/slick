@@ -961,8 +961,6 @@
             _.progressiveLazyLoad();
         }
 
-        _.adaptiveHeight();
-
     };
 
     Slick.prototype.postSlide = function(index) {
