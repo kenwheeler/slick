@@ -98,7 +98,6 @@
                 $slideTrack: null,
                 $slides: null,
                 sliding: false,
-                slideOffset: 0,
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
@@ -690,47 +689,44 @@
     Slick.prototype.getLeft = function(slideIndex) {
 
         var _ = this,
-            targetLeft,
-            verticalHeight,
-            verticalOffset = 0;
+            targetOffset,
+            nextOffset,
+            carouselOffset = 0,
+            targetIndex = slideIndex;
 
-        _.slideOffset = 0;
-        verticalHeight = _.$slides.first().outerHeight();
+        if (targetIndex > _.slideCount - _.options.slidesToShow ) {
+            targetIndex = slideIndex - (_.slideCount % _.options.slidesToScroll)
+        }
 
-        if (_.options.infinite === true) {
-            if (_.slideCount > _.options.slidesToShow) {
-                _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
-                verticalOffset = (verticalHeight * _.options.slidesToShow) * -1;
-            }
-            if (_.slideCount % _.options.slidesToScroll !== 0) {
-                if (slideIndex + _.options.slidesToScroll > _.slideCount && _.slideCount > _.options.slidesToShow) {
-                    _.slideOffset = ((_.slideCount % _.options.slidesToShow) * _.slideWidth) * -1;
-                    verticalOffset = ((_.slideCount % _.options.slidesToShow) * verticalHeight) * -1;
-                }
-            }
-        } else {
-            if (_.slideCount % _.options.slidesToShow !== 0) {
-                if (slideIndex + _.options.slidesToScroll > _.slideCount && _.slideCount > _.options.slidesToShow) {
-                    _.slideOffset = (_.options.slidesToShow * _.slideWidth) - ((_.slideCount % _.options.slidesToShow) * _.slideWidth);
-                    verticalOffset = ((_.slideCount % _.options.slidesToShow) * verticalHeight);
-                }
-            }
+        nextOffset = _.getCombinedChildSize(0, targetIndex);
+
+        if (_.options.infinite === true && _.slideCount > _.options.slidesToShow) {
+            nextOffset = _.getCombinedChildSize(_.options.slidesToShow, _.options.slidesToShow + targetIndex);
+            carouselOffset = _.getCombinedChildSize(0, _.options.slidesToShow) * -1
         }
 
         if (_.options.centerMode === true && _.options.infinite === true) {
-            _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
+            carouselOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
         } else if (_.options.centerMode === true) {
-            _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
+            carouselOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
         }
 
-        if (_.options.vertical === false) {
-            targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
-        } else {
-            targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
-        }
+        targetOffset = (nextOffset * -1) + carouselOffset;
 
-        return targetLeft;
+        return targetOffset;
+    };
 
+    Slick.prototype.getCombinedChildSize = function(start, end) {
+        var _ = this,
+            offsetHeight = 0,
+            offsetWidth = 0;
+
+        _.$slideTrack.children().slice(start, end).each(function() {
+            offsetHeight += $(this).outerHeight();
+            offsetWidth += $(this).outerWidth();
+        });
+
+        return _.options.vertical ? offsetHeight : offsetWidth;
     };
 
     Slick.prototype.init = function() {
@@ -1147,7 +1143,9 @@
         }
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
-        _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+        if (!_.options.variableWidth) {
+            _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+        }
 
     };
 
