@@ -1204,7 +1204,7 @@
             _.animType = 'OTransform';
             _.transformType = "-o-transform";
             _.transitionType = 'OTransition';
-            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.WebkitPerspective === undefined) _.animType = false;
+            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.webkitPerspective === undefined) _.animType = false;
         }
         if (bodyStyle.MozTransform !== undefined) {
             _.animType = 'MozTransform';
@@ -1222,7 +1222,7 @@
             _.animType = 'msTransform';
             _.transformType = "-ms-transform";
             _.transitionType = 'msTransition';
-            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.msPerspective === undefined) _.animType = false;
+            if (bodyStyle.msTransform === undefined) _.animType = false;
         }
         if (bodyStyle.transform !== undefined && _.animType !== false) {
             _.animType = 'transform';
