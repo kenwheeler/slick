@@ -1181,7 +1181,8 @@
 
     Slick.prototype.setProps = function() {
 
-        var _ = this;
+        var _ = this,
+            bodyStyle = document.body.style;
 
         _.positionProp = _.options.vertical === true ? 'top' : 'left';
 
@@ -1191,36 +1192,44 @@
             _.$slider.removeClass('slick-vertical');
         }
 
-        if (document.body.style.WebkitTransition !== undefined ||
-            document.body.style.MozTransition !== undefined ||
-            document.body.style.msTransition !== undefined) {
+        if (bodyStyle.WebkitTransition !== undefined ||
+            bodyStyle.MozTransition !== undefined ||
+            bodyStyle.msTransition !== undefined) {
             if(_.options.useCSS === true) {
                 _.cssTransitions = true;
             }
         }
 
-        if (document.body.style.MozTransform !== undefined) {
+        if (bodyStyle.OTransform !== undefined) {
+            _.animType = 'OTransform';
+            _.transformType = "-o-transform";
+            _.transitionType = 'OTransition';
+            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.WebkitPerspective === undefined) _.animType = false;
+        }
+        if (bodyStyle.MozTransform !== undefined) {
             _.animType = 'MozTransform';
             _.transformType = "-moz-transform";
             _.transitionType = 'MozTransition';
+            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.MozPerspective === undefined) _.animType = false;
         }
-        if (document.body.style.webkitTransform !== undefined) {
+        if (bodyStyle.webkitTransform !== undefined) {
             _.animType = 'webkitTransform';
             _.transformType = "-webkit-transform";
             _.transitionType = 'webkitTransition';
+            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.webkitPerspective === undefined) _.animType = false;
         }
-        if (document.body.style.msTransform !== undefined) {
+        if (bodyStyle.msTransform !== undefined) {
             _.animType = 'msTransform';
             _.transformType = "-ms-transform";
             _.transitionType = 'msTransition';
+            if (bodyStyle.perspectiveProperty === undefined && bodyStyle.msPerspective === undefined) _.animType = false;
         }
-        if (document.body.style.transform !== undefined) {
+        if (bodyStyle.transform !== undefined && _.animType !== false) {
             _.animType = 'transform';
             _.transformType = "transform";
             _.transitionType = 'transition';
         }
-
-        _.transformsEnabled = (_.animType !== null);
+        _.transformsEnabled = (_.animType !== null && _.animType !== false);
 
     };
 
