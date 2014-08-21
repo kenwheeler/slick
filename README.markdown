@@ -47,7 +47,7 @@ prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <b
 nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
-onBeforeChange(this, index) | method | null | Before slide change callback
+onBeforeChange(this, currentIndex,targetIndex) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
 onInit(this) | method | null | When Slick initializes for the first time callback
 onReInit(this) | method | null | Every time Slick (re-)initializes callback
