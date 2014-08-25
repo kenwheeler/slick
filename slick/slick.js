@@ -500,21 +500,27 @@
                         _.options = $.extend({}, _.options,
                             _.breakpointSettings[
                                 targetBreakpoint]);
+                        _.unfilterSlides();
                         _.refresh();
+                        _.filterSlides(_.currentFilter);
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
                     _.options = $.extend({}, _.options,
                         _.breakpointSettings[
                             targetBreakpoint]);
+                    _.unfilterSlides();
                     _.refresh();
+                    _.filterSlides(_.currentFilter);
                 }
             } else {
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
                     _.options = $.extend({}, _.options,
                         _.originalSettings);
+                    _.unfilterSlides();
                     _.refresh();
+                    _.filterSlides(_.currentFilter);
                 }
             }
 
@@ -652,6 +658,8 @@
             _.$slideTrack.children(this.options.slide).detach();
 
             _.$slidesCache.filter(filter).appendTo(_.$slideTrack);
+
+            _.currentFilter = filter;
 
             _.reinit();
 
