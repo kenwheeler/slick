@@ -48,8 +48,15 @@ $opacity-not-active: .25;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -ms-touch-action: none;
     -webkit-tap-highlight-color: transparent;
+    &.slick-horizontal {
+        -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    }
+    &.slick-vertical {
+        -ms-touch-action: pan-x;
+        touch-action: pan-x;
+    }
 }
 .slick-list {
     position: relative;
