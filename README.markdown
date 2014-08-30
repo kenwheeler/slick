@@ -25,6 +25,12 @@ Then, before your closing ```<body>``` tag add:
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.min.js"/></script>
 ```
 
+#### Bower
+
+````
+bower install --save slick.js
+````
+
 #### Options
 
 Option | Type | Default | Description
