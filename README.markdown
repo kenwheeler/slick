@@ -70,6 +70,7 @@ touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1
 useCSS | boolean | true | Enable/Disable CSS Transitions
 vertical | boolean | false | Vertical slide direction
 rtl | boolean | false | Change the slider's direction to become right-to-left
+waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 
 
 #### Methods

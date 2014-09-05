@@ -77,7 +77,8 @@
                 touchMove: true,
                 touchThreshold: 5,
                 useCSS: true,
-                vertical: false
+                vertical: false,
+                waitForAnimate: true
             };
 
             _.initials = {
@@ -1139,11 +1140,11 @@
         if(_.options.vertical === false) {
             _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
             _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
-        
+
         } else {
             _.slideWidth = Math.ceil(_.listWidth);
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
-        
+
         }
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
@@ -1365,7 +1366,7 @@
         var targetSlide, animSlide, slideLeft, unevenOffset, targetLeft = null,
             _ = this;
 
-        if (_.animating === true) {
+        if (_.animating === true && _.options.waitForAnimate === true) {
             return false;
         }
 
