@@ -1197,9 +1197,11 @@
         _.positionProp = _.options.vertical === true ? 'top' : 'left';
 
         if (_.positionProp === 'top') {
-            _.$slider.addClass('slick-vertical');
+            _.$slider.addClass('slick-vertical')
+                .removeClass('slick-horizontal');
         } else {
-            _.$slider.removeClass('slick-vertical');
+            _.$slider.addClass('slick-horizontal')
+                .removeClass('slick-vertical');
         }
 
         if (bodyStyle.WebkitTransition !== undefined ||
