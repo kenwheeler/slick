@@ -13,6 +13,7 @@ $(document).ready(function() {
         slidesToShow: 3,
         slidesToScroll: 3
     });
+    $('.data-attributes').slick();
     $('.one-time').slick({
         dots: true,
         infinite: false,
