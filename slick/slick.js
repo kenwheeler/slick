@@ -581,7 +581,7 @@
             _.$slides.unwrap().unwrap();
         }
         _.$slides.removeClass(
-            'slick-slide slick-active slick-visible').removeAttr('style');
+            'slick-slide slick-active slick-visible').css('width', '');
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
 
@@ -1665,7 +1665,7 @@
             _.$nextArrow.remove();
         }
         _.$slides.removeClass(
-            'slick-slide slick-active slick-visible').removeAttr('style');
+            'slick-slide slick-active slick-visible').css('width', '');
 
     };
 
