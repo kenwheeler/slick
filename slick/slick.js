@@ -41,6 +41,7 @@
             _.defaults = {
                 accessibility: true,
                 appendArrows: $(element),
+                appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
                 prevArrow: '<button type="button" data-role="none" class="slick-prev">Previous</button>',
@@ -410,7 +411,7 @@
             dotString += '</ul>';
 
             _.$dots = $(dotString).appendTo(
-                _.$slider);
+                _.options.appendDots);
 
             _.$dots.find('li').first().addClass(
                 'slick-active');
@@ -588,7 +589,7 @@
         _.$list.off('.slick');
         $(window).off('.slick-' + _.instanceUid);
         $(document).off('.slick-' + _.instanceUid);
-        
+
     };
 
     Slick.prototype.disableTransition = function(slide) {
