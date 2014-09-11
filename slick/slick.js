@@ -551,7 +551,7 @@
                 break;
 
             case 'index':
-                var index = $(event.target).parent().index() * _.options.slidesToScroll;
+                var index = $(event.target).parents('.slick-slide').first().index() * _.options.slidesToScroll;
                 _.slideHandler(index);
                 if(asNavFor != null)  asNavFor.slideHandler(index);                break;
 
@@ -1345,7 +1345,7 @@
 
         var _ = this;
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
-        var index = parseInt($(event.target).parent().attr("index"));
+        var index = parseInt($(event.target).parents('.slick-slide').first().attr("index"));
         if(!index) index = 0;
 
         if(_.slideCount <= _.options.slidesToShow){
