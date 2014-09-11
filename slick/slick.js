@@ -552,9 +552,10 @@
                 break;
 
             case 'index':
-                var index = $(event.target).parent().index() * _.options.slidesToScroll;
+                var index = event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
+                console.log(index);
                 _.slideHandler(index);
-                if(asNavFor != null)  asNavFor.slideHandler(index);                break;
+                if(asNavFor != null)  asNavFor.slideHandler(index);
 
             default:
                 return false;
@@ -1738,9 +1739,12 @@
         var _ = this;
         return _.each(function(index, element) {
 
-            var asNavFor = element.slick.options.asNavFor != null ? $(element.slick.options.asNavFor) : null;
-            if(asNavFor != null) asNavFor.slickGoTo(slide);
-            element.slick.slideHandler(slide);
+            element.slick.changeSlide({
+                data: {
+                    message: 'index',
+                    index: slide
+                }
+            });
 
         });
     };
