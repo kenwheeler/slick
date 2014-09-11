@@ -21,6 +21,9 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
+    } else if (typeof require === 'function' && module && module.exports) {
+        var jQuery = require('jquery');
+        factory(jQuery);
     } else {
         factory(jQuery);
     }
