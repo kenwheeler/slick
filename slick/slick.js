@@ -552,8 +552,8 @@
                 break;
 
             case 'index':
-                var index = event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
-                console.log(index);
+                var index = event.data.index === 0 ? 0 :
+                    event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
                 _.slideHandler(index);
                 if(asNavFor != null)  asNavFor.slideHandler(index);
 
