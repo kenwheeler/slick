@@ -27,6 +27,34 @@
 
 }(function($) {
     'use strict';
+
+    // Fallback for requestAnimationFrame
+    // From https://gist.github.com/paulirish/1579671
+    (function() {
+        var lastTime = 0;
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+               || window[vendors[x]+'CancelRequestAnimationFrame'];
+        }
+
+        if (!window.requestAnimationFrame)
+            window.requestAnimationFrame = function(callback, element) {
+                var currTime = new Date().getTime();
+                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                    timeToCall);
+                lastTime = currTime + timeToCall;
+                return id;
+            };
+
+        if (!window.cancelAnimationFrame)
+            window.cancelAnimationFrame = function(id) {
+                clearTimeout(id);
+            };
+    }());
+
     var Slick = window.Slick || {};
 
     Slick = (function() {
@@ -153,6 +181,7 @@
             _.dragHandler = $.proxy(_.dragHandler, _);
             _.keyHandler = $.proxy(_.keyHandler, _);
             _.autoPlayIterator = $.proxy(_.autoPlayIterator, _);
+            _.runAutoPlay = $.proxy(_.runAutoPlay, _);
 
             _.instanceUid = instanceUid++;
 
@@ -273,12 +302,22 @@
                 _.$slideTrack.css(animProps);
 
                 if (callback) {
-                    setTimeout(function() {
 
-                        _.disableTransition();
+                    var callbackTimerStart = null;
 
-                        callback.call();
-                    }, _.options.speed);
+                    var runCallback = function(timestamp) {
+                        if (callbackTimerStart === null) callbackTimerStart = timestamp
+                        var progress = timestamp - callbackTimerStart;
+
+                        if (progress >= _.options.speed) {
+                            _.disableTransition();
+                            callback.call();
+                        } else {
+                            requestAnimationFrame(runCallback);
+                        }
+                    };
+                    requestAnimationFrame(runCallback);
+
                 }
 
             }
@@ -306,17 +345,32 @@
 
     };
 
+    Slick.prototype.autoPlayLastRun = null;
+
+    Slick.prototype.runAutoPlay = function(timestamp) {
+        var _ = this,
+                progress;
+
+        if (_.autoPlayLastRun === null) _.autoPlayLastRun = timestamp;
+        progress = timestamp - _.autoPlayLastRun;
+
+        if (progress >= _.options.autoplaySpeed) {
+            _.autoPlayIterator();
+            _.autoPlayLastRun = timestamp;
+        }
+
+        _.autoPlayTimer = requestAnimationFrame(_.runAutoPlay);
+
+    }
+
     Slick.prototype.autoPlay = function() {
 
         var _ = this;
 
-        if (_.autoPlayTimer) {
-            clearInterval(_.autoPlayTimer);
-        }
+        _.autoPlayClear();
 
         if (_.slideCount > _.options.slidesToShow && _.paused !== true) {
-            _.autoPlayTimer = setInterval(_.autoPlayIterator,
-                _.options.autoplaySpeed);
+            _.autoPlayTimer = requestAnimationFrame(_.runAutoPlay)
         }
 
     };
@@ -326,7 +380,8 @@
         var _ = this;
 
         if (_.autoPlayTimer) {
-            clearInterval(_.autoPlayTimer);
+            cancelAnimationFrame(_.autoPlayTimer);
+            _.autoPlayLastRun = null;
         }
 
     };
