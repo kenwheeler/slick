@@ -21,6 +21,8 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
+    } else if (typeof exports !== 'undefined') {
+        factory(require('jquery'));
     } else {
         factory(jQuery);
     }
