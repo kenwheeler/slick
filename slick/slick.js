@@ -1347,13 +1347,12 @@
 
         var _ = this;
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
-        var index = parseInt($(event.target).parent().attr("index"));
+	    var index = parseInt($(event.target).parents('.slick-slide').attr("index"));
         if(!index) index = 0;
 
-        if(_.slideCount <= _.options.slidesToShow){
-            return;
-        }
-        _.slideHandler(index);
+	    if(_.slideCount > _.options.slidesToShow){
+		    _.slideHandler(index);
+	    }
 
         if(asNavFor != null){
             if(asNavFor.slideCount <= asNavFor.options.slidesToShow){
