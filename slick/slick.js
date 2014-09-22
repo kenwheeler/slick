@@ -1536,7 +1536,7 @@
 
         if ((_.options.swipe === false) || ('ontouchend' in document && _.options.swipe === false)) {
            return;
-        } else if ((_.options.draggable === false) || (_.options.draggable === false && !event.originalEvent.touches)) {
+        } else if (_.options.draggable === false && event.type.indexOf('mouse') !== -1) {
            return;
         }
 
