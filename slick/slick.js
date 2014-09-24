@@ -997,7 +997,11 @@
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                 targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
-            });
+            })
+	       .error(function () {
+	       	targetImage.removeAttr('data-lazy');
+	       	_.progressiveLazyLoad();
+	       });
         }
 
     };
