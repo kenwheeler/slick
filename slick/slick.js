@@ -1704,6 +1704,7 @@
 
         if (_.$dots !== null) {
 
+            _.$dots.find('li.slick-active').children().blur();
             _.$dots.find('li').removeClass('slick-active');
             _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass('slick-active');
 
