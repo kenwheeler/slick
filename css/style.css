@@ -53,17 +53,15 @@ p.cdn{font-size: 14px;}
 p.guff{font-size:16px;}
 pre{background:#fff;margin:0 10px 20px;padding:10px;}
 section{width:100%;}
-table{border-collapse:collapse;border-spacing:0;margin:40px auto;text-align:left;width:100%; table-layout: fixed; font-size: 14px; line-height: 1.4;}
-tbody{background:#fff;border-color:#fff;}
-td{background:#3498db;border:1px solid #fff;color:#fff;padding:10px;width:33%; vertical-align: top;}
-th{border-left:1px solid #3498db;padding:10px;}
-td:first-child { font-weight: bold;}
-th.last{width: 230px;}
-th.type {width: 80px;}
-th.default { width: 100px; }
-th:first-child{border-left:0;}
-thead{background:#fff;border-color:#3498db;color:#3498db;}
-tr{background:#fff;border-right:1px solid #fff;}
+table{font-size:14px;line-height:18px;margin:40px auto 20px; display: block; float: left;}
+tr { width: 100%; border-right: none; border-bottom: 1px solid #fff; margin: 0px 0px 20px; padding: 0px 0px 20px; background: transparent; float: left; }
+thead { display: none; }
+td { border: 0; padding: 10px 0px;}
+td,tbody { display: block; width: 100% !important;}
+table.settings td:nth-of-type(1), table.methods td:nth-of-type(1){font-weight: bold; font-size: 16px; line-height: 18px;}
+table.settings td:nth-of-type(2):before{content: 'Type: '; font-weight: bold;}
+table.settings td:nth-of-type(3):before{content: 'Default: '; font-weight: bold;}
+table.methods td:nth-of-type(2):before{content: 'Arguments: '; font-weight: bold;}
 ul.nav{margin-bottom:0;padding-left:0;text-align:center;}
 ul.nav li{display:inline-block;list-style-type:none;margin:0 20px;}
 ul.nav li a{font-size:12px;text-decoration:none;}

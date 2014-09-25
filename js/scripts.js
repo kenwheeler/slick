@@ -15,12 +15,10 @@ $(document).ready(function() {
     });
     $('.one-time').slick({
         dots: true,
-        infinite: false,
-        placeholders: false,
+        infinite: true,
         speed: 300,
-        slidesToShow: 5,
-        touchMove: false,
-        slidesToScroll: 1
+        slidesToShow: 1,
+        adaptiveHeight: true
     });
     $('.uneven').slick({
         dots: true,
