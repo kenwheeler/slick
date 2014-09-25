@@ -1374,7 +1374,7 @@
 
         var _ = this;
         var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
-        var index = parseInt($(event.target).closest('.slick-slide').attr("index"));
+        var index = parseInt($(event.target).parents('.slick-slide').attr("index"));
         if(!index) index = 0;
 
         if(_.slideCount <= _.options.slidesToShow){
