@@ -1,10 +1,10 @@
 @font-face {
-  font-family: 'Pacifico';
-  src: url('pacifico.eot');
-  src: url('pacifico.eot?#iefix') format('embedded-opentype'),
-       url('pacifico.woff') format('woff'),
-       url('pacifico.ttf') format('truetype'),
-       url('pacifico.svg#Pacifico') format('svg');
+    font-family: 'Pacifico';
+    src: url('pacifico.eot');
+    src: url('pacifico.eot?#iefix') format('embedded-opentype'),
+    url('pacifico.woff') format('woff'),
+    url('pacifico.ttf') format('truetype'),
+    url('pacifico.svg#Pacifico') format('svg');
 }
 
 #disqus_thread{margin-top:20px;}
@@ -65,28 +65,32 @@ table.methods td:nth-of-type(2):before{content: 'Arguments: '; font-weight: bold
 ul.nav{margin-bottom:0;padding-left:0;text-align:center;}
 ul.nav li{display:inline-block;list-style-type:none;margin:0 20px;}
 ul.nav li a{font-size:12px;text-decoration:none;}
+.variable-width h3, .variable-width-infinite h3 { width: 100px; height: 100px}
+h3.wide { width: 180px; }
+h3.wider { width: 240px; }
+
 @media (max-width: 420px) {
-ul.nav li a{display:block;font-size:10px;}
+    ul.nav li a{display:block;font-size:10px;}
 }
 @media (max-width: 768px) {
-.blue h3{font-size:24px;}
-.button{margin:0 auto 20px;width:auto;}
-.button.first{margin-top:40px;}
-.buttons{padding:0 0 20px;}
-.buttons .button{float:left;font-size:12px;margin:1%;width:48%;}
-.center{margin-left:-40px;margin-right:-40px;}
-.center .slick-center h3{-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);-webkit-transform:scale(1);color:#e67e22;opacity:1;transform:scale(1);}
-.center h3{-moz-transform:scale(0.95);-ms-transform:scale(0.95);-o-transform:scale(0.95);-webkit-transform:scale(0.95);opacity:0.8;transform:scale(0.95);transition:all 300ms ease;}
-.content{margin:auto;padding:20px 40px;width:auto;}
-.fixed-header .header-content{width:auto;}
-pre{font-size:12px; overflow-x: scroll;}
-table{font-size:14px;line-height:18px;margin:40px auto 20px; display: block; float: left;}
-tr { width: 100%; border-right: none; border-bottom: 1px solid #fff; margin: 0px 0px 20px; padding: 0px 0px 20px; background: transparent; float: left; }
-thead { display: none; }
-td { border: 0; padding: 10px 0px;}
-td,tbody { display: block; width: 100% !important;}
-table.settings td:nth-of-type(1), table.methods td:nth-of-type(1){font-weight: bold; font-size: 16px; line-height: 18px;}
-table.settings td:nth-of-type(2):before{content: 'Type: '; font-weight: bold;}
-table.settings td:nth-of-type(3):before{content: 'Default: '; font-weight: bold;}
-table.methods td:nth-of-type(2):before{content: 'Arguments: '; font-weight: bold;}
+    .blue h3{font-size:24px;}
+    .button{margin:0 auto 20px;width:auto;}
+    .button.first{margin-top:40px;}
+    .buttons{padding:0 0 20px;}
+    .buttons .button{float:left;font-size:12px;margin:1%;width:48%;}
+    .center{margin-left:-40px;margin-right:-40px;}
+    .center .slick-center h3{-moz-transform:scale(1);-ms-transform:scale(1);-o-transform:scale(1);-webkit-transform:scale(1);color:#e67e22;opacity:1;transform:scale(1);}
+    .center h3{-moz-transform:scale(0.95);-ms-transform:scale(0.95);-o-transform:scale(0.95);-webkit-transform:scale(0.95);opacity:0.8;transform:scale(0.95);transition:all 300ms ease;}
+    .content{margin:auto;padding:20px 40px;width:auto;}
+    .fixed-header .header-content{width:auto;}
+    pre{font-size:12px; overflow-x: scroll;}
+    table{font-size:14px;line-height:18px;margin:40px auto 20px; display: block; float: left;}
+    tr { width: 100%; border-right: none; border-bottom: 1px solid #fff; margin: 0px 0px 20px; padding: 0px 0px 20px; background: transparent; float: left; }
+    thead { display: none; }
+    td { border: 0; padding: 10px 0px;}
+    td,tbody { display: block; width: 100% !important;}
+    table.settings td:nth-of-type(1), table.methods td:nth-of-type(1){font-weight: bold; font-size: 16px; line-height: 18px;}
+    table.settings td:nth-of-type(2):before{content: 'Type: '; font-weight: bold;}
+    table.settings td:nth-of-type(3):before{content: 'Default: '; font-weight: bold;}
+    table.methods td:nth-of-type(2):before{content: 'Arguments: '; font-weight: bold;}
 }

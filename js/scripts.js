@@ -187,5 +187,17 @@ $(document).ready(function() {
         slidesToScroll: 3,
         rtl: true
     });
+    $('.variable-width-infinite').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        variableWidth: true
+    });
+    $('.variable-width').slick({
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        variableWidth: true
+    });
 
 });

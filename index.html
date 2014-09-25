@@ -408,6 +408,48 @@ $('.single-item-rtl').slick({
 				</code></pre>
 
 				<p><strong>Note:</strong> the HTML tag or the parent of the slider must have the attribute "dir" set to "rtl".</p>
+                <hr />
+                <h2>Variable width infinite items</h2>
+                <div class="slider variable-width-infinite">
+                    <div><h3>1</h3></div>
+                    <div><h3 class="wide">2</h3></div>
+                    <div><h3>3</h3></div>
+                    <div><h3 class="wider">4</h3></div>
+                    <div><h3>5</h3></div>
+                    <div><h3 class="wide">6</h3></div>
+                    <div><h3>7</h3></div>
+                    <div><h3 class="wider">8</h3></div>
+                    <div><h3>9</h3></div>
+                </div>
+				<pre><code>
+$('.variable-width-infinite').slick({
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    variableWidth: true
+});
+                </code></pre>
+                <hr />
+                <h2>Variable width fixed items</h2>
+                <div class="slider variable-width">
+                    <div><h3>1</h3></div>
+                    <div><h3 class="wide">2</h3></div>
+                    <div><h3>3</h3></div>
+                    <div><h3 class="wider">4</h3></div>
+                    <div><h3>5</h3></div>
+                    <div><h3 class="wide">6</h3></div>
+                    <div><h3>7</h3></div>
+                    <div><h3 class="wider">8</h3></div>
+                    <div><h3>9</h3></div>
+                </div>
+				<pre><code>
+$('.variable-width').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    variableWidth: true
+});
+                </code></pre>
+
 				<hr />
 				<h4 class="more">and a whole lot more...</h4>
 				</div>
