@@ -78,6 +78,7 @@
                 slidesToScroll: 1,
                 speed: 300,
                 swipe: true,
+                swipeToSlide: false,
                 touchMove: true,
                 touchThreshold: 5,
                 useCSS: true,
@@ -295,6 +296,11 @@
 
     };
 
+    Slick.prototype.asNavFor = function(index) {
+        var _ = this, asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
+        if(asNavFor != null) asNavFor.slideHandler(index, true);
+    };
+
     Slick.prototype.applyTransition = function(slide) {
 
         var _ = this,
@@ -342,7 +348,6 @@
     Slick.prototype.autoPlayIterator = function() {
 
         var _ = this;
-        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
 
         if (_.options.infinite === false) {
 
@@ -354,7 +359,6 @@
                 }
 
                 _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-                if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
 
             } else {
 
@@ -365,14 +369,12 @@
                 }
 
                 _.slideHandler(_.currentSlide - _.options.slidesToScroll);
-                if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
 
             }
 
         } else {
 
             _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-            if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
 
         }
 
@@ -535,27 +537,28 @@
     Slick.prototype.changeSlide = function(event) {
 
         var _ = this,
-            $target = $(event.target);
-        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
+            $target = $(event.target),
+            indexOffset, slideOffset, unevenOffset;
 
         // If target is a link, prevent default action.
         $target.is('a') && event.preventDefault();
 
+        unevenOffset = (_.slideCount % _.options.slidesToScroll !== 0);
+        indexOffset = unevenOffset ? 0 : (_.slideCount - _.currentSlide) % _.options.slidesToScroll;
+
         switch (event.data.message) {
 
             case 'previous':
+                slideOffset = indexOffset === 0 ? _.options.slidesToScroll : _.options.slidesToShow - indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
-                  _.slideHandler(_.currentSlide - _.options
-                    .slidesToScroll);
-                if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
+                    _.slideHandler(_.currentSlide  - slideOffset);
                 }
                 break;
 
             case 'next':
+                slideOffset = indexOffset === 0 ? _.options.slidesToScroll : indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
-                  _.slideHandler(_.currentSlide + _.options
-                    .slidesToScroll);
-                if(asNavFor != null)  asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
+                    _.slideHandler(_.currentSlide + slideOffset);
                 }
                 break;
 
@@ -563,7 +566,6 @@
                 var index = event.data.index === 0 ? 0 :
                     event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
                 _.slideHandler(index);
-                if(asNavFor != null)  asNavFor.slideHandler(index);
 
             default:
                 return false;
@@ -712,6 +714,9 @@
             if (_.slideCount > _.options.slidesToShow) {
                 _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
                 verticalOffset = (verticalHeight * _.options.slidesToShow) * -1;
+            } else {
+                _.slideOffset = 0;
+                verticalOffset = 0;
             }
             if (_.slideCount % _.options.slidesToScroll !== 0) {
                 if (slideIndex + _.options.slidesToScroll > _.slideCount && _.slideCount > _.options.slidesToShow) {
@@ -906,7 +911,7 @@
         function loadImages(imagesScope) {
             $('img[data-lazy]', imagesScope).each(function() {
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy') + "?" + new Date().getTime();
+                    imageSource = $(this).attr('data-lazy');
 
                 image
                   .load(function() { image.animate({ opacity: 1 }, 200); })
@@ -1004,10 +1009,10 @@
                 targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
             })
-	       .error(function () {
-	       	targetImage.removeAttr('data-lazy');
-	       	_.progressiveLazyLoad();
-	       });
+         .error(function () {
+          targetImage.removeAttr('data-lazy');
+          _.progressiveLazyLoad();
+         });
         }
 
     };
@@ -1373,7 +1378,6 @@
     Slick.prototype.selectHandler = function(event) {
 
         var _ = this;
-        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
         var index = parseInt($(event.target).parents('.slick-slide').attr("index"));
         if(!index) index = 0;
 
@@ -1382,21 +1386,21 @@
         }
         _.slideHandler(index);
 
-        if(asNavFor != null){
-            if(asNavFor.slideCount <= asNavFor.options.slidesToShow){
-                return;
-            }
-            asNavFor.slideHandler(index);
-        }
     };
 
-    Slick.prototype.slideHandler = function(index) {
+    Slick.prototype.slideHandler = function(index,sync) {
 
         var targetSlide, animSlide, slideLeft, unevenOffset, targetLeft = null,
             _ = this;
 
+        sync = sync || false;
+
         if (_.animating === true && _.options.waitForAnimate === true) {
             return false;
+        }
+
+        if (sync === false) {
+            _.asNavFor(index);
         }
 
         targetSlide = index;
@@ -1433,10 +1437,14 @@
             if (_.slideCount % _.options.slidesToScroll !== 0) {
                 animSlide = _.slideCount - (_.slideCount % _.options.slidesToScroll);
             } else {
-                animSlide = _.slideCount - _.options.slidesToScroll;
+                animSlide = _.slideCount + targetSlide;
             }
-        } else if (targetSlide > (_.slideCount - 1)) {
-            animSlide = 0;
+        } else if (targetSlide >= _.slideCount) {
+            if (_.slideCount % _.options.slidesToScroll !== 0) {
+                animSlide = 0;
+            } else {
+                animSlide = targetSlide - _.slideCount;
+            }
         } else {
             animSlide = targetSlide;
         }
@@ -1517,8 +1525,7 @@
 
     Slick.prototype.swipeEnd = function(event) {
 
-        var _ = this;
-        var asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
+        var _ = this, slideCount, slidesTraversed, swipeDiff;
 
         _.dragging = false;
 
@@ -1534,23 +1541,27 @@
                 $(event.target).off('click.slick');
             });
 
+            if(_.options.swipeToSlide === true) {
+                slidesTraversed = Math.round(_.touchObject.swipeLength / _.slideWidth);
+                slideCount = slidesTraversed
+            } else {
+                slideCount = _.options.slidesToScroll;
+            }
+
             switch (_.swipeDirection()) {
                 case 'left':
-                    _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-                    if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide + asNavFor.options.slidesToScroll);
+                    _.slideHandler(_.currentSlide + slideCount);
                     _.touchObject = {};
                     break;
 
                 case 'right':
-                    _.slideHandler(_.currentSlide - _.options.slidesToScroll);
-                    if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide - asNavFor.options.slidesToScroll);
+                    _.slideHandler(_.currentSlide - slideCount);
                     _.touchObject = {};
                     break;
             }
         } else {
             if(_.touchObject.startX !== _.touchObject.curX) {
                 _.slideHandler(_.currentSlide);
-                if(asNavFor != null) asNavFor.slideHandler(asNavFor.currentSlide);
                 _.touchObject = {};
             }
         }
