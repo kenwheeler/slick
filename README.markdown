@@ -16,14 +16,20 @@ CDN hosted slick is a great way to get set up quick:
 In your ```<head>``` add:
 
 ````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.6/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.css"/>
 ````
 
 Then, before your closing ```<body>``` tag add:
 
 ```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.6/slick.min.js"/></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.min.js"></script>
 ```
+
+#### Bower
+
+````
+bower install --save slick.js
+````
 
 #### Options
 
@@ -37,16 +43,18 @@ centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
 dots | boolean | false | Current slide indicator dots
+dotsClass | string | 'slick-dots' | Class for slide indicator dots container
 draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
 fade | boolean | false | Enables fade
 arrows | boolean | true | Enable Next/Prev arrows
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
+appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
 prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
 nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
-onBeforeChange(this, index) | method | null | Before slide change callback
+onBeforeChange(this, currentIndex,targetIndex) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
 onInit(this) | method | null | When Slick initializes for the first time callback
 onReInit(this) | method | null | Every time Slick (re-)initializes callback
@@ -62,6 +70,8 @@ touchMove | boolean | true | Enables slide moving with touch
 touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.
 useCSS | boolean | true | Enable/Disable CSS Transitions
 vertical | boolean | false | Vertical slide direction
+rtl | boolean | false | Change the slider's direction to become right-to-left
+waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 
 
 #### Methods
