@@ -82,6 +82,7 @@
                 touchMove: true,
                 touchThreshold: 5,
                 useCSS: true,
+                variableWidth: false,
                 vertical: false,
                 waitForAnimate: true
             };
@@ -705,7 +706,9 @@
         var _ = this,
             targetLeft,
             verticalHeight,
-            verticalOffset = 0;
+            verticalOffset = 0,
+            slideWidth,
+            targetSlide;
 
         _.slideOffset = 0;
         verticalHeight = _.$slides.first().outerHeight();
@@ -743,6 +746,16 @@
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
             targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+        }
+
+        if (_.options.variableWidth === true) {
+            targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow);
+            targetLeft = targetSlide[0].offsetLeft * -1;
+            if (_.options.centerMode === true) {
+                targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow + 1);
+                targetLeft = targetSlide[0].offsetLeft * -1;
+                targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
+            }
         }
 
         return targetLeft;
@@ -1156,18 +1169,23 @@
         _.listHeight = _.$list.height();
 
 
-        if(_.options.vertical === false) {
+        if(_.options.vertical === false && _.options.variableWidth === false) {
             _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
             _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
 
+        } else if (_.options.variableWidth === true) {
+            _.slideWidth = 0;
+            _.$slideTrack.children('.slick-slide').each(function(){
+                _.slideWidth += $(this).outerWidth();
+            });
+            _.$slideTrack.width(Math.ceil(_.slideWidth));
         } else {
             _.slideWidth = Math.ceil(_.listWidth);
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
-
         }
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
-        _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+        if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
 
     };
 

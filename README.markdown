@@ -16,13 +16,13 @@ CDN hosted slick is a great way to get set up quick:
 In your ```<head>``` add:
 
 ````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.8/slick.css"/>
 ````
 
 Then, before your closing ```<body>``` tag add:
 
 ```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.8/slick.min.js"></script>
 ```
 
 #### Bower
@@ -70,6 +70,7 @@ swipeToSlide | boolean | false | Swipe to slide irrespective of slidesToScroll
 touchMove | boolean | true | Enables slide moving with touch
 touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.
 useCSS | boolean | true | Enable/Disable CSS Transitions
+variableWidth | boolean | false | Disables automatic slide width calculation
 vertical | boolean | false | Vertical slide direction
 rtl | boolean | false | Change the slider's direction to become right-to-left
 waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
