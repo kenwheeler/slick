@@ -749,7 +749,11 @@
         }
 
         if (_.options.variableWidth === true) {
-            targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow);
+            if(_.slideCount <= _.options.slidesToShow || _.options.infinite === false) {
+                targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex);
+            } else {
+                targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow);
+            }
             targetLeft = targetSlide[0].offsetLeft * -1;
             if (_.options.centerMode === true) {
                 targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow + 1);
@@ -1176,9 +1180,9 @@
         } else if (_.options.variableWidth === true) {
             _.slideWidth = 0;
             _.$slideTrack.children('.slick-slide').each(function(){
-                _.slideWidth += $(this).outerWidth();
+                _.slideWidth += Math.ceil($(this).outerWidth(true));
             });
-            _.$slideTrack.width(Math.ceil(_.slideWidth));
+            _.$slideTrack.width(Math.ceil(_.slideWidth) + 1);
         } else {
             _.slideWidth = Math.ceil(_.listWidth);
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
