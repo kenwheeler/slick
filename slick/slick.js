@@ -1813,7 +1813,7 @@
             element.slick.changeSlide({
                 data: {
                     message: 'index',
-                    index: slide
+                    index: parseInt(slide)
                 }
             });
 
