@@ -1687,6 +1687,10 @@
         var _ = this,
             touches;
 
+        if (event.target.nodeName === 'IMG') {
+            event.preventDefault();
+        }
+
         if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
             _.touchObject = {};
             return false;
