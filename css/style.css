@@ -32,6 +32,7 @@
 .margin-40{margin-bottom:40px;}
 .more,.button.first{margin-top:40px;}
 .red{background:#e74c3c;color:#fff;}
+.slick-slide{clear:none !important;}
 .slick-slide .image{padding:10px;}
 .slick-slide img{border:5px solid #FFF;display:block;width:100%;}
 .slick-slide img.slick-loading{border:0 }
