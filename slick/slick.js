@@ -570,8 +570,11 @@
                     index = event.data.index;
                 } else if (_.options.oneDotPerSlide) {
                     index = $(event.target).parent().index();
-                    if (!_.centerMode) {
-                        index = Math.max(0, Math.min(index - Math.floor(_.options.slidesToShow / 2), _.slideCount - _.options.slidesToShow));
+                    if (!_.options.centerMode) {
+                        index = index - Math.floor(_.options.slidesToShow / 2)
+                    }
+                    if (!_.options.infinite && !_.options.centerMode) {
+                        index = Math.max(0, Math.min(index, _.slideCount - _.options.slidesToShow));
                     }
                 } else {
                     index = $(event.target).parent().index() * _.options.slidesToScroll;
