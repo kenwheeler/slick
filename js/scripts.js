@@ -187,5 +187,11 @@ $(document).ready(function() {
         slidesToScroll: 3,
         rtl: true
     });
+    $('.one-dot-per-slide').slick({
+        dots: true,
+        oneDotPerSlide: true,
+        slidesToShow: 3,
+        slidesToScroll: 1
+    });
 
 });

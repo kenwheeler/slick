@@ -58,6 +58,7 @@ onBeforeChange(this, currentIndex,targetIndex) | method | null | Before slide ch
 onAfterChange(this, index) | method | null | After slide change callback
 onInit(this) | method | null | When Slick initializes for the first time callback
 onReInit(this) | method | null | Every time Slick (re-)initializes callback
+oneDotPerSlide | boolean | false | One navigation dot per slide (instead of one per slidesToShow slides)
 pauseOnHover | boolean | true | Pauses autoplay on hover
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 responsive | object | null | Breakpoint triggered settings
