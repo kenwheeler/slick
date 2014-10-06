@@ -1440,14 +1440,16 @@
 
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
-        if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
-            if(_.options.fade === false) {
-                targetSlide = _.currentSlide;
-                _.animateSlide(slideLeft, function() {
-                    _.postSlide(targetSlide);
-                });
-            }
-            return false;
+        if (_.options.infinite === false && _.options.centerMode === false) {
+          if (index < 0) {
+            targetSlide = 0;
+            animSlide = 0
+            targetLeft = _.getLeft(targetSlide);
+          } else if (index > (_.slideCount - _.options.slidesToShow + unevenOffset)) {
+            targetSlide = _.slideCount - _options.slidesToShow + unevenOffset;
+            animSlide = targetSlide
+            targetLeft = _.getLeft(targetSlide);
+          }
         } else if (_.options.infinite === false && _.options.centerMode === true && (index < 0 || index > (_.slideCount - _.options.slidesToScroll))) {
             if(_.options.fade === false) {
                 targetSlide = _.currentSlide;
