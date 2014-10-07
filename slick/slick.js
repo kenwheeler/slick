@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.3.10
+ Version: 1.3.11
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -1701,10 +1701,6 @@
 
         var _ = this,
             touches;
-
-        if (event.target.nodeName === 'IMG') {
-            event.preventDefault();
-        }
 
         if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
             _.touchObject = {};
