@@ -74,6 +74,7 @@
                 responsive: null,
                 rtl: false,
                 slide: 'div',
+                slidesToLoad: 1,
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 speed: 300,
@@ -937,6 +938,68 @@
 
     };
 
+    Slick.prototype.semiLazyLoad = function() {
+        var _ = this,
+            loadRange, cloneRange, rangeStart, rangeEnd;
+        function loadImages(imagesScope) {
+            $('img[data-lazy]', imageScope).each(function() {
+                var image = $(this),
+                    imageSource = $(this).attr('data-lazy');
+
+
+                image
+                  .load(function() { image.animate({opacity: 1}, 200);  })
+                  .css({ opacity: 0 })
+                  .attr('src', imageSource)
+                  .removeAttr('data-lazy')
+                  .removeClass('slick-loading');
+          });
+        }
+
+        if (!_.options.slidesToLoad || (_.options.slidesToLoad <= 0) ) {
+            _.lazyLoad();
+            return;
+        }
+
+        if (_.options.slidesToLoad > _.slideCount) {
+            _.progressiveLazyLoad();
+            return;
+        }
+        //currently will load additional slides for centermode by incrementing rangeEnd
+        if (_.options.centerMode === true) {
+            if (_.options.infinite === true) {
+                rangeStart = _.currentSlide + (_.options.slidesToShow/2 + 1);
+                rangeEnd = rangeStart + _.options.slidesToShow + _.options.slidesToLoad + 2;
+            } else {
+                rangeStart = Math.max(0, _.currentSlide - (_.options.slidesToShow/2 + 1));
+                rangeEnd = 2 + (_.options.slidesToShow/2 + 1) + _.currentSlide + _.options.slidesToLoad;
+            }
+        } else {
+            rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide - _.options.slidesToLoad/2 : _.currentSlide;
+            rangeEnd = rangeStart + _.options.slidesToShow + _.options.slidesToLoad;
+            if (_.options.fade === true) {
+                if(rangeStart > 0) rangeStart --;
+                if(rangeEnd <= _.slideCount) rangeEnd++;
+            }
+        }
+
+        loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
+        loadImages(loadRange);
+
+        if (_.slideCount <= _.options.slidesToShow){
+              cloneRange = _.$slider.find('.slick-slide')
+              loadImages(cloneRange)
+          } else {
+        if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
+            cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
+            loadImages(cloneRange)
+        } else if (_.currentSlide === 0) {
+            cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
+            loadImages(cloneRange);
+        }
+          }
+    };
+
     Slick.prototype.lazyLoad = function() {
 
         var _ = this,
@@ -1370,6 +1433,10 @@
 
         if (_.options.lazyLoad === 'ondemand') {
             _.lazyLoad();
+        }
+
+        if (_.options.lazyLoad === 'semilazy') {
+            _.semiLazyLoad();
         }
 
     };
@@ -1940,3 +2007,4 @@
     };
 
 }));
+
