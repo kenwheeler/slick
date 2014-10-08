@@ -1062,6 +1062,7 @@
 
         _.currentSlide = currentSlide;
         _.init();
+        _.updateArrows();
 
     };
 
