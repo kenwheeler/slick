@@ -84,7 +84,8 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
-                waitForAnimate: true
+                waitForAnimate: true,
+                preventLink: false
             };
 
             _.initials = {
@@ -857,6 +858,11 @@
         _.$list.on('touchcancel.slick mouseleave.slick', {
             action: 'end'
         }, _.swipeHandler);
+        if(_.options.preventLink){
+	        _.$list.on('touchstart.slick click.slick', 'a', function(e){
+	        	e.preventDefault();
+	        });
+        }
 
         if (_.options.pauseOnHover === true && _.options.autoplay === true) {
             _.$list.on('mouseenter.slick', _.autoPlayClear);
@@ -1604,6 +1610,12 @@
                     break;
             }
         } else {
+            if(_.options.preventLink && _.touchObject.startX === _.touchObject.curX && event.type.indexOf('leave') < 0){
+        		var link = $(event.target).closest('a');
+        		if(link.length){
+        			window.location.href = link.get(0).href;
+        		}
+        	  }
             if(_.touchObject.startX !== _.touchObject.curX) {
                 _.slideHandler(_.currentSlide);
                 _.touchObject = {};
