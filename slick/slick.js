@@ -1610,15 +1610,16 @@
                     break;
             }
         } else {
-            if(_.options.preventLink && _.touchObject.startX === _.touchObject.curX && event.type.indexOf('leave') < 0){
-        		var link = $(event.target).closest('a');
-        		if(link.length){
-        			window.location.href = link.get(0).href;
-        		}
-        	  }
             if(_.touchObject.startX !== _.touchObject.curX) {
                 _.slideHandler(_.currentSlide);
                 _.touchObject = {};
+            }else{
+            	if(event.type.indexOf('leave') < 0 && _.options.preventLink ){
+            	    var link = $(event.target).closest('a');
+                    if(link.length){
+                        window.location.href = link.get(0).href;
+                    }	
+            	}
             }
         }
 
