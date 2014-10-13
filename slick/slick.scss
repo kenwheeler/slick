@@ -12,9 +12,9 @@ $slick-prev-character: '\2190' !default;
 $slick-next-character: '\2192' !default;
 $slick-dot-character: '\2022' !default;
 $slick-dot-size: 6px !default;
-$opacity-default: .75;
-$opacity-on-hover: 1;
-$opacity-not-active: .25;
+$slick-opacity-default: .75 !default;
+$slick-opacity-on-hover: 1 !default;
+$slick-opacity-not-active: .25 !default;
 
 
 @function slick-image-url($url) {
@@ -175,11 +175,11 @@ $opacity-not-active: .25;
       background: transparent;
       color: transparent;
       &:before {
-        opacity: $opacity-on-hover;
+        opacity: $slick-opacity-on-hover;
       }
     }
     &.slick-disabled:before {
-        opacity: $opacity-not-active;
+        opacity: $slick-opacity-not-active;
     }
 }
 .slick-prev:before, .slick-next:before {
@@ -187,7 +187,7 @@ $opacity-not-active: .25;
     font-size: 20px;
     line-height: 1;
     color: $slick-arrow-color;
-    opacity: $opacity-default;
+    opacity: $slick-opacity-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -256,7 +256,7 @@ $opacity-not-active: .25;
             &:hover, &:focus {
                 outline: none;
                 &:before {
-                  opacity: $opacity-on-hover;
+                  opacity: $slick-opacity-on-hover;
                 }
             }
 
@@ -272,7 +272,7 @@ $opacity-not-active: .25;
                 line-height: 20px;
                 text-align: center;
                 color: $slick-dot-color;
-                opacity: $opacity-not-active;
+                opacity: $slick-opacity-not-active;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
@@ -281,7 +281,7 @@ $opacity-not-active: .25;
 
         &.slick-active button:before {
             color: $slick-dot-color-active;
-            opacity: $opacity-default;
+            opacity: $slick-opacity-default;
         }
     }
 }
