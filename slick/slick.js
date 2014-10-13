@@ -1151,8 +1151,8 @@
         if (_.options.rtl === true) {
             position = -position;
         }
-        x = _.positionProp == 'left' ? position + 'px' : '0px';
-        y = _.positionProp == 'top' ? position + 'px' : '0px';
+        x = _.positionProp == 'left' ? position.toFixed() + 'px' : '0px';
+        y = _.positionProp == 'top' ? position.toFixed() + 'px' : '0px';
 
         positionProps[_.positionProp] = position;
 
