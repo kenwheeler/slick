@@ -514,8 +514,6 @@
                 _.$thumbs.find('img').eq(_.currentSlide).load(function(){   
                     _.updateThumbs( this.parentNode.offsetWidth, this.parentNode.offsetLeft);
                 });
-
-                _.updateThumbArrows();
             }
         }
     };
@@ -1010,7 +1008,7 @@
                     _.windowWidth = $(window).width();
                     _.checkResponsive();
                     _.setPosition();
-                    _.updateThumbArrows();
+                    _.updateThumbs();
                 }, 50);
             }
         });
@@ -1946,6 +1944,7 @@
                     left:  left || thumb.offsetLeft 
                 });
             }
+            _.updateThumbArrows();
         }
     };
 
@@ -1954,7 +1953,7 @@
         var _ = this,
             key, $el;
 
-        if (_.options.thumbArrows) {
+        if ( _.options.thumbArrows == true && _.$thumbs !== null) {
             $el = _.$thumbs.get(0);
 
             if ($el.scrollWidth > $el.clientWidth) {
