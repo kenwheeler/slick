@@ -45,6 +45,7 @@
                 adaptiveHeight: false,
                 appendArrows: $(element),
                 appendDots: $(element),
+                appendThumbs: $(element),
                 arrows: true,
                 asNavFor: null,
                 prevArrow: '<button type="button" data-role="none" class="slick-prev">Previous</button>',
@@ -58,11 +59,17 @@
                     return '<button type="button" data-role="none">' + (i + 1) + '</button>';
                 },
                 dots: false,
+                thumbs: false,
                 dotsClass: 'slick-dots',
+                thumbsClass: 'slick-thumbs',
+                thumbFrame: true,
+                thumbArrows: true,
                 draggable: true,
                 easing: 'linear',
                 fade: false,
                 focusOnSelect: false,
+                changeOnClick: true,
+
                 infinite: true,
                 lazyLoad: 'ondemand',
                 onBeforeChange: null,
@@ -95,6 +102,12 @@
                 currentLeft: null,
                 direction: 1,
                 $dots: null,
+                $thumbs : null,
+                $thumbArrows : {
+                    left: '<div class="slick-prev slick-thumb-left"></div>',
+                    right: '<div class="slick-next slick-thumb-right"></div>'
+                },
+
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
@@ -431,6 +444,82 @@
 
     };
 
+    Slick.prototype.buildThumbs = function() {
+
+        var _ = this,
+            i, length = _.$slides.length,
+            thumbs = [], thumb, srcList = [],
+            container = _.options.appendThumbs,
+            images, index;
+
+        if (_.options.thumbs === true) {
+
+            for(i = 0; i < length; i++) {
+                thumb =  $(_.$slides[i]).data('thumb');
+                if (thumb) {
+                    thumbs.push('<div class="slick-thumb"><img src="' +thumb+ '"></div>');
+                    srcList.push(thumb);
+                }
+            }
+
+            if (thumbs.length == length) {
+            
+                if ( container.get(0) == _.$slider.get(0)) {
+                    _.options.appendThumbs = container = $('<div></div>').appendTo(container);
+                }
+
+                container.addClass('slick-thumbs-box');
+
+                if (_.$thumbs) {
+                    // diff with previous state
+                    images = _.$thumbs.find('img');
+                    for(i = 0; i < images.length; i++) {
+                        index = $.inArray(images[i].getAttribute('src'), srcList);
+                        if (index == -1) {
+                            $(images[i].parentNode).remove();
+                        } else {
+                            // remove duplicates
+                            thumbs[index] = srcList[index] = '';
+                        }
+                    }
+                } else {
+                    _.$thumbs = $('<div class="' +_.options.thumbsClass+ '">'
+                        +'</div>').appendTo(container);
+                }
+                // apend only new thumbnails
+                _.$thumbs.get(0).insertAdjacentHTML('beforeend', thumbs.join(''));
+                
+                if (_.options.thumbFrame === true) {
+                    index = _.$thumbs.find('div.slick-thumb-frame').get(0);
+                    index = index 
+                        ? _.$thumbs.get(0).appendChild(index)
+                        : _.$thumbs.get(0).insertAdjacentHTML('beforeend', '<div class="slick-thumb-frame"></div>');
+                    
+                    if (_.slideCount == 0) {
+                        _.$thumbs.get(0).removeChild(index)
+                    }
+                }
+
+                _.$thumbs.find('div').first().addClass(
+                    'slick-active');
+
+                if (_.options.thumbArrows && _.$thumbArrows.init !== true) {
+                    for(var key in _.$thumbArrows) {
+                        _.$thumbArrows[key] = $(_.options.thumbArrows).find('.slick-thumb-' + key).get(0) || _.$thumbArrows[key];
+                        _.$thumbArrows[key] = $(_.$thumbArrows[key]).addClass('slick-hide').appendTo(
+                            container);
+                    }
+                }
+
+                _.$thumbs.find('img').eq(_.currentSlide).load(function(){   
+                    _.updateThumbs( this.parentNode.offsetWidth, this.parentNode.offsetLeft);
+                });
+
+                _.updateThumbArrows();
+            }
+        }
+    };
+
     Slick.prototype.buildOut = function() {
 
         var _ = this;
@@ -470,6 +559,8 @@
         _.buildArrows();
 
         _.buildDots();
+
+        _.buildThumbs();
 
         _.updateDots();
 
@@ -586,6 +677,11 @@
         if (_.$dots) {
             _.$dots.remove();
         }
+        
+        if (_.$thumbs) {
+            _.options.appendThumbs.empty();
+        }
+
         if (_.$prevArrow) {
             _.$prevArrow.remove();
             _.$nextArrow.remove();
@@ -837,6 +933,30 @@
 
     };
 
+    Slick.prototype.initThumbEvents = function() {
+
+        var _ = this,
+            timers = { left: 0, right: 0},
+            el, key;
+
+        if (_.options.thumbs === true && _.slideCount > _.options.slidesToShow) {
+            // prevent doubled event
+            $('div.slick-thumb', _.$thumbs).each(function(){
+                ! $(this).data('events') && $(this).on('click.slick', { message: 'index' }, _.changeSlide);
+            });
+
+            if (_.options.thumbArrows && _.$thumbArrows.init !== true) {
+                for(key in _.$thumbArrows) {
+                    _.$thumbArrows[key]
+                        .on('mousedown.slick', {key : key},  function(event) { timers[event.data.key] = _.scrollThumbs(10, event.data.key, timers) })
+                        .on('mouseup.slick mouseleave.slick', {key : key}, function(event) { clearInterval( timers[event.data.key] ) } );
+                }
+                _.$thumbArrows.init = true;
+            }
+        }
+
+    };
+
     Slick.prototype.initializeEvents = function() {
 
         var _ = this;
@@ -844,6 +964,8 @@
         _.initArrowEvents();
 
         _.initDotEvents();
+
+        _.initThumbEvents();
 
         _.$list.on('touchstart.slick mousedown.slick', {
             action: 'start'
@@ -871,6 +993,11 @@
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
         }
 
+        if(_.options.changeOnClick === true) {
+            _.$list.on('click.slick', { message: 'next' }, _.changeSlide);
+
+        }
+
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
             _.checkResponsive();
             _.setPosition();
@@ -883,6 +1010,7 @@
                     _.windowWidth = $(window).width();
                     _.checkResponsive();
                     _.setPosition();
+                    _.updateThumbArrows();
                 }, 50);
             }
         });
@@ -1086,17 +1214,26 @@
 
         _.setupInfinite();
 
+
         _.buildArrows();
 
         _.updateArrows();
 
         _.initArrowEvents();
 
+
         _.buildDots();
 
         _.updateDots();
 
         _.initDotEvents();
+
+
+        _.buildThumbs();
+        
+        _.updateThumbs();
+
+        _.initThumbEvents();
 
         if(_.options.focusOnSelect === true) {
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
@@ -1505,6 +1642,7 @@
 
         _.updateDots();
         _.updateArrows();
+        _.updateThumbs();
 
         if (_.options.fade === true) {
             _.fadeSlide(oldSlide,animSlide, function() {
@@ -1783,6 +1921,68 @@
 
         }
 
+    };
+    
+    Slick.prototype.updateThumbs = function(width, left) {
+
+        var _ = this,
+            thumb, parent;
+
+        if (_.$thumbs !== null) {
+            _.$thumbs.find('div.slick-active').removeClass('slick-active');
+            
+            thumb = _.$thumbs.find('div')[_.currentSlide];
+            parent = $(thumb.parentNode);
+            
+            $(thumb).addClass('slick-active');
+
+            parent.animate({
+                scrollLeft : thumb.offsetLeft
+            });
+
+            if (_.options.thumbFrame === true) {
+                _.$thumbs.find('div.slick-thumb-frame').animate({
+                    width: width || $(thumb).outerWidth(true),
+                    left:  left || thumb.offsetLeft 
+                });
+            }
+        }
+    };
+
+    Slick.prototype.updateThumbArrows = function() {
+
+        var _ = this,
+            key, $el;
+
+        if (_.options.thumbArrows) {
+            $el = _.$thumbs.get(0);
+
+            if ($el.scrollWidth > $el.clientWidth) {
+                for(key in _.$thumbArrows) if (key != 'init') {
+                    _.$thumbArrows[key].removeClass('slick-hide');
+                }
+            } else {
+                for(key in _.$thumbArrows) if (key != 'init') {
+                    _.$thumbArrows[key].addClass('slick-hide');
+                }
+            }
+        }
+    }
+
+
+    Slick.prototype.scrollThumbs = function(delay, direction, timers) {
+        var $el = this.$thumbs.get(0),
+            scrollLeftMax = direction == 'left' ? 0 : $el.scrollWidth - $el.clientWidth,
+            k = direction == 'left' ? -1 : 1;
+
+        var scrolling = function() {
+            $el.scrollLeft += k * 5;
+            if ($el.scrollLeft == scrollLeftMax) {
+                clearTimeout(timers[direction]);
+            }
+        }
+
+        return setInterval(scrolling, delay);
     };
 
     $.fn.slick = function(options) {

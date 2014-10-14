@@ -53,3 +53,52 @@
 [dir="rtl"] .slick-prev {right: -25px;left: auto;}
 [dir="rtl"] .slick-prev:before {content: "\2192";}
 [dir="rtl"] .slick-slide {float: right;}
+
+
+/* THUMBNAILS mode */
+.slick-thumbs-box {
+    display: block;
+    position: relative;
+    height: 100px; /* height = img height */
+}
+
+.slick-thumbs {
+    position: absolute;
+    overflow: hidden;
+    left: 0; right: 0;
+    
+    text-align: center;
+    white-space: nowrap;
+}
+
+.slick-thumbs, .slick-thumb, .slick-thumb img{
+    height: 100%;
+}
+
+.slick-thumb {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    
+}
+.slick-thumb img {
+    display: block;
+    max-height: 150px;
+    border: 5px solid transparent;
+}
+
+.slick-thumb-frame {
+    position: absolute;
+    top: 0;
+    left: -12px; /* to hide element | 12px = border-left + border-right*/
+    
+    height: 100%;
+    z-index: 10;
+    background: rgba(99,62,191, 0.2);
+    border: 6px #633EBF solid; /* border need more then img border */
+    border-radius: 3px;
+}
+
+.slick-hide {
+    display: none;
+}
