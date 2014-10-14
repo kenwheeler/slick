@@ -1447,10 +1447,11 @@
         }
 
         targetSlide = index;
+        var final_lhs_slide = _.slideCount - _.options.slidesToShow;
         if (targetSlide < 0 && _.currentSlide != 0) {
             targetSlide = 0;
-        } else if (targetSlide > _.slideCount - 1 && _.currentSlide != _.slideCount - 1) {
-            targetSlide = _.slideCount - 1;
+        } else if (targetSlide > final_lhs_slide && _.currentSlide <= final_lhs_slide) {
+            targetSlide = final_lhs_slide;
         }
         targetLeft = _.getLeft(targetSlide);
         slideLeft = _.getLeft(_.currentSlide);
