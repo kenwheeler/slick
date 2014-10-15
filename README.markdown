@@ -31,6 +31,10 @@ Then, before your closing ```<body>``` tag add:
 bower install --save slick.js
 ````
 
+#### Contributing
+
+PLEASE review CONTRIBUTING.markdown prior to requesting a feature, filing a pull request or filing an issue.
+
 #### Options
 
 Option | Type | Default | Description
