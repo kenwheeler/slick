@@ -1447,6 +1447,12 @@
         }
 
         targetSlide = index;
+        var final_lhs_slide = _.slideCount - _.options.slidesToShow;
+        if (targetSlide < 0 && _.currentSlide != 0) {
+            targetSlide = 0;
+        } else if (targetSlide > final_lhs_slide && _.currentSlide <= final_lhs_slide) {
+            targetSlide = final_lhs_slide;
+        }
         targetLeft = _.getLeft(targetSlide);
         slideLeft = _.getLeft(_.currentSlide);
 
@@ -1454,7 +1460,7 @@
 
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
-        if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || index > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
+        if (_.options.infinite === false && _.options.centerMode === false && (targetSlide < 0 || targetSlide > (_.slideCount - _.options.slidesToShow + unevenOffset))) {
             if(_.options.fade === false) {
                 targetSlide = _.currentSlide;
                 _.animateSlide(slideLeft, function() {
@@ -1462,7 +1468,7 @@
                 });
             }
             return false;
-        } else if (_.options.infinite === false && _.options.centerMode === true && (index < 0 || index > (_.slideCount - _.options.slidesToScroll))) {
+        } else if (_.options.infinite === false && _.options.centerMode === true && (targetSlide < 0 || targetSlide > (_.slideCount - _.options.slidesToScroll))) {
             if(_.options.fade === false) {
                 targetSlide = _.currentSlide;
                 _.animateSlide(slideLeft, function() {
