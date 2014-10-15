@@ -10,6 +10,8 @@ All bug reports and problem issues require a jsFiddle. You can create one at [js
 
 Providing a test case is the best way to get your issue addressed. Without a test case, your issue may be closed.
 
+You must provide a clear and simple way to reproduce the issue with the provided demo.
+
 ## Support
 
 If you are having problems getting Slick to work, or can't figure something out, this repository's issues section is not the place to ask about it.
