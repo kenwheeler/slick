@@ -1446,7 +1446,11 @@
         sync = sync || false;
 
         if (_.animating === true && _.options.waitForAnimate === true) {
-            return false;
+            return;
+        }
+
+        if (_.options.fade === true && _.currentSlide === index) {
+            return;
         }
 
         if (sync === false) {
@@ -1468,7 +1472,7 @@
                     _.postSlide(targetSlide);
                 });
             }
-            return false;
+            return;
         } else if (_.options.infinite === false && _.options.centerMode === true && (index < 0 || index > (_.slideCount - _.options.slidesToScroll))) {
             if(_.options.fade === false) {
                 targetSlide = _.currentSlide;
@@ -1476,7 +1480,7 @@
                     _.postSlide(targetSlide);
                 });
             }
-            return false;
+            return;
         }
 
         if (_.options.autoplay === true) {
@@ -1517,7 +1521,7 @@
             _.fadeSlide(oldSlide,animSlide, function() {
                 _.postSlide(animSlide);
             });
-            return false;
+            return;
         }
 
         _.animateSlide(targetLeft, function() {
