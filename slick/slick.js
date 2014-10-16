@@ -1381,7 +1381,7 @@
         var _ = this,
             i, slideIndex, infiniteCount;
 
-        if (_.options.fade === true || _.options.vertical === true) {
+        if (_.options.fade === true) {
             _.options.centerMode = false;
         }
 
