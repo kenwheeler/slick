@@ -587,8 +587,10 @@
         if (_.$dots) {
             _.$dots.remove();
         }
-        if (_.$prevArrow) {
+        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
             _.$prevArrow.remove();
+        }
+        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
             _.$nextArrow.remove();
         }
         if (_.$slides.parent().hasClass('slick-track')) {
@@ -1755,8 +1757,10 @@
         if (_.$dots) {
             _.$dots.remove();
         }
-        if (_.$prevArrow) {
+        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
             _.$prevArrow.remove();
+        }
+        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
             _.$nextArrow.remove();
         }
         _.$slides.removeClass(
