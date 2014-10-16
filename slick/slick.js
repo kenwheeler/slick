@@ -450,14 +450,14 @@
             i, length = _.$slides.length,
             thumbs = [], thumb, srcList = [],
             container = _.options.appendThumbs,
-            images, index;
+            images = {}, index;
 
         if (_.options.thumbs === true) {
 
             for(i = 0; i < length; i++) {
                 thumb =  $(_.$slides[i]).data('thumb');
                 if (thumb) {
-                    thumbs.push('<div class="slick-thumb"><img src="' +thumb+ '"></div>');
+                    thumbs.push('<img class="slick-thumb" src="' +thumb+ '">');
                     srcList.push(thumb);
                 }
             }
@@ -476,7 +476,7 @@
                     for(i = 0; i < images.length; i++) {
                         index = $.inArray(images[i].getAttribute('src'), srcList);
                         if (index == -1) {
-                            $(images[i].parentNode).remove();
+                            $(images[i]).remove();
                         } else {
                             // remove duplicates
                             thumbs[index] = srcList[index] = '';
@@ -489,19 +489,21 @@
                 // apend only new thumbnails
                 _.$thumbs.get(0).insertAdjacentHTML('beforeend', thumbs.join(''));
                 
-                if (_.options.thumbFrame === true) {
-                    index = _.$thumbs.find('div.slick-thumb-frame').get(0);
+                if (_.options.thumbFrame) {
+                    index = _.$thumbs.find('div.slick-thumb-frame').addClass('slick-hide').get(0);
+                    images = images.length ? images : _.$thumbs.find('img');
+
                     index = index 
                         ? _.$thumbs.get(0).appendChild(index)
-                        : _.$thumbs.get(0).insertAdjacentHTML('beforeend', '<div class="slick-thumb-frame"></div>');
+                        : _.$thumbs.get(0).insertAdjacentHTML('beforeend', '<div class="slick-thumb-frame slick-hide"/>');
                     
                     if (_.slideCount == 0) {
                         _.$thumbs.get(0).removeChild(index)
                     }
-                }
 
-                _.$thumbs.find('div').first().addClass(
-                    'slick-active');
+                    images.filter('img.slick-thumb-frame').removeClass('slick-thumb-frame');
+                    _.options.thumbFrame = images.eq(_.currentSlide).addClass('slick-thumb-frame');
+                }
 
                 if (_.options.thumbArrows && _.$thumbArrows.init !== true) {
                     for(var key in _.$thumbArrows) {
@@ -511,9 +513,6 @@
                     }
                 }
 
-                _.$thumbs.find('img').eq(_.currentSlide).load(function(){   
-                    _.updateThumbs( this.parentNode.offsetWidth, this.parentNode.offsetLeft);
-                });
             }
         }
     };
@@ -939,8 +938,8 @@
 
         if (_.options.thumbs === true && _.slideCount > _.options.slidesToShow) {
             // prevent doubled event
-            $('div.slick-thumb', _.$thumbs).each(function(){
-                ! $(this).data('events') && $(this).on('click.slick', { message: 'index' }, _.changeSlide);
+            $('img.slick-thumb', _.$thumbs).each(function(num, thumb){
+                ! $(this).data('events') && $(thumb).on('click.slick', { message: 'index', index: num }, _.changeSlide);
             });
 
             if (_.options.thumbArrows && _.$thumbArrows.init !== true) {
@@ -1008,7 +1007,7 @@
                     _.windowWidth = $(window).width();
                     _.checkResponsive();
                     _.setPosition();
-                    _.updateThumbs();
+                    _.updateThumbArrows();
                 }, 50);
             }
         });
@@ -1229,7 +1228,7 @@
 
         _.buildThumbs();
         
-        _.updateThumbs();
+        _.updateThumbArrows();
 
         _.initThumbEvents();
 
@@ -1921,30 +1920,45 @@
 
     };
     
-    Slick.prototype.updateThumbs = function(width, left) {
+    Slick.prototype.updateThumbs = function() {
 
         var _ = this,
-            thumb, parent;
+            thumb;
 
         if (_.$thumbs !== null) {
-            _.$thumbs.find('div.slick-active').removeClass('slick-active');
-            
-            thumb = _.$thumbs.find('div')[_.currentSlide];
-            parent = $(thumb.parentNode);
-            
-            $(thumb).addClass('slick-active');
+            thumb = _.$thumbs.find('img')[_.currentSlide];
 
-            parent.animate({
-                scrollLeft : thumb.offsetLeft
-            });
+            if (thumb) {
+                _.$thumbs.find('img.slick-active').removeClass('slick-active');
 
-            if (_.options.thumbFrame === true) {
-                _.$thumbs.find('div.slick-thumb-frame').animate({
-                    width: width || $(thumb).outerWidth(true),
-                    left:  left || thumb.offsetLeft 
+                $(thumb).addClass('slick-active');
+
+                $(thumb.parentNode).animate({
+                    scrollLeft : thumb.offsetLeft
                 });
+
+                if (_.options.thumbFrame) {
+                    _.$thumbs.find('div.slick-thumb-frame')
+                        .css({
+                            width: _.options.thumbFrame.get(0).offsetWidth,
+                            left: _.options.thumbFrame.get(0).offsetLeft
+                        })
+                        .animate({
+                            width: thumb.offsetWidth,
+                            left:  thumb.offsetLeft
+                        }, {
+                            start: function() {
+                                $(this).removeClass('slick-hide');
+                                _.options.thumbFrame.removeClass('slick-thumb-frame');
+                            },
+                            complete: function() {
+                                $(this).addClass('slick-hide');
+                                _.options.thumbFrame = $(thumb).addClass('slick-thumb-frame');
+                            }
+                        });
+                }
             }
-            _.updateThumbArrows();
+
         }
     };
 

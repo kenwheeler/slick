@@ -69,9 +69,10 @@
     
     text-align: center;
     white-space: nowrap;
+    
 }
 
-.slick-thumbs, .slick-thumb, .slick-thumb img{
+.slick-thumbs, .slick-thumb{
     height: 100%;
 }
 
@@ -79,24 +80,22 @@
     position: relative;
     display: inline-block;
     vertical-align: top;
-    
-}
-.slick-thumb img {
-    display: block;
     max-height: 150px;
     border: 5px solid transparent;
 }
 
 .slick-thumb-frame {
+    border: 5px #633EBF solid; /* border need more then img border */
+    border-radius: 3px;
+}
+
+div.slick-thumb-frame {
     position: absolute;
     top: 0;
     left: -12px; /* to hide element | 12px = border-left + border-right*/
     
     height: 100%;
     z-index: 10;
-    background: rgba(99,62,191, 0.2);
-    border: 6px #633EBF solid; /* border need more then img border */
-    border-radius: 3px;
 }
 
 .slick-hide {
