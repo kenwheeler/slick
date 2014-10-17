@@ -91,8 +91,9 @@
                 animating: false,
                 dragging: false,
                 autoPlayTimer: null,
-                currentSlide: 0,
+                currentDirection: 0,
                 currentLeft: null,
+                currentSlide: 0,
                 direction: 1,
                 $dots: null,
                 listWidth: null,
@@ -785,6 +786,26 @@
 
     };
 
+    Slick.prototype.getSlideCount = function() {
+
+        var _ = this, slidesTraversed;
+
+        if(_.options.swipeToSlide === true) {
+            var swipedSlide = null;
+            _.$slideTrack.find('.slick-slide').each(function(index, slide){
+                if (slide.offsetLeft + ($(slide).outerWidth() / 2) > (_.swipeLeft * -1)) {
+                    swipedSlide = slide;
+                    return false;
+                }
+            });
+            slidesTraversed = Math.abs($(swipedSlide).attr('index') - _.currentSlide);
+            return slidesTraversed;
+        } else {
+            return _.options.slidesToScroll;
+        }
+
+    };
+
     Slick.prototype.init = function() {
 
         var _ = this;
@@ -1203,11 +1224,12 @@
             _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
 
         } else if (_.options.variableWidth === true) {
-            _.slideWidth = 0;
+            var trackWidth = 0;
+            _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
             _.$slideTrack.children('.slick-slide').each(function(){
-                _.slideWidth += Math.ceil($(this).outerWidth(true));
+                trackWidth += Math.ceil($(this).outerWidth(true));
             });
-            _.$slideTrack.width(Math.ceil(_.slideWidth) + 1);
+            _.$slideTrack.width(Math.ceil(trackWidth) + 1);
         } else {
             _.slideWidth = Math.ceil(_.listWidth);
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
@@ -1577,7 +1599,7 @@
 
     Slick.prototype.swipeEnd = function(event) {
 
-        var _ = this, slideCount, slidesTraversed, swipeDiff;
+        var _ = this, slideCount;
 
         _.dragging = false;
 
@@ -1593,21 +1615,16 @@
                 $(event.target).off('click.slick');
             });
 
-            if(_.options.swipeToSlide === true) {
-                slidesTraversed = Math.round(_.touchObject.swipeLength / _.slideWidth);
-                slideCount = slidesTraversed
-            } else {
-                slideCount = _.options.slidesToScroll;
-            }
-
             switch (_.swipeDirection()) {
                 case 'left':
-                    _.slideHandler(_.currentSlide + slideCount);
+                    _.slideHandler(_.currentSlide + _.getSlideCount());
+                    _.currentDirection = 0;
                     _.touchObject = {};
                     break;
 
                 case 'right':
-                    _.slideHandler(_.currentSlide - slideCount);
+                    _.slideHandler(_.currentSlide - _.getSlideCount());
+                    _.currentDirection = 1;
                     _.touchObject = {};
                     break;
             }
