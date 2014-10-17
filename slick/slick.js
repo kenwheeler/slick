@@ -59,6 +59,7 @@
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
+                dotsActiveClass: 'slick-active',
                 draggable: true,
                 easing: 'linear',
                 fade: false,
@@ -424,8 +425,7 @@
             _.$dots = $(dotString).appendTo(
                 _.options.appendDots);
 
-            _.$dots.find('li').first().addClass(
-                'slick-active');
+            _.$dots.find('li').first().addClass(_.options.dotsActiveClass);
 
         }
 
@@ -1778,8 +1778,8 @@
 
         if (_.$dots !== null) {
 
-            _.$dots.find('li').removeClass('slick-active');
-            _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass('slick-active');
+            _.$dots.find('li').removeClass(_.options.dotsActiveClass);
+            _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass(_.options.dotsActiveClass);
 
         }
 
