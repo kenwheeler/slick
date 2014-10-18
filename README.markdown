@@ -47,6 +47,7 @@ centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
 dots | boolean | false | Current slide indicator dots
+dotsActiveClass | string | 'slick-active' | Class for currently active slide indicator dot
 dotsClass | string | 'slick-dots' | Class for slide indicator dots container
 draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
