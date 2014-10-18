@@ -63,7 +63,6 @@
                 dotsClass: 'slick-dots',
                 thumbsClass: 'slick-thumbs',
                 thumbFrame: true,
-                thumbArrows: true,
                 draggable: true,
                 easing: 'linear',
                 fade: false,
@@ -103,11 +102,6 @@
                 direction: 1,
                 $dots: null,
                 $thumbs : null,
-                $thumbArrows : {
-                    left: '<div class="slick-prev slick-thumb-left"></div>',
-                    right: '<div class="slick-next slick-thumb-right"></div>'
-                },
-
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
@@ -503,14 +497,6 @@
 
                     images.filter('img.slick-thumb-frame').removeClass('slick-thumb-frame');
                     _.options.thumbFrame = images.eq(_.currentSlide).addClass('slick-thumb-frame');
-                }
-
-                if (_.options.thumbArrows && _.$thumbArrows.init !== true) {
-                    for(var key in _.$thumbArrows) {
-                        _.$thumbArrows[key] = $(_.options.thumbArrows).find('.slick-thumb-' + key).get(0) || _.$thumbArrows[key];
-                        _.$thumbArrows[key] = $(_.$thumbArrows[key]).addClass('slick-hide').appendTo(
-                            container);
-                    }
                 }
 
             }
@@ -933,25 +919,92 @@
     Slick.prototype.initThumbEvents = function() {
 
         var _ = this,
-            timers = { left: 0, right: 0},
-            el, key;
+            timers = { left: 0, right: 0 },
+            key, stateThumbs;
 
         if (_.options.thumbs === true && _.slideCount > _.options.slidesToShow) {
             // prevent doubled event
-            $('img.slick-thumb', _.$thumbs).each(function(num, thumb){
-                ! $(this).data('events') && $(thumb).on('click.slick', { message: 'index', index: num }, _.changeSlide);
+            $('img.slick-thumb', _.$thumbs).each(function(num){
+                ! $(this).data('events') && $(this).on('click.slick', { message: 'index', index: num }, _.changeSlide);
             });
 
-            if (_.options.thumbArrows && _.$thumbArrows.init !== true) {
-                for(key in _.$thumbArrows) {
-                    _.$thumbArrows[key]
-                        .on('mousedown.slick', {key : key},  function(event) { timers[event.data.key] = _.scrollThumbs(10, event.data.key, timers) })
-                        .on('mouseup.slick mouseleave.slick', {key : key}, function(event) { clearInterval( timers[event.data.key] ) } );
+            stateThumbs = {
+
+                horizontal : {
+                    axis : 'pageX',
+                    modifier : 'scrollLeft',
+                    limit : _.$thumbs.get(0).clientWidth + 10
+                },
+
+                vertical : {
+                    axis : 'pageY',
+                    modifier : 'scrollTop',
+                    limit : _.$thumbs.get(0).clientHeight + 10
                 }
-                _.$thumbArrows.init = true;
+
+            }[_.options.vertical ? 'vertical' : 'horizontal'];
+
+            if (! _.$thumbs.data('events')) {
+
+                _.$thumbs.on('touchstart.slick mousedown.slick', {
+                    action: 'start',
+                    state: stateThumbs
+                }, _.swipeThumbsHandler);
+
+                _.$thumbs.on('touchmove.slick mousemove.slick', {
+                    action: 'move',
+                    state: stateThumbs
+                }, _.swipeThumbsHandler);
+
+                _.$thumbs.on('touchend.slick touchcancel.slick mouseleave.slick mouseup.slick', {
+                    action: 'end',
+                    state: stateThumbs
+                }, _.swipeThumbsHandler);
+                // prevent native drag event
+                _.$thumbs.on('dragstart.slick', function(){ return false });
             }
         }
 
+    };
+
+    Slick.prototype.swipeThumbsHandler = function(event) {
+        var ev = event,
+            state = event.data.state, delta;
+
+        if (state.touch && event.type.indexOf('mousemove') !== -1) {
+            return;
+        }
+
+        if (event.originalEvent && event.originalEvent.touches !== undefined) {
+            ev = event.originalEvent.touches[0];
+            state.touch = true;
+        }
+
+        switch(event.data.action) {
+
+            case 'move':
+                if (state.isDraggable) {
+                    event.preventDefault();
+
+                    delta = state.start - ev[state.axis];
+                    if (delta >= -state.limit && delta <= state.limit) {
+                        this[state.modifier] = state.offset + delta;
+                    }
+                }
+                break;
+
+            case 'start':
+                state.isDraggable = true;
+                state.start = ev[state.axis];
+                state.offset = this[state.modifier];
+                state.touch = false;
+                break;
+
+            case 'end':
+                state.isDraggable = false;
+                break;
+
+        }
     };
 
     Slick.prototype.initializeEvents = function() {
@@ -1007,7 +1060,6 @@
                     _.windowWidth = $(window).width();
                     _.checkResponsive();
                     _.setPosition();
-                    _.updateThumbArrows();
                 }, 50);
             }
         });
@@ -1228,8 +1280,6 @@
 
         _.buildThumbs();
         
-        _.updateThumbArrows();
-
         _.initThumbEvents();
 
         if(_.options.focusOnSelect === true) {
@@ -1960,42 +2010,6 @@
             }
 
         }
-    };
-
-    Slick.prototype.updateThumbArrows = function() {
-
-        var _ = this,
-            key, $el;
-
-        if ( _.options.thumbArrows == true && _.$thumbs !== null) {
-            $el = _.$thumbs.get(0);
-
-            if ($el.scrollWidth > $el.clientWidth) {
-                for(key in _.$thumbArrows) if (key != 'init') {
-                    _.$thumbArrows[key].removeClass('slick-hide');
-                }
-            } else {
-                for(key in _.$thumbArrows) if (key != 'init') {
-                    _.$thumbArrows[key].addClass('slick-hide');
-                }
-            }
-        }
-    }
-
-
-    Slick.prototype.scrollThumbs = function(delay, direction, timers) {
-        var $el = this.$thumbs.get(0),
-            scrollLeftMax = direction == 'left' ? 0 : $el.scrollWidth - $el.clientWidth,
-            k = direction == 'left' ? -1 : 1;
-
-        var scrolling = function() {
-            $el.scrollLeft += k * 5;
-            if ($el.scrollLeft == scrollLeftMax) {
-                clearTimeout(timers[direction]);
-            }
-        }
-
-        return setInterval(scrolling, delay);
     };
 
     $.fn.slick = function(options) {
