@@ -341,7 +341,6 @@
     Slick.prototype.autoPlayClear = function() {
 
         var _ = this;
-
         if (_.autoPlayTimer) {
             clearInterval(_.autoPlayTimer);
         }
@@ -865,8 +864,14 @@
 
         if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
             $('li', _.$dots)
-                .on('mouseenter.slick', _.autoPlayClear)
-                .on('mouseleave.slick', _.autoPlay);
+                .on('mouseenter.slick', function(){
+                    _.paused = true;
+                    _.autoPlayClear();
+                })
+                .on('mouseleave.slick', function(){
+                    _.paused = false;
+                    _.autoPlay();
+                });
         }
 
     };
@@ -893,8 +898,14 @@
         }, _.swipeHandler);
 
         if (_.options.pauseOnHover === true && _.options.autoplay === true) {
-            _.$list.on('mouseenter.slick', _.autoPlayClear);
-            _.$list.on('mouseleave.slick', _.autoPlay);
+            _.$list.on('mouseenter.slick', function(){
+                _.paused = true;
+                _.autoPlayClear();
+            });
+            _.$list.on('mouseleave.slick', function(){
+                _.paused = false;
+                _.autoPlay();
+            });
         }
 
         if(_.options.accessibility === true) {
