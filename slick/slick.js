@@ -511,14 +511,14 @@
                     if (targetBreakpoint !== _.activeBreakpoint) {
                         _.activeBreakpoint =
                             targetBreakpoint;
-                        _.options = $.extend({}, _.options,
+                        _.options = $.extend({}, _.originalSettings,
                             _.breakpointSettings[
                                 targetBreakpoint]);
                         _.refresh();
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
-                    _.options = $.extend({}, _.options,
+                    _.options = $.extend({}, _.originalSettings,
                         _.breakpointSettings[
                             targetBreakpoint]);
                     _.refresh();
@@ -526,8 +526,7 @@
             } else {
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
-                    _.options = $.extend({}, _.options,
-                        _.originalSettings);
+                    _.options = _.originalSettings;
                     _.refresh();
                 }
             }
@@ -597,7 +596,15 @@
             _.$slides.unwrap().unwrap();
         }
         _.$slides.removeClass(
-            'slick-slide slick-active slick-visible').css('width', '');
+            'slick-slide slick-active slick-visible').css({
+                position: '',
+                left: '',
+                top: '',
+                zIndex: '',
+                opacity: '',
+                width: ''
+            });
+
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
 
@@ -1247,13 +1254,23 @@
 
         _.$slides.each(function(index, element) {
             targetLeft = (_.slideWidth * index) * -1;
-            $(element).css({
-                position: 'relative',
-                left: targetLeft,
-                top: 0,
-                zIndex: 800,
-                opacity: 0
-            });
+            if (_.options.rtl === true) {
+                $(element).css({
+                    position: 'relative',
+                    right: targetLeft,
+                    top: 0,
+                    zIndex: 800,
+                    opacity: 0
+                });
+            } else {
+                $(element).css({
+                    position: 'relative',
+                    left: targetLeft,
+                    top: 0,
+                    zIndex: 800,
+                    opacity: 0
+                });
+            }
         });
 
         _.$slides.eq(_.currentSlide).css({
