@@ -84,7 +84,8 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
-                waitForAnimate: true
+                waitForAnimate: true,
+                oneDotPerSlide: false
             };
 
             _.initials = {
@@ -564,8 +565,20 @@
                 break;
 
             case 'index':
-                var index = event.data.index === 0 ? 0 :
-                    event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
+                var index;
+                if (typeof(event.data.index) === "number") {
+                    index = event.data.index;
+                } else if (_.options.oneDotPerSlide) {
+                    index = $(event.target).parent().index();
+                    if (!_.options.centerMode) {
+                        index = index - Math.floor(_.options.slidesToShow / 2)
+                    }
+                    if (!_.options.infinite && !_.options.centerMode) {
+                        index = Math.max(0, Math.min(index, _.slideCount - _.options.slidesToShow));
+                    }
+                } else {
+                    index = $(event.target).parent().index() * _.options.slidesToScroll;
+                }
                 _.slideHandler(index);
 
             default:
@@ -698,6 +711,10 @@
             dotCounter = 0,
             dotCount = 0,
             dotLimit;
+
+        if (_.options.oneDotPerSlide) {
+            return _.slideCount - 1;
+        }
 
         dotLimit = _.options.infinite === true ? _.slideCount + _.options.slidesToShow - _.options.slidesToScroll : _.slideCount;
 
@@ -1779,7 +1796,24 @@
         if (_.$dots !== null) {
 
             _.$dots.find('li').removeClass('slick-active');
-            _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass('slick-active');
+
+            if (_.options.oneDotPerSlide) {
+                var start = _.options.centerMode
+                    ? _.currentSlide - Math.floor(_.options.slidesToShow / 2)
+                    : _.currentSlide;
+                if (_.options.infinite) {
+                    if (start > _.slideCount - _.options.slidesToShow) {
+                        start -= _.slideCount;
+                    }
+                }
+                _.$dots.find('li').filter(function() {
+                   var idx = $(this).index();
+                   return (idx >= start && idx < start + _.options.slidesToShow) || (_.options.infinite && idx - _.slideCount >= start && idx - _.slideCount < start + _.options.slidesToShow);
+                }).addClass('slick-active');
+
+            } else {
+                _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass('slick-active');
+            }
 
         }
 
