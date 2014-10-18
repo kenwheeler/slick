@@ -595,8 +595,11 @@
         if (_.$slides.parent().hasClass('slick-track')) {
             _.$slides.unwrap().unwrap();
         }
+
         _.$slides.removeClass(
-            'slick-slide slick-active slick-visible').css({
+            'slick-slide slick-active slick-center slick-visible')
+            .removeAttr('index')
+            .css({
                 position: '',
                 left: '',
                 top: '',
