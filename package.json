@@ -1,5 +1,5 @@
 {
-    "name": "slick-carousel",
+    "name": "slick",
     "version": "1.3.11",
     "description": "the last carousel you'll ever need",
     "main": "slick/slick.js",
@@ -16,5 +16,16 @@
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/kenwheeler/slick/issues"
+    },
+    "spm": {
+        "main": "slick/slick.js",
+        "dependencies": {
+            "jquery": "1.7.2"
+        },
+        "ignore": [
+            "css",
+            "js",
+            "img"
+        ]
     }
 }
