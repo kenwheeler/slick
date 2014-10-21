@@ -1643,13 +1643,14 @@
             return false;
         }
 
+        $(event.target).on('click.slick', function(event) {
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            event.preventDefault();
+            $(event.target).off('click.slick');
+        });
+
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
-            $(event.target).on('click.slick', function(event) {
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                event.preventDefault();
-                $(event.target).off('click.slick');
-            });
 
             switch (_.swipeDirection()) {
                 case 'left':
