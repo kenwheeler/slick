@@ -116,6 +116,7 @@
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
+                thumbsParams: {},
                 transformsEnabled: false
             };
 
@@ -463,6 +464,11 @@
                 }
 
                 container.addClass('slick-thumbs-box');
+                if (_.options.vertical === true) {
+                    container.addClass('slick-thumbs-box-vertical');
+                } else {
+                    container.removeClass('slick-thumbs-box-vertical');
+                }
 
                 if (_.$thumbs) {
                     // diff with previous state
@@ -500,6 +506,43 @@
                 }
 
             }
+
+            _.thumbsParams = {
+
+                horizontal : {
+                    offset : {
+                        axis : 'offsetLeft',
+                        scroll : 'scrollLeft',
+                        property : 'offsetWidth'
+                    },
+                    swipe : {
+                        axis : 'pageX',
+                        scroll : 'scrollLeft'
+                    },
+                    animate : {
+                        axis : 'left',
+                        property : 'width'
+                    }
+                },
+
+                vertical : {
+                    offset : {
+                        axis : 'offsetTop',
+                        scroll : 'scrollTop',
+                        property : 'offsetHeight'
+                    },
+                    swipe : {
+                        axis : 'pageY',
+                        scroll : 'scrollTop'
+                    },
+                    animate : {
+                        axis : 'top',
+                        property : 'height'
+                    }
+                }
+
+            }[_.options.vertical ? 'vertical' : 'horizontal'];
+
         }
     };
 
@@ -920,7 +963,7 @@
 
         var _ = this,
             timers = { left: 0, right: 0 },
-            key, stateThumbs;
+            key;
 
         if (_.options.thumbs === true && _.slideCount > _.options.slidesToShow) {
             // prevent doubled event
@@ -928,37 +971,20 @@
                 ! $(this).data('events') && $(this).on('click.slick', { message: 'index', index: num }, _.changeSlide);
             });
 
-            stateThumbs = {
-
-                horizontal : {
-                    axis : 'pageX',
-                    modifier : 'scrollLeft',
-                    limit : _.$thumbs.get(0).clientWidth + 10
-                },
-
-                vertical : {
-                    axis : 'pageY',
-                    modifier : 'scrollTop',
-                    limit : _.$thumbs.get(0).clientHeight + 10
-                }
-
-            }[_.options.vertical ? 'vertical' : 'horizontal'];
-
             if (! _.$thumbs.data('events')) {
-
                 _.$thumbs.on('touchstart.slick mousedown.slick', {
                     action: 'start',
-                    state: stateThumbs
+                    state: _.thumbsParams.swipe
                 }, _.swipeThumbsHandler);
 
                 _.$thumbs.on('touchmove.slick mousemove.slick', {
                     action: 'move',
-                    state: stateThumbs
+                    state: _.thumbsParams.swipe
                 }, _.swipeThumbsHandler);
 
                 _.$thumbs.on('touchend.slick touchcancel.slick mouseleave.slick mouseup.slick', {
                     action: 'end',
-                    state: stateThumbs
+                    state: _.thumbsParams.swipe
                 }, _.swipeThumbsHandler);
                 // prevent native drag event
                 _.$thumbs.on('dragstart.slick', function(){ return false });
@@ -983,25 +1009,23 @@
         switch(event.data.action) {
 
             case 'move':
-                if (state.isDraggable) {
+                if (state.draggable) {
                     event.preventDefault();
 
                     delta = state.start - ev[state.axis];
-                    if (delta >= -state.limit && delta <= state.limit) {
-                        this[state.modifier] = state.offset + delta;
-                    }
+                    this[state.scroll] = state.offset + delta;
                 }
                 break;
 
             case 'start':
-                state.isDraggable = true;
                 state.start = ev[state.axis];
-                state.offset = this[state.modifier];
+                state.offset = this[state.scroll];
+                state.draggable = true;
                 state.touch = false;
                 break;
 
             case 'end':
-                state.isDraggable = false;
+                state.draggable = false;
                 break;
 
         }
@@ -1428,6 +1452,30 @@
         if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
             _.$list.css('height', targetHeight);
+        }
+
+        if (_.$thumbs && _.options.vertical === true) {
+            var thumbs = _.$thumbs.get(0),
+                className = thumbs.className,
+                height = thumbs.offsetHeight,
+                scroll = thumbs.scrollTop,
+                measuredHeight;
+
+            thumbs.className = className + ' slick-thumbs-measure';
+            measuredHeight = thumbs.offsetHeight;
+            if (measuredHeight < thumbs.parentNode.offsetHeight) {
+                if (height != measuredHeight) {
+                    _.$thumbs.height(measuredHeight);
+                    className = className.replace(' slick-thumbs-centered', '') + ' slick-thumbs-centered';
+                }
+            } else {
+                if (className.indexOf('slick-thumbs-centered') !== -1) {
+                    _.$thumbs.height('auto');
+                    className = className.replace(' slick-thumbs-centered', '');
+                }
+            }
+            thumbs.className = className;
+            thumbs.scrollTop = scroll;
         }
 
     };
@@ -1973,7 +2021,7 @@
     Slick.prototype.updateThumbs = function() {
 
         var _ = this,
-            thumb;
+            thumb, offset, delta, prop = {}, p;
 
         if (_.$thumbs !== null) {
             thumb = _.$thumbs.find('img')[_.currentSlide];
@@ -1983,20 +2031,35 @@
 
                 $(thumb).addClass('slick-active');
 
-                $(thumb.parentNode).animate({
-                    scrollLeft : thumb.offsetLeft
-                });
+                offset = _.thumbsParams.offset;
 
-                if (_.options.thumbFrame) {
+                if (thumb[offset.axis] - thumb.parentNode[offset.scroll] < 0) {
+                    delta = thumb[offset.axis];
+                } else if ((thumb[offset.axis] + thumb[offset.property]) > (thumb.parentNode[offset.scroll] + thumb.parentNode[offset.property])) {
+                    delta = thumb[offset.axis] + thumb[offset.property] - thumb.parentNode[offset.property]
+                }
+
+                if (delta !== undefined) {
+                    $(thumb.parentNode).animate((
+                        prop[offset.scroll] = delta,
+                        prop
+                    ));
+                }
+
+                if (_.options.thumbFrame && _.options.thumbFrame.get(0) != thumb) {
+                    prop = {};
+                    p = _.thumbsParams.animate;
                     _.$thumbs.find('div.slick-thumb-frame')
-                        .css({
-                            width: _.options.thumbFrame.get(0).offsetWidth,
-                            left: _.options.thumbFrame.get(0).offsetLeft
-                        })
-                        .animate({
-                            width: thumb.offsetWidth,
-                            left:  thumb.offsetLeft
-                        }, {
+                        .css((
+                            prop[p.axis] = _.options.thumbFrame.get(0)[offset.axis],
+                            prop[p.property] = _.options.thumbFrame.get(0)[offset.property],
+                            prop
+                        ))
+                        .animate((
+                            prop[p.axis] = thumb[offset.axis],
+                            prop[p.property] = thumb[offset.property],
+                            prop
+                        ), {
                             start: function() {
                                 $(this).removeClass('slick-hide');
                                 _.options.thumbFrame.removeClass('slick-thumb-frame');

@@ -56,6 +56,10 @@
 
 
 /* THUMBNAILS mode */
+.slick-hide {
+    display: none;
+}
+
 .slick-thumbs-box {
     display: block;
     position: relative;
@@ -76,8 +80,6 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -ms-touch-action: pan-y;
-    touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -89,24 +91,57 @@
     position: relative;
     display: inline-block;
     vertical-align: top;
-    max-height: 150px;
     border: 5px solid transparent;
 }
 
 .slick-thumb-frame {
-    border: 5px #633EBF solid; /* border need more then img border */
+    border: 5px #633EBF solid;
     border-radius: 3px;
 }
 
 div.slick-thumb-frame {
     position: absolute;
     top: 0;
-    left: -12px; /* to hide element | 12px = border-left + border-right*/
+    left: -10px; /* to hide element */
     
     height: 100%;
     z-index: 10;
 }
 
-.slick-hide {
-    display: none;
+/* vertical mode */
+.slick-thumbs-box-vertical {
+    height: auto;
+    width: 100px; /* width = img width */
+}
+
+.slick-thumbs-box-vertical .slick-thumbs {
+    white-space: normal;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.slick-thumbs-box-vertical .slick-thumbs-measure {
+    bottom: auto;
+    visibility: hidden;
+    height: auto !important;
+}
+
+.slick-thumbs-box-vertical .slick-thumb {
+    height: auto;
+    width: 100%;
+    max-height: none;
+}
+
+.slick-thumbs-box-vertical div.slick-thumb-frame {
+    left: 0;
+    height: auto;
+    width: 100%;
+}
+
+.slick-vertical .slick-thumbs-box-vertical {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: 100%; /* not right -100px, to avoid container width restriction */
 }
