@@ -53,3 +53,95 @@
 [dir="rtl"] .slick-prev {right: -25px;left: auto;}
 [dir="rtl"] .slick-prev:before {content: "\2192";}
 [dir="rtl"] .slick-slide {float: right;}
+
+
+/* THUMBNAILS mode */
+.slick-hide {
+    display: none;
+}
+
+.slick-thumbs-box {
+    display: block;
+    position: relative;
+    height: 100px; /* height = img height */
+}
+
+.slick-thumbs {
+    position: absolute;
+    overflow: hidden;
+    left: 0; right: 0;
+    
+    text-align: center;
+    white-space: nowrap;
+    
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-thumbs, .slick-thumb{
+    height: 100%;
+}
+
+.slick-thumb {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    border: 5px solid transparent;
+}
+
+.slick-thumb-frame {
+    border: 5px #633EBF solid;
+    border-radius: 3px;
+}
+
+div.slick-thumb-frame {
+    position: absolute;
+    top: 0;
+    left: -10px; /* to hide element */
+    
+    height: 100%;
+    z-index: 10;
+}
+
+/* vertical mode */
+.slick-thumbs-box-vertical {
+    height: auto;
+    width: 100px; /* width = img width */
+}
+
+.slick-thumbs-box-vertical .slick-thumbs {
+    white-space: normal;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.slick-thumbs-box-vertical .slick-thumbs-measure {
+    bottom: auto;
+    visibility: hidden;
+    height: auto !important;
+}
+
+.slick-thumbs-box-vertical .slick-thumb {
+    height: auto;
+    width: 100%;
+    max-height: none;
+}
+
+.slick-thumbs-box-vertical div.slick-thumb-frame {
+    left: 0;
+    height: auto;
+    width: 100%;
+}
+
+.slick-vertical .slick-thumbs-box-vertical {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: 100%; /* not right -100px, to avoid container width restriction */
+}
