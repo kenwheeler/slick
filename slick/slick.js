@@ -869,6 +869,9 @@
 
         if(_.options.focusOnSelect === true) {
             $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
+                if(_.slideCount <= _.options.slidesToShow){
+                _.$slider.find('.slick-slide').removeClass('slick-center');
+            }
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
@@ -1425,6 +1428,9 @@
         if(!index) index = 0;
 
         if(_.slideCount <= _.options.slidesToShow){
+            _.$slider.find('.slick-slide').removeClass('slick-center');
+            _.$slides.eq(index).addClass('slick-active').addClass('slick-center');
+            _.asNavFor(index);
             return;
         }
         _.slideHandler(index);
