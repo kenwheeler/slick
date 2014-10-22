@@ -72,17 +72,11 @@ $opacity-not-active: .25;
         cursor: hand;
     }
 }
-.slick-slider .slick-list {
+.slick-slider .slick-track {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-.slick-track,
-.slick-slide,
-.slick-slide img {
     transform: translate3d(0, 0, 0);
 }
 
