@@ -1482,6 +1482,13 @@
         if(!index) index = 0;
 
         if(_.slideCount <= _.options.slidesToShow){
+            _.$slider.find('.slick-slide').removeClass('slick-active');
+            _.$slides.eq(index).addClass('slick-active');
+            if(_.options.centerMode === true) {
+                _.$slider.find('.slick-slide').removeClass('slick-center');
+                _.$slides.eq(index).addClass('slick-center');
+            }
+            _.asNavFor(index);
             return;
         }
         _.slideHandler(index);
@@ -1500,6 +1507,10 @@
         }
 
         if (_.options.fade === true && _.currentSlide === index) {
+            return;
+        }
+
+        if (_.slideCount <= _.options.slidesToShow) {
             return;
         }
 
