@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.3.11
+ Version: 1.3.12
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -1654,12 +1654,14 @@
             return false;
         }
 
-        $(event.target).on('click.slick', function(event) {
-            event.stopImmediatePropagation();
-            event.stopPropagation();
-            event.preventDefault();
-            $(event.target).off('click.slick');
-        });
+        if(_.touchObject.swipeLength > 10) {
+            $(event.target).on('click.slick', function(event) {
+                event.stopImmediatePropagation();
+                event.stopPropagation();
+                event.preventDefault();
+                $(event.target).off('click.slick');
+            });
+        }
 
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
 
