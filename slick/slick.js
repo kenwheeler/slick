@@ -124,6 +124,7 @@
             _.cssTransitions = false;
             _.paused = false;
             _.positionProp = null;
+            _.shouldClick = true;
             _.$slider = $(element);
             _.$slidesCache = null;
             _.transformType = null;
@@ -574,6 +575,18 @@
 
     };
 
+    Slick.prototype.clickHandler = function(event) {
+
+        var _ = this;
+
+        if(_.shouldClick === false) {
+            event.stopImmediatePropagation();
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
+    }
+
     Slick.prototype.destroy = function() {
 
         var _ = this;
@@ -896,6 +909,8 @@
         _.$list.on('touchcancel.slick mouseleave.slick', {
             action: 'end'
         }, _.swipeHandler);
+
+        _.$list.on('click.slick', _.clickHandler.bind(this));
 
         if (_.options.pauseOnHover === true && _.options.autoplay === true) {
             _.$list.on('mouseenter.slick', function(){
@@ -1650,17 +1665,10 @@
 
         _.dragging = false;
 
+        _.shouldClick = (_.touchObject.swipeLength > 10) ? false : true;
+
         if (_.touchObject.curX === undefined) {
             return false;
-        }
-
-        if(_.touchObject.swipeLength > 10) {
-            $(event.target).on('click.slick', function(event) {
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                event.preventDefault();
-                $(event.target).off('click.slick');
-            });
         }
 
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
