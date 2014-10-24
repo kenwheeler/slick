@@ -64,6 +64,7 @@
                 fade: false,
                 focusOnSelect: false,
                 infinite: true,
+                initialSlide: 0,
                 lazyLoad: 'ondemand',
                 onBeforeChange: null,
                 onAfterChange: null,
@@ -133,6 +134,8 @@
             _.windowTimer = null;
 
             _.options = $.extend({}, _.defaults, settings);
+
+            _.currentSlide = _.options.initialSlide;
 
             _.originalSettings = _.options;
             responsiveSettings = _.options.responsive || null;
