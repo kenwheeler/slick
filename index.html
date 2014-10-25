@@ -160,6 +160,45 @@ $('.responsive').slick({
 });
 				</code></pre>
 				<hr/>
+                <h2>Responsive Display</h2>
+                <div class="slider responsive-mq">
+                    <div><h3>1</h3></div>
+                    <div><h3>2</h3></div>
+                    <div><h3>3</h3></div>
+                    <div><h3>4</h3></div>
+                    <div><h3>5</h3></div>
+                    <div><h3>6</h3></div>
+                    <div><h3>7</h3></div>
+                    <div><h3>8</h3></div>
+                </div>
+				<pre><code>
+$('.responsive-mq').slick({
+  dots: true,
+  infinite: false,
+  speed: 300,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 'all and (min-width: 48em)',
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2
+      }
+    },
+    {
+      breakpoint: 'all and (min-width: 60em)',
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+  ]
+});
+                </code></pre>
+                <hr/>
 				<h2>Adaptive Height</h2>
 				<div class="slider one-time">
 					<div><h3>1</h3></div>
