@@ -445,8 +445,7 @@
         var _ = this,
             i, length = _.$slides.length,
             thumbs = [], thumb, srcList = [],
-            container = _.options.appendThumbs,
-            images = {}, index;
+            container, images = {}, index;
 
         if (_.options.thumbs === true) {
 
@@ -459,12 +458,10 @@
             }
 
             if (thumbs.length == length) {
-            
-                if ( container.get(0) == _.$slider.get(0)) {
-                    _.options.appendThumbs = container = $('<div></div>').appendTo(container);
-                }
+                container = _.options.appendThumbs.find('div.slick-thumbs-box').get(0)
+                    ? _.options.appendThumbs.find('div.slick-thumbs-box')
+                    : $('<div class="slick-thumbs-box"/>').appendTo(_.options.appendThumbs);
 
-                container.addClass('slick-thumbs-box');
                 if (_.options.vertical === true) {
                     container.addClass('slick-thumbs-box-vertical');
                 } else {
@@ -708,13 +705,15 @@
 
         _.touchObject = {};
 
+        _.thumbsParams = {};
+
         $('.slick-cloned', _.$slider).remove();
         if (_.$dots) {
             _.$dots.remove();
         }
         
         if (_.$thumbs) {
-            _.options.appendThumbs.empty();
+            _.$thumbs.parent('.slick-thumbs-box').remove();
         }
 
         if (_.$prevArrow) {
@@ -976,7 +975,7 @@
             timers = { left: 0, right: 0 },
             key;
 
-        if (_.options.thumbs === true && _.slideCount > _.options.slidesToShow) {
+        if (_.$thumbs && _.slideCount > _.options.slidesToShow) {
             // prevent doubled event
             $('img.slick-thumb', _.$thumbs).each(function(num){
                 ! $(this).data('events') && $(this).on('click.slick', { message: 'index', index: num }, _.changeSlide);
