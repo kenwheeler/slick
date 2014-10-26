@@ -16,13 +16,13 @@ CDN hosted slick is a great way to get set up quick:
 In your ```<head>``` add:
 
 ````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.12/slick.css"/>
 ````
 
 Then, before your closing ```<body>``` tag add:
 
 ```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.12/slick.min.js"></script>
 ```
 
 #### Bower
@@ -57,6 +57,7 @@ appendDots | string | $(element) | Change where the navigation dots are attached
 prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
 nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
+initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
 onBeforeChange(this, currentIndex,targetIndex) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
