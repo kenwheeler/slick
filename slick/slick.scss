@@ -72,22 +72,19 @@ $slick-opacity-not-active: .25 !default;
         cursor: hand;
     }
 }
-.slick-slider .slick-list,
-.slick-track,
-.slick-slide,
-.slick-slide img {
+.slick-slider .slick-track {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     -o-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
+
 .slick-track {
     position: relative;
     left: 0;
     top: 0;
     display: block;
-    zoom: 1;
 
     &:before,
     &:after {
