@@ -513,6 +513,11 @@
 
             }
 
+            index = _.thumbsParams ? {
+                scrollType : _.thumbsParams.scrollType,
+                direction : _.thumbsParams.swipeDirection,
+            } : {};
+
             _.thumbsParams = {
 
                 horizontal : {
@@ -549,6 +554,8 @@
 
             }[_.options.vertical ? 'vertical' : 'horizontal'];
 
+            _.thumbsParams.scrollType = index.scrollType;
+            _.thumbsParams.swipe.direction = index.direction || 1;
         }
     };
 
@@ -976,6 +983,11 @@
             key;
 
         if (_.$thumbs && _.slideCount > _.options.slidesToShow) {
+
+            if (_.options.rtl === true) {
+                $(window).on('load.slick.slick-' + _.instanceUid, $.proxy(_.proxyThumbScroll, _));
+            }
+
             // prevent doubled event
             $('img.slick-thumb', _.$thumbs).each(function(num){
                 ! $(this).data('events') && $(this).on('click.slick', { message: 'index', index: num }, _.changeSlide);
@@ -1023,7 +1035,7 @@
                     event.preventDefault();
 
                     delta = state.start - ev[state.axis];
-                    this[state.scroll] = state.offset + delta;
+                    this[state.scroll] = state.offset + state.direction * delta;
                 }
                 break;
 
@@ -2029,11 +2041,48 @@
         }
 
     };
+
+   Slick.prototype.proxyThumbScroll = function(negative, value) {
+
+        var _ = this,
+            scrollType = _.thumbsParams.scrollType,
+            scroll = _.thumbsParams.offset.scroll,
+            value, el;
+
+        if (_.$thumbs !== null) {
+            el = _.$thumbs.get(0);
+            value = value !== undefined ? value : el[scroll];
+
+            if (_.options.rtl === true && _.options.vertical === false) {
+                if (scrollType === undefined) {
+                    scrollType = el.scrollLeft > 0 ? 'default'
+                        : (el.scrollLeft = 1, el.scrollLeft) === 0 ? 'negative'
+                        : 'reverse';
+
+                    _.thumbsParams.scrollType = scrollType;
+                    _.thumbsParams.swipe.direction = scrollType === 'reverse' ? -1 : 1;
+                    return;
+                }
+
+                if (scrollType !== 'negative') {
+                    if (scrollType === 'default') {
+                        value = negative === true ? value : -value;
+                        value = (el.scrollWidth - el.clientWidth) - value;
+                    }
+                    if (scrollType === 'reverse' || negative === true) {
+                        value = -value;
+                    }
+                }
+            }
+
+            return value;
+        }
+    };
     
     Slick.prototype.updateThumbs = function() {
 
         var _ = this,
-            thumb, offset, delta, prop = {}, p;
+            thumb, offset, scroll, delta, prop = {}, p;
 
         if (_.$thumbs !== null) {
             thumb = _.$thumbs.find('img')[_.currentSlide];
@@ -2045,15 +2094,17 @@
 
                 offset = _.thumbsParams.offset;
 
-                if (thumb[offset.axis] - thumb.parentNode[offset.scroll] < 0) {
+                scroll = _.proxyThumbScroll(true);
+
+                if (thumb[offset.axis] - scroll < 0) {
                     delta = thumb[offset.axis];
-                } else if ((thumb[offset.axis] + thumb[offset.property]) > (thumb.parentNode[offset.scroll] + thumb.parentNode[offset.property])) {
+                } else if ((thumb[offset.axis] + thumb[offset.property]) > (scroll + thumb.parentNode[offset.property])) {
                     delta = thumb[offset.axis] + thumb[offset.property] - thumb.parentNode[offset.property]
                 }
 
                 if (delta !== undefined) {
                     $(thumb.parentNode).animate((
-                        prop[offset.scroll] = delta,
+                        prop[offset.scroll] = _.proxyThumbScroll(false, delta),
                         prop
                     ));
                 }
