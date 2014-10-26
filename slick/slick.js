@@ -115,6 +115,7 @@
                 slideOffset: 0,
                 swipeLeft: null,
                 $list: null,
+                filtered: null,
                 touchObject: {},
                 thumbsParams: {},
                 transformsEnabled: false
@@ -475,18 +476,26 @@
                     images = _.$thumbs.find('img');
                     for(i = 0; i < images.length; i++) {
                         index = $.inArray(images[i].getAttribute('src'), srcList);
-                        if (index == -1) {
-                            $(images[i]).remove();
+
+                        if (index == -1 || _.filtered === false) {
+                            // remove elements if slides < thumbs || remove all elements when unfiltered
+                            $(images[i]).off('click.slick');
+                            images[i].parentNode.removeChild(images[i]);
                         } else {
                             // remove duplicates
                             thumbs[index] = srcList[index] = '';
+                        }
+
+                        if (_.filtered === true) {
+                            // remove events when filtered
+                            $(images[i]).off('click.slick');
                         }
                     }
                 } else {
                     _.$thumbs = $('<div class="' +_.options.thumbsClass+ '">'
                         +'</div>').appendTo(container);
                 }
-                // apend only new thumbnails
+                // append only new thumbnails
                 _.$thumbs.get(0).insertAdjacentHTML('beforeend', thumbs.join(''));
                 
                 if (_.options.thumbFrame) {
@@ -792,6 +801,8 @@
         var _ = this;
 
         if (filter !== null) {
+
+            _.filtered = true;
 
             _.unload();
 
@@ -1956,6 +1967,8 @@
         var _ = this;
 
         if (_.$slidesCache !== null) {
+
+            _.filtered = false;
 
             _.unload();
 
