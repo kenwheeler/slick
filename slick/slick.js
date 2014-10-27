@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.3.12
+ Version: 1.3.13
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -1530,7 +1530,7 @@
         targetLeft = _.getLeft(targetSlide);
         slideLeft = _.getLeft(_.currentSlide);
 
-        unevenOffset = _.options.slidesToShow - (Math.round(_.slideCount / _.options.slidesToScroll));
+        unevenOffset = _.options.slidesToScroll === 1 ? 0 : _.options.slidesToShow - (Math.round(_.slideCount / _.options.slidesToScroll));
 
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
