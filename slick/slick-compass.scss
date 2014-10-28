@@ -1,5 +1,3 @@
-@charset 'UTF-8';
-
 // Default Variables
 
 $slick-font-path: './fonts/' !default;
@@ -12,15 +10,16 @@ $slick-prev-character: '\2190' !default;
 $slick-next-character: '\2192' !default;
 $slick-dot-character: '\2022' !default;
 $slick-dot-size: 6px !default;
-$opacity-default: 0.75;
-$opacity-on-hover: 1;
-$opacity-not-active: 0.25;
+$slick-opacity-default: 0.75 !default;
+$slick-opacity-on-hover: 1 !default;
+$slick-opacity-not-active: 0.25 !default;
 
 
 @function slick-image-url($url) {
   @if function-exists(image-url) {
     @return image-url($url, false, false);
   }
+
   @else  {
     @return url($slick-loader-path + $url);
   }
@@ -30,6 +29,7 @@ $opacity-not-active: 0.25;
   @if function-exists(font-url) {
     @return font-url($url);
   }
+
   @else  {
     @return url($slick-font-path + $url);
   }
@@ -51,6 +51,11 @@ $opacity-not-active: 0.25;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
   margin-bottom: 30px;
+
+
+  .slick-track {
+    @include transform(translate3d(0, 0, 0));
+  }
 }
 
 .slick-list {
@@ -65,7 +70,7 @@ $opacity-not-active: 0.25;
   }
 
   .slick-loading & {
-    background: #FFFFFF slick-image-url('ajax-loader.gif') center center no-repeat;
+    background: #FFF slick-image-url('ajax-loader.gif') center center no-repeat;
   }
 
   &.dragging {
@@ -74,19 +79,11 @@ $opacity-not-active: 0.25;
   }
 }
 
-.slick-slider .slick-list,
-.slick-track,
-.slick-slide,
-.slick-slide img {
-  @include transform(translate3d(0, 0, 0));
-}
-
 .slick-track {
   position: relative;
   left: 0;
   top: 0;
   display: block;
-  zoom: 1;
 
   &:before,
   &:after {
@@ -180,12 +177,12 @@ $opacity-not-active: 0.25;
     color: transparent;
 
     &:before {
-      @include opacity($opacity-on-hover);
+      @include opacity($slick-opacity-on-hover);
     }
   }
 
   &.slick-disabled:before {
-    @include opacity($opacity-not-active);
+    @include opacity($slick-opacity-not-active);
   }
 }
 
@@ -194,7 +191,7 @@ $opacity-not-active: 0.25;
   font-size: 20px;
   line-height: 1;
   color: $slick-arrow-color;
-  @include opacity($opacity-default);
+  @include opacity($slick-opacity-default);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -270,7 +267,7 @@ $opacity-not-active: 0.25;
         outline: none;
 
         &:before {
-          @include opacity($opacity-on-hover);
+          @include opacity($slick-opacity-on-hover);
         }
       }
 
@@ -286,7 +283,7 @@ $opacity-not-active: 0.25;
         line-height: 20px;
         text-align: center;
         color: $slick-dot-color;
-        @include opacity($opacity-not-active);
+        @include opacity($slick-opacity-not-active);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
@@ -295,7 +292,7 @@ $opacity-not-active: 0.25;
 
     &.slick-active button:before {
       color: $slick-dot-color-active;
-      @include opacity($opacity-default);
+      @include opacity($slick-opacity-default);
     }
   }
 }
