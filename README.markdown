@@ -16,13 +16,13 @@ CDN hosted slick is a great way to get set up quick:
 In your ```<head>``` add:
 
 ````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.13/slick.css"/>
 ````
 
 Then, before your closing ```<body>``` tag add:
 
 ```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.11/slick.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.13/slick.min.js"></script>
 ```
 
 #### Bower
@@ -30,6 +30,10 @@ Then, before your closing ```<body>``` tag add:
 ````
 bower install --save slick.js
 ````
+
+#### Contributing
+
+PLEASE review CONTRIBUTING.markdown prior to requesting a feature, filing a pull request or filing an issue.
 
 #### Options
 
@@ -53,6 +57,7 @@ appendDots | string | $(element) | Change where the navigation dots are attached
 prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
 nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
+initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
 onBeforeChange(this, currentIndex,targetIndex) | method | null | Before slide change callback
 onAfterChange(this, index) | method | null | After slide change callback
@@ -89,7 +94,7 @@ slickPlay() | | Start Autoplay
 slickGoTo() | index : int | Goes to slide by index
 slickCurrentSlide() |  |  Returns the current slide index
 slickAdd() | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
-slideRemove() | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
+slickRemove() | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
 slickFilter() | filter : selector or function | Filters slides using jQuery .filter syntax
 slickUnfilter() | | Removes applied filter
 slickGetOption(option) | option : string(option name) | Gets an option value.
