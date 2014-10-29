@@ -501,8 +501,10 @@
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
                      var width;
                      if(_.breakpoints.hasOwnProperty('useInnerWidth')){
+                          console.log("use inner")
                           width = window.innerWidth || document.documentElement.clientWidth //for ie8
                      } else {
+                          console.log("normal")
                           width = $(window).width()
                      }
                     if ( width < _.breakpoints[
