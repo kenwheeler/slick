@@ -500,7 +500,7 @@
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
                      var width;
-                     if(_.options.hasOwnProperty('useInnerWidth')){
+                     if(_.options.hasOwnProperty('responsiveUseInnerWidth')){
                           width = window.innerWidth || document.documentElement.clientWidth //for ie8
                      } else {
                           width = $(window).width()
