@@ -499,7 +499,13 @@
 
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
-                    if ($(window).width() < _.breakpoints[
+                     var width;
+                     if(_.breakpoints.hasOwnProperty(useInnerWidth)){
+                          width = window.innerWidth || document.documentElement.clientWidth //for ie8
+                     } else {
+                          width = $(window).width()
+                     }
+                    if ( width < _.breakpoints[
                         breakpoint]) {
                         targetBreakpoint = _.breakpoints[
                             breakpoint];
