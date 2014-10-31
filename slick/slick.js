@@ -66,6 +66,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                lazyLoadAttr: 'lazy',
                 onBeforeChange: null,
                 onAfterChange: null,
                 onInit: null,
@@ -111,7 +112,8 @@
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
-                transformsEnabled: false
+                transformsEnabled: false,
+                lazyLoadKey: 'data-' + _.defaults.lazyLoadAttr
             };
 
             $.extend(_, _.initials);
@@ -465,7 +467,7 @@
             _.options.slidesToShow = 3;
         }
 
-        $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('img[' + _.options.lazyLoadKey + ']', _.$slider).not('[src]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -992,15 +994,16 @@
             loadRange, cloneRange, rangeStart, rangeEnd;
 
         function loadImages(imagesScope) {
-            $('img[data-lazy]', imagesScope).each(function() {
+
+            $('img[' + _.options.lazyLoadKey + ']', imagesScope).each(function() {
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy');
+                    imageSource = $(this).attr(key);
 
                 image
                   .load(function() { image.animate({ opacity: 1 }, 200); })
                   .css({ opacity: 0 })
                   .attr('src', imageSource)
-                  .removeAttr('data-lazy')
+                  .removeAttr(key)
                   .removeClass('slick-loading');
             });
         }
@@ -1084,16 +1087,16 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]').length;
+        imgCount = $('img[' + _.options.lazyLoadKey + ']').length;
 
         if (imgCount > 0) {
-            targetImage = $('img[data-lazy]', _.$slider).first();
-            targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
-                targetImage.removeAttr('data-lazy');
+            targetImage = $('img[' + _.options.lazyLoadKey + ']', _.$slider).first();
+            targetImage.attr('src', targetImage.attr(_.options.lazyLoadKey)).removeClass('slick-loading').load(function() {
+                targetImage.removeAttr(_.options.lazyLoadKey);
                 _.progressiveLazyLoad();
             })
          .error(function () {
-          targetImage.removeAttr('data-lazy');
+          targetImage.removeAttr(_.options.lazyLoadKey);
           _.progressiveLazyLoad();
          });
         }
