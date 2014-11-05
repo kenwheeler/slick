@@ -1100,7 +1100,7 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]').length;
+        imgCount = $('img[data-lazy]', _.$slider).length;
 
         if (imgCount > 0) {
             targetImage = $('img[data-lazy]', _.$slider).first();
