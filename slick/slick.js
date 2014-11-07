@@ -1648,13 +1648,13 @@
         }
 
         if ((swipeAngle <= 45) && (swipeAngle >= 0)) {
-            return 'left';
+            return (_.options.rtl === false ? 'left' : 'right');
         }
         if ((swipeAngle <= 360) && (swipeAngle >= 315)) {
-            return 'left';
+            return (_.options.rtl === false ? 'left' : 'right');
         }
         if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
-            return 'right';
+            return (_.options.rtl === false ? 'right' : 'left');
         }
 
         return 'vertical';
@@ -1760,7 +1760,7 @@
             event.preventDefault();
         }
 
-        positionOffset = _.touchObject.curX > _.touchObject.startX ? 1 : -1;
+        positionOffset = (_.options.rtl === false ? 1 : -1) * (_.touchObject.curX > _.touchObject.startX ? 1 : -1);
 
         if (_.options.vertical === false) {
             _.swipeLeft = curLeft + _.touchObject.swipeLength * positionOffset;
