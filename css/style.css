@@ -33,7 +33,7 @@
 .more,.button.first{margin-top:40px;}
 .red{background:#e74c3c;color:#fff;}
 .slick-slide .image{padding:10px;}
-.slick-slide img{border:5px solid #FFF;display:block;width:100%;}
+.slick-slide img{border:5px solid #FFF;display:block;width:100%;-moz-user-select:none;-webkit-user-select:none;-webkit-user-drag:none;}
 .slick-slide img.slick-loading{border:0 }
 .slick-slider{margin:30px auto 50px;}
 .subheading{color:#555;font-size:12px;font-style:italic;font-weight:400;margin:10px auto;text-align:center;}
