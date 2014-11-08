@@ -891,6 +891,8 @@
             _.startLoad();
             _.loadSlider();
             _.initializeEvents();
+            _.updateArrows();
+            _.updateDots();
         }
 
         if (_.options.onInit !== null) {
