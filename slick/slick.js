@@ -1231,7 +1231,7 @@
 
     };
 
-    Slick.prototype.removeSlide = function(index, removeBefore) {
+    Slick.prototype.removeSlide = function(index, removeBefore, removeAll) {
 
         var _ = this;
 
@@ -1248,7 +1248,11 @@
 
         _.unload();
 
-        _.$slideTrack.children(this.options.slide).eq(index).remove();
+        if(removeAll === true) {
+            _.$slideTrack.children().remove();
+        } else {
+            _.$slideTrack.children(this.options.slide).eq(index).remove();
+        }
 
         _.$slides = _.$slideTrack.children(this.options.slide);
 
@@ -2043,6 +2047,15 @@
         return _.each(function(index, element) {
 
             element.slick.removeSlide(slideIndex, removeBefore);
+
+        });
+    };
+
+    $.fn.slickRemoveAll = function() {
+        var _ = this;
+        return _.each(function(index, element) {
+
+            element.slick.removeSlide(null, null, true);
 
         });
     };
