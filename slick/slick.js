@@ -160,6 +160,7 @@
             _.autoPlay = $.proxy(_.autoPlay, _);
             _.autoPlayClear = $.proxy(_.autoPlayClear, _);
             _.changeSlide = $.proxy(_.changeSlide, _);
+            _.clickHandler = $.proxy(_.clickHandler, _);
             _.selectHandler = $.proxy(_.selectHandler, _);
             _.setPosition = $.proxy(_.setPosition, _);
             _.swipeHandler = $.proxy(_.swipeHandler, _);
@@ -923,7 +924,7 @@
             action: 'end'
         }, _.swipeHandler);
 
-        _.$list.on('click.slick', _.clickHandler.bind(this));
+        _.$list.on('click.slick', _.clickHandler);
 
         if (_.options.pauseOnHover === true && _.options.autoplay === true) {
             _.$list.on('mouseenter.slick', function(){
