@@ -1032,13 +1032,13 @@
 
         var _ = this;
 
-        if (event.keyCode === 37) {
+        if (event.keyCode === 37 && _.options.accessibility === true) {
             _.changeSlide({
                 data: {
                     message: 'previous'
                 }
             });
-        } else if (event.keyCode === 39) {
+        } else if (event.keyCode === 39 && _.options.accessibility === true) {
             _.changeSlide({
                 data: {
                     message: 'next'
