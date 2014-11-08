@@ -882,6 +882,8 @@
             _.startLoad();
             _.loadSlider();
             _.initializeEvents();
+            _.updateArrows();
+            _.updateDots();
         }
 
         if (_.options.onInit !== null) {
@@ -1380,10 +1382,10 @@
         } else {
             _.setFade();
         }
-        
+
         if (_.options.onSetPosition !== null) {
             _.options.onSetPosition.call(this, _);
-        }        
+        }
 
     };
 
