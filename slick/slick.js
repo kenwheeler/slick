@@ -503,7 +503,7 @@
 
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
-                    if ($(window).width() < _.breakpoints[
+                    if ($(window.innerWidth)[0] < _.breakpoints[
                         breakpoint]) {
                         targetBreakpoint = _.breakpoints[
                             breakpoint];
@@ -984,10 +984,10 @@
         });
 
         $(window).on('resize.slick.slick-' + _.instanceUid, function() {
-            if ($(window).width() !== _.windowWidth) {
+            if ($(window.innerWidth)[0] !== _.windowWidth) {
                 clearTimeout(_.windowDelay);
                 _.windowDelay = window.setTimeout(function() {
-                    _.windowWidth = $(window).width();
+                    _.windowWidth = $(window.innerWidth)[0];
                     _.checkResponsive();
                     _.setPosition();
                 }, 50);
