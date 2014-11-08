@@ -599,7 +599,7 @@
                 _.slideHandler(index, false, dontAnimate);
 
             default:
-                return false;
+                return;
         }
 
     };
