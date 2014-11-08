@@ -785,7 +785,6 @@
                         _.slideOffset = ((_.slideCount % _.options.slidesToScroll) * _.slideWidth) * -1;
                         verticalOffset = ((_.slideCount % _.options.slidesToScroll) * verticalHeight) * -1;
                     }
-
                 }
             }
         } else {
