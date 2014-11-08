@@ -70,6 +70,7 @@
                 onAfterChange: null,
                 onInit: null,
                 onReInit: null,
+                onSetPosition: null,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
                 responsive: null,
@@ -1379,6 +1380,10 @@
         } else {
             _.setFade();
         }
+        
+        if (_.options.onSetPosition !== null) {
+            _.options.onSetPosition.call(this, _);
+        }        
 
     };
 
