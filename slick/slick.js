@@ -73,6 +73,7 @@
                 onSetPosition: null,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
+                respondTo: 'window',
                 responsive: null,
                 rtl: false,
                 slide: 'div',
@@ -497,7 +498,7 @@
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth;
         var sliderWidth = _.$slider.width();
-        var windowWidth = $(window).width();
+        var windowWidth = window.innerWidth || $(window).width();
         if (_.respondTo === "window") {
           respondToWidth = windowWidth;
         } else if (_.respondTo === "slider") {
