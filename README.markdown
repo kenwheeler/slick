@@ -66,6 +66,7 @@ onReInit(this) | method | null | Every time Slick (re-)initializes callback
 onSetPosition(this) | method | null | Every time Slick recalculates position
 pauseOnHover | boolean | true | Pauses autoplay on hover
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
+respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
 responsive | object | null | Breakpoint triggered settings
 slide | string | 'div' | Slide element query
 slidesToShow | int | 1 | # of slides to show at a time
