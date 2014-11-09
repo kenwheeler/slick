@@ -468,7 +468,6 @@
 
         if (_.options.centerMode === true) {
             _.options.slidesToScroll = 1;
-            _.options.slidesToShow = 3;
         }
 
         $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
