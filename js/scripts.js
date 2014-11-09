@@ -2,8 +2,31 @@ $(document).ready(function() {
     $('.single-item').slick({
         dots: true,
         infinite: true,
-        speed: 300,
+        speed: 1000,
         slidesToShow: 1,
+        slidesToScroll: 1,
+        useCSS: false
+    });
+    $('.single-item-2').slick({
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        swipeToSlide: true
+    });
+    $('.single-item-3').slick({
+        dots: true,
+        infinite: true,
+        speed: 1000,
+        slidesToShow: 4,
+        slidesToScroll: 3
+    });
+    $('.single-item-4').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
         slidesToScroll: 1
     });
     $('.multiple-items').slick({
@@ -29,7 +52,7 @@ $(document).ready(function() {
     });
     $('.responsive').slick({
         dots: true,
-        infinite: false,
+        infinite: true,
         speed: 300,
         slidesToShow: 4,
         slidesToScroll: 4,
@@ -90,7 +113,7 @@ $(document).ready(function() {
         speed: 300,
         slidesToShow: 3,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 2000
     });
 
