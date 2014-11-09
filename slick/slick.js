@@ -78,7 +78,7 @@
                 slide: 'div',
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                speed: 300,
+                speed: 500,
                 swipe: true,
                 swipeToSlide: false,
                 touchMove: true,
