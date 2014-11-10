@@ -1187,6 +1187,8 @@
             }
         }, true);
 
+        _.updateArrows();
+
     };
 
     Slick.prototype.reinit = function() {
