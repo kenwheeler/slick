@@ -583,7 +583,7 @@
 
                 navigables = _.getNavigableIndexes();
                 prevNavigable = 0;
-                if(navigables.indexOf(index) === -1) {
+                if(navigables[index] && navigables[index] === index) {
                     if(index > navigables[navigables.length -1]){
                         index = navigables[navigables.length -1];
                     } else {
