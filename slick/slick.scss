@@ -72,7 +72,8 @@ $slick-opacity-not-active: .25 !default;
         cursor: hand;
     }
 }
-.slick-slider .slick-track {
+.slick-slider .slick-track,
+.slick-slider .slick-list {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
