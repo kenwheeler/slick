@@ -66,6 +66,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                lazyAnimation: true,
                 onBeforeChange: null,
                 onAfterChange: null,
                 onInit: null,
@@ -1066,8 +1067,8 @@
                     imageSource = $(this).attr('data-lazy');
 
                 image
-                  .load(function() { image.animate({ opacity: 1 }, 200); })
-                  .css({ opacity: 0 })
+                  .load(function() { if (_.options.lazyAnimation) { image.animate({ opacity: 1 }, 200); } })
+                  .css({ opacity: _.options.lazyAnimation ? 0 : 1 })
                   .attr('src', imageSource)
                   .removeAttr('data-lazy')
                   .removeClass('slick-loading');
