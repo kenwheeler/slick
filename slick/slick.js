@@ -559,7 +559,7 @@
         $target.is('a') && event.preventDefault();
 
         unevenOffset = (_.slideCount % _.options.slidesToScroll !== 0);
-        indexOffset = unevenOffset ? 0 : (_.slideCount - _.currentSlide) % _.options.slidesToScroll;
+        indexOffset = (_.slideCount - _.currentSlide) % _.options.slidesToScroll;
 
         switch (event.data.message) {
 
@@ -1604,6 +1604,8 @@
             _.asNavFor(index);
         }
 
+        if (index < 0) index = 0;
+
         targetSlide = index;
         targetLeft = _.getLeft(targetSlide);
         slideLeft = _.getLeft(_.currentSlide);
@@ -1953,6 +1955,17 @@
 
         }
 
+    };
+
+    Slick.prototype.getCount = function() {
+        var _ = this;
+        return _.slideCount;
+    };
+
+
+    $.fn.slickGetCount = function() {
+        var _ = this;
+        return _.get(0).slick.getCount();
     };
 
     $.fn.slick = function(options) {
