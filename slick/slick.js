@@ -809,6 +809,7 @@
         }
 
         if (_.options.centerMode === true && _.options.infinite === true) {
+            if ( _.slideCount == 1) { return 0 }
             _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
         } else if (_.options.centerMode === true) {
             _.slideOffset = 0;
