@@ -226,8 +226,14 @@
         });
 
         _.$slidesCache = _.$slides;
-
-        _.reinit();
+        
+        if(addBefore){
+        	_.reinit(1);
+        }
+        else{
+        	_.reinit();
+        }
+        
 
     };
 
@@ -1189,7 +1195,7 @@
 
     };
 
-    Slick.prototype.reinit = function() {
+    Slick.prototype.reinit = function(index) {
 
         var _ = this;
 
@@ -1204,6 +1210,10 @@
 
         if (_.slideCount <= _.options.slidesToShow) {
             _.currentSlide = 0;
+        }
+        
+        if(index!==undefined){
+        	_.currentSlide = index;
         }
 
         _.setProps();
