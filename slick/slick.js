@@ -481,9 +481,9 @@
 
         _.updateDots();
 
-        if (_.options.accessibility === true) {
-            _.$list.prop('tabIndex', 0);
-        }
+        // if (_.options.accessibility === true) {
+        //     _.$list.prop('tabIndex', 0);
+        // }
 
         _.setSlideClasses(typeof this.currentSlide === 'number' ? this.currentSlide : 0);
 
@@ -983,7 +983,7 @@
         }
 
         if(_.options.accessibility === true) {
-            _.$list.on('keydown.slick', _.keyHandler);
+            _.$slider.on('keydown.slick', _.keyHandler);
         }
 
         if(_.options.focusOnSelect === true) {
@@ -1046,18 +1046,21 @@
 
         var _ = this;
 
-        if (event.keyCode === 37 && _.options.accessibility === true) {
-            _.changeSlide({
-                data: {
-                    message: 'previous'
-                }
-            });
-        } else if (event.keyCode === 39 && _.options.accessibility === true) {
-            _.changeSlide({
-                data: {
-                    message: 'next'
-                }
-            });
+        if(!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
+
+            if (event.keyCode === 37 && _.options.accessibility === true) {
+                _.changeSlide({
+                    data: {
+                        message: 'previous'
+                    }
+                });
+            } else if (event.keyCode === 39 && _.options.accessibility === true) {
+                _.changeSlide({
+                    data: {
+                        message: 'next'
+                    }
+                });
+            }
         }
 
     };
@@ -2012,7 +2015,7 @@
             'tabindex': '0'
         }).find('a, input, button, select').attr({
             'tabindex': '0'
-        });
+        }).eq(0).focus();
 
     };
 
