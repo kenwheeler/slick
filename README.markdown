@@ -42,6 +42,7 @@ Option | Type | Default | Description
 accessibility | boolean | true | Enables tabbing and arrow key navigation
 autoplay | boolean | false | Enables auto play of slides
 autoplaySpeed | int  | 3000 | Auto play change interval
+autoplayChangeDirection | boolean  | true | Change direction when reaching the final slide when autoplay is enabled and infinite looping is disabled.
 centerMode | boolean | false | Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.
 centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing

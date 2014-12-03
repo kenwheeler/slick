@@ -51,6 +51,7 @@
                 nextArrow: '<button type="button" data-role="none" class="slick-next">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
+                autoplayChangeDirection: true,
                 centerMode: false,
                 centerPadding: '50px',
                 cssEase: 'ease',
@@ -363,7 +364,7 @@
 
         if (_.options.infinite === false) {
 
-            if (_.direction === 1) {
+            if (_.direction === 1 || _.options.autoplayChangeDirection === false) {
 
                 if ((_.currentSlide + 1) === _.slideCount -
                     1) {
