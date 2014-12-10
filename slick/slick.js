@@ -222,7 +222,7 @@
         _.$slideTrack.append(_.$slides);
 
         _.$slides.each(function(index, element) {
-            $(element).attr("data-index",index);
+            $(element).attr("data-slick-index",index);
         });
 
         _.$slidesCache = _.$slides;
@@ -452,7 +452,7 @@
         _.slideCount = _.$slides.length;
 
         _.$slides.each(function(index, element) {
-            $(element).attr("data-index",index);
+            $(element).attr("data-slick-index",index);
         });
 
         _.$slidesCache = _.$slides;
@@ -640,7 +640,7 @@
 
         _.$slides.removeClass(
             'slick-slide slick-active slick-center slick-visible')
-            .removeAttr('data-index')
+            .removeAttr('data-slick-index')
             .css({
                 position: '',
                 left: '',
@@ -876,7 +876,7 @@
                     return false;
                 }
             });
-            slidesTraversed = Math.abs($(swipedSlide).attr('data-index') - _.currentSlide);
+            slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide);
             return slidesTraversed;
         } else {
             return _.options.slidesToScroll;
@@ -1542,13 +1542,13 @@
                     infiniteCount); i -= 1) {
                     slideIndex = i - 1;
                     $(_.$slides[slideIndex]).clone(true).attr('id', '')
-                        .attr('data-index', slideIndex-_.slideCount)
+                        .attr('data-slick-index', slideIndex-_.slideCount)
                         .prependTo(_.$slideTrack).addClass('slick-cloned');
                 }
                 for (i = 0; i < infiniteCount; i += 1) {
                     slideIndex = i;
                     $(_.$slides[slideIndex]).clone(true).attr('id', '')
-                        .attr('data-index', slideIndex+_.slideCount)
+                        .attr('data-slick-index', slideIndex+_.slideCount)
                         .appendTo(_.$slideTrack).addClass('slick-cloned');
                 }
                 _.$slideTrack.find('.slick-cloned').find('[id]').each(function() {
@@ -1564,7 +1564,7 @@
     Slick.prototype.selectHandler = function(event) {
 
         var _ = this;
-        var index = parseInt($(event.target).parents('.slick-slide').attr("data-index"));
+        var index = parseInt($(event.target).parents('.slick-slide').attr("data-slick-index"));
         if(!index) index = 0;
 
         if(_.slideCount <= _.options.slidesToShow){
