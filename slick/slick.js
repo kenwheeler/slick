@@ -82,6 +82,7 @@
                 speed: 500,
                 swipe: true,
                 swipeToSlide: false,
+                swipeAngleOffset: 45,
                 touchMove: true,
                 touchThreshold: 5,
                 useCSS: true,
@@ -1725,13 +1726,13 @@
             swipeAngle = 360 - Math.abs(swipeAngle);
         }
 
-        if ((swipeAngle <= 45) && (swipeAngle >= 0)) {
+        if ((swipeAngle <= _.options.swipeAngleOffset) && (swipeAngle >= 0)) {
             return (_.options.rtl === false ? 'left' : 'right');
         }
-        if ((swipeAngle <= 360) && (swipeAngle >= 315)) {
+        if ((swipeAngle <= 360) && (swipeAngle >= ( 360 - _.options.swipeAngleOffset ))) {
             return (_.options.rtl === false ? 'left' : 'right');
         }
-        if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
+        if ((swipeAngle >= ( 180 - _.options.swipeAngleOffset )) && (swipeAngle <= ( 180 + _.options.swipeAngleOffset ))) {
             return (_.options.rtl === false ? 'right' : 'left');
         }
 
