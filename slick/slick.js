@@ -311,9 +311,11 @@
 
     Slick.prototype.asNavFor = function(index) {
         var _ = this, asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor) : null;
-        asNavFor.each(function() {
-            $(this).getSlick().slideHandler(index, true);
-        });
+        if(asNavFor != null) {
+            asNavFor.each(function() {
+                $(this).getSlick().slideHandler(index, true);
+            });
+        }
     };
 
     Slick.prototype.applyTransition = function(slide) {
