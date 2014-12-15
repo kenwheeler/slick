@@ -7,12 +7,14 @@ $slick-font-family: "slick" !default;
 $slick-loader-path: "./" !default;
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
+$slick-dot-color-active: $slick-dot-color !default;
 $slick-prev-character: '\2190' !default;
 $slick-next-character: '\2192' !default;
 $slick-dot-character: '\2022' !default;
-$opacity-default: .75;
-$opacity-on-hover: 1;
-$opacity-not-active: .25;
+$slick-dot-size: 6px !default;
+$slick-opacity-default: .75 !default;
+$slick-opacity-on-hover: 1 !default;
+$slick-opacity-not-active: .25 !default;
 
 
 @function slick-image-url($url) {
@@ -46,8 +48,8 @@ $opacity-not-active: .25;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    -ms-touch-action: none;
-    touch-action: none;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 }
 .slick-list {
@@ -70,22 +72,20 @@ $opacity-not-active: .25;
         cursor: hand;
     }
 }
-.slick-slider .slick-list,
-.slick-track,
-.slick-slide,
-.slick-slide img {
+.slick-slider .slick-track,
+.slick-slider .slick-list {
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     -o-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
+
 .slick-track {
     position: relative;
     left: 0;
     top: 0;
     display: block;
-    zoom: 1;
 
     &:before,
     &:after {
@@ -105,6 +105,9 @@ $opacity-not-active: .25;
     float: left;
     height: 100%;
     min-height: 1px;
+    [dir="rtl"] & {
+        float: right;
+    }
     img {
         display: block;
     }
@@ -170,11 +173,11 @@ $opacity-not-active: .25;
       background: transparent;
       color: transparent;
       &:before {
-        opacity: $opacity-on-hover;
+        opacity: $slick-opacity-on-hover;
       }
     }
     &.slick-disabled:before {
-        opacity: $opacity-not-active;
+        opacity: $slick-opacity-not-active;
     }
 }
 .slick-prev:before, .slick-next:before {
@@ -182,20 +185,34 @@ $opacity-not-active: .25;
     font-size: 20px;
     line-height: 1;
     color: $slick-arrow-color;
-    opacity: $opacity-default;
+    opacity: $slick-opacity-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 .slick-prev {
     left: -25px;
+    [dir="rtl"] & {
+        left:  auto;
+        right: -25px;
+    }
     &:before {
         content: $slick-prev-character;
+        [dir="rtl"] & {
+            content: $slick-next-character;
+        }
     }
 }
 .slick-next {
     right: -25px;
+    [dir="rtl"] & {
+        left:  -25px;
+        right: auto;
+    }
     &:before {
         content: $slick-next-character;
+        [dir="rtl"] & {
+            content: $slick-prev-character;
+        }
     }
 }
 
@@ -237,7 +254,7 @@ $opacity-not-active: .25;
             &:hover, &:focus {
                 outline: none;
                 &:before {
-                  opacity: $opacity-on-hover;
+                  opacity: $slick-opacity-on-hover;
                 }
             }
 
@@ -249,11 +266,11 @@ $opacity-not-active: .25;
                 width: 20px;
                 height: 20px;
                 font-family: $slick-font-family;
-                font-size: 6px;
+                font-size: $slick-dot-size;
                 line-height: 20px;
                 text-align: center;
                 color: $slick-dot-color;
-                opacity: $opacity-not-active;
+                opacity: $slick-opacity-not-active;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
@@ -261,7 +278,8 @@ $opacity-not-active: .25;
         }
 
         &.slick-active button:before {
-            opacity: $opacity-default;
+            color: $slick-dot-color-active;
+            opacity: $slick-opacity-default;
         }
     }
 }
