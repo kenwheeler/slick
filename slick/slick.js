@@ -420,13 +420,15 @@
     Slick.prototype.buildDots = function() {
 
         var _ = this,
-            i, dotString;
+            i, dotString, amount;
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
             dotString = '<ul class="' + _.options.dotsClass + '">';
 
-            for (i = 0; i <= _.getDotCount(); i += 1) {
+            amount = _.getDotCount();
+
+            for (i = 0; i <= amount; i += 1) {
                 dotString += '<li>' + _.options.customPaging.call(this, _, i) + '</li>';
             }
 
@@ -450,6 +452,11 @@
             ':not(.slick-cloned)').addClass(
             'slick-slide');
         _.slideCount = _.$slides.length;
+
+        if (_.options.showOnLines)
+          _.slideCount = Math.floor(_.slideCount/_.options.showOnLines) + 1;
+
+        console.log(_.slideCount);
 
         _.$slides.each(function(index, element) {
             $(element).attr("index",index);
@@ -639,7 +646,7 @@
         }
 
         _.$slides.removeClass(
-            'slick-slide slick-active slick-center slick-visible')
+            'slick-slide slick-active slick-clear slick-center slick-visible')
             .removeAttr('index')
             .css({
                 position: '',
@@ -1202,6 +1209,9 @@
             _.currentSlide = _.currentSlide - _.options.slidesToScroll;
         }
 
+        if (_.options.showOnLines)
+          _.slideCount = Math.floor(_.slideCount/_.options.showOnLines) + 1;
+
         if (_.slideCount <= _.options.slidesToShow) {
             _.currentSlide = 0;
         }
@@ -1497,6 +1507,10 @@
 
             if (index >= 0 && index <= (_.slideCount - _.options.slidesToShow)) {
                 _.$slides.slice(index, index + _.options.slidesToShow).addClass('slick-active');
+
+                if (_.options.showOnLines)
+                  _.$slides.filter(':nth-child('+ (Math.floor(_.$slides.length / _.options.showOnLines) + 1) +'n)').addClass('slick-clear');
+
             } else if ( allSlides.length <= _.options.slidesToShow ) {
                 allSlides.addClass('slick-active');
             } else {
@@ -1914,7 +1928,7 @@
             _.$nextArrow.remove();
         }
         _.$slides.removeClass(
-            'slick-slide slick-active slick-visible').css('width', '');
+            'slick-slide slick-active slick-clear slick-visible').css('width', '');
 
     };
 
