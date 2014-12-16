@@ -1180,14 +1180,16 @@
 
         _.init();
 
+        if (currentSlide > _.slideCount - _.options.slidesToShow && _.options.infinite !== true && _.options.centerMode !== true) {
+            currentSlide = currentSlide - (_.options.slidesToShow - 1);
+        }
+
         _.changeSlide({
             data: {
                 message: 'index',
                 index: currentSlide,
             }
         }, true);
-
-        _.updateArrows();
 
     };
 
