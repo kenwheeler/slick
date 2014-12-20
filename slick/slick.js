@@ -402,7 +402,7 @@
             _.$nextArrow = $(_.options.nextArrow);
 
             if (_.htmlExpr.test(_.options.prevArrow)) {
-                _.$prevArrow.appendTo(_.options.appendArrows);
+                _.$prevArrow.prependTo(_.options.appendArrows);
             }
 
             if (_.htmlExpr.test(_.options.nextArrow)) {
@@ -1985,7 +1985,7 @@
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr({
                 'role': 'option',
-                'aria-labelledby': 'slick-slide' + _.instanceUid + i + ''
+                'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
             })
         });
 
@@ -2013,9 +2013,9 @@
         _.$slideTrack.find('.slick-active').attr({
             'aria-hidden': 'false',
             'tabindex': '0'
-        }).find('a, input, button, select').attr({
+        }).focus().find('a, input, button, select').attr({
             'tabindex': '0'
-        }).eq(0).focus();
+        });
 
     };
 
