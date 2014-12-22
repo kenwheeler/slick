@@ -2002,20 +2002,22 @@
                 .find('button').attr('role', 'button').end()
                 .closest('div').attr('role', 'toolbar');
         };
-
-
         _.activateADA();
 
     };
 
     Slick.prototype.activateADA = function() {
-        var _ = this;
+        var _ = this,
+        _isSlideOnFocus = _.$slides.is(':focus') || _.$slides.find('*').is(':focus');
+
         _.$slideTrack.find('.slick-active').attr({
             'aria-hidden': 'false',
             'tabindex': '0'
-        }).focus().find('a, input, button, select').attr({
+        }).find('a, input, button, select').attr({
             'tabindex': '0'
         });
+
+        (_isSlideOnFocus) &&  _.$slideTrack.find('.slick-active').focus();
 
     };
 
