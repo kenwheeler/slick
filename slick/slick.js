@@ -77,6 +77,7 @@
                 responsive: null,
                 rtl: false,
                 slide: 'div',
+                slideId: null,
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 speed: 500,
@@ -898,6 +899,7 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
+            _.slickGoToSlide();
         }
 
         if (_.options.onInit !== null) {
@@ -1950,6 +1952,71 @@
 
             _.$dots.find('li').removeClass('slick-active');
             _.$dots.find('li').eq(Math.floor(_.currentSlide / _.options.slidesToScroll)).addClass('slick-active');
+
+        }
+
+    };
+
+    Slick.prototype.slickGoToSlide = function() {
+
+        var _ = this;
+
+        if (_.urlParamExists()) {
+
+            _.$slides.each(function(index) {
+
+                var slideId = $(this).data('slide-id').toString();
+
+                _.checkSlideId(index, _.slideId);
+
+            });
+
+        }
+
+    };
+
+    Slick.prototype.urlParamExists = function() {
+
+        var _ = this;
+
+        var currentParam;
+        var currentParamName;
+        var currentParamValue;
+        var urlParams = window.location.search.split('?')[1].split('&');
+
+        for (var i = 0, arrLen = urlParams.length; i < arrLen; i++) {
+
+            currentParam = urlParams[i];
+            currentParamName = currentParam.split('=')[0];
+            currentParamValue = currentParam.split('=')[1];
+
+            if(currentParamName == 'slideId') {
+
+                _.slideId = currentParamValue;
+                return true;
+
+            }
+
+        }
+
+        return false;
+
+    };
+
+    Slick.prototype.checkSlideId = function(index, slide) {
+
+        var _ = this;
+
+        var slideExists = slide == _.slideId ? true : false;
+
+        if (slideExists) {
+
+            _.changeSlide({
+                data: {
+                    message: 'index',
+                    index: parseInt(slide - 1)
+                }
+            }, true);
 
         }
 
