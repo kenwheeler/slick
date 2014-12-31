@@ -1982,15 +1982,18 @@
         var currentParam;
         var currentParamName;
         var currentParamValue;
-        var urlParams = window.location.search.split('?')[1].split('&');
+        var urlParams = window.location.search != "" && window.location.search.split('?')[1].split('&');
 
         for (var i = 0, arrLen = urlParams.length; i < arrLen; i++) {
 
             currentParam = urlParams[i];
             currentParamName = currentParam.split('=')[0];
-            currentParamValue = currentParam.split('=')[1];
+            currentParamValue = typeof currentParam.split('=')[1] != "undefined"? currentParam.split('=')[1] : false;
 
-            if(currentParamName == 'slideId') {
+            console.log(currentParamValue);
+
+            if(currentParamName == 'slideId' &&
+               currentParamValue) {
 
                 _.slideId = currentParamValue;
                 return true;
