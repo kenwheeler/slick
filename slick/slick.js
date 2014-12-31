@@ -1988,7 +1988,7 @@
 
             currentParam = urlParams[i];
             currentParamName = currentParam.split('=')[0];
-            currentParamValue = typeof currentParam.split('=')[1] != "undefined"? currentParam.split('=')[1] : false;
+            currentParamValue = typeof currentParam.split('=')[1] != "undefined" ? currentParam.split('=')[1] : false;
 
             console.log(currentParamValue);
 
