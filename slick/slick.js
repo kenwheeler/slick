@@ -1185,7 +1185,7 @@
         _.changeSlide({
             data: {
                 message: 'index',
-                index: currentSlide,
+                index: currentSlide
             }
         }, true);
 
@@ -1961,64 +1961,21 @@
 
         var _ = this;
 
-        if (_.urlParamExists()) {
+        var checkQuery;
+        var sliderid = _.$slider.slick().getSlick().instanceUid;
+        var queries  = window.location.search.slice(1).split('&');
 
-            _.$slides.each(function(index) {
+        for (var query in queries) {
+            checkQuery = queries[query].split('=');
 
-                var slideId = $(this).data('slide-id').toString();
-
-                _.checkSlideId(index, _.slideId);
-
-            });
-
-        }
-
-    };
-
-    Slick.prototype.urlParamExists = function() {
-
-        var _ = this;
-
-        var currentParam;
-        var currentParamName;
-        var currentParamValue;
-        var urlParams = window.location.search != "" && window.location.search.split('?')[1].split('&');
-
-        for (var i = 0, arrLen = urlParams.length; i < arrLen; i++) {
-
-            currentParam = urlParams[i];
-            currentParamName = currentParam.split('=')[0];
-            currentParamValue = typeof currentParam.split('=')[1] != "undefined" ? currentParam.split('=')[1] : false;
-
-            if(currentParamName == 'slideId' &&
-               currentParamValue) {
-
-                _.slideId = currentParamValue;
-                return true;
-
+            if (checkQuery[0] == "slick" + sliderid) {
+                _.changeSlide({
+                    data: {
+                        message: 'index',
+                        index: parseInt( checkQuery[1], 10 )
+                    }
+                }, false);
             }
-
-        }
-
-        return false;
-
-    };
-
-    Slick.prototype.checkSlideId = function(index, slide) {
-
-        var _ = this;
-
-        var slideExists = slide == _.slideId ? true : false;
-
-        if (slideExists) {
-
-            _.changeSlide({
-                data: {
-                    message: 'index',
-                    index: parseInt(slide - 1)
-                }
-            }, true);
-
         }
 
     };
