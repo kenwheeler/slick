@@ -1962,13 +1962,14 @@
         var _ = this;
 
         var checkQuery;
-        var sliderid = _.$slider.slick().getSlick().instanceUid;
-        var queries  = window.location.search.slice(1).split('&');
+        var sliderid  = _.$slider.slick().getSlick().instanceUid;
+        var paramName = "slick" + sliderid;
+        var queries   = window.location.search.slice(1).split('&');
 
         for (var query in queries) {
             checkQuery = queries[query].split('=');
 
-            if (checkQuery[0] == "slick" + sliderid) {
+            if (checkQuery[0] == paramName) {
                 _.changeSlide({
                     data: {
                         message: 'index',
