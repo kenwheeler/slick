@@ -77,7 +77,6 @@
                 responsive: null,
                 rtl: false,
                 slide: 'div',
-                slideId: null,
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 speed: 500,
