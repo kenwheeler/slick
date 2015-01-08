@@ -1105,7 +1105,6 @@
                 cloneRange = _.$slider.find('.slick-cloned').slice(0, slideToPreload);
                 loadImages(cloneRange);
             } else if (_.currentSlide === 0) {
-                console.log('_.currentSlide === 0');
                 cloneRange = _.$slider.find('.slick-cloned').slice(slideToPreload * -1);
                 loadImages(cloneRange);
             }
