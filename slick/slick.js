@@ -1173,22 +1173,23 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]', _.$slider).length;
-
-        if (imgCount > 0) {
-            switch (_.options.lazyLoadTargetAttr) {
-                case "background-image":
-
+        switch (_.options.lazyLoadTargetAttr) {
+            case "background-image":
+                imgCount = $('div[' + _.options.lazyLoadSourceAttr + ']', _.$slider).length;
+                if (imgCount > 0) {
                     targetImage = $('div[' + _.options.lazyLoadSourceAttr + ']', _.$slider).first();
                     targetImage
                         .css({backgroundImage: "url('" + targetImage.attr(_.options.lazyLoadSourceAttr) + "')"})
                         .removeClass('slick-loading')
                         .removeAttr(_.options.lazyLoadSourceAttr);
-                        _.progressiveLazyLoad();
-                    break;
+                    _.progressiveLazyLoad();
+                }
+                break;
 
-                default:
-                case "src":
+            default:
+            case "src":
+                imgCount = $('img[' + _.options.lazyLoadSourceAttr + ']', _.$slider).length;
+                if (imgCount > 0) {
                     targetImage = $('img[' + _.options.lazyLoadSourceAttr + ']', _.$slider).first();
                     targetImage.attr('src', targetImage.attr(_.options.lazyLoadSourceAttr)).removeClass('slick-loading').load(function() {
                         targetImage.removeAttr(_.options.lazyLoadSourceAttr);
@@ -1197,9 +1198,8 @@
                         targetImage.removeAttr(_.options.lazyLoadSourceAttr);
                         _.progressiveLazyLoad();
                     });
-                    break;
-            }
-
+                }
+                break;
         }
 
     };
