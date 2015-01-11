@@ -1070,7 +1070,8 @@
                             imageSource = $(this).attr(_.options.lazyLoadSourceAttr);
 
                         image
-                            .css({backgroundImage: "url('" + imageSource + "')"})
+                            .css({opacity: 0, backgroundImage: "url('" + imageSource + "')"})
+                            .animate({opacity: 1}, 200)
                             .removeAttr(_.options.lazyLoadSourceAttr)
                             .removeClass('slick-loading');
                     });
