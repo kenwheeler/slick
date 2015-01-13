@@ -1183,7 +1183,7 @@
         _.changeSlide({
             data: {
                 message: 'index',
-                index: currentSlide,
+                index: currentSlide
             }
         }, true);
 
