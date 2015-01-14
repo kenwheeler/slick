@@ -66,6 +66,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                lazyLoadAhead: false,
                 onBeforeChange: null,
                 onAfterChange: null,
                 onInit: null,
@@ -1074,20 +1075,22 @@
             });
         }
 
+        var slidesToLoad = (_.options.lazyLoadAhead ? 2 : 1) * _.options.slidesToShow;
+
         if (_.options.centerMode === true) {
             if (_.options.infinite === true) {
-                rangeStart = _.currentSlide + (_.options.slidesToShow/2 + 1);
-                rangeEnd = rangeStart + _.options.slidesToShow + 2;
+                rangeStart = _.currentSlide + (slidesToLoad/2 + 1);
+                rangeEnd = rangeStart + slidesToLoad + 2;
             } else {
-                rangeStart = Math.max(0, _.currentSlide - (_.options.slidesToShow/2 + 1));
-                rangeEnd = 2 + (_.options.slidesToShow/2 + 1) + _.currentSlide;
+                rangeStart = Math.max(0, _.currentSlide - (slidesToLoad/2 + 1));
+                rangeEnd = 2 + (slidesToLoad/2 + 1) + _.currentSlide;
             }
         } else {
-            rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
-            rangeEnd = rangeStart + _.options.slidesToShow;
+            rangeStart = _.options.infinite ? slidesToLoad + _.currentSlide : _.currentSlide;
+            rangeEnd = rangeStart + slidesToLoad;
             if (_.options.fade === true ) {
                 if(rangeStart > 0) rangeStart--;
-                if(rangeEnd <= _.slideCount) rangeEnd++;
+                if(rangeEnd <= slidesToLoad) rangeEnd++;
             }
         }
 
@@ -1098,11 +1101,11 @@
               cloneRange = _.$slider.find('.slick-slide')
               loadImages(cloneRange)
           }else
-        if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-            cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
+        if (_.currentSlide >= _.slideCount - slidesToLoad) {
+            cloneRange = _.$slider.find('.slick-cloned').slice(0, slidesToLoad);
             loadImages(cloneRange)
         } else if (_.currentSlide === 0) {
-            cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
+            cloneRange = _.$slider.find('.slick-cloned').slice(slidesToLoad * -1);
             loadImages(cloneRange);
         }
 
