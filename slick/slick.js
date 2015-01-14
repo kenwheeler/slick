@@ -66,6 +66,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                OnChange:null,
                 onBeforeChange: null,
                 onAfterChange: null,
                 onInit: null,
@@ -1688,7 +1689,9 @@
         } else {
             _.postSlide(animSlide);
         }
-
+        if(_.options.OnChange !== null){
+            _.options.OnChange.call();
+        }
     };
 
     Slick.prototype.startLoad = function() {
