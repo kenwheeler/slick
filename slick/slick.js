@@ -65,6 +65,7 @@
                 focusOnSelect: false,
                 infinite: true,
                 initialSlide: 0,
+                nextSlidesToPreload: 0,
                 lazyLoad: 'ondemand',
                 onBeforeChange: null,
                 onAfterChange: null,
@@ -1060,6 +1061,8 @@
         var _ = this,
             loadRange, cloneRange, rangeStart, rangeEnd;
 
+        var slideToPreload = _.options.nextSlidesToPreload > 0 ? _.options.slidesToShow + _.options.nextSlidesToPreload : _.options.slidesToShow;
+
         function loadImages(imagesScope) {
             $('img[data-lazy]', imagesScope).each(function() {
                 var image = $(this),
@@ -1083,8 +1086,8 @@
                 rangeEnd = 2 + (_.options.slidesToShow/2 + 1) + _.currentSlide;
             }
         } else {
-            rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
-            rangeEnd = rangeStart + _.options.slidesToShow;
+            rangeStart = _.options.infinite ? (_.options.slidesToShow  - _.options.nextSlidesToPreload) + _.currentSlide : _.currentSlide;
+            rangeEnd =   (rangeStart + _.options.nextSlidesToPreload) + slideToPreload;
             if (_.options.fade === true ) {
                 if(rangeStart > 0) rangeStart--;
                 if(rangeEnd <= _.slideCount) rangeEnd++;
@@ -1094,17 +1097,19 @@
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
         loadImages(loadRange);
 
-          if (_.slideCount <= _.options.slidesToShow){
-              cloneRange = _.$slider.find('.slick-slide')
-              loadImages(cloneRange)
-          }else
-        if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-            cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
-            loadImages(cloneRange)
-        } else if (_.currentSlide === 0) {
-            cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
-            loadImages(cloneRange);
-        }
+          if (_.slideCount <= slideToPreload){
+              cloneRange = _.$slider.find('.slick-slide');
+              loadImages(cloneRange);
+          } else{
+            if (_.currentSlide >= _.slideCount - slideToPreload) {
+                cloneRange = _.$slider.find('.slick-cloned').slice(0, slideToPreload);
+                loadImages(cloneRange);
+            } else if (_.currentSlide === 0) {
+                cloneRange = _.$slider.find('.slick-cloned').slice(slideToPreload * -1);
+                loadImages(cloneRange);
+            }
+          }
+
 
     };
 
