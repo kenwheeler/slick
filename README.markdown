@@ -95,6 +95,9 @@ slickPause() | | Pause Autoplay
 slickPlay() | | Start Autoplay
 slickGoTo() | index : int | Goes to slide by index
 slickCurrentSlide() |  |  Returns the current slide index
+slickNumberOfSlides() |  |  Return the number os slides
+slickFirstSlide() |  |  Return the first slide DOM element
+slickLastSlide() |  |  Return the last slide DOM element
 slickAdd() | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
 slickRemove() | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
 slickRemoveAll() | | Removes all slides

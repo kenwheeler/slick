@@ -746,6 +746,33 @@
 
     };
 
+    Slick.prototype.getFirstSlide = function() {
+
+        var _ = this;
+        var $slides = _.$slides;
+
+        return $slides[0];
+
+   };
+
+   Slick.prototype.getLastSlide = function() {
+
+        var _ = this;
+        var $slides = _.$slides;
+
+        return $slides[$slides.length - 1];
+
+   };
+
+   Slick.prototype.getNumberOfSlides = function() {
+
+        var _ = this;
+        var $slides = _.$slides;
+
+        return $slides.length;
+
+   };
+
     Slick.prototype.getDotCount = function() {
 
         var _ = this;
@@ -1976,6 +2003,21 @@
     $.fn.slickCurrentSlide = function() {
         var _ = this;
         return _.get(0).slick.getCurrent();
+    };
+
+    $.fn.slickFirstSlide = function() {
+        var _ = this;
+        return _.get(0).slick.getFirstSlide();
+    };
+
+    $.fn.slickLastSlide = function() {
+        var _ = this;
+        return _.get(0).slick.getLastSlide();
+    };
+
+    $.fn.slickNumberOfSlides = function() {
+        var _ = this;
+        return _.get(0).slick.getNumberOfSlides();
     };
 
     $.fn.slickFilter = function(filter) {
