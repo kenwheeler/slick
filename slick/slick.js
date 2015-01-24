@@ -266,6 +266,7 @@
                     duration: _.options.speed,
                     easing: _.options.easing,
                     step: function(now) {
+                        now = Math.ceil(now);
                         if (_.options.vertical === false) {
                             animProps[_.animType] = 'translate(' +
                                 now + 'px, 0px)';
@@ -286,6 +287,7 @@
             } else {
 
                 _.applyTransition();
+                targetLeft = Math.ceil(targetLeft);
 
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
@@ -1279,8 +1281,8 @@
         if (_.options.rtl === true) {
             position = -position;
         }
-        x = _.positionProp == 'left' ? position + 'px' : '0px';
-        y = _.positionProp == 'top' ? position + 'px' : '0px';
+        x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
+        y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
 
         positionProps[_.positionProp] = position;
 
