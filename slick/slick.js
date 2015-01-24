@@ -649,9 +649,6 @@
         if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
             _.$nextArrow.remove();
         }
-        if (_.$slides.parent().hasClass('slick-track')) {
-            _.$slides.unwrap().unwrap();
-        }
 
         _.$slides.removeClass(
             'slick-slide slick-active slick-center slick-visible')
@@ -671,6 +668,8 @@
         _.$list.off('.slick');
         $(window).off('.slick-' + _.instanceUid);
         $(document).off('.slick-' + _.instanceUid);
+
+        _.$slider.html(_.$slides);
 
     };
 
