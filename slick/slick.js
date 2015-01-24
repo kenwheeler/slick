@@ -124,6 +124,7 @@
             _.breakpoints = [];
             _.breakpointSettings = [];
             _.cssTransitions = false;
+            _.hidden = "hidden";
             _.paused = false;
             _.positionProp = null;
             _.respondTo = null;
@@ -132,6 +133,7 @@
             _.$slidesCache = null;
             _.transformType = null;
             _.transitionType = null;
+            _.visibilityChange = "visibilitychange";
             _.windowWidth = 0;
             _.windowTimer = null;
 
@@ -156,6 +158,17 @@
                 _.breakpoints.sort(function(a, b) {
                     return b - a;
                 });
+            }
+
+            if (typeof document.mozHidden !== "undefined") {
+                _.hidden = "mozHidden";
+                _.visibilityChange = "mozvisibilitychange";
+            } else if (typeof document.msHidden !== "undefined") {
+                _.hidden = "msHidden";
+                _.visibilityChange = "msvisibilitychange";
+            } else if (typeof document.webkitHidden !== "undefined") {
+                _.hidden = "webkitHidden";
+                _.visibilityChange = "webkitvisibilitychange";
             }
 
             _.autoPlay = $.proxy(_.autoPlay, _);
@@ -266,6 +279,7 @@
                     duration: _.options.speed,
                     easing: _.options.easing,
                     step: function(now) {
+                        now = Math.ceil(now);
                         if (_.options.vertical === false) {
                             animProps[_.animType] = 'translate(' +
                                 now + 'px, 0px)';
@@ -286,6 +300,7 @@
             } else {
 
                 _.applyTransition();
+                targetLeft = Math.ceil(targetLeft);
 
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
@@ -994,15 +1009,25 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        if (_.options.pauseOnHover === true && _.options.autoplay === true) {
-            _.$list.on('mouseenter.slick', function(){
-                _.paused = true;
-                _.autoPlayClear();
+        if (_.options.autoplay === true) {
+
+            $(document).on(_.visibilityChange, function(){
+                _.visibility();
             });
-            _.$list.on('mouseleave.slick', function(){
-                _.paused = false;
-                _.autoPlay();
-            });
+
+            if( _.options.pauseOnHover === true ) {
+
+                _.$list.on('mouseenter.slick', function(){
+                    _.paused = true;
+                    _.autoPlayClear();
+                });
+                _.$list.on('mouseleave.slick', function(){
+                    _.paused = false;
+                    _.autoPlay();
+                });
+
+            }
+
         }
 
         if(_.options.accessibility === true) {
@@ -1347,8 +1372,8 @@
         if (_.options.rtl === true) {
             position = -position;
         }
-        x = _.positionProp == 'left' ? position + 'px' : '0px';
-        y = _.positionProp == 'top' ? position + 'px' : '0px';
+        x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
+        y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
 
         positionProps[_.positionProp] = position;
 
@@ -2042,7 +2067,21 @@
 
     };
 
-    $.fn.slick = function() {
+    Slick.prototype.visibility = function() {
+
+        var _ = this;
+
+        if( document[ _.hidden ] ) {
+            _.paused = true;
+            _.autoPlayClear();
+        } else {
+            _.paused = false;
+            _.autoPlay();
+        }
+
+    };
+
+    $.fn.slick = function(options) {
         var _ = this, opt = arguments[0], args = Array.prototype.slice.call(arguments,1), l = _.length, i = 0, ret;
         for(i; i < l; i++) {
             if (typeof opt == 'object')
