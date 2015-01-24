@@ -134,6 +134,13 @@ $slick-opacity-not-active: .25 !default;
         height: auto;
         border: 1px solid transparent;
     }
+
+	.autoFitImage {
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		margin: auto;
+	}
 }
 
 /* Icons */

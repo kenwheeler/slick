@@ -66,6 +66,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+				autoFitImage: false,
                 onBeforeChange: null,
                 onAfterChange: null,
                 onInit: null,
@@ -1085,20 +1086,45 @@
         var _ = this,
             loadRange, cloneRange, rangeStart, rangeEnd;
 
-        function loadImages(imagesScope) {
-            $('img[data-lazy]', imagesScope).each(function() {
-                var image = $(this),
-                    imageSource = $(this).attr('data-lazy');
+		var loadImages;
+		if(_.options.autoFitImage)
+        {
+            loadImages = function(imagesScope) {
+                $('div[data-lazy]', imagesScope).each(function() {
+                    var imageSrc = $(this).attr('data-lazy');
+                    var div = $(this);
 
-                image
-                  .load(function() { image.animate({ opacity: 1 }, 200); })
-                  .css({ opacity: 0 })
-                  .attr('src', imageSource)
-                  .removeAttr('data-lazy')
-                  .removeClass('slick-loading');
-            });
+                    div.css({ opacity: 0 });
+
+                    //Only show image once it's loaded
+                    $('<img/>').attr('src', imageSrc).load(function() {
+                        $(this).remove();
+
+                        div
+                            .css('background-image', 'url('+imageSrc+')')
+                            .animate({ opacity: 1 }, 200)
+                            .removeAttr('data-lazy');
+                    });
+                });
+            }
         }
+		else
+		{
+			loadImages = function(imagesScope) {
+				$('img[data-lazy]', imagesScope).each(function() {
+					var image = $(this),
+						imageSource = $(this).attr('data-lazy');
 
+					image
+					  .load(function() { image.animate({ opacity: 1 }, 200); })
+					  .css({ opacity: 0 })
+					  .attr('src', imageSource)
+					  .removeAttr('data-lazy')
+					  .removeClass('slick-loading');
+				});
+			}
+		}
+		
         if (_.options.centerMode === true) {
             if (_.options.infinite === true) {
                 rangeStart = _.currentSlide + (_.options.slidesToShow/2 + 1);
@@ -1119,10 +1145,10 @@
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
         loadImages(loadRange);
 
-          if (_.slideCount <= _.options.slidesToShow){
-              cloneRange = _.$slider.find('.slick-slide')
-              loadImages(cloneRange)
-          }else
+        if (_.slideCount <= _.options.slidesToShow){
+            cloneRange = _.$slider.find('.slick-slide')
+            loadImages(cloneRange)
+        }else
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
             loadImages(cloneRange)
