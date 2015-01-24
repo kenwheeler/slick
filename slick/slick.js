@@ -270,7 +270,9 @@
         } else {
 
             if (_.cssTransitions === false) {
-
+                if (_.options.rtl === true) {
+                    _.currentLeft = -(_.currentLeft);
+                }
                 $({
                     animStart: _.currentLeft
                 }).animate({
