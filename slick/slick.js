@@ -598,17 +598,15 @@
 
                 navigables = _.getNavigableIndexes();
                 prevNavigable = 0;
-                if(navigables[index] && navigables[index] === index) {
-                    if(index > navigables[navigables.length -1]){
-                        index = navigables[navigables.length -1];
-                    } else {
-                        for(var n in navigables) {
-                            if(index < navigables[n]) {
-                                index = prevNavigable;
-                                break;
-                            }
-                            prevNavigable = navigables[n];
+                if(index > navigables[navigables.length -1]){
+                    index = navigables[navigables.length -1];
+                } else {
+                    for(var n in navigables) {
+                        if(index < navigables[n]) {
+                            index = prevNavigable;
+                            break;
                         }
+                        prevNavigable = navigables[n];
                     }
                 }
                 _.slideHandler(index, false, dontAnimate);
@@ -874,8 +872,9 @@
         var breakPoint = 0;
         var counter = 0;
         var indexes = [];
+        var max = _.options.infinite === false ? _.slideCount - _.options.slidesToShow + 1 : _.slideCount;
 
-        while (breakPoint < _.slideCount){
+        while (breakPoint < max){
             indexes.push(breakPoint);
             breakPoint = counter + _.options.slidesToScroll;
             counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll  : _.options.slidesToShow;
