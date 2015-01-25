@@ -61,7 +61,7 @@
                 dotsClass: 'slick-dots',
                 draggable: true,
                 easing: 'linear',
-                edgeFriction: 0.15,
+                edgeFriction: 0.35,
                 fade: false,
                 focusOnSelect: false,
                 infinite: true,
@@ -913,6 +913,9 @@
             });
 
             slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide);
+            if ($(swipedSlide).index() >= _.slideCount - _.options.slidesToShow) {
+                slidesTraversed = 1;
+            }
             return slidesTraversed || 1;
 
         } else {
