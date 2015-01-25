@@ -327,7 +327,7 @@
     };
 
     Slick.prototype.asNavFor = function(index) {
-        var _ = this, asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).getSlick() : null;
+        var _ = this, asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).slick('getSlick') : null;
         if(asNavFor != null) asNavFor.slideHandler(index, true);
     };
 
