@@ -894,11 +894,13 @@
 
     Slick.prototype.getSlideCount = function() {
 
-        var _ = this, slidesTraversed, swipedSlide;
+        var _ = this, slidesTraversed, swipedSlide, centerOffset;
+
+        centerOffset = _.options.centerMode === true ? _.slideWidth * Math.floor(_.options.slidesToShow / 2) : 0;
 
         if(_.options.swipeToSlide === true) {
             _.$slideTrack.find('.slick-slide').each(function(index, slide){
-                if (slide.offsetLeft + ($(slide).outerWidth() / 2) > (_.swipeLeft * -1)) {
+                if (slide.offsetLeft - centerOffset + ($(slide).outerWidth() / 2) > (_.swipeLeft * -1)) {
                     swipedSlide = slide;
                     return false;
                 }
