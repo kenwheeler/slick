@@ -769,6 +769,8 @@
 
         if(_.options.infinite === true) {
             pagerQty = Math.ceil(_.slideCount / _.options.slidesToScroll);
+        } else if (_.options.centerMode === true) {
+            pagerQty = _.slideCount;
         } else {
             while (breakPoint < _.slideCount){
                 ++pagerQty;
@@ -875,6 +877,7 @@
         var counter = 0;
         var indexes = [];
         var max = _.options.infinite === false ? _.slideCount - _.options.slidesToShow + 1 : _.slideCount;
+        if (_.options.centerMode === true) max = _.slideCount;
 
         while (breakPoint < max){
             indexes.push(breakPoint);
@@ -2047,7 +2050,7 @@
             } else if (_.currentSlide >= _.slideCount - _.options.slidesToShow && _.options.centerMode === false) {
                 _.$nextArrow.addClass('slick-disabled');
                 _.$prevArrow.removeClass('slick-disabled');
-            } else if (_.currentSlide > _.slideCount - _.options.slidesToShow + centerOffset  && _.options.centerMode === true) {
+            } else if (_.currentSlide >= _.slideCount - 1 && _.options.centerMode === true) {
                 _.$nextArrow.addClass('slick-disabled');
                 _.$prevArrow.removeClass('slick-disabled');
             }
