@@ -1957,7 +1957,7 @@
         swipeLength = _.touchObject.swipeLength;
 
         if (_.options.infinite === false) {
-            if ((_.currentSlide === 0 && swipeDirection === "right") || (_.currentSlide === _.getDotCount() && swipeDirection === "left")) {
+            if ((_.currentSlide === 0 && swipeDirection === "right") || (_.currentSlide >= _.slideCount - _.options.slidesToShow && swipeDirection === "left")) {
                 swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
             }
         }
