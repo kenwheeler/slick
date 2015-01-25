@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.3.15
+ Version: 1.4.0
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -38,7 +38,7 @@
         function Slick(element, settings) {
 
             var _ = this,
-                responsiveSettings, breakpoint;
+                dataSettings, responsiveSettings, breakpoint;
 
             _.defaults = {
                 accessibility: true,
@@ -137,7 +137,9 @@
             _.windowWidth = 0;
             _.windowTimer = null;
 
-            _.options = $.extend({}, _.defaults, settings);
+            dataSettings = $(element).data('slick') || {};
+
+            _.options = $.extend({}, _.defaults, dataSettings, settings);
 
             _.currentSlide = _.options.initialSlide;
 
