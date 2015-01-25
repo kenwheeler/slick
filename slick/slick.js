@@ -913,8 +913,8 @@
             });
 
             slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide);
-            if ($(swipedSlide).index() >= _.slideCount - _.options.slidesToShow) {
-                slidesTraversed = 1;
+            if (_.currentSlide + slidesTraversed >= _.slideCount - _.options.slidesToShow) {
+                slidesTraversed = (_.slideCount - _.options.slidesToShow) - _.currentSlide;
             }
             return slidesTraversed || 1;
 
