@@ -61,6 +61,7 @@
                 dotsClass: 'slick-dots',
                 draggable: true,
                 easing: 'linear',
+                edgeFriction: 0.15,
                 fade: false,
                 focusOnSelect: false,
                 infinite: true,
@@ -1925,7 +1926,7 @@
     Slick.prototype.swipeMove = function(event) {
 
         var _ = this,
-            curLeft, swipeDirection, positionOffset, touches;
+            curLeft, swipeDirection, swipeLength, positionOffset, touches;
 
         touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
 
@@ -1953,11 +1954,18 @@
 
         positionOffset = (_.options.rtl === false ? 1 : -1) * (_.touchObject.curX > _.touchObject.startX ? 1 : -1);
 
+        swipeLength = _.touchObject.swipeLength;
+
+        if (_.options.infinite === false) {
+            if ((_.currentSlide === 0 && swipeDirection === "right") || (_.currentSlide === _.getDotCount() && swipeDirection === "left")) {
+                swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
+            }
+        }
+
         if (_.options.vertical === false) {
-            _.swipeLeft = curLeft + _.touchObject.swipeLength * positionOffset;
+            _.swipeLeft = curLeft + swipeLength * positionOffset;
         } else {
-            _.swipeLeft = curLeft + (_.touchObject
-                .swipeLength * (_.$list.height() / _.listWidth)) * positionOffset;
+            _.swipeLeft = curLeft + (swipeLength * (_.$list.height() / _.listWidth)) * positionOffset;
         }
 
         if (_.options.fade === true || _.options.touchMove === false) {
