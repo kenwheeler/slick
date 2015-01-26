@@ -573,7 +573,7 @@
 
         var _ = this,
             $target = $(event.target),
-            indexOffset, slideOffset, unevenOffset,navigables, prevNavigable;
+            indexOffset, slideOffset, unevenOffset;
 
         // If target is a link, prevent default action.
         $target.is('a') && event.preventDefault();
@@ -601,25 +601,33 @@
                 var index = event.data.index === 0 ? 0 :
                     event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
 
-                navigables = _.getNavigableIndexes();
-                prevNavigable = 0;
-                if(index > navigables[navigables.length -1]){
-                    index = navigables[navigables.length -1];
-                } else {
-                    for(var n in navigables) {
-                        if(index < navigables[n]) {
-                            index = prevNavigable;
-                            break;
-                        }
-                        prevNavigable = navigables[n];
-                    }
-                }
-                _.slideHandler(index, false, dontAnimate);
+                _.slideHandler(_.checkNavigable(index), false, dontAnimate);
 
             default:
                 return;
         }
 
+    };
+
+    Slick.prototype.checkNavigable = function(index) {
+
+        var _ = this, navigables, prevNavigable;
+
+        navigables = _.getNavigableIndexes();
+        prevNavigable = 0;
+        if(index > navigables[navigables.length -1]){
+            index = navigables[navigables.length -1];
+        } else {
+            for(var n in navigables) {
+                if(index < navigables[n]) {
+                    index = prevNavigable;
+                    break;
+                }
+                prevNavigable = navigables[n];
+            }
+        }
+
+        return index;
     };
 
     Slick.prototype.clickHandler = function(event) {
@@ -898,7 +906,7 @@
 
     };
 
-    Slick.prototype.getSlideCount = function() {
+    Slick.prototype.getSlideCount = function(direction) {
 
         var _ = this, slidesTraversed, swipedSlide, centerOffset;
 
@@ -912,8 +920,9 @@
                 }
             });
 
-            slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide);
-            return slidesTraversed || 1;
+            slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide) || 1;
+
+            return slidesTraversed;
 
         } else {
             return _.options.slidesToScroll;
@@ -1869,23 +1878,15 @@
 
             switch (_.swipeDirection()) {
                 case 'left':
-                    _.changeSlide({
-                        data: {
-                            message: 'index',
-                            index: _.currentSlide + _.getSlideCount()
-                        }
-                    }, false);
+                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide + _.getSlideCount()) : _.currentSlide + _.getSlideCount();
+                    _.slideHandler(slideCount);
                     _.currentDirection = 0;
                     _.touchObject = {};
                     break;
 
                 case 'right':
-                    _.changeSlide({
-                        data: {
-                            message: 'index',
-                            index: _.currentSlide - _.getSlideCount()
-                        }
-                    }, false);
+                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide - _.getSlideCount()) : _.currentSlide - _.getSlideCount();
+                    _.slideHandler(slideCount);
                     _.currentDirection = 1;
                     _.touchObject = {};
                     break;
