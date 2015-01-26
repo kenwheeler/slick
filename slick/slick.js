@@ -73,7 +73,7 @@
                 respondTo: 'window',
                 responsive: null,
                 rtl: false,
-                slide: 'div',
+                slide: $(element).children().prop('tagName').toLowerCase(),
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 speed: 500,
