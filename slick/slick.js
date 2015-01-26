@@ -551,17 +551,25 @@
                     if (targetBreakpoint !== _.activeBreakpoint) {
                         _.activeBreakpoint =
                             targetBreakpoint;
+                        if(_.breakpointSettings[targetBreakpoint] === "unslick") {
+                            _.unslick();
+                        } else {
+                            _.options = $.extend({}, _.originalSettings,
+                                _.breakpointSettings[
+                                    targetBreakpoint]);
+                            _.refresh();
+                        }
+                    }
+                } else {
+                    _.activeBreakpoint = targetBreakpoint;
+                    if(_.breakpointSettings[targetBreakpoint] === "unslick") {
+                        _.unslick();
+                    } else {
                         _.options = $.extend({}, _.originalSettings,
                             _.breakpointSettings[
                                 targetBreakpoint]);
                         _.refresh();
                     }
-                } else {
-                    _.activeBreakpoint = targetBreakpoint;
-                    _.options = $.extend({}, _.originalSettings,
-                        _.breakpointSettings[
-                            targetBreakpoint]);
-                    _.refresh();
                 }
             } else {
                 if (_.activeBreakpoint !== null) {
