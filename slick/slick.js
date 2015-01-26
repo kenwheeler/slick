@@ -913,9 +913,6 @@
             });
 
             slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide);
-            if (_.currentSlide + slidesTraversed >= _.slideCount - _.options.slidesToShow) {
-                slidesTraversed = (_.slideCount - _.options.slidesToShow) - _.currentSlide;
-            }
             return slidesTraversed || 1;
 
         } else {
@@ -1872,13 +1869,23 @@
 
             switch (_.swipeDirection()) {
                 case 'left':
-                    _.slideHandler(_.currentSlide + _.getSlideCount());
+                    _.changeSlide({
+                        data: {
+                            message: 'index',
+                            index: _.currentSlide + _.getSlideCount()
+                        }
+                    }, false);
                     _.currentDirection = 0;
                     _.touchObject = {};
                     break;
 
                 case 'right':
-                    _.slideHandler(_.currentSlide - _.getSlideCount());
+                    _.changeSlide({
+                        data: {
+                            message: 'index',
+                            index: _.currentSlide - _.getSlideCount()
+                        }
+                    }, false);
                     _.currentDirection = 1;
                     _.touchObject = {};
                     break;
@@ -1960,7 +1967,7 @@
         swipeLength = _.touchObject.swipeLength;
 
         if (_.options.infinite === false) {
-            if ((_.currentSlide === 0 && swipeDirection === "right") || (_.currentSlide >= _.slideCount - _.options.slidesToShow && swipeDirection === "left")) {
+            if ((_.currentSlide === 0 && swipeDirection === "right") || (_.currentSlide >= _.getDotCount() && swipeDirection === "left")) {
                 swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
             }
         }
