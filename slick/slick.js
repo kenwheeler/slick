@@ -67,6 +67,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
                 respondTo: 'window',
@@ -154,7 +155,11 @@
                     }
                 }
                 _.breakpoints.sort(function(a, b) {
-                    return b - a;
+                    if(_.options.mobileFirst === true) {
+                        return a - b;
+                    } else {
+                        return b - a;
+                    }
                 });
             }
 
@@ -529,8 +534,14 @@
 
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
-                    if (respondToWidth < _.breakpoints[breakpoint]) {
-                        targetBreakpoint = _.breakpoints[breakpoint];
+                    if (_.originalSettings.mobileFirst === false) {
+                        if (respondToWidth < _.breakpoints[breakpoint]) {
+                            targetBreakpoint = _.breakpoints[breakpoint];
+                        }
+                    } else {
+                        if (respondToWidth > _.breakpoints[breakpoint]) {
+                            targetBreakpoint = _.breakpoints[breakpoint];
+                        }
                     }
                 }
             }
