@@ -67,11 +67,6 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
-                onBeforeChange: null,
-                onAfterChange: null,
-                onInit: null,
-                onReInit: null,
-                onSetPosition: null,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
                 respondTo: 'window',
@@ -330,8 +325,8 @@
     };
 
     Slick.prototype.asNavFor = function(index) {
-        var _ = this, asNavFor = _.options.asNavFor != null ? $(_.options.asNavFor).slick('getSlick') : null;
-        if(asNavFor != null) asNavFor.slideHandler(index, true);
+        var _ = this, asNavFor = _.options.asNavFor !== null ? $(_.options.asNavFor).slick('getSlick') : null;
+        if(asNavFor !== null) asNavFor.slideHandler(index, true);
     };
 
     Slick.prototype.applyTransition = function(slide) {
@@ -602,6 +597,7 @@
                     event.data.index || $(event.target).parent().index() * _.options.slidesToScroll;
 
                 _.slideHandler(_.checkNavigable(index), false, dontAnimate);
+                break;
 
             default:
                 return;
@@ -800,7 +796,6 @@
             targetLeft,
             verticalHeight,
             verticalOffset = 0,
-            slideWidth,
             targetSlide;
 
         _.slideOffset = 0;
@@ -906,7 +901,7 @@
 
     };
 
-    Slick.prototype.getSlideCount = function(direction) {
+    Slick.prototype.getSlideCount = function() {
 
         var _ = this, slidesTraversed, swipedSlide, centerOffset;
 
@@ -959,9 +954,7 @@
             _.updateDots();
         }
 
-        if (_.options.onInit !== null) {
-            _.options.onInit.call(this, _);
-        }
+        _.$slider.trigger("init", [ this, _]);
 
     };
 
@@ -1231,9 +1224,7 @@
 
         var _ = this;
 
-        if (_.options.onAfterChange !== null) {
-            _.options.onAfterChange.call(this, _, index);
-        }
+        _.$slider.trigger("afterChange", [ this, _, index]);
 
         _.animating = false;
 
@@ -1341,9 +1332,7 @@
 
         _.setPosition();
 
-        if (_.options.onReInit !== null) {
-            _.options.onReInit.call(this, _);
-        }
+        _.$slider.trigger("reInit", [ this, _]);
 
     };
 
@@ -1524,9 +1513,7 @@
             _.setFade();
         }
 
-        if (_.options.onSetPosition !== null) {
-            _.options.onSetPosition.call(this, _);
-        }
+        _.$slider.trigger("setPosition", [ this, _]);
 
     };
 
@@ -1706,7 +1693,7 @@
 
     Slick.prototype.slideHandler = function(index,sync,dontAnimate) {
 
-        var targetSlide, animSlide, oldSlide, slideLeft, unevenOffset, targetLeft = null,
+        var targetSlide, animSlide, oldSlide, slideLeft, targetLeft = null,
             _ = this;
 
         sync = sync || false;
@@ -1781,9 +1768,7 @@
 
         _.animating = true;
 
-        if (_.options.onBeforeChange !== null && index !== _.currentSlide) {
-            _.options.onBeforeChange.call(this, _, _.currentSlide, animSlide);
-        }
+        _.$slider.trigger("beforeChange", [ this, _, _.currentSlide, animSlide]);
 
         oldSlide = _.currentSlide;
         _.currentSlide = animSlide;
@@ -1874,6 +1859,10 @@
             return false;
         }
 
+        if (_.touchObject.edgeHit === true) {
+            _.$slider.trigger("edge", [ this, _, _.swipeDirection()]);
+        }
+
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
 
             switch (_.swipeDirection()) {
@@ -1882,6 +1871,7 @@
                     _.slideHandler(slideCount);
                     _.currentDirection = 0;
                     _.touchObject = {};
+                    _.$slider.trigger("swipe", [ this, _, "left"]);
                     break;
 
                 case 'right':
@@ -1889,6 +1879,7 @@
                     _.slideHandler(slideCount);
                     _.currentDirection = 1;
                     _.touchObject = {};
+                    _.$slider.trigger("swipe", [ this, _, "right"]);
                     break;
             }
         } else {
@@ -1937,6 +1928,7 @@
     Slick.prototype.swipeMove = function(event) {
 
         var _ = this,
+            edgeWasHit = false,
             curLeft, swipeDirection, swipeLength, positionOffset, touches;
 
         touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
@@ -1967,9 +1959,12 @@
 
         swipeLength = _.touchObject.swipeLength;
 
+        _.touchObject.edgeHit = false;
+
         if (_.options.infinite === false) {
             if ((_.currentSlide === 0 && swipeDirection === "right") || (_.currentSlide >= _.getDotCount() && swipeDirection === "left")) {
                 swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
+                _.touchObject.edgeHit = true;
             }
         }
 
@@ -2108,7 +2103,7 @@
 
     };
 
-    $.fn.slick = function(options) {
+    $.fn.slick = function() {
         var _ = this, opt = arguments[0], args = Array.prototype.slice.call(arguments,1), l = _.length, i = 0, ret;
         for(i; i < l; i++) {
             if (typeof opt == 'object')
