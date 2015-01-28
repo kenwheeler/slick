@@ -246,7 +246,7 @@
         _.reinit();
 
     };
-	
+
 	Slick.prototype.animateHeight = function(){
 		var _ = this;
 		if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
@@ -978,7 +978,7 @@
             _.updateDots();
         }
 
-        _.$slider.trigger("init", [ this, _]);
+        _.$slider.trigger("init", [ _ ]);
 
     };
 
@@ -1248,7 +1248,7 @@
 
         var _ = this;
 
-        _.$slider.trigger("afterChange", [ this, _, index]);
+        _.$slider.trigger("afterChange", [ _, index]);
 
         _.animating = false;
 
@@ -1356,7 +1356,7 @@
 
         _.setPosition();
 
-        _.$slider.trigger("reInit", [ this, _]);
+        _.$slider.trigger("reInit", [ _ ]);
 
     };
 
@@ -1537,7 +1537,7 @@
             _.setFade();
         }
 
-        _.$slider.trigger("setPosition", [ this, _]);
+        _.$slider.trigger("setPosition", [ _ ]);
 
     };
 
@@ -1792,7 +1792,7 @@
 
         _.animating = true;
 
-        _.$slider.trigger("beforeChange", [ this, _, _.currentSlide, animSlide]);
+        _.$slider.trigger("beforeChange", [ _ , _.currentSlide, animSlide]);
 
         oldSlide = _.currentSlide;
         _.currentSlide = animSlide;
@@ -1885,7 +1885,7 @@
         }
 
         if (_.touchObject.edgeHit === true) {
-            _.$slider.trigger("edge", [ this, _, _.swipeDirection()]);
+            _.$slider.trigger("edge", [  _, _.swipeDirection()]);
         }
 
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
@@ -1896,7 +1896,7 @@
                     _.slideHandler(slideCount);
                     _.currentDirection = 0;
                     _.touchObject = {};
-                    _.$slider.trigger("swipe", [ this, _, "left"]);
+                    _.$slider.trigger("swipe", [ _, "left"]);
                     break;
 
                 case 'right':
@@ -1904,7 +1904,7 @@
                     _.slideHandler(slideCount);
                     _.currentDirection = 1;
                     _.touchObject = {};
-                    _.$slider.trigger("swipe", [ this, _, "right"]);
+                    _.$slider.trigger("swipe", [ _, "right"]);
                     break;
             }
         } else {
@@ -2131,7 +2131,7 @@
     $.fn.slick = function() {
         var _ = this, opt = arguments[0], args = Array.prototype.slice.call(arguments,1), l = _.length, i = 0, ret;
         for(i; i < l; i++) {
-            if (typeof opt == 'object')
+            if (typeof opt == 'object' || typeof opt == 'undefined')
                 _[i].slick =  new Slick(_[i], opt);
             else
                 ret = _[i].slick[opt].apply(_[i].slick, args);
@@ -2139,5 +2139,9 @@
         }
         return _;
     };
+
+    $(function(){
+        $('[data-slick]').slick();
+    });
 
 }));
