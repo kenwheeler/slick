@@ -84,7 +84,7 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
-                waitForAnimate: true
+                waitForAnimate: true,
                 minVertListHeight: 0 // Does nothing unless 'vertical' is true
             };
 
