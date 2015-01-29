@@ -636,7 +636,8 @@
 
         var _ = this, navigables, prevNavigable;
 
-        navigables = _.getNavigableIndexes();
+        navigables = _.getNavigableIndexes( index < 0 );
+
         prevNavigable = 0;
         if(index > navigables[navigables.length -1]){
             index = navigables[navigables.length -1];
@@ -649,6 +650,7 @@
                 prevNavigable = navigables[n];
             }
         }
+
 
         return index;
     };
@@ -898,7 +900,7 @@
 
     };
 
-    Slick.prototype.getNavigableIndexes = function() {
+    Slick.prototype.getNavigableIndexes = function( isReversed ) {
 
         var _ = this;
 
@@ -908,10 +910,20 @@
         var max = _.options.infinite === false ? _.slideCount - _.options.slidesToShow + 1 : _.slideCount;
         if (_.options.centerMode === true) max = _.slideCount;
 
-        while (breakPoint < max){
+        // while (breakPoint < max){ 
+        // changed to '<=' because could reach last slide when odd number of slides and when set to 'swipeToSlide:true'
+        while (breakPoint <= max){
             indexes.push(breakPoint);
             breakPoint = counter + _.options.slidesToScroll;
             counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll  : _.options.slidesToShow;
+        }
+
+        // 'swipeToSlide:true' was breaking in reverse, so reversed slide logic
+        if( isReversed ) {
+            indexes = indexes.reverse();
+            $.each(indexes, function(i, val) {
+                indexes[i] = val * -1;
+            });
         }
 
         return indexes;
