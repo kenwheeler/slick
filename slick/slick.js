@@ -85,7 +85,7 @@
                 variableWidth: false,
                 vertical: false,
                 waitForAnimate: true,
-                minVertListHeight: 0 // Does nothing unless 'vertical' is true
+                adaptiveHeightMinVert: 0 // Does nothing unless 'vertical' is true
             };
 
             _.initials = {
@@ -248,19 +248,19 @@
 
     };
 
-	Slick.prototype.animateHeight = function(){
-		var _ = this;
-		if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
+    Slick.prototype.animateHeight = function(){
+        var _ = this;
+        if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
             _.$list.animate({height: targetHeight},_.options.speed);
         }
-	};
+    };
 
     Slick.prototype.animateSlide = function(targetLeft, callback) {
 
         var animProps = {}, _ = this;
 
-		_.animateHeight();
+        _.animateHeight();
 
         if (_.options.rtl === true && _.options.vertical === false) {
             targetLeft = -targetLeft;
@@ -1434,11 +1434,13 @@
             }
         } else {
 
-            var h = Math.max( _.$slides.eq(_.currentSlide).outerHeight(true), _.options.minVertListHeight );;
-            _.$list.stop().animate({ height: h }, 200, "linear");
-
-            // _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
-
+            if( _.options.adaptiveHeightMinVert ) {
+                var h = Math.max( _.$slides.eq(_.currentSlide).outerHeight(true), _.options.adaptiveHeightMinVert );;
+                _.$list.stop().animate({ height: h }, 200, "linear");
+            } else {
+                
+                _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+            }
 
             if (_.options.centerMode === true) {
                 _.$list.css({
@@ -1815,7 +1817,7 @@
             } else {
                 _.postSlide(animSlide);
             }
-			_.animateHeight();
+            _.animateHeight();
             return;
         }
 
