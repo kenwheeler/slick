@@ -818,7 +818,7 @@
             targetSlide;
 
         _.slideOffset = 0;
-        // verticalHeight = _.$slides.eq( slideIndex ).outerHeight();
+        
         verticalHeight = _.$slides.first().outerHeight();
 
         if (_.options.infinite === true) {
@@ -860,6 +860,8 @@
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
             // targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+
+            // Changed so vertical slides to get the height of each slide, rather than assuming every slide is the same height
 
             var i = 0, targetLeft = 0;
             for(i; i<slideIndex; i++) {
@@ -1446,6 +1448,7 @@
             }
         } else {
 
+            // If 'adaptiveHeightMinVert:true' here we animate the height of the container. Similar to 'adaptiveHeight', but works with 'vertical:true'.
             if( _.options.adaptiveHeightMinVert ) {
                 var h = Math.max( _.$slides.eq(_.currentSlide).outerHeight(true), _.options.adaptiveHeightMinVert );;
                 _.$list.stop().animate({ height: h }, 200, "linear");
