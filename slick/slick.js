@@ -85,6 +85,7 @@
                 variableWidth: false,
                 vertical: false,
                 waitForAnimate: true
+                minVertListHeight: 0 // Does nothing unless 'vertical' is true
             };
 
             _.initials = {
@@ -315,6 +316,8 @@
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
                 } else {
+
+                        // console.log( "targetLeft", targetLeft );
                     animProps[_.animType] = 'translate3d(0px,' + targetLeft + 'px, 0px)';
                 }
                 _.$slideTrack.css(animProps);
@@ -813,6 +816,7 @@
             targetSlide;
 
         _.slideOffset = 0;
+        // verticalHeight = _.$slides.eq( slideIndex ).outerHeight();
         verticalHeight = _.$slides.first().outerHeight();
 
         if (_.options.infinite === true) {
@@ -853,7 +857,12 @@
         if (_.options.vertical === false) {
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
-            targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+            // targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+
+            var i = 0, targetLeft = 0;
+            for(i; i<slideIndex; i++) {
+                targetLeft -= _.$slides.eq(i).outerHeight();
+            }
         }
 
         if (_.options.variableWidth === true) {
@@ -1424,7 +1433,13 @@
                 });
             }
         } else {
-            _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+
+            var h = Math.max( _.$slides.eq(_.currentSlide).outerHeight(true), _.options.minVertListHeight );;
+            _.$list.stop().animate({ height: h }, 200, "linear");
+
+            // _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+
+
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
@@ -1811,7 +1826,6 @@
         } else {
             _.postSlide(animSlide);
         }
-
     };
 
     Slick.prototype.startLoad = function() {
