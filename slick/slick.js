@@ -719,7 +719,7 @@
 
     };
 
-    Slick.prototype.fadeSlide = function(oldSlide, slideIndex, callback) {
+    Slick.prototype.fadeSlide = function(slideIndex, callback) {
 
         var _ = this;
 
@@ -733,29 +733,19 @@
                 opacity: 1
             }, _.options.speed, _.options.easing, callback);
 
-            _.$slides.eq(oldSlide).animate({
-                opacity: 0
-            }, _.options.speed, _.options.easing);
-
         } else {
 
             _.applyTransition(slideIndex);
-            _.applyTransition(oldSlide);
 
             _.$slides.eq(slideIndex).css({
                 opacity: 1,
                 zIndex: 1000
             });
 
-            _.$slides.eq(oldSlide).css({
-                opacity: 0
-            });
-
             if (callback) {
                 setTimeout(function() {
 
                     _.disableTransition(slideIndex);
-                    _.disableTransition(oldSlide);
 
                     callback.call();
                 }, _.options.speed);
@@ -1804,7 +1794,7 @@
 
         if (_.options.fade === true) {
             if(dontAnimate!==true) {
-                _.fadeSlide(oldSlide,animSlide, function() {
+                _.fadeSlide(animSlide, function() {
                     _.postSlide(animSlide);
                 });
             } else {
