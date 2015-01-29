@@ -142,7 +142,7 @@ Methods are called on slick instances through the slick method itself in version
 
 ```javascript
 // Add a slide
-$('.your-element').slick('slickAdd',"&lt;div&gt;&lt;/div&gt;");
+$('.your-element').slick('slickAdd',"<div></div>");
 
 // Get the current slide
 var currentSlide = $('.your-element').slick('slickCurrentSlide');
