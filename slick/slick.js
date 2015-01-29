@@ -1454,7 +1454,7 @@
             var trackWidth = 0;
             _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
             _.$slideTrack.children('.slick-slide').each(function(){
-                trackWidth += Math.ceil($(this).outerWidth(true));
+                trackWidth += _.listWidth;
             });
             _.$slideTrack.width(Math.ceil(trackWidth) + 1);
         } else {
