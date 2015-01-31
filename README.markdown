@@ -105,7 +105,7 @@ waitForAnimate | boolean | true | Ignores requests to advance the slide while an
 
 ### Events
 
-In slick 1.4, callback methods have been deprecated and replaced with events. Use them as shown below:
+In slick 1.4, callback methods have been deprecated and replaced with events. Use them before the initialization of slick as shown below:
 
 ```javascript
 // On swipe event
