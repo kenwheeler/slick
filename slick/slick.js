@@ -194,7 +194,7 @@
 
             _.init();
 
-            _.checkResponsive();
+            _.checkResponsive(true);
 
         }
 
@@ -518,7 +518,7 @@
 
     };
 
-    Slick.prototype.checkResponsive = function() {
+    Slick.prototype.checkResponsive = function(initial) {
 
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth;
@@ -562,6 +562,8 @@
                             _.options = $.extend({}, _.originalSettings,
                                 _.breakpointSettings[
                                     targetBreakpoint]);
+                            if(initial === true)
+                                _.currentSlide = _.options.initialSlide;
                             _.refresh();
                         }
                     }
@@ -573,6 +575,8 @@
                         _.options = $.extend({}, _.originalSettings,
                             _.breakpointSettings[
                                 targetBreakpoint]);
+                        if(initial === true)
+                            _.currentSlide = _.options.initialSlide;
                         _.refresh();
                     }
                 }
@@ -580,6 +584,8 @@
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
                     _.options = _.originalSettings;
+                    if(initial === true)
+                        _.currentSlide = _.options.initialSlide;
                     _.refresh();
                 }
             }
