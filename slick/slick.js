@@ -1069,7 +1069,7 @@
         }
 
         if(_.options.focusOnSelect === true) {
-            $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
+            $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
         $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
@@ -1348,7 +1348,7 @@
         _.initDotEvents();
 
         if(_.options.focusOnSelect === true) {
-            $(_.options.slide, _.$slideTrack).on('click.slick', _.selectHandler);
+            $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
         _.setSlideClasses(0);
