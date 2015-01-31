@@ -247,19 +247,19 @@
 
     };
 
-	Slick.prototype.animateHeight = function(){
-		var _ = this;
-		if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
+    Slick.prototype.animateHeight = function(){
+        var _ = this;
+        if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
             _.$list.animate({height: targetHeight},_.options.speed);
         }
-	};
+    };
 
     Slick.prototype.animateSlide = function(targetLeft, callback) {
 
         var animProps = {}, _ = this;
 
-		_.animateHeight();
+        _.animateHeight();
 
         if (_.options.rtl === true && _.options.vertical === false) {
             targetLeft = -targetLeft;
@@ -492,7 +492,7 @@
             '<div class="slick-list"/>').parent();
         _.$slideTrack.css('opacity', 0);
 
-        if (_.options.centerMode === true) {
+        if (_.options.centerMode === true || _.options.swipeToSlide === true) {
             _.options.slidesToScroll = 1;
         }
 
@@ -897,13 +897,16 @@
 
     Slick.prototype.getNavigableIndexes = function() {
 
-        var _ = this;
+        var _ = this, breakPoint = 0, counter = 0, indexes = [], max;
 
-        var breakPoint = 0;
-        var counter = 0;
-        var indexes = [];
-        var max = _.options.infinite === false ? _.slideCount - _.options.slidesToShow + 1 : _.slideCount;
-        if (_.options.centerMode === true) max = _.slideCount;
+        if(_.options.infinite === false) {
+            max = _.slideCount - _.options.slidesToShow + 1;
+            if (_.options.centerMode === true) max = _.slideCount;
+        } else {
+            breakPoint = _.slideCount * -1;
+            counter = _.slideCount * -1;
+            max = _.slideCount * 2;
+        }
 
         while (breakPoint < max){
             indexes.push(breakPoint);
@@ -1806,7 +1809,7 @@
             } else {
                 _.postSlide(animSlide);
             }
-			_.animateHeight();
+            _.animateHeight();
             return;
         }
 
