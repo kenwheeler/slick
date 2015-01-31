@@ -1591,7 +1591,7 @@
         var _ = this,
             centerOffset, allSlides, indexOffset, remainder;
 
-        _.$slider.find('.slick-slide').removeClass('slick-active').removeClass('slick-center');
+        _.$slider.find('.slick-slide').removeClass('slick-active').removeClass('slick-center').removeClass('slick-center-neighbor');
         allSlides = _.$slider.find('.slick-slide');
 
         if (_.options.centerMode === true) {
@@ -1602,15 +1602,22 @@
 
                 if (index >= centerOffset && index <= (_.slideCount - 1) - centerOffset) {
                     _.$slides.slice(index - centerOffset, index + centerOffset + 1).addClass('slick-active');
+					
+                    _.$slides.slice(index - centerOffset + 1, index + centerOffset).addClass('slick-center-neighbor');
                 } else {
                     indexOffset = _.options.slidesToShow + index;
-                    allSlides.slice(indexOffset - centerOffset + 1, indexOffset + centerOffset + 2).addClass('slick-active');
+                    allSlides.slice(indexOffset - centerOffset + 1, indexOffset + centerOffset + 2).addClass('slick-active')
+                    allSlides.slice(indexOffset - centerOffset + 2, indexOffset + centerOffset + 1).addClass('slick-center-neighbor');
                 }
 
                 if (index === 0) {
                     allSlides.eq(allSlides.length - 1 - _.options.slidesToShow).addClass('slick-center');
+                    allSlides.eq(allSlides.length - 2 - _.options.slidesToShow).addClass('slick-center-neighbor');
+                    allSlides.eq(allSlides.length - 0 - _.options.slidesToShow).addClass('slick-center-neighbor');
                 } else if (index === _.slideCount - 1) {
                     allSlides.eq(_.options.slidesToShow).addClass('slick-center');
+                    allSlides.eq(_.options.slidesToShow - 1).addClass('slick-center-neighbor');
+                    allSlides.eq(_.options.slidesToShow + 1).addClass('slick-center-neighbor');
                 }
 
             }
