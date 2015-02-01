@@ -84,7 +84,8 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
-                waitForAnimate: true
+                waitForAnimate: true,
+                adaptiveHeightMinVert: 0 // Does nothing unless 'vertical' is true
             };
 
             _.initials = {
@@ -247,19 +248,19 @@
 
     };
 
-	Slick.prototype.animateHeight = function(){
-		var _ = this;
-		if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
+    Slick.prototype.animateHeight = function(){
+        var _ = this;
+        if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
             _.$list.animate({height: targetHeight},_.options.speed);
         }
-	};
+    };
 
     Slick.prototype.animateSlide = function(targetLeft, callback) {
 
         var animProps = {}, _ = this;
 
-		_.animateHeight();
+        _.animateHeight();
 
         if (_.options.rtl === true && _.options.vertical === false) {
             targetLeft = -targetLeft;
@@ -315,6 +316,8 @@
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
                 } else {
+
+                        // console.log( "targetLeft", targetLeft );
                     animProps[_.animType] = 'translate3d(0px,' + targetLeft + 'px, 0px)';
                 }
                 _.$slideTrack.css(animProps);
@@ -632,7 +635,8 @@
 
         var _ = this, navigables, prevNavigable;
 
-        navigables = _.getNavigableIndexes();
+        navigables = _.getNavigableIndexes( index < 0 );
+
         prevNavigable = 0;
         if(index > navigables[navigables.length -1]){
             index = navigables[navigables.length -1];
@@ -645,6 +649,7 @@
                 prevNavigable = navigables[n];
             }
         }
+
 
         return index;
     };
@@ -813,6 +818,7 @@
             targetSlide;
 
         _.slideOffset = 0;
+        
         verticalHeight = _.$slides.first().outerHeight();
 
         if (_.options.infinite === true) {
@@ -853,7 +859,14 @@
         if (_.options.vertical === false) {
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
-            targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+            // targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+
+            // Changed so vertical slides to get the height of each slide, rather than assuming every slide is the same height
+
+            var i = 0, targetLeft = 0;
+            for(i; i<slideIndex; i++) {
+                targetLeft -= _.$slides.eq(i).outerHeight();
+            }
         }
 
         if (_.options.variableWidth === true) {
@@ -889,7 +902,7 @@
 
     };
 
-    Slick.prototype.getNavigableIndexes = function() {
+    Slick.prototype.getNavigableIndexes = function( isReversed ) {
 
         var _ = this;
 
@@ -899,10 +912,20 @@
         var max = _.options.infinite === false ? _.slideCount - _.options.slidesToShow + 1 : _.slideCount;
         if (_.options.centerMode === true) max = _.slideCount;
 
-        while (breakPoint < max){
+        // while (breakPoint < max){ 
+        // changed to '<=' because could reach last slide when odd number of slides and when set to 'swipeToSlide:true'
+        while (breakPoint <= max){
             indexes.push(breakPoint);
             breakPoint = counter + _.options.slidesToScroll;
             counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll  : _.options.slidesToShow;
+        }
+
+        // 'swipeToSlide:true' was breaking in reverse, so reversed slide logic
+        if( isReversed ) {
+            indexes = indexes.reverse();
+            $.each(indexes, function(i, val) {
+                indexes[i] = val * -1;
+            });
         }
 
         return indexes;
@@ -1428,7 +1451,16 @@
                 });
             }
         } else {
-            _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+
+            // If 'adaptiveHeightMinVert:true' here we animate the height of the container. Similar to 'adaptiveHeight', but works with 'vertical:true'.
+            if( _.options.adaptiveHeightMinVert ) {
+                var h = Math.max( _.$slides.eq(_.currentSlide).outerHeight(true), _.options.adaptiveHeightMinVert );;
+                _.$list.stop().animate({ height: h }, 200, "linear");
+            } else {
+                
+                _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+            }
+
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
@@ -1804,7 +1836,7 @@
             } else {
                 _.postSlide(animSlide);
             }
-			_.animateHeight();
+            _.animateHeight();
             return;
         }
 
@@ -1815,7 +1847,6 @@
         } else {
             _.postSlide(animSlide);
         }
-
     };
 
     Slick.prototype.startLoad = function() {
