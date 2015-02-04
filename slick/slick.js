@@ -369,6 +369,8 @@
         if (_.slideCount > _.options.slidesToShow && _.paused !== true) {
             _.autoPlayTimer = setInterval(_.autoPlayIterator,
                 _.options.autoplaySpeed);
+
+            _.$slider.trigger("play", [ _ , _.currentSlide ]);
         }
 
     };
@@ -378,6 +380,8 @@
         var _ = this;
         if (_.autoPlayTimer) {
             clearInterval(_.autoPlayTimer);
+
+            _.$slider.trigger("pause", [ _ , _.currentSlide ]);
         }
 
     };
@@ -1276,7 +1280,7 @@
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                 targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
-                
+
                 if( _.options.adaptiveHeight === true ) {
                     _.setPosition();
                 }
