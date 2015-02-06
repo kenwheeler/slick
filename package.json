@@ -1,6 +1,6 @@
 {
     "name": "slick-carousel",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "the last carousel you'll ever need",
     "main": "slick/slick.js",
     "repository": {
