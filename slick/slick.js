@@ -109,11 +109,10 @@
                 slideOffset: 0,
                 swipeLeft: null,
                 $list: null,
-                touchObject: {},
                 transformsEnabled: false
             };
 
-            $.extend(_, _.initials);
+            _.setInitialValues();
 
             _.activeBreakpoint = null;
             _.animType = null;
@@ -981,6 +980,12 @@
 
     };
 
+    Slick.prototype.setInitialValues = function() {
+      var _ = this;
+      $.extend(_, _.initials);
+      _.touchObject = {};
+    }
+
     Slick.prototype.initArrowEvents = function() {
 
         var _ = this;
@@ -1305,7 +1310,7 @@
 
         _.destroy();
 
-        $.extend(_, _.initials);
+        _.setInitialValues();
 
         _.init();
 
