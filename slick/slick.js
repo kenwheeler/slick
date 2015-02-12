@@ -1747,6 +1747,10 @@
 
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
+        if(_.options.infinite === false && (targetSlide<=0 || targetSlide >=  _.getDotCount()* _.options.slidesToScroll)){
+             _.$slider.trigger("edge", [  _, _.swipeDirection()]);
+        }
+        
         if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || index > _.getDotCount() * _.options.slidesToScroll)) {
             if(_.options.fade === false) {
                 targetSlide = _.currentSlide;
