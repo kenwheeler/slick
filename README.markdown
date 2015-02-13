@@ -36,6 +36,9 @@ bower install --save slick.js
 
 //NPM
 npm install slick-carousel
+
+//Composer
+composer require kenwheeler/slick-carousel
 ````
 
 #### Contributing
