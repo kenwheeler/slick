@@ -1315,7 +1315,9 @@
                 index: currentSlide
             }
         }, true);
-
+          
+        _.touchObject = {};
+          
     };
 
     Slick.prototype.reinit = function() {
