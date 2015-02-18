@@ -904,7 +904,6 @@
             if (_.options.centerMode === true) max = _.slideCount;
         } else {
             breakPoint = _.slideCount * -1;
-            counter = _.slideCount * -1;
             max = _.slideCount * 2;
         }
 
@@ -1285,7 +1284,7 @@
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                 targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
-                
+
                 if( _.options.adaptiveHeight === true ) {
                     _.setPosition();
                 }
