@@ -166,9 +166,6 @@
             if (typeof document.mozHidden !== "undefined") {
                 _.hidden = "mozHidden";
                 _.visibilityChange = "mozvisibilitychange";
-            } else if (typeof document.msHidden !== "undefined") {
-                _.hidden = "msHidden";
-                _.visibilityChange = "msvisibilitychange";
             } else if (typeof document.webkitHidden !== "undefined") {
                 _.hidden = "webkitHidden";
                 _.visibilityChange = "webkitvisibilitychange";
