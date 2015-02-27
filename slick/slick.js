@@ -1043,26 +1043,24 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-
-            $(document).on(_.visibilityChange, function(){
+        $(document).on(_.visibilityChange, function(){
+            if (_.options.autoplay === true) {
                 _.visibility();
-            });
-
-            if( _.options.pauseOnHover === true ) {
-
-                _.$list.on('mouseenter.slick', function(){
-                    _.paused = true;
-                    _.autoPlayClear();
-                });
-                _.$list.on('mouseleave.slick', function(){
-                    _.paused = false;
-                    _.autoPlay();
-                });
-
             }
+        });
 
-        }
+        _.$list.on('mouseenter.slick', function(){
+            if (_.options.autoplay === true && _.options.pauseOnHover === true) {
+                _.paused = true;
+                _.autoPlayClear();
+            }
+        });
+        _.$list.on('mouseleave.slick', function(){
+            if (_.options.autoplay === true && _.options.pauseOnHover === true) {
+                _.paused = false;
+                _.autoPlay();
+            }
+        });
 
         if(_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
