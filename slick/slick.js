@@ -251,7 +251,9 @@
         var _ = this;
         if(_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
-            _.$list.animate({height: targetHeight},_.options.speed);
+            if (targetHeight > 1) {
+                _.$list.animate({height: targetHeight},_.options.speed);
+            }
         }
     };
 
@@ -1149,7 +1151,11 @@
                     imageSource = $(this).attr('data-lazy');
 
                 image
-                  .load(function() { image.animate({ opacity: 1 }, 200); })
+                  .load(function() {
+                    _.checkResponsive();
+                    _.setPosition();
+                    image.animate({ opacity: 1 }, 200);
+                  })
                   .css({ opacity: 0 })
                   .attr('src', imageSource)
                   .removeAttr('data-lazy')
