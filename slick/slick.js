@@ -1699,7 +1699,8 @@
     Slick.prototype.selectHandler = function(event) {
 
         var _ = this;
-        var index = parseInt($(event.target).parents('.slick-slide').attr("data-slick-index"));
+        var slide = $(event.target).parents('.slick-slide');
+        var index = $(event.target).parents('.slick-track').children().index(slide);
         if(!index) index = 0;
 
         if(_.slideCount <= _.options.slidesToShow){
