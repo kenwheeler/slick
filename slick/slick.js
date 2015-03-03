@@ -336,6 +336,13 @@
 
     Slick.prototype.asNavFor = function(index) {
         var _ = this, asNavFor = _.options.asNavFor !== null ? $(_.options.asNavFor).slick('getSlick') : null;
+
+        if (index < 0) {
+            index = 0;
+        } else if (index > _.$slides.length - 1) {
+            index = _.$slides.length - 1;
+        }
+        
         if(asNavFor !== null) asNavFor.slideHandler(index, true);
     };
 
