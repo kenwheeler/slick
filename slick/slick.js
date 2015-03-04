@@ -65,6 +65,7 @@
                 fade: false,
                 focusOnSelect: false,
                 infinite: true,
+                infiniteAutoplay: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
                 mobileFirst: false,
@@ -390,9 +391,20 @@
 
             if (_.direction === 1) {
 
-                if ((_.currentSlide + 1) === _.slideCount -
-                    1) {
-                    _.direction = 0;
+                if ((_.currentSlide + 1) === _.slideCount - 1) {
+
+                    if (_.options.infiniteAutoplay === true) {
+
+                        _.direction = 0;
+
+                    } else {
+
+                        if (_.autoPlayTimer) {
+
+                            clearInterval(_.autoPlayTimer);
+
+                        } 
+                    }
                 }
 
                 _.slideHandler(_.currentSlide + _.options.slidesToScroll);
@@ -401,7 +413,18 @@
 
                 if ((_.currentSlide - 1 === 0)) {
 
-                    _.direction = 1;
+                    if (_.options.infiniteAutoplay === true) {
+
+                        _.direction = 1;
+
+                    } else {
+                        
+                        if (_.autoPlayTimer) {
+
+                            clearInterval(_.autoPlayTimer);
+
+                        } 
+                    }
 
                 }
 
