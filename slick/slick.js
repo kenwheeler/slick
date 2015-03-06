@@ -904,7 +904,6 @@
             if (_.options.centerMode === true) max = _.slideCount;
         } else {
             breakPoint = _.slideCount * -1;
-            var div = _.slideCount % _.options.slidesToScroll;
             if (((_.slideCount % _.options.slidesToScroll) > 0) && (((_.slideCount % 2) == 1) || ((_.options.slidesToScroll % 2) == 1))) {
                 counter = (_.slideCount * -1) -1;
             } else {
