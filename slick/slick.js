@@ -1006,19 +1006,21 @@
             }, _.changeSlide);
         }
 
-        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
-            $('li', _.$dots)
-                .on('mouseenter.slick', function(){
+        $('li', _.$dots)
+            .on('mouseenter.slick', function(){
+                if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
                     _.paused = true;
                     _.autoPlayClear();
-                })
-                .on('mouseleave.slick', function(){
+                }
+            })
+            .on('mouseleave.slick', function(){
+                if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
                     _.paused = false;
                     _.autoPlay();
-                });
+                }
+            });
         }
 
-    };
 
     Slick.prototype.initializeEvents = function() {
 
@@ -1283,7 +1285,7 @@
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                 targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
-                
+
                 if( _.options.adaptiveHeight === true ) {
                     _.setPosition();
                 }
