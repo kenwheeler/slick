@@ -123,6 +123,7 @@
             _.cssTransitions = false;
             _.hidden = "hidden";
             _.paused = false;
+            _.pauseRequested = false;
             _.positionProp = null;
             _.respondTo = null;
             _.shouldClick = true;
@@ -366,7 +367,7 @@
             clearInterval(_.autoPlayTimer);
         }
 
-        if (_.slideCount > _.options.slidesToShow && _.paused !== true) {
+        if (_.slideCount > _.options.slidesToShow && _.paused !== true && _.pauseRequested !== true) {
             _.autoPlayTimer = setInterval(_.autoPlayIterator,
                 _.options.autoplaySpeed);
         }
@@ -1057,8 +1058,10 @@
         });
         _.$list.on('mouseleave.slick', function(){
             if (_.options.autoplay === true && _.options.pauseOnHover === true) {
-                _.paused = false;
-                _.autoPlay();
+                if(!_.pauseRequested){
+                    _.paused = false;
+                    _.autoPlay();
+                }
             }
         });
 
@@ -1224,21 +1227,16 @@
     };
 
     Slick.prototype.pause = Slick.prototype.slickPause = function() {
-
         var _ = this;
-
         _.autoPlayClear();
-        _.paused = true;
-
+        _.pauseRequested = true;
     };
 
     Slick.prototype.play = Slick.prototype.slickPlay = function() {
-
         var _ = this;
-
+        _.pauseRequested = false;
         _.paused = false;
         _.autoPlay();
-
     };
 
     Slick.prototype.postSlide = function(index) {
@@ -1283,7 +1281,7 @@
             targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
                 targetImage.removeAttr('data-lazy');
                 _.progressiveLazyLoad();
-                
+
                 if( _.options.adaptiveHeight === true ) {
                     _.setPosition();
                 }
