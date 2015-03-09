@@ -1,0 +1,93 @@
+body {
+	background: #3498db;
+}
+
+h1 {
+    font-size: 30px;
+    color: #fff;
+    margin-top: 28px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+h3 {
+	background: #fff;
+	color: #3498db;
+	font-size: 36px;
+	line-height: 100px;
+	margin: 10px;
+	padding: 2%;
+	position: relative;
+	text-align: center;
+}
+
+p {
+	font-size: 16px;
+	line-height: 1.5;
+	margin-bottom: 40px;
+	text-align: center;
+	color: #fff;
+	font-weight: 700;
+}
+
+.slider {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto 40px;
+}
+
+.slick-prev:before, 
+.slick-next:before {
+    color: #fff;
+}
+
+.center-mode h3 {
+	opacity: 0.8;
+	transition: all 300ms ease;
+}
+
+.center-mode .slick-center h3 {
+	opacity: 1;
+	color: #e67e22;
+	transform: scale(1.08);
+	-webkit-transform: scale(1.08);
+	-o-transform: scale(1.08);
+	-ms-transform: scale(1.08);
+	-moz-transform: scale(1.08);
+}
+
+.image {
+	padding: 10px;
+}
+
+.slick-slide img {
+	border: 5px solid #fff;
+	display: block;
+	width: 100%;
+}
+
+.buttons {
+	padding: 0 20px 20px;
+	margin: 0 auto 10px;
+	width: 100%;
+	max-width: 600px;
+}
+
+.buttons .button {
+	background: #fff;
+	color: #3498db;
+	float: left;
+	margin: 5px;
+	display: block;
+	font-size: 16px;
+	cursor: pointer;
+	padding: 20px;
+	text-align: center;
+	width: 48%;
+	border: 0 none;
+}
+
+.buttons .js-filter {
+	float: none;
+	margin: 5px auto;
+}

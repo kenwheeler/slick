@@ -1,0 +1,38 @@
+<!doctype html>
+	<html lang="en">
+		<head>
+			<link href="../slick/slick.css" rel="stylesheet" />
+			<link href="../slick/slick-theme.css" rel="stylesheet" />
+			<link href="style.css" rel="stylesheet" />
+			
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+			<script type="text/javascript" src="../slick/slick.js"></script>
+			<meta charset="UTF-8">
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('.autoplay').slick({
+						dots: true,
+						infinite: true,
+						speed: 500,
+						slidesToShow: 3,
+						slidesToScroll: 1,
+						autoplay: true,
+						autoplaySpeed: 2000
+					});
+				});
+			</script>
+		</head>
+		<body>
+			<h1>Autoplay</h1>
+			
+			<section class="slider autoplay">
+			    <div><h3>1</h3></div>
+			    <div><h3>2</h3></div>
+			    <div><h3>3</h3></div>
+			    <div><h3>4</h3></div>
+			    <div><h3>5</h3></div>
+			    <div><h3>6</h3></div>
+			</section>
+		</body>
+	</html>
