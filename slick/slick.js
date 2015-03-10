@@ -744,22 +744,24 @@
             _.$nextArrow.remove();
         }
 
-        _.$slides.removeClass('slick-slide slick-active slick-center slick-visible')
-            .attr('aria-hidden', 'true')
-            .removeAttr('data-slick-index')
-            .css({
-                position: '',
-                left: '',
-                top: '',
-                zIndex: '',
-                opacity: '',
-                width: ''
-            });
+        if (_.$slides) {
+            _.$slides.removeClass('slick-slide slick-active slick-center slick-visible')
+                .attr('aria-hidden', 'true')
+                .removeAttr('data-slick-index')
+                .css({
+                    position: '',
+                    left: '',
+                    top: '',
+                    zIndex: '',
+                    opacity: '',
+                    width: ''
+                });
+
+            _.$slider.html(_.$slides);
+        }
 
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
-
-        _.$slider.html(_.$slides);
 
     };
 
@@ -1514,12 +1516,7 @@
             _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
 
         } else if (_.options.variableWidth === true) {
-            var trackWidth = 0;
-            _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
-            _.$slideTrack.children('.slick-slide').each(function() {
-                trackWidth += _.listWidth;
-            });
-            _.$slideTrack.width(Math.ceil(trackWidth) + 1);
+            _.$slideTrack.width(5000 * _.slideCount);
         } else {
             _.slideWidth = Math.ceil(_.listWidth);
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
