@@ -1070,8 +1070,20 @@
                 });
 
             }
+        });
 
-        }
+        _.$list.on('mouseenter.slick', function(){
+            if (_.options.autoplay === true && _.options.pauseOnHover === true) {
+                _.paused = true;
+                _.autoPlayClear();
+            }
+        });
+        _.$list.on('mouseleave.slick', function(){
+            if (_.options.autoplay === true && _.options.pauseOnHover === true) {
+                _.paused = false;
+                _.autoPlay();
+            }
+        });
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);

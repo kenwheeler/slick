@@ -2,7 +2,7 @@
 
 ### Test case required
 
-**All bug reports and problem issues require a jsFiddle**. [Please fork this JSFiddle as a baseline](http://jsfiddle.net/L0hntr35/).
+**All bug reports and problem issues require a jsFiddle**. [Please fork this JSFiddle as a baseline](http://jsfiddle.net/nemh9nzk/).
 
 + A test case clearly demonstrates the bug or issue.
 + It contains the bare minimum HTML, CSS, and JavaScript required to demonstrate the bug.
