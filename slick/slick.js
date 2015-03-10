@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.4.1
+ Version: 1.5.0
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -659,6 +659,57 @@
         return index;
     };
 
+    Slick.prototype.cleanUpEvents = function() {
+
+        var _ = this;
+
+        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
+            $('li', _.$dots).off('click.slick', _.changeSlide);
+        }
+
+        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
+            $('li', _.$dots)
+                .off('mouseenter.slick', _.setPaused.bind(_, true))
+                .off('mouseleave.slick', _.setPaused.bind(_, false));
+        }
+
+        if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
+            _.$prevArrow && _.$prevArrow.off('click.slick', _.changeSlide);
+            _.$nextArrow && _.$nextArrow.off('click.slick', _.changeSlide);
+        }
+
+        _.$list.off('touchstart.slick mousedown.slick', _.swipeHandler);
+        _.$list.off('touchmove.slick mousemove.slick', _.swipeHandler);
+        _.$list.off('touchend.slick mouseup.slick', _.swipeHandler);
+        _.$list.off('touchcancel.slick mouseleave.slick', _.swipeHandler);
+
+        _.$list.off('click.slick', _.clickHandler);
+
+        if (_.options.autoplay === true) {
+            $(document).off(_.visibilityChange, _.visibility);
+        }
+
+        _.$list.off('mouseenter.slick', _.setPaused.bind(_, true));
+        _.$list.off('mouseleave.slick', _.setPaused.bind(_, false));
+
+        if (_.options.accessibility === true) {
+            _.$list.off('keydown.slick', _.keyHandler);
+        }
+
+        if (_.options.focusOnSelect === true) {
+            $(_.$slideTrack).children().off('click.slick', _.selectHandler);
+        }
+
+        $(window).off('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange);
+
+        $(window).off('resize.slick.slick-' + _.instanceUid, _.resize);
+
+        $('[draggable!=true]', _.$slideTrack).off('dragstart', _.preventDefault);
+
+        $(window).off('load.slick.slick-' + _.instanceUid, _.setPosition);
+        $(document).off('ready.slick.slick-' + _.instanceUid, _.setPosition);
+    };
+
     Slick.prototype.clickHandler = function(event) {
 
         var _ = this;
@@ -679,7 +730,10 @@
 
         _.touchObject = {};
 
+        _.cleanUpEvents();
+
         $('.slick-cloned', _.$slider).remove();
+
         if (_.$dots) {
             _.$dots.remove();
         }
@@ -689,7 +743,6 @@
         if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
             _.$nextArrow.remove();
         }
-
 
         _.$slides.removeClass('slick-slide slick-active slick-center slick-visible')
             .attr('aria-hidden', 'true')
@@ -705,10 +758,6 @@
 
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
-
-        _.$list.off('.slick');
-        $(window).off('.slick-' + _.instanceUid);
-        $(document).off('.slick-' + _.instanceUid);
 
         _.$slider.html(_.$slides);
 
@@ -1047,7 +1096,7 @@
         _.$list.on('click.slick', _.clickHandler);
 
         if (_.options.autoplay === true) {
-            $(document).on(_.visibilityChange, _.visibility);
+            $(document).on(_.visibilityChange, _.visibility.bind(_));
         }
 
         _.$list.on('mouseenter.slick', _.setPaused.bind(_, true));
@@ -1061,9 +1110,9 @@
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
-        $(window).on('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange);
+        $(window).on('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange.bind(_));
 
-        $(window).on('resize.slick.slick-' + _.instanceUid, _.resize);
+        $(window).on('resize.slick.slick-' + _.instanceUid, _.resize.bind(_));
 
         $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
@@ -1209,8 +1258,12 @@
     };
 
     Slick.prototype.orientationChange = function() {
+
+        var _ = this;
+
         _.checkResponsive();
         _.setPosition();
+
     };
 
     Slick.prototype.pause = Slick.prototype.slickPause = function() {
@@ -1356,6 +1409,9 @@
     };
 
     Slick.prototype.resize = function() {
+
+        var _ = this;
+
         if ($(window).width() !== _.windowWidth) {
             clearTimeout(_.windowDelay);
             _.windowDelay = window.setTimeout(function() {
