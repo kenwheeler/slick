@@ -22,7 +22,7 @@ Please use this as an area to discuss Slick and any issues you may have.
 
 ## Feature Requests
 
-If you would like to request or propose a feature, please do so in the the Slick subreddit - [reddit.com/r/slickcarousel](http://www.reddit.com/r/slickcarousel/). 
+If you would like to request or propose a feature, please do so in the the Slick subreddit - [reddit.com/r/slickcarousel](http://www.reddit.com/r/slickcarousel/).
 
 ## Pull requests
 

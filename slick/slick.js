@@ -1017,14 +1017,8 @@
 
         if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
             $('li', _.$dots)
-                .on('mouseenter.slick', function() {
-                    _.paused = true;
-                    _.autoPlayClear();
-                })
-                .on('mouseleave.slick', function() {
-                    _.paused = false;
-                    _.autoPlay();
-                });
+                .on('mouseenter.slick', _.setPaused.bind(_, true))
+                .on('mouseleave.slick', _.setPaused.bind(_, false));
         }
 
     };
@@ -1053,37 +1047,11 @@
         _.$list.on('click.slick', _.clickHandler);
 
         if (_.options.autoplay === true) {
+            $(document).on(_.visibilityChange, _.visibility);
+        }
 
-            $(document).on(_.visibilityChange, function() {
-                _.visibility();
-            });
-
-            if (_.options.pauseOnHover === true) {
-
-                _.$list.on('mouseenter.slick', function() {
-                    _.paused = true;
-                    _.autoPlayClear();
-                });
-                _.$list.on('mouseleave.slick', function() {
-                    _.paused = false;
-                    _.autoPlay();
-                });
-
-            }
-        });
-
-        _.$list.on('mouseenter.slick', function(){
-            if (_.options.autoplay === true && _.options.pauseOnHover === true) {
-                _.paused = true;
-                _.autoPlayClear();
-            }
-        });
-        _.$list.on('mouseleave.slick', function(){
-            if (_.options.autoplay === true && _.options.pauseOnHover === true) {
-                _.paused = false;
-                _.autoPlay();
-            }
-        });
+        _.$list.on('mouseenter.slick', _.setPaused.bind(_, true));
+        _.$list.on('mouseleave.slick', _.setPaused.bind(_, false));
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
@@ -1093,25 +1061,11 @@
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
-        $(window).on('orientationchange.slick.slick-' + _.instanceUid, function() {
-            _.checkResponsive();
-            _.setPosition();
-        });
+        $(window).on('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange);
 
-        $(window).on('resize.slick.slick-' + _.instanceUid, function() {
-            if ($(window).width() !== _.windowWidth) {
-                clearTimeout(_.windowDelay);
-                _.windowDelay = window.setTimeout(function() {
-                    _.windowWidth = $(window).width();
-                    _.checkResponsive();
-                    _.setPosition();
-                }, 50);
-            }
-        });
+        $(window).on('resize.slick.slick-' + _.instanceUid, _.resize);
 
-        $('*[draggable!=true]', _.$slideTrack).on('dragstart', function(e) {
-            e.preventDefault();
-        });
+        $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
         $(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
         $(document).on('ready.slick.slick-' + _.instanceUid, _.setPosition);
@@ -1254,6 +1208,11 @@
 
     };
 
+    Slick.prototype.orientationChange = function() {
+        _.checkResponsive();
+        _.setPosition();
+    };
+
     Slick.prototype.pause = Slick.prototype.slickPause = function() {
 
         var _ = this;
@@ -1300,6 +1259,10 @@
             }
         });
 
+    };
+
+    Slick.prototype.preventDefault = function(e) {
+        e.preventDefault();
     };
 
     Slick.prototype.progressiveLazyLoad = function() {
@@ -1390,6 +1353,17 @@
 
         _.$slider.trigger('reInit', [_]);
 
+    };
+
+    Slick.prototype.resize = function() {
+        if ($(window).width() !== _.windowWidth) {
+            clearTimeout(_.windowDelay);
+            _.windowDelay = window.setTimeout(function() {
+                _.windowWidth = $(window).width();
+                _.checkResponsive();
+                _.setPosition();
+            }, 50);
+        }
     };
 
     Slick.prototype.removeSlide = Slick.prototype.slickRemove = function(index, removeBefore, removeAll) {
@@ -1726,6 +1700,16 @@
 
         }
 
+    };
+
+    Slick.prototype.setPaused = function(paused) {
+
+        var _ = this;
+
+        if (_.options.autoplay === true && _.options.pauseOnHover === true) {
+            _.paused = paused;
+            _.autoPlayClear();
+        }
     };
 
     Slick.prototype.selectHandler = function(event) {
