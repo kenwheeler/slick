@@ -682,9 +682,7 @@
 
         _.$list.off('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-            $(document).off(_.visibilityChange, _.visibility);
-        }
+        $(document).off(_.visibilityChange, _.visibility);
 
         _.$list.off('mouseenter.slick', _.setPaused.bind(_, true));
         _.$list.off('mouseleave.slick', _.setPaused.bind(_, false));
@@ -1094,9 +1092,7 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-            $(document).on(_.visibilityChange, _.visibility.bind(_));
-        }
+        $(document).on(_.visibilityChange, _.visibility.bind(_));
 
         _.$list.on('mouseenter.slick', _.setPaused.bind(_, true));
         _.$list.on('mouseleave.slick', _.setPaused.bind(_, false));
@@ -2213,15 +2209,17 @@
     };
 
     Slick.prototype.visibility = function() {
-
+            
         var _ = this;
 
         if (document[_.hidden]) {
             _.paused = true;
             _.autoPlayClear();
         } else {
-            _.paused = false;
-            _.autoPlay();
+            if (_.options.autoplay === true) {
+                _.paused = false;
+                _.autoPlay();
+            }
         }
 
     };
