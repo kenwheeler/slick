@@ -2281,7 +2281,8 @@
 
     Slick.prototype.activateADA = function() {
         var _ = this,
-        _isSlideOnFocus = _.$slides.is(':focus') || _.$slides.find('*').is(':focus');
+        _isSlideOnFocus =_.$slider.find('*').is(':focus');
+        // _isSlideOnFocus = _.$slides.is(':focus') || _.$slides.find('*').is(':focus');
 
         _.$slideTrack.find('.slick-active').attr({
             'aria-hidden': 'false',
