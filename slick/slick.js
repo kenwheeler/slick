@@ -1038,7 +1038,10 @@
         }
 
         _.$slider.trigger('init', [_]);
-        _.initADA();
+        
+        if (_.options.accessibility === true) {
+            _.initADA();
+        };
 
     };
 
@@ -1307,8 +1310,9 @@
             _.autoPlay();
         }
 
-        _.initADA();
-
+        if (_.options.accessibility === true) {
+            _.initADA();
+        };
     };
 
     Slick.prototype.prev = Slick.prototype.slickPrev = function() {
