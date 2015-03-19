@@ -1,6 +1,8 @@
 slick
 -------
 
+[![Join the chat at https://gitter.im/kenwheeler/slick](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kenwheeler/slick?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [1]: <https://github.com/kenwheeler/slick>
 
 _the last carousel you'll ever need_
