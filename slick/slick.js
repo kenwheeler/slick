@@ -430,11 +430,11 @@
             _.$nextArrow = $(_.options.nextArrow);
 
             if (_.htmlExpr.test(_.options.prevArrow)) {
-                _.$prevArrow.appendTo(_.options.appendArrows);
+                _.$prevArrow.appendTo(_.$list);
             }
 
             if (_.htmlExpr.test(_.options.nextArrow)) {
-                _.$nextArrow.appendTo(_.options.appendArrows);
+                _.$nextArrow.appendTo(_.$list);
             }
 
             if (_.options.infinite !== true) {
