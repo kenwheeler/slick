@@ -122,12 +122,16 @@ $('.your-element').on('edge', function(event, slick, direction){
 // On before slide change
 $('.your-element').on('beforeChange', function(event, slick, currentSlide, nextSlide){
   console.log(nextSlide);
+
+  if(nextSlide === 2){
+    event.preventDefault();
+  }
 });
 ```
 
 Event | Params | Description
 ------ | -------- | -----------
-beforeChange | slick, currentSlide, nextSlide | Before slide change callback
+beforeChange | slick, currentSlide, nextSlide | Before slide change callback. Call `event.preventDefault()` to block the change from happening.
 afterChange | slick, currentSlide | After slide change callback
 edge | slick, direction | Fires when an edge is overscrolled in non-infinite mode.
 init | slick | When Slick initializes for the first time callback
