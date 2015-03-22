@@ -14,7 +14,7 @@ You must provide a clear and simple way to reproduce the issue with the provided
 
 ## Support
 
-If you are **having problems getting Slick to work**, or **can't figure something out**, this repository's issues section is **not the place to ask about it**.
+Although Slick is designed to be super easy to use, there's always things that can go wrong, especially when interacting with other plugins and complicated websites. If you are **having problems getting Slick to work**, or can't figure something out, **this repository**'s issues section **is not the place to ask about it**.  
 
 I have set up a subreddit for Slick discussion at [reddit.com/r/slickcarousel](http://www.reddit.com/r/slickcarousel/).  
 And a gitter chatroom here: [gitter.im/kenwheeler/slick](https://gitter.im/kenwheeler/slick)
