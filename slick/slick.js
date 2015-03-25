@@ -82,7 +82,8 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
-                waitForAnimate: true
+                waitForAnimate: true,
+                preventLink: false
             };
 
             _.initials = {
@@ -1094,6 +1095,11 @@
         _.$list.on('touchcancel.slick mouseleave.slick', {
             action: 'end'
         }, _.swipeHandler);
+        if(_.options.preventLink){
+	        _.$list.on('touchstart.slick click.slick', 'a', function(e){
+	        	e.preventDefault();
+	        });
+        }
 
         _.$list.on('click.slick', _.clickHandler);
 
@@ -1995,6 +2001,13 @@
             if (_.touchObject.startX !== _.touchObject.curX) {
                 _.slideHandler(_.currentSlide);
                 _.touchObject = {};
+            }else{
+            	if(event.type.indexOf('leave') < 0 && _.options.preventLink ){
+            	    var link = $(event.target).closest('a');
+                    if(link.length){
+                        window.location.href = link.get(0).href;
+                    }	
+            	}
             }
         }
 
