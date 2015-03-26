@@ -129,6 +129,10 @@ Event | Params | Description
 ------ | -------- | -----------
 beforeChange | slick, currentSlide, nextSlide | Before slide change callback
 afterChange | slick, currentSlide | After slide change callback
+beforeAdd | slick, appendElement | Before element is added to slider
+afterAdd | slick, appendElement | After element was added to slider
+beforeRemove | slick, removedElement | Before element is removed from slider
+afterRemove | slick, removedElement | After element was removed from slider
 edge | slick, direction | Fires when an edge is overscrolled in non-infinite mode.
 init | slick | When Slick initializes for the first time callback
 reInit | slick | Every time Slick (re-)initializes callback
