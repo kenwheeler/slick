@@ -1432,13 +1432,35 @@
     Slick.prototype.removeSlide = Slick.prototype.slickRemove = function(index, removeBefore, removeAll) {
 
         var _ = this,
-            $slidesToRemove;
+            $slidesToRemove, i, length;
 
-        if (typeof(index) === 'boolean') {
+        switch (typeof(index)) {
+        
+        case 'boolean':
             removeBefore = index;
             index = removeBefore === true ? 0 : _.slideCount - 1;
-        } else {
+            break;
+        
+        case 'number':
             index = removeBefore === true ? --index : index;
+            break;
+        
+        case 'string':
+        case 'object':
+            var DOMElement;
+            
+            if (index instanceof jQuery)
+                DOMElement = index.get(0);
+            else
+                DOMElement = $(index).get(0);
+
+            for (i = 0, length = _.$slideTrack.children(this.options.slide).length; i < length; i++) {
+                if (_.$slideTrack.children(this.options.slide).get(i) === DOMElement) {
+                    index = removeBefore === true ? --i : i;
+                    break;
+                }
+            }
+            break;
         }
 
         if (_.slideCount < 1 || index < 0 || index > _.slideCount - 1) {
