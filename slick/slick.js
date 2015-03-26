@@ -203,7 +203,8 @@
 
     Slick.prototype.addSlide = Slick.prototype.slickAdd = function(markup, index, addBefore) {
 
-        var _ = this;
+        var _ = this,
+            $appendElement = $(markup);
 
         if (typeof(index) === 'boolean') {
             addBefore = index;
@@ -211,6 +212,8 @@
         } else if (index < 0 || (index >= _.slideCount)) {
             return false;
         }
+
+        _.$slider.trigger("beforeAdd", [ _, $appendElement ]);
 
         _.unload();
 
@@ -241,6 +244,8 @@
         });
 
         _.$slidesCache = _.$slides;
+        
+        _.$slider.trigger("afterAdd", [ _, $appendElement ]);
 
         _.reinit();
 
@@ -1426,7 +1431,8 @@
 
     Slick.prototype.removeSlide = Slick.prototype.slickRemove = function(index, removeBefore, removeAll) {
 
-        var _ = this;
+        var _ = this,
+            $slidesToRemove;
 
         if (typeof(index) === 'boolean') {
             removeBefore = index;
@@ -1442,11 +1448,14 @@
         _.unload();
 
         if (removeAll === true) {
-            _.$slideTrack.children().remove();
+            $slidesToRemove = _.$slideTrack.children();
         } else {
-            _.$slideTrack.children(this.options.slide).eq(index).remove();
+            $slidesToRemove = _.$slideTrack.children(this.options.slide).eq(index);
         }
-
+        
+        _.$slider.trigger("beforeRemove", [ _, $slidesToRemove ]);
+        $slidesToRemove.remove();
+        
         _.$slides = _.$slideTrack.children(this.options.slide);
 
         _.$slideTrack.children(this.options.slide).detach();
@@ -1455,6 +1464,8 @@
 
         _.$slidesCache = _.$slides;
 
+       _.$slider.trigger("afterRemove", [ _, $slidesToRemove ]);
+       
         _.reinit();
 
     };
