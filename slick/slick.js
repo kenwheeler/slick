@@ -1432,38 +1432,34 @@
     Slick.prototype.removeSlide = Slick.prototype.slickRemove = function(index, removeBefore, removeAll) {
 
         var _ = this,
-            $slidesToRemove, i, length;
+            elementNotInSlider = true,
+            $slidesToRemove, $element;
 
         switch (typeof(index)) {
         
         case 'boolean':
             removeBefore = index;
             index = removeBefore === true ? 0 : _.slideCount - 1;
+            elementNotInSlider = index < 0 || index > _.slideCount - 1
             break;
         
         case 'number':
             index = removeBefore === true ? --index : index;
+            elementNotInSlider = index < 0 || index > _.slideCount - 1
             break;
         
         case 'string':
-        case 'object':
-            var DOMElement;
-            
+        case 'object':            
             if (index instanceof jQuery)
-                DOMElement = index.get(0);
+                $element = index;
             else
-                DOMElement = $(index).get(0);
-
-            for (i = 0, length = _.$slideTrack.children(this.options.slide).length; i < length; i++) {
-                if (_.$slideTrack.children(this.options.slide).get(i) === DOMElement) {
-                    index = removeBefore === true ? --i : i;
-                    break;
-                }
-            }
+                $element = $(index);
+                
+            elementNotInSlider = _.$slideTrack.children(this.options.slide).filter($element).length < 0
             break;
         }
-
-        if (_.slideCount < 1 || index < 0 || index > _.slideCount - 1) {
+        
+        if (elementNotInSlider || _.slideCount < 1) {
             return false;
         }
 
@@ -1471,6 +1467,11 @@
 
         if (removeAll === true) {
             $slidesToRemove = _.$slideTrack.children();
+        } else if(typeof $element !== 'undefined') {
+            $slidesToRemove = _.$slideTrack
+                .children(this.options.slide)
+                .filter($element)
+                .not(".slick-cloned");
         } else {
             $slidesToRemove = _.$slideTrack.children(this.options.slide).eq(index);
         }
