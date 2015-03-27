@@ -203,7 +203,8 @@
 
     Slick.prototype.addSlide = Slick.prototype.slickAdd = function(markup, index, addBefore) {
 
-        var _ = this;
+        var _ = this,
+            $appendElement = $(markup);
 
         if (typeof(index) === 'boolean') {
             addBefore = index;
@@ -211,6 +212,8 @@
         } else if (index < 0 || (index >= _.slideCount)) {
             return false;
         }
+
+        _.$slider.trigger("beforeAdd", [ _, $appendElement ]);
 
         _.unload();
 
@@ -241,6 +244,8 @@
         });
 
         _.$slidesCache = _.$slides;
+        
+        _.$slider.trigger("afterAdd", [ _, $appendElement ]);
 
         _.reinit();
 
@@ -1426,27 +1431,54 @@
 
     Slick.prototype.removeSlide = Slick.prototype.slickRemove = function(index, removeBefore, removeAll) {
 
-        var _ = this;
+        var _ = this,
+            elementNotInSlider = true,
+            $slidesToRemove, $element;
 
-        if (typeof(index) === 'boolean') {
+        switch (typeof(index)) {
+        
+        case 'boolean':
             removeBefore = index;
             index = removeBefore === true ? 0 : _.slideCount - 1;
-        } else {
+            elementNotInSlider = index < 0 || index > _.slideCount - 1
+            break;
+        
+        case 'number':
             index = removeBefore === true ? --index : index;
+            elementNotInSlider = index < 0 || index > _.slideCount - 1
+            break;
+        
+        case 'string':
+        case 'object':            
+            if (index instanceof jQuery)
+                $element = index;
+            else
+                $element = $(index);
+                
+            elementNotInSlider = _.$slideTrack.children(this.options.slide).filter($element).length < 0
+            break;
         }
-
-        if (_.slideCount < 1 || index < 0 || index > _.slideCount - 1) {
+        
+        if (elementNotInSlider || _.slideCount < 1) {
             return false;
         }
 
         _.unload();
 
         if (removeAll === true) {
-            _.$slideTrack.children().remove();
+            $slidesToRemove = _.$slideTrack.children();
+        } else if(typeof $element !== 'undefined') {
+            $slidesToRemove = _.$slideTrack
+                .children(this.options.slide)
+                .filter($element)
+                .not(".slick-cloned");
         } else {
-            _.$slideTrack.children(this.options.slide).eq(index).remove();
+            $slidesToRemove = _.$slideTrack.children(this.options.slide).eq(index);
         }
-
+        
+        _.$slider.trigger("beforeRemove", [ _, $slidesToRemove ]);
+        $slidesToRemove.remove();
+        
         _.$slides = _.$slideTrack.children(this.options.slide);
 
         _.$slideTrack.children(this.options.slide).detach();
@@ -1455,6 +1487,8 @@
 
         _.$slidesCache = _.$slides;
 
+       _.$slider.trigger("afterRemove", [ _, $slidesToRemove ]);
+       
         _.reinit();
 
     };
