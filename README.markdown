@@ -171,7 +171,7 @@ slickPlay | | Start Autoplay
 slickGoTo | index : int, dontAnimate : bool | Goes to slide by index, skipping animation if second parameter is set to true
 slickCurrentSlide |  |  Returns the current slide index
 slickAdd | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
-slickRemove | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
+slickRemove | index: int or jQuery object or selector string, removeBefore: bool | Remove slide by index or jQuery object/selector. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set. If the given index argument results in a collection of objects, all of them will be removed.
 slickFilter | filter : selector or function | Filters slides using jQuery .filter syntax
 slickUnfilter | | Removes applied filter
 slickGetOption | option : string(option name) | Gets an option value.
