@@ -1010,8 +1010,22 @@
 
     Slick.prototype.goTo = Slick.prototype.slickGoTo = function(slide, dontAnimate) {
 
-        var _ = this;
-
+        var _ = this,
+            index, $slideCollection;
+        
+        if (typeof slide !== 'number'){
+            $slideCollection = _.$slideTrack
+                .children(this.options.slide)
+                .not(".slick-cloned");
+            
+            if (typeof slide === 'string')
+                slide = $(slide);
+            
+            index = $slideCollection.index(slide);
+        }else{
+            index = slide;
+        } 
+        
         _.changeSlide({
             data: {
                 message: 'index',
