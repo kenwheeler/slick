@@ -219,17 +219,17 @@
 
         if (typeof(index) === 'number') {
             if (index === 0 && _.$slides.length === 0) {
-                $(markup).appendTo(_.$slideTrack);
+                $appendElement.appendTo(_.$slideTrack);
             } else if (addBefore) {
-                $(markup).insertBefore(_.$slides.eq(index));
+                $appendElement.insertBefore(_.$slides.eq(index));
             } else {
-                $(markup).insertAfter(_.$slides.eq(index));
+                $appendElement.insertAfter(_.$slides.eq(index));
             }
         } else {
             if (addBefore === true) {
-                $(markup).prependTo(_.$slideTrack);
+                $appendElement.prependTo(_.$slideTrack);
             } else {
-                $(markup).appendTo(_.$slideTrack);
+                $appendElement.appendTo(_.$slideTrack);
             }
         }
 
