@@ -1486,11 +1486,10 @@
         _.$slideTrack.append(_.$slides);
 
         _.$slidesCache = _.$slides;
-
-       _.$slider.trigger("afterRemove", [ _, $slidesToRemove ]);
        
         _.reinit();
-
+     
+       _.$slider.trigger("afterRemove", [ _, $slidesToRemove ]);
     };
 
     Slick.prototype.setCSS = function(position) {
