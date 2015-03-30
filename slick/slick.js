@@ -244,11 +244,10 @@
         });
 
         _.$slidesCache = _.$slides;
-        
-        _.$slider.trigger("afterAdd", [ _, $appendElement ]);
 
         _.reinit();
 
+        _.$slider.trigger("afterAdd", [ _, $appendElement ]);
     };
 
     Slick.prototype.animateHeight = function() {
