@@ -129,6 +129,10 @@ Event | Params | Description
 ------ | -------- | -----------
 beforeChange | slick, currentSlide, nextSlide | Before slide change callback
 afterChange | slick, currentSlide | After slide change callback
+beforeAdd | slick, appendElement | Before element is added to slider
+afterAdd | slick, appendElement | After element was added to slider
+beforeRemove | slick, removedElement | Before element is removed from slider
+afterRemove | slick, removedElement | After element was removed from slider
 edge | slick, direction | Fires when an edge is overscrolled in non-infinite mode.
 init | slick | When Slick initializes for the first time callback
 reInit | slick | Every time Slick (re-)initializes callback
@@ -167,7 +171,7 @@ slickPlay | | Start Autoplay
 slickGoTo | index : int, dontAnimate : bool | Goes to slide by index, skipping animation if second parameter is set to true
 slickCurrentSlide |  |  Returns the current slide index
 slickAdd | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
-slickRemove | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
+slickRemove | index: int or jQuery object or selector string, removeBefore: bool | Remove slide by index or jQuery object/selector. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set. If the given index argument results in a collection of objects, all of them will be removed.
 slickFilter | filter : selector or function | Filters slides using jQuery .filter syntax
 slickUnfilter | | Removes applied filter
 slickGetOption | option : string(option name) | Gets an option value.
