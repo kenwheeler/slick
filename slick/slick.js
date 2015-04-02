@@ -757,7 +757,7 @@
                     width: ''
                 });
 
-            _.$slider.html(_.$slides);
+            _.$slider.prepend(_.$slides);
         }
 
         _.$slider.removeClass('slick-slider');
