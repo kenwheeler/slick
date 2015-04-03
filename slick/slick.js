@@ -1176,14 +1176,17 @@
         function loadImages(imagesScope) {
             $('img[data-lazy]', imagesScope).each(function() {
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy');
+                    imageSource = $(this).attr('data-lazy'),
+                    imageToLoad = document.createElement('img');
+
+                imageToLoad.onload = function() {
+                    image.animate({
+                        opacity: 1
+                    }, 200);
+                };
+                imageToLoad.src = imageSource;
 
                 image
-                    .load(function() {
-                        image.animate({
-                            opacity: 1
-                        }, 200);
-                    })
                     .css({
                         opacity: 0
                     })
