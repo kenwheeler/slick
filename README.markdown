@@ -127,13 +127,13 @@ $('.your-element').on('beforeChange', function(event, slick, currentSlide, nextS
 
 Event | Params | Description
 ------ | -------- | -----------
-beforeChange | slick, currentSlide, nextSlide | Before slide change callback
-afterChange | slick, currentSlide | After slide change callback
-edge | slick, direction | Fires when an edge is overscrolled in non-infinite mode.
-init | slick | When Slick initializes for the first time callback
-reInit | slick | Every time Slick (re-)initializes callback
-setPosition | slick | Every time Slick recalculates position
-swipe | slick, direction | Fires after swipe/drag
+beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
+afterChange | event, slick, currentSlide | After slide change callback
+edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
+init | event, slick | When Slick initializes for the first time callback
+reInit | event, slick | Every time Slick (re-)initializes callback
+setPosition | event, slick | Every time Slick recalculates position
+swipe | event, slick, direction | Fires after swipe/drag
 
 
 #### Methods
