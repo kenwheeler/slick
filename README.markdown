@@ -91,7 +91,7 @@ respondTo | string | 'window' | Width that responsive object responds to. Can be
 responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
 slide | string | '' | Slide element query
-slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row.
+slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row. dver
 slidesToShow | int | 1 | # of slides to show at a time
 slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
@@ -102,6 +102,7 @@ touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1
 useCSS | boolean | true | Enable/Disable CSS Transitions
 variableWidth | boolean | false | Disables automatic slide width calculation
 vertical | boolean | false | Vertical slide direction
+verticalSwiping | boolean | false | Changes swipe direction to vertical
 rtl | boolean | false | Change the slider's direction to become right-to-left
 waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 

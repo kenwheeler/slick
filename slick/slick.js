@@ -84,6 +84,7 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
+                verticalSwiping: false,
                 waitForAnimate: true
             };
 
@@ -110,8 +111,7 @@
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
-                transformsEnabled: false,
-                verticalScrolling: false
+                transformsEnabled: false
             };
 
             $.extend(_, _.initials);
@@ -1999,7 +1999,7 @@
         if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
             return (_.options.rtl === false ? 'right' : 'left');
         }
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
                 return 'left';
             } else {
@@ -2072,7 +2072,7 @@
         _.touchObject.minSwipe = _.listWidth / _.options
             .touchThreshold;
 
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             _.touchObject.minSwipe = _.listHeight / _.options
                 .touchThreshold;
         }
@@ -2115,7 +2115,7 @@
         _.touchObject.swipeLength = Math.round(Math.sqrt(
             Math.pow(_.touchObject.curX - _.touchObject.startX, 2)));
 
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             _.touchObject.swipeLength = Math.round(Math.sqrt(
                 Math.pow(_.touchObject.curY - _.touchObject.startY, 2)));
         }
@@ -2131,7 +2131,7 @@
         }
 
         positionOffset = (_.options.rtl === false ? 1 : -1) * (_.touchObject.curX > _.touchObject.startX ? 1 : -1);
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             positionOffset = _.touchObject.curY > _.touchObject.startY ? 1 : -1;
         }
 
@@ -2152,7 +2152,7 @@
         } else {
             _.swipeLeft = curLeft + (swipeLength * (_.$list.height() / _.listWidth)) * positionOffset;
         }
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             _.swipeLeft = curLeft + swipeLength * positionOffset;
         }
 
