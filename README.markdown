@@ -16,16 +16,16 @@ CDN hosted slick is a great way to get set up quick:
 In your ```<head>``` add:
 
 ````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.css"/>
 
 // Add the slick-theme.css if you want default styling
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.0/slick-theme.css"/>
 ````
 
 Then, before your closing ```<body>``` tag add:
 
 ```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.4.1/slick.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.min.js"></script>
 ```
 
 #### Package Managers
@@ -44,7 +44,7 @@ PLEASE review CONTRIBUTING.markdown prior to requesting a feature, filing a pull
 
 ### Data Attribute Settings
 
-In slick 1.4 you can now add settings using the data-slick attribute. These elements get $.slick called on them automatically if the slick-data attr is present.
+In slick 1.5 you can now add settings using the data-slick attribute. You still need to call $(element).slick() to initialize slick on the element.
 
 Example:
 
@@ -89,7 +89,9 @@ pauseOnHover | boolean | true | Pauses autoplay on hover
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
 responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
+rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
 slide | string | '' | Slide element query
+slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row. dver
 slidesToShow | int | 1 | # of slides to show at a time
 slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
@@ -100,6 +102,7 @@ touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1
 useCSS | boolean | true | Enable/Disable CSS Transitions
 variableWidth | boolean | false | Disables automatic slide width calculation
 vertical | boolean | false | Vertical slide direction
+verticalSwiping | boolean | false | Changes swipe direction to vertical
 rtl | boolean | false | Change the slider's direction to become right-to-left
 waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 
@@ -127,13 +130,13 @@ $('.your-element').on('beforeChange', function(event, slick, currentSlide, nextS
 
 Event | Params | Description
 ------ | -------- | -----------
-beforeChange | slick, currentSlide, nextSlide | Before slide change callback
-afterChange | slick, currentSlide | After slide change callback
-edge | slick, direction | Fires when an edge is overscrolled in non-infinite mode.
-init | slick | When Slick initializes for the first time callback
-reInit | slick | Every time Slick (re-)initializes callback
-setPosition | slick | Every time Slick recalculates position
-swipe | slick, direction | Fires after swipe/drag
+beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
+afterChange | event, slick, currentSlide | After slide change callback
+edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
+init | event, slick | When Slick initializes for the first time callback
+reInit | event, slick | Every time Slick (re-)initializes callback
+setPosition | event, slick | Every time Slick recalculates position
+swipe | event, slick, direction | Fires after swipe/drag
 
 
 #### Methods

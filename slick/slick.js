@@ -70,8 +70,10 @@
                 pauseOnDotsHover: false,
                 respondTo: 'window',
                 responsive: null,
+                rows: 1,
                 rtl: false,
                 slide: '',
+                slidesPerRow: 1,
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 speed: 500,
@@ -82,6 +84,7 @@
                 useCSS: true,
                 variableWidth: false,
                 vertical: false,
+                verticalSwiping: false,
                 waitForAnimate: true
             };
 
@@ -108,8 +111,7 @@
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
-                transformsEnabled: false,
-                verticalScrolling: false
+                transformsEnabled: false
             };
 
             $.extend(_, _.initials);
@@ -124,6 +126,7 @@
             _.paused = false;
             _.positionProp = null;
             _.respondTo = null;
+            _.rowCount = 1;
             _.shouldClick = true;
             _.$slider = $(element);
             _.$slidesCache = null;
@@ -485,7 +488,7 @@
 
         var _ = this;
 
-        _.$slides = _.$slider.children(_.options.slide +
+        _.$slides = _.$slider.children(
             ':not(.slick-cloned)').addClass(
             'slick-slide');
         _.slideCount = _.$slides.length;
@@ -529,6 +532,41 @@
         if (_.options.draggable === true) {
             _.$list.addClass('draggable');
         }
+
+    };
+
+    Slick.prototype.buildRows = function() {
+
+        var _ = this, a, b, c, newSlides, numOfSlides, originalSlides,slidesPerSection;
+
+        newSlides = document.createDocumentFragment();
+        originalSlides = _.$slider.children();
+
+        if(_.options.rows > 1) {
+            slidesPerSection = _.options.slidesPerRow * _.options.rows;
+            numOfSlides = Math.ceil(
+                originalSlides.length / slidesPerSection
+            );
+
+            for(a = 0; a < numOfSlides; a++){
+                var slide = document.createElement('div');
+                for(b = 0; b < _.options.rows; b++) {
+                    var row = document.createElement('div');
+                    for(c = 0; c < _.options.slidesPerRow; c++) {
+                        var target = (a * slidesPerSection + ((b * _.options.slidesPerRow) + c));
+                        if (originalSlides.get(target)) {
+                            row.appendChild(originalSlides.get(target));
+                        }
+                    }
+                    slide.appendChild(row);
+                }
+                newSlides.appendChild(slide);
+            };
+            _.$slider.html(newSlides);
+            _.$slider.children().children().children()
+                .width((100 / _.options.slidesPerRow) + "%")
+                .css({'display': 'inline-block'});
+        };
 
     };
 
@@ -722,6 +760,18 @@
         $(document).off('ready.slick.slick-' + _.instanceUid, _.setPosition);
     };
 
+    Slick.prototype.cleanUpRows = function() {
+
+        var _ = this, originalSlides;
+
+        if(_.options.rows > 1) {
+            originalSlides = _.$slides.children().children();
+            originalSlides.removeAttr('style');
+            _.$slider.html(originalSlides);
+        }
+
+    };
+
     Slick.prototype.clickHandler = function(event) {
 
         var _ = this;
@@ -771,6 +821,8 @@
 
             _.$slider.html(_.$slides);
         }
+
+        _.cleanUpRows();
 
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
@@ -1040,6 +1092,7 @@
         if (!$(_.$slider).hasClass('slick-initialized')) {
 
             $(_.$slider).addClass('slick-initialized');
+            _.buildRows();
             _.buildOut();
             _.setProps();
             _.startLoad();
@@ -1188,14 +1241,17 @@
         function loadImages(imagesScope) {
             $('img[data-lazy]', imagesScope).each(function() {
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy');
+                    imageSource = $(this).attr('data-lazy'),
+                    imageToLoad = document.createElement('img');
+
+                imageToLoad.onload = function() {
+                    image.animate({
+                        opacity: 1
+                    }, 200);
+                };
+                imageToLoad.src = imageSource;
 
                 image
-                    .load(function() {
-                        image.animate({
-                            opacity: 1
-                        }, 200);
-                    })
                     .css({
                         opacity: 0
                     })
@@ -1373,7 +1429,7 @@
                 message: 'index',
                 index: currentSlide
             }
-        }, true);
+        }, false);
 
     };
 
@@ -1967,7 +2023,7 @@
         if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
             return (_.options.rtl === false ? 'right' : 'left');
         }
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
                 return 'left';
             } else {
@@ -2040,7 +2096,7 @@
         _.touchObject.minSwipe = _.listWidth / _.options
             .touchThreshold;
 
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             _.touchObject.minSwipe = _.listHeight / _.options
                 .touchThreshold;
         }
@@ -2083,7 +2139,7 @@
         _.touchObject.swipeLength = Math.round(Math.sqrt(
             Math.pow(_.touchObject.curX - _.touchObject.startX, 2)));
 
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             _.touchObject.swipeLength = Math.round(Math.sqrt(
                 Math.pow(_.touchObject.curY - _.touchObject.startY, 2)));
         }
@@ -2099,7 +2155,7 @@
         }
 
         positionOffset = (_.options.rtl === false ? 1 : -1) * (_.touchObject.curX > _.touchObject.startX ? 1 : -1);
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             positionOffset = _.touchObject.curY > _.touchObject.startY ? 1 : -1;
         }
 
@@ -2120,7 +2176,7 @@
         } else {
             _.swipeLeft = curLeft + (swipeLength * (_.$list.height() / _.listWidth)) * positionOffset;
         }
-        if (_.options.verticalScrolling === true) {
+        if (_.options.verticalSwiping === true) {
             _.swipeLeft = curLeft + swipeLength * positionOffset;
         }
 
