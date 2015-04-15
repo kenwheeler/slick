@@ -168,9 +168,6 @@
             if (typeof document.mozHidden !== 'undefined') {
                 _.hidden = 'mozHidden';
                 _.visibilityChange = 'mozvisibilitychange';
-            } else if (typeof document.msHidden !== 'undefined') {
-                _.hidden = 'msHidden';
-                _.visibilityChange = 'msvisibilitychange';
             } else if (typeof document.webkitHidden !== 'undefined') {
                 _.hidden = 'webkitHidden';
                 _.visibilityChange = 'webkitvisibilitychange';
@@ -723,9 +720,7 @@
 
         _.$list.off('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-            $(document).off(_.visibilityChange, _.visibility);
-        }
+        $(document).off(_.visibilityChange, _.visibility);
 
         _.$list.off('mouseenter.slick', _.setPaused.bind(_, true));
         _.$list.off('mouseleave.slick', _.setPaused.bind(_, false));
@@ -1150,9 +1145,7 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-            $(document).on(_.visibilityChange, _.visibility.bind(_));
-        }
+        $(document).on(_.visibilityChange, _.visibility.bind(_));
 
         _.$list.on('mouseenter.slick', _.setPaused.bind(_, true));
         _.$list.on('mouseleave.slick', _.setPaused.bind(_, false));
@@ -2272,15 +2265,17 @@
     };
 
     Slick.prototype.visibility = function() {
-
+            
         var _ = this;
 
         if (document[_.hidden]) {
             _.paused = true;
             _.autoPlayClear();
         } else {
-            _.paused = false;
-            _.autoPlay();
+            if (_.options.autoplay === true) {
+                _.paused = false;
+                _.autoPlay();
+            }
         }
 
     };
