@@ -1006,7 +1006,7 @@
             max;
 
         if (_.options.infinite === false) {
-            max = _.slideCount - _.options.slidesToShow + 1;
+            max = Math.ceil(_.slideCount / _.options.slidesToShow) * _.options.slidesToShow;
             if (_.options.centerMode === true) max = _.slideCount;
         } else {
             breakPoint = _.options.slidesToScroll * -1;
