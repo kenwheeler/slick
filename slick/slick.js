@@ -1826,7 +1826,7 @@
 
         if (!index) index = 0;
 
-        if (_.slideCount <= _.options.slidesToShow) {
+        if (_.slideCount <= _.options.slidesToShow && !_.options.centerMode) {
             _.$slider.find('.slick-slide').removeClass('slick-active').attr('aria-hidden', 'true');
             _.$slides.eq(index).addClass('slick-active').attr("aria-hidden", "false");
             if (_.options.centerMode === true) {
@@ -1855,7 +1855,7 @@
             return;
         }
 
-        if (_.slideCount <= _.options.slidesToShow) {
+        if (_.slideCount <= _.options.slidesToShow && !_.options.centerMode) {
             return;
         }
 
@@ -2167,7 +2167,7 @@
         var _ = this,
             touches;
 
-        if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
+        if (_.touchObject.fingerCount !== 1 || (_.slideCount <= _.options.slidesToShow && !_.options.centerMode)) {
             _.touchObject = {};
             return false;
         }
