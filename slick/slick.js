@@ -1810,8 +1810,13 @@
 
         if (_.options.autoplay === true && _.options.pauseOnHover === true) {
             _.paused = paused;
-            _.autoPlayClear();
+            if( !paused ) {
+                _.autoPlay();
+            } else {
+                _.autoPlayClear();
+            }
         }
+
     };
 
     Slick.prototype.selectHandler = function(event) {
