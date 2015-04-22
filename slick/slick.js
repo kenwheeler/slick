@@ -591,39 +591,40 @@
             if (targetBreakpoint !== null) {
                 if (_.activeBreakpoint !== null) {
                     if (targetBreakpoint !== _.activeBreakpoint) {
-                        _.activeBreakpoint =
-                            targetBreakpoint;
+                        _.activeBreakpoint = targetBreakpoint;
                         if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
                             _.unslick();
                         } else {
-                            _.options = $.extend({}, _.originalSettings,
-                                _.breakpointSettings[
-                                    targetBreakpoint]);
-                            if (initial === true)
+                            _.options = $.extend({}, _.originalSettings, _.breakpointSettings[targetBreakpoint]);
+                            if (initial === true) {
                                 _.currentSlide = _.options.initialSlide;
+                            }
                             _.refresh();
                         }
+                        _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
                     if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
                         _.unslick();
                     } else {
-                        _.options = $.extend({}, _.originalSettings,
-                            _.breakpointSettings[
-                                targetBreakpoint]);
-                        if (initial === true)
+                        _.options = $.extend({}, _.originalSettings, _.breakpointSettings[targetBreakpoint]);
+                        if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
+                        }
                         _.refresh();
                     }
+                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
             } else {
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
                     _.options = _.originalSettings;
-                    if (initial === true)
+                    if (initial === true) {
                         _.currentSlide = _.options.initialSlide;
+                    }
                     _.refresh();
+                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
             }
 
