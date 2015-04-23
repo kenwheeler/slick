@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.0
+ Version: 1.5.1
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -168,6 +168,9 @@
             if (typeof document.mozHidden !== 'undefined') {
                 _.hidden = 'mozHidden';
                 _.visibilityChange = 'mozvisibilitychange';
+            } else if (typeof document.msHidden !== 'undefined') {
+                _.hidden = 'msHidden';
+                _.visibilityChange = 'msvisibilitychange';
             } else if (typeof document.webkitHidden !== 'undefined') {
                 _.hidden = 'webkitHidden';
                 _.visibilityChange = 'webkitvisibilitychange';
@@ -591,40 +594,39 @@
             if (targetBreakpoint !== null) {
                 if (_.activeBreakpoint !== null) {
                     if (targetBreakpoint !== _.activeBreakpoint) {
-                        _.activeBreakpoint = targetBreakpoint;
+                        _.activeBreakpoint =
+                            targetBreakpoint;
                         if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
                             _.unslick();
                         } else {
-                            _.options = $.extend({}, _.originalSettings, _.breakpointSettings[targetBreakpoint]);
-                            if (initial === true) {
+                            _.options = $.extend({}, _.originalSettings,
+                                _.breakpointSettings[
+                                    targetBreakpoint]);
+                            if (initial === true)
                                 _.currentSlide = _.options.initialSlide;
-                            }
                             _.refresh();
                         }
-                        _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
                     if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
                         _.unslick();
                     } else {
-                        _.options = $.extend({}, _.originalSettings, _.breakpointSettings[targetBreakpoint]);
-                        if (initial === true) {
+                        _.options = $.extend({}, _.originalSettings,
+                            _.breakpointSettings[
+                                targetBreakpoint]);
+                        if (initial === true)
                             _.currentSlide = _.options.initialSlide;
-                        }
                         _.refresh();
                     }
-                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
             } else {
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
                     _.options = _.originalSettings;
-                    if (initial === true) {
+                    if (initial === true)
                         _.currentSlide = _.options.initialSlide;
-                    }
                     _.refresh();
-                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
             }
 
@@ -721,7 +723,9 @@
 
         _.$list.off('click.slick', _.clickHandler);
 
-        $(document).off(_.visibilityChange, _.visibility);
+        if (_.options.autoplay === true) {
+            $(document).off(_.visibilityChange, _.visibility);
+        }
 
         _.$list.off('mouseenter.slick', _.setPaused.bind(_, true));
         _.$list.off('mouseleave.slick', _.setPaused.bind(_, false));
@@ -778,7 +782,7 @@
 
         _.cleanUpEvents();
 
-        $('.slick-cloned', _.$slider).remove();
+        $('.slick-cloned', _.$slider).detach();
 
         if (_.$dots) {
             _.$dots.remove();
@@ -792,7 +796,7 @@
 
         if (_.$slides) {
             _.$slides.removeClass('slick-slide slick-active slick-center slick-visible')
-                .attr('aria-hidden', 'true')
+                .removeAttr('aria-hidden')
                 .removeAttr('data-slick-index')
                 .css({
                     position: '',
@@ -803,7 +807,13 @@
                     width: ''
                 });
 
-            _.$slider.html(_.$slides);
+            _.$slideTrack.children(this.options.slide).detach();
+
+            _.$slideTrack.detach();
+
+            _.$list.detach();
+
+            _.$slider.append(_.$slides);
         }
 
         _.cleanUpRows();
@@ -898,7 +908,11 @@
         var pagerQty = 0;
 
         if (_.options.infinite === true) {
-            pagerQty = Math.ceil(_.slideCount / _.options.slidesToScroll);
+            while (breakPoint < _.slideCount) {
+                ++pagerQty;
+                breakPoint = counter + _.options.slidesToShow;
+                counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+            }
         } else if (_.options.centerMode === true) {
             pagerQty = _.slideCount;
         } else {
@@ -1146,7 +1160,9 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        $(document).on(_.visibilityChange, _.visibility.bind(_));
+        if (_.options.autoplay === true) {
+            $(document).on(_.visibilityChange, _.visibility.bind(_));
+        }
 
         _.$list.on('mouseenter.slick', _.setPaused.bind(_, true));
         _.$list.on('mouseleave.slick', _.setPaused.bind(_, false));
@@ -1811,13 +1827,8 @@
 
         if (_.options.autoplay === true && _.options.pauseOnHover === true) {
             _.paused = paused;
-            if( !paused ) {
-                _.autoPlay();
-            } else {
-                _.autoPlayClear();
-            }
+            _.autoPlayClear();
         }
-
     };
 
     Slick.prototype.selectHandler = function(event) {
@@ -2271,17 +2282,15 @@
     };
 
     Slick.prototype.visibility = function() {
-            
+
         var _ = this;
 
         if (document[_.hidden]) {
             _.paused = true;
             _.autoPlayClear();
         } else {
-            if (_.options.autoplay === true) {
-                _.paused = false;
-                _.autoPlay();
-            }
+            _.paused = false;
+            _.autoPlay();
         }
 
     };
