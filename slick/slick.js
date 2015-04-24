@@ -57,6 +57,7 @@
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
+                dotsMax: false,
                 draggable: true,
                 easing: 'linear',
                 edgeFriction: 0.35,
@@ -921,6 +922,10 @@
                 breakPoint = counter + _.options.slidesToShow;
                 counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
             }
+        }
+
+        if (_.options.dotsMax && _.options.dotsMax > 0) {
+            pagerQty = Math.min(pagerQty, _.options.dotsMax + 1);
         }
 
         return pagerQty - 1;
