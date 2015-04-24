@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.1
+ Version: 1.5.2
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -168,9 +168,6 @@
             if (typeof document.mozHidden !== 'undefined') {
                 _.hidden = 'mozHidden';
                 _.visibilityChange = 'mozvisibilitychange';
-            } else if (typeof document.msHidden !== 'undefined') {
-                _.hidden = 'msHidden';
-                _.visibilityChange = 'msvisibilitychange';
             } else if (typeof document.webkitHidden !== 'undefined') {
                 _.hidden = 'webkitHidden';
                 _.visibilityChange = 'webkitvisibilitychange';
@@ -606,6 +603,7 @@
                                 _.currentSlide = _.options.initialSlide;
                             _.refresh();
                         }
+                        _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
@@ -619,6 +617,7 @@
                             _.currentSlide = _.options.initialSlide;
                         _.refresh();
                     }
+                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
             } else {
                 if (_.activeBreakpoint !== null) {
@@ -627,6 +626,7 @@
                     if (initial === true)
                         _.currentSlide = _.options.initialSlide;
                     _.refresh();
+                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
             }
 
@@ -707,8 +707,8 @@
 
         if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
             $('li', _.$dots)
-                .off('mouseenter.slick', _.setPaused.bind(_, true))
-                .off('mouseleave.slick', _.setPaused.bind(_, false));
+                .off('mouseenter.slick', $.proxy(_.setPaused, _, true))
+                .off('mouseleave.slick', $.proxy(_.setPaused, _, false));
         }
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
@@ -723,12 +723,10 @@
 
         _.$list.off('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-            $(document).off(_.visibilityChange, _.visibility);
-        }
+        $(document).off(_.visibilityChange, _.visibility);
 
-        _.$list.off('mouseenter.slick', _.setPaused.bind(_, true));
-        _.$list.off('mouseleave.slick', _.setPaused.bind(_, false));
+        _.$list.off('mouseenter.slick', $.proxy(_.setPaused, _, true));
+        _.$list.off('mouseleave.slick', $.proxy(_.setPaused, _, false));
 
         if (_.options.accessibility === true) {
             _.$list.off('keydown.slick', _.keyHandler);
@@ -1131,8 +1129,8 @@
 
         if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
             $('li', _.$dots)
-                .on('mouseenter.slick', _.setPaused.bind(_, true))
-                .on('mouseleave.slick', _.setPaused.bind(_, false));
+                .on('mouseenter.slick', $.proxy(_.setPaused, _, true))
+                .on('mouseleave.slick', $.proxy(_.setPaused, _, false));
         }
 
     };
@@ -1160,12 +1158,10 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        if (_.options.autoplay === true) {
-            $(document).on(_.visibilityChange, _.visibility.bind(_));
-        }
+        $(document).on(_.visibilityChange, $.proxy(_.visibility, _));
 
-        _.$list.on('mouseenter.slick', _.setPaused.bind(_, true));
-        _.$list.on('mouseleave.slick', _.setPaused.bind(_, false));
+        _.$list.on('mouseenter.slick', $.proxy(_.setPaused, _, true));
+        _.$list.on('mouseleave.slick', $.proxy(_.setPaused, _, false));
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
@@ -1175,9 +1171,9 @@
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
-        $(window).on('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange.bind(_));
+        $(window).on('orientationchange.slick.slick-' + _.instanceUid, $.proxy(_.orientationChange, _));
 
-        $(window).on('resize.slick.slick-' + _.instanceUid, _.resize.bind(_));
+        $(window).on('resize.slick.slick-' + _.instanceUid, $.proxy(_.resize, _));
 
         $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
@@ -1827,7 +1823,11 @@
 
         if (_.options.autoplay === true && _.options.pauseOnHover === true) {
             _.paused = paused;
-            _.autoPlayClear();
+            if (!paused) {
+                _.autoPlay();
+            } else {
+                _.autoPlayClear();
+            }
         }
     };
 
@@ -2289,8 +2289,10 @@
             _.paused = true;
             _.autoPlayClear();
         } else {
-            _.paused = false;
-            _.autoPlay();
+            if (_.options.autoplay === true) {
+                _.paused = false;
+                _.autoPlay();
+            }
         }
 
     };
