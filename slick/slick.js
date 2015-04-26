@@ -1098,7 +1098,7 @@
             _.updateDots();
         }
 
-        _.$slider.trigger('init', [_]);
+        _.$slider.trigger('init', [_]).trigger('init.slick', [_]);
 
     };
 
@@ -1352,7 +1352,7 @@
 
         var _ = this;
 
-        _.$slider.trigger('afterChange', [_, index]);
+        _.$slider.trigger('afterChange', [_, index]).trigger('afterChange.slick', [_, index]);
 
         _.animating = false;
 
@@ -1468,7 +1468,7 @@
 
         _.setPosition();
 
-        _.$slider.trigger('reInit', [_]);
+        _.$slider.trigger('reInit', [_]).trigger('reInit.slick', [_]);
 
     };
 
@@ -1659,7 +1659,7 @@
             _.setFade();
         }
 
-        _.$slider.trigger('setPosition', [_]);
+        _.$slider.trigger('setPosition', [_]).trigger('setPosition.slick', [_]);
 
     };
 
@@ -1934,7 +1934,7 @@
 
         _.animating = true;
 
-        _.$slider.trigger("beforeChange", [_, _.currentSlide, animSlide]);
+        _.$slider.trigger("beforeChange", [_, _.currentSlide, animSlide]).trigger("beforeChange.slick", [_, _.currentSlide, animSlide]);
 
         oldSlide = _.currentSlide;
         _.currentSlide = animSlide;
@@ -2035,7 +2035,7 @@
         }
 
         if (_.touchObject.edgeHit === true) {
-            _.$slider.trigger("edge", [_, _.swipeDirection()]);
+            _.$slider.trigger("edge", [_, _.swipeDirection()]).trigger("edge.slick", [_, _.swipeDirection()]);
         }
 
         if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
@@ -2046,7 +2046,7 @@
                     _.slideHandler(slideCount);
                     _.currentDirection = 0;
                     _.touchObject = {};
-                    _.$slider.trigger("swipe", [_, "left"]);
+                    _.$slider.trigger("swipe", [_, "left"]).trigger("swipe.slick", [_, "left"]);
                     break;
 
                 case 'right':
@@ -2054,7 +2054,7 @@
                     _.slideHandler(slideCount);
                     _.currentDirection = 1;
                     _.touchObject = {};
-                    _.$slider.trigger("swipe", [_, "right"]);
+                    _.$slider.trigger("swipe", [_, "right"]).trigger("swipe.slick", [_, "right"]);
                     break;
             }
         } else {
