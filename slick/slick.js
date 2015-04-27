@@ -819,6 +819,8 @@
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
 
+        _.$slider.trigger('destroy', [_]);
+
     };
 
     Slick.prototype.disableTransition = function(slide) {
