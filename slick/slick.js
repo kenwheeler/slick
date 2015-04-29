@@ -674,6 +674,7 @@
                     event.data.index || $target.index() * _.options.slidesToScroll;
 
                 _.slideHandler(_.checkNavigable(index), false, dontAnimate);
+                $target.children().trigger("focus");
                 break;
 
             default:
