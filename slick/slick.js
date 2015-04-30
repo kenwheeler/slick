@@ -1656,6 +1656,9 @@
     Slick.prototype.setPosition = function() {
 
         var _ = this;
+        if(_.$list === null) {
+            return;
+        }
 
         _.setDimensions();
 
