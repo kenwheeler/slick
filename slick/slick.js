@@ -338,8 +338,17 @@
 
     Slick.prototype.asNavFor = function(index) {
         var _ = this,
-            asNavFor = _.options.asNavFor !== null ? $(_.options.asNavFor).slick('getSlick') : null;
-        if (asNavFor !== null) asNavFor.slideHandler(index, true);
+            asNavFor = _.options.asNavFor;
+
+        if (typeof asNavFor === 'object') {
+            asNavFor = asNavFor.slick('getSlick');
+        } else if (typeof asNavFor === 'string') {
+            asNavFor = $(asNavFor).slick('getSlick');
+        }
+
+        if (asNavFor !== null) {
+            asNavFor.slideHandler(index, true);
+        }
     };
 
     Slick.prototype.applyTransition = function(slide) {
@@ -646,7 +655,7 @@
         }
 
         // If target is not the <li> element (ie: a child), find the <li>.
-        if(!$target.is('li')) { 
+        if(!$target.is('li')) {
             $target = $target.closest('li');
         }
 
