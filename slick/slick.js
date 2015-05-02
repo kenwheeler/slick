@@ -337,18 +337,20 @@
     };
 
     Slick.prototype.asNavFor = function(index) {
+
         var _ = this,
             asNavFor = _.options.asNavFor;
 
-        if (typeof asNavFor === 'object') {
-            asNavFor = asNavFor.slick('getSlick');
-        } else if (typeof asNavFor === 'string') {
-            asNavFor = $(asNavFor).slick('getSlick');
+        if ( asNavFor && asNavFor !== null ) {
+            asNavFor = $(asNavFor);
         }
 
-        if (asNavFor !== null) {
-            asNavFor.slideHandler(index, true);
+        if ( asNavFor !== null && typeof asNavFor === "object" ) {
+            asNavFor.each(function() {
+                $(this).slick('getSlick').slideHandler(index, true);
+            });
         }
+
     };
 
     Slick.prototype.applyTransition = function(slide) {
