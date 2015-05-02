@@ -348,7 +348,7 @@
         if ( asNavFor !== null && typeof asNavFor === "object" ) {
             asNavFor.each(function() {
                 var target = $(this).slick('getSlick');
-                if(!target.options.unslicked) {
+                if(!target.unslicked) {
                     target.slideHandler(index, true);
                 }
             });
@@ -849,7 +849,7 @@
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
 
-        _.options.unslicked = true;
+        _.unslicked = true;
 
     };
 
