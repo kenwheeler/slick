@@ -605,13 +605,14 @@
                         _.activeBreakpoint =
                             targetBreakpoint;
                         if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-                            _.unslick();
+                            _.unslick(targetBreakpoint);
                         } else {
                             _.options = $.extend({}, _.originalSettings,
                                 _.breakpointSettings[
                                     targetBreakpoint]);
-                            if (initial === true)
+                            if (initial === true) {
                                 _.currentSlide = _.options.initialSlide;
+                            }
                             _.refresh();
                         }
                         _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
@@ -619,13 +620,14 @@
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
                     if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-                        _.unslick();
+                        _.unslick(targetBreakpoint);
                     } else {
                         _.options = $.extend({}, _.originalSettings,
                             _.breakpointSettings[
                                 targetBreakpoint]);
-                        if (initial === true)
+                        if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
+                        }
                         _.refresh();
                     }
                     _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
@@ -634,8 +636,9 @@
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
                     _.options = _.originalSettings;
-                    if (initial === true)
+                    if (initial === true) {
                         _.currentSlide = _.options.initialSlide;
+                    }
                     _.refresh();
                     _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
                 }
@@ -2255,9 +2258,10 @@
 
     };
 
-    Slick.prototype.unslick = function() {
+    Slick.prototype.unslick = function( fromBreakpoint ) {
 
         var _ = this;
+        _.$slider.trigger('unslick', [_, fromBreakpoint]);
         _.destroy();
 
     };
