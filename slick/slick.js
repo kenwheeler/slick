@@ -191,7 +191,7 @@
             // Extracted from jQuery v1.11 source
             _.htmlExpr = /^(?:\s*(<[\w\W]+>)[^>]*)$/;
 
-            _.init();
+            _.init(true);
 
             _.checkResponsive(true);
 
@@ -337,9 +337,20 @@
     };
 
     Slick.prototype.asNavFor = function(index) {
+
         var _ = this,
-            asNavFor = _.options.asNavFor !== null ? $(_.options.asNavFor).slick('getSlick') : null;
-        if (asNavFor !== null) asNavFor.slideHandler(index, true);
+            asNavFor = _.options.asNavFor;
+
+        if ( asNavFor && asNavFor !== null ) {
+            asNavFor = $(asNavFor).not(_.$slider);
+        }
+
+        if ( asNavFor !== null && typeof asNavFor === "object" ) {
+            asNavFor.each(function() {
+                $(this).slick('getSlick').slideHandler(index, true);
+            });
+        }
+
     };
 
     Slick.prototype.applyTransition = function(slide) {
@@ -558,9 +569,10 @@
     Slick.prototype.checkResponsive = function(initial) {
 
         var _ = this,
-            breakpoint, targetBreakpoint, respondToWidth;
+            breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
         var sliderWidth = _.$slider.width();
         var windowWidth = window.innerWidth || $(window).width();
+
         if (_.respondTo === 'window') {
             respondToWidth = windowWidth;
         } else if (_.respondTo === 'slider') {
@@ -594,42 +606,49 @@
                         _.activeBreakpoint =
                             targetBreakpoint;
                         if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-                            _.unslick();
+                            _.unslick(targetBreakpoint);
                         } else {
                             _.options = $.extend({}, _.originalSettings,
                                 _.breakpointSettings[
                                     targetBreakpoint]);
-                            if (initial === true)
+                            if (initial === true) {
                                 _.currentSlide = _.options.initialSlide;
+                            }
                             _.refresh();
                         }
-                        _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
+                        triggerBreakpoint = targetBreakpoint;
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
                     if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-                        _.unslick();
+                        _.unslick(targetBreakpoint);
                     } else {
                         _.options = $.extend({}, _.originalSettings,
                             _.breakpointSettings[
                                 targetBreakpoint]);
-                        if (initial === true)
+                        if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
+                        }
                         _.refresh();
                     }
-                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
+                    triggerBreakpoint = targetBreakpoint;
                 }
             } else {
                 if (_.activeBreakpoint !== null) {
                     _.activeBreakpoint = null;
                     _.options = _.originalSettings;
-                    if (initial === true)
+                    if (initial === true) {
                         _.currentSlide = _.options.initialSlide;
+                    }
                     _.refresh();
-                    _.$slider.trigger('breakpoint', [_, targetBreakpoint]);
+                    triggerBreakpoint = targetBreakpoint;
                 }
             }
 
+            // only trigger breakpoints during an actual break. not on initialize.
+            if( !initial && triggerBreakpoint !== false ) {
+                _.$slider.trigger('breakpoint', [_, triggerBreakpoint]);
+            }
         }
 
     };
@@ -646,7 +665,7 @@
         }
 
         // If target is not the <li> element (ie: a child), find the <li>.
-        if(!$target.is('li')) { 
+        if(!$target.is('li')) {
             $target = $target.closest('li');
         }
 
@@ -1089,7 +1108,7 @@
 
     };
 
-    Slick.prototype.init = function() {
+    Slick.prototype.init = function(creation) {
 
         var _ = this;
 
@@ -1106,7 +1125,9 @@
             _.updateDots();
         }
 
-        _.$slider.trigger('init', [_]);
+        if (creation) {
+            _.$slider.trigger('init', [_]);
+        }
 
     };
 
@@ -2244,9 +2265,10 @@
 
     };
 
-    Slick.prototype.unslick = function() {
+    Slick.prototype.unslick = function(fromBreakpoint) {
 
         var _ = this;
+        _.$slider.trigger('unslick', [_, fromBreakpoint]);
         _.destroy();
 
     };
