@@ -342,7 +342,7 @@
             asNavFor = _.options.asNavFor;
 
         if ( asNavFor && asNavFor !== null ) {
-            asNavFor = $(asNavFor);
+            asNavFor = $(asNavFor).not(_.$slider);
         }
 
         if ( asNavFor !== null && typeof asNavFor === "object" ) {
