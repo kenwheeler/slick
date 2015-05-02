@@ -2265,7 +2265,7 @@
 
     };
 
-    Slick.prototype.unslick = function( fromBreakpoint ) {
+    Slick.prototype.unslick = function(fromBreakpoint) {
 
         var _ = this;
         _.$slider.trigger('unslick', [_, fromBreakpoint]);
