@@ -111,7 +111,8 @@
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
-                transformsEnabled: false
+                transformsEnabled: false,
+                unslicked: false
             };
 
             $.extend(_, _.initials);
@@ -631,8 +632,9 @@
                                 targetBreakpoint]);
                         if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
+                        } else {
+                            _.refresh();
                         }
-                        _.refresh();
                     }
                     triggerBreakpoint = targetBreakpoint;
                 }
