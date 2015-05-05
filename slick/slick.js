@@ -631,8 +631,9 @@
                                 targetBreakpoint]);
                         if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
+                        } else {
+                            _.refresh();
                         }
-                        _.refresh();
                     }
                     triggerBreakpoint = targetBreakpoint;
                 }
