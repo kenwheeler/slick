@@ -1050,12 +1050,9 @@
             breakPoint = 0,
             counter = 0,
             indexes = [],
-            max;
+            max = _.slideCount;
 
-        if (_.options.infinite === false) {
-            max = _.slideCount - _.options.slidesToShow + 1;
-            if (_.options.centerMode === true) max = _.slideCount;
-        } else {
+        if (_.options.infinite === true) {
             breakPoint = _.options.slidesToScroll * -1;
             counter = _.options.slidesToScroll * -1;
             max = _.slideCount * 2;
