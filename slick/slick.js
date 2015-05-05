@@ -111,7 +111,8 @@
                 swipeLeft: null,
                 $list: null,
                 touchObject: {},
-                transformsEnabled: false
+                transformsEnabled: false,
+                unslicked: false
             };
 
             $.extend(_, _.initials);
