@@ -1523,7 +1523,7 @@
             _.windowDelay = window.setTimeout(function() {
                 _.windowWidth = $(window).width();
                 _.checkResponsive();
-                _.setPosition();
+                if( !_.unslicked ) { _.setPosition(); }
             }, 50);
         }
     };
