@@ -737,7 +737,7 @@
             $('li', _.$dots).off('click.slick', _.changeSlide);
 
             if (_.options.pauseOnDotsHover === true && _.options.autoplay === true) {
-                
+
                 $('li', _.$dots)
                     .off('mouseenter.slick', $.proxy(_.setPaused, _, true))
                     .off('mouseleave.slick', $.proxy(_.setPaused, _, false));
