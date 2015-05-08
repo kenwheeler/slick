@@ -618,7 +618,7 @@
                             if (initial === true) {
                                 _.currentSlide = _.options.initialSlide;
                             }
-                            _.refresh();
+                            _.refresh(initial);
                         }
                         triggerBreakpoint = targetBreakpoint;
                     }
@@ -632,9 +632,8 @@
                                 targetBreakpoint]);
                         if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
-                        } else {
-                            _.refresh();
                         }
+                        _.refresh(initial);
                     }
                     triggerBreakpoint = targetBreakpoint;
                 }
@@ -645,7 +644,7 @@
                     if (initial === true) {
                         _.currentSlide = _.options.initialSlide;
                     }
-                    _.refresh();
+                    _.refresh(initial);
                     triggerBreakpoint = targetBreakpoint;
                 }
             }
@@ -1446,7 +1445,7 @@
 
     };
 
-    Slick.prototype.refresh = function() {
+    Slick.prototype.refresh = function( initializing ) {
 
         var _ = this,
             currentSlide = _.currentSlide;
@@ -1457,12 +1456,16 @@
 
         _.init();
 
-        _.changeSlide({
-            data: {
-                message: 'index',
-                index: currentSlide
-            }
-        }, false);
+        if( !initializing ) {
+
+            _.changeSlide({
+                data: {
+                    message: 'index',
+                    index: currentSlide
+                }
+            }, false);
+
+        }
 
     };
 
