@@ -618,7 +618,7 @@
                             if (initial === true) {
                                 _.currentSlide = _.options.initialSlide;
                             }
-                            _.refresh();
+                            _.refresh(initial);
                         }
                         triggerBreakpoint = targetBreakpoint;
                     }
@@ -632,9 +632,8 @@
                                 targetBreakpoint]);
                         if (initial === true) {
                             _.currentSlide = _.options.initialSlide;
-                        } else {
-                            _.refresh();
                         }
+                        _.refresh(initial);
                     }
                     triggerBreakpoint = targetBreakpoint;
                 }
@@ -645,7 +644,7 @@
                     if (initial === true) {
                         _.currentSlide = _.options.initialSlide;
                     }
-                    _.refresh();
+                    _.refresh(initial);
                     triggerBreakpoint = targetBreakpoint;
                 }
             }
@@ -733,14 +732,18 @@
 
         var _ = this;
 
-        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
-            $('li', _.$dots).off('click.slick', _.changeSlide);
-        }
+        if (_.options.dots && _.$dots !== null) {
 
-        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
-            $('li', _.$dots)
-                .off('mouseenter.slick', $.proxy(_.setPaused, _, true))
-                .off('mouseleave.slick', $.proxy(_.setPaused, _, false));
+            $('li', _.$dots).off('click.slick', _.changeSlide);
+
+            if (_.options.pauseOnDotsHover === true && _.options.autoplay === true) {
+
+                $('li', _.$dots)
+                    .off('mouseenter.slick', $.proxy(_.setPaused, _, true))
+                    .off('mouseleave.slick', $.proxy(_.setPaused, _, false));
+
+            }
+
         }
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
@@ -1442,7 +1445,7 @@
 
     };
 
-    Slick.prototype.refresh = function() {
+    Slick.prototype.refresh = function( initializing ) {
 
         var _ = this,
             currentSlide = _.currentSlide;
@@ -1453,12 +1456,16 @@
 
         _.init();
 
-        _.changeSlide({
-            data: {
-                message: 'index',
-                index: currentSlide
-            }
-        }, false);
+        if( !initializing ) {
+
+            _.changeSlide({
+                data: {
+                    message: 'index',
+                    index: currentSlide
+                }
+            }, false);
+
+        }
 
     };
 
