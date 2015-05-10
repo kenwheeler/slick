@@ -35,8 +35,7 @@
 
         function Slick(element, settings) {
 
-            var _ = this,
-                dataSettings, responsiveSettings, breakpoint;
+            var _ = this, dataSettings;
 
             _.defaults = {
                 accessibility: true,
@@ -144,27 +143,6 @@
             _.currentSlide = _.options.initialSlide;
 
             _.originalSettings = _.options;
-            responsiveSettings = _.options.responsive || null;
-
-            if (responsiveSettings && responsiveSettings.length > -1) {
-                _.respondTo = _.options.respondTo || 'window';
-                for (breakpoint in responsiveSettings) {
-                    if (responsiveSettings.hasOwnProperty(breakpoint)) {
-                        _.breakpoints.push(responsiveSettings[
-                            breakpoint].breakpoint);
-                        _.breakpointSettings[responsiveSettings[
-                                breakpoint].breakpoint] =
-                            responsiveSettings[breakpoint].settings;
-                    }
-                }
-                _.breakpoints.sort(function(a, b) {
-                    if (_.options.mobileFirst === true) {
-                        return a - b;
-                    } else {
-                        return b - a;
-                    }
-                });
-            }
 
             if (typeof document.mozHidden !== 'undefined') {
                 _.hidden = 'mozHidden';
@@ -192,8 +170,9 @@
             // Extracted from jQuery v1.11 source
             _.htmlExpr = /^(?:\s*(<[\w\W]+>)[^>]*)$/;
 
-            _.init(true);
 
+            _.registerBreakpoints();
+            _.init(true);
             _.checkResponsive(true);
 
         }
@@ -572,7 +551,7 @@
 
     };
 
-    Slick.prototype.checkResponsive = function(initial) {
+    Slick.prototype.checkResponsive = function(initial, forceUpdate) {
 
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
@@ -587,8 +566,9 @@
             respondToWidth = Math.min(windowWidth, sliderWidth);
         }
 
-        if (_.originalSettings.responsive && _.originalSettings
-            .responsive.length > -1 && _.originalSettings.responsive !== null) {
+        if ( _.options.responsive && 
+            _.options.responsive.length && 
+            _.options.responsive !== null) {
 
             targetBreakpoint = null;
 
@@ -608,7 +588,7 @@
 
             if (targetBreakpoint !== null) {
                 if (_.activeBreakpoint !== null) {
-                    if (targetBreakpoint !== _.activeBreakpoint) {
+                    if (targetBreakpoint !== _.activeBreakpoint || forceUpdate) {
                         _.activeBreakpoint =
                             targetBreakpoint;
                         if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
@@ -1127,6 +1107,7 @@
         if (!$(_.$slider).hasClass('slick-initialized')) {
 
             $(_.$slider).addClass('slick-initialized');
+
             _.buildRows();
             _.buildOut();
             _.setProps();
@@ -1135,6 +1116,7 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
+
         }
 
         if (creation) {
@@ -1472,6 +1454,46 @@
 
     };
 
+    Slick.prototype.registerBreakpoints = function() {
+
+        var _ = this, breakpoint, currentBreakpoint, l,
+            responsiveSettings = _.options.responsive || null;
+
+        if ( $.type(responsiveSettings) === "array" && responsiveSettings.length ) {
+
+            _.respondTo = _.options.respondTo || 'window';
+
+            for ( breakpoint in responsiveSettings ) {
+
+                l = _.breakpoints.length-1;
+                currentBreakpoint = responsiveSettings[breakpoint].breakpoint;
+
+                if (responsiveSettings.hasOwnProperty(breakpoint)) {
+
+                    // loop through the breakpoints and cut out any existing
+                    // ones with the same breakpoint number, we don't want dupes.
+                    while( l >= 0 ) {
+                        if( _.breakpoints[l] && _.breakpoints[l] === currentBreakpoint ) {
+                            _.breakpoints.splice(l,1);
+                        }
+                        l--;
+                    }
+
+                    _.breakpoints.push(currentBreakpoint);
+                    _.breakpointSettings[currentBreakpoint] = responsiveSettings[breakpoint].settings;
+
+                }
+
+            }
+
+            _.breakpoints.sort(function(a, b) {
+                return ( _.options.mobileFirst ) ? a-b : b-a;
+            });
+
+        }
+
+    };
+
     Slick.prototype.reinit = function() {
 
         var _ = this;
@@ -1489,21 +1511,18 @@
             _.currentSlide = 0;
         }
 
+        _.registerBreakpoints();
+
         _.setProps();
-
         _.setupInfinite();
-
         _.buildArrows();
-
         _.updateArrows();
-
         _.initArrowEvents();
-
         _.buildDots();
-
         _.updateDots();
-
         _.initDotEvents();
+
+        _.checkResponsive(false, true);
 
         if (_.options.focusOnSelect === true) {
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
@@ -1680,8 +1699,27 @@
 
     Slick.prototype.setOption = Slick.prototype.slickSetOption = function(option, value, refresh) {
 
-        var _ = this;
-        _.options[option] = value;
+        var _ = this, l, item;
+
+        if( option === "responsive" && $.type(value) === "array" ) {
+            for ( item in value ) {
+                if( $.type( _.options.responsive ) !== "array" ) {
+                    _.options.responsive = [ value[item] ];
+                } else {
+                    l = _.options.responsive.length-1;
+                    // loop through the responsive object and splice out duplicates.
+                    while( l >= 0 ) {
+                        if( _.options.responsive[l].breakpoint === value[item].breakpoint ) {
+                            _.options.responsive.splice(l,1);
+                        }
+                        l--;
+                    }
+                    _.options.responsive.push( value[item] );
+                }
+            }
+        } else {
+            _.options[option] = value;
+        }
 
         if (refresh === true) {
             _.unload();
