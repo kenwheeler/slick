@@ -549,8 +549,10 @@
             };
             _.$slider.html(newSlides);
             _.$slider.children().children().children()
-                .css('width', (100 / _.options.slidesPerRow) + "%")
-                .css({'display': 'inline-block'});
+                .css({
+                    'width':(100 / _.options.slidesPerRow) + "%",
+                    'display': 'inline-block'
+                });
         };
 
     };
