@@ -807,7 +807,7 @@
 
     };
 
-    Slick.prototype.destroy = function() {
+    Slick.prototype.destroy = function(refresh) {
 
         var _ = this;
 
@@ -854,6 +854,10 @@
         _.$slider.removeClass('slick-initialized');
 
         _.unslicked = true;
+        
+        if(!refresh) {
+            _.$slider.trigger('destroy', [_]);
+        }
 
     };
 
@@ -1449,7 +1453,7 @@
         var _ = this,
             currentSlide = _.currentSlide;
 
-        _.destroy();
+        _.destroy(true);
 
         $.extend(_, _.initials);
 
