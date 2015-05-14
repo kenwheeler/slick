@@ -3,7 +3,7 @@
 ### Test case required
 
 **All bug reports and problem issues require a jsFiddle**.   
-[Please fork this JSFiddle as a baseline](http://jsfiddle.net/nemh9nzk/).
+[Please fork this JSFiddle as a baseline](http://jsfiddle.net/simeydotme/fmo50w7n/).
 
 + A test case clearly demonstrates the bug or issue.
 + It contains the bare minimum HTML, CSS, and JavaScript required to demonstrate the bug.

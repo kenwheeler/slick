@@ -16,16 +16,16 @@ CDN hosted slick is a great way to get set up quick:
 In your ```<head>``` add:
 
 ````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.5/slick.css"/>
 
 // Add the slick-theme.css if you want default styling
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.0/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.5/slick-theme.css"/>
 ````
 
 Then, before your closing ```<body>``` tag add:
 
 ```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.0/slick.min.js"></script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.5/slick.min.js"></script>
 ```
 
 #### Package Managers
@@ -130,8 +130,9 @@ $('.your-element').on('beforeChange', function(event, slick, currentSlide, nextS
 
 Event | Params | Description
 ------ | -------- | -----------
-beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
 afterChange | event, slick, currentSlide | After slide change callback
+beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
+breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
 edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
 init | event, slick | When Slick initializes for the first time callback
 reInit | event, slick | Every time Slick (re-)initializes callback
