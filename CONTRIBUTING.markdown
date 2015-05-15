@@ -7,6 +7,7 @@
 
 + A test case clearly demonstrates the bug or issue.
 + It contains the bare minimum HTML, CSS, and JavaScript required to demonstrate the bug.
++ Assets are not minified (we cannot debug .min.js files).
 + A link to your production site is **not** a reduced test case.
 
 Providing a test case is the best way to get your issue addressed. Without a test case; your issue may be closed.  
