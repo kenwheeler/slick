@@ -884,6 +884,10 @@
 
         if (_.cssTransitions === false) {
 
+            _.$slides.eq(slideIndex).css({
+                zIndex: 1000
+            });
+
             _.$slides.eq(slideIndex).animate({
                 opacity: 1
             }, _.options.speed, _.options.easing, callback);
@@ -893,7 +897,8 @@
             _.applyTransition(slideIndex);
 
             _.$slides.eq(slideIndex).css({
-                opacity: 1
+                opacity: 1,
+                zIndex: 1000
             });
 
             if (callback) {
