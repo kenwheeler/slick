@@ -925,7 +925,7 @@
 
             _.$slides.eq(slideIndex).animate({
                 opacity: 0
-            }, _.options.speed, _.options.easing, callback);
+            }, _.options.speed, _.options.easing);
 
         } else {
 
