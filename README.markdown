@@ -133,6 +133,7 @@ Event | Params | Description
 afterChange | event, slick, currentSlide | After slide change callback
 beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
 breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
+destroy | event, slick | When slider is destroyed, or unslicked.
 edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
 init | event, slick | When Slick initializes for the first time callback
 reInit | event, slick | Every time Slick (re-)initializes callback
