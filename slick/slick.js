@@ -914,6 +914,37 @@
 
     };
 
+    Slick.prototype.fadeSlideOut = function(slideIndex, callback) {
+
+        var _ = this;
+
+        if (_.cssTransitions === false) {
+
+            _.$slides.eq(slideIndex).animate({
+                opacity: 0
+            }, _.options.speed, _.options.easing, callback);
+
+        } else {
+
+            _.applyTransition(slideIndex);
+
+            _.$slides.eq(slideIndex).css({
+                opacity: 0
+            });
+
+            if (callback) {
+                setTimeout(function() {
+
+                    _.disableTransition(slideIndex);
+
+                    callback.call();
+                }, _.options.speed);
+            }
+
+        }
+
+    };
+
     Slick.prototype.filterSlides = Slick.prototype.slickFilter = function(filter) {
 
         var _ = this;
@@ -1993,6 +2024,9 @@
 
         if (_.options.fade === true) {
             if (dontAnimate !== true) {
+                _.fadeSlideOut(oldSlide, function() {
+                    _.postSlide(oldSlide);
+                })
                 _.fadeSlide(animSlide, function() {
                     _.postSlide(animSlide);
                 });
