@@ -489,9 +489,11 @@
 
         var _ = this;
 
-        _.$slides = _.$slider.children(
-            ':not(.slick-cloned)').addClass(
-            'slick-slide');
+        _.$slides = 
+            _.$slider
+                .children( _.options.slide + ':not(.slick-cloned)')
+                .addClass('slick-slide');
+
         _.slideCount = _.$slides.length;
 
         _.$slides.each(function(index, element) {
