@@ -85,7 +85,8 @@
                 variableWidth: false,
                 vertical: false,
                 verticalSwiping: false,
-                waitForAnimate: true
+                waitForAnimate: true,
+                zIndex: 1000
             };
 
             _.initials = {
@@ -164,6 +165,10 @@
                         return b - a;
                     }
                 });
+            }
+
+            if (_.options.zIndex < 3) {
+                _.options.zIndex = 3;
             }
 
             if (typeof document.mozHidden !== 'undefined') {
@@ -888,7 +893,7 @@
         if (_.cssTransitions === false) {
 
             _.$slides.eq(slideIndex).css({
-                zIndex: 1000
+                zIndex: _.options.zIndex
             });
 
             _.$slides.eq(slideIndex).animate({
@@ -901,7 +906,7 @@
 
             _.$slides.eq(slideIndex).css({
                 opacity: 1,
-                zIndex: 1000
+                zIndex: _.options.zIndex
             });
 
             if (callback) {
@@ -1673,7 +1678,7 @@
                     position: 'relative',
                     right: targetLeft,
                     top: 0,
-                    zIndex: 800,
+                    zIndex: _.options.zIndex - 2,
                     opacity: 0
                 });
             } else {
@@ -1681,14 +1686,14 @@
                     position: 'relative',
                     left: targetLeft,
                     top: 0,
-                    zIndex: 800,
+                    zIndex: _.options.zIndex - 2,
                     opacity: 0
                 });
             }
         });
 
         _.$slides.eq(_.currentSlide).css({
-            zIndex: 900,
+            zIndex: _.options.zIndex - 1,
             opacity: 1
         });
 
