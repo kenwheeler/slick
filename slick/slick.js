@@ -1307,24 +1307,26 @@
 
         function loadImages(imagesScope) {
             $('img[data-lazy]', imagesScope).each(function() {
+
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
-                    image.animate({
-                        opacity: 1
-                    }, 200);
+                    image
+                        .animate({ opacity: 0 }, 100, function() {
+                            image
+                                .attr('src', imageSource)
+                                .animate({ opacity: 1 }, 200, function() {
+                                    image
+                                        .removeAttr('data-lazy')
+                                        .removeClass('slick-loading');
+                                });
+                        });
                 };
+
                 imageToLoad.src = imageSource;
 
-                image
-                    .css({
-                        opacity: 0
-                    })
-                    .attr('src', imageSource)
-                    .removeAttr('data-lazy')
-                    .removeClass('slick-loading');
             });
         }
 
