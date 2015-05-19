@@ -828,10 +828,10 @@
         if (_.$dots) {
             _.$dots.remove();
         }
-        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
+        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object' && typeof _.options.prevArrow !== 'string')) {
             _.$prevArrow.remove();
         }
-        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
+        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object' && typeof _.options.nextArrow !== 'string')) {
             _.$nextArrow.remove();
         }
 
@@ -2319,10 +2319,10 @@
         if (_.$dots) {
             _.$dots.remove();
         }
-        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
+        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object' && typeof _.options.prevArrow !== 'string')) {
             _.$prevArrow.remove();
         }
-        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
+        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object' && typeof _.options.nextArrow !== 'string')) {
             _.$nextArrow.remove();
         }
         _.$slides.removeClass('slick-slide slick-active slick-visible').attr("aria-hidden", "true").css('width', '');
