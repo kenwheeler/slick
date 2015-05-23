@@ -2390,11 +2390,11 @@
             _.$dots.remove();
         }
 
-        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
+        if (_.$prevArrow && _.htmlExpr.test(_.options.prevArrow)) {
             _.$prevArrow.remove();
         }
 
-        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
+        if (_.$nextArrow && _.htmlExpr.test(_.options.nextArrow)) {
             _.$nextArrow.remove();
         }
 
