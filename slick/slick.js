@@ -1985,25 +1985,10 @@
 
         if (_.slideCount <= _.options.slidesToShow) {
 
-            _.$slider
-                .find('.slick-slide')
-                .removeClass('slick-active')
-                .attr('aria-hidden', 'true');
-
-            _.$slides
-                .eq(index)
-                .addClass('slick-active')
-                .attr('aria-hidden', 'false');
-
-            if (_.options.centerMode === true) {
-
-                _.$slider.find('.slick-slide').removeClass('slick-center');
-                _.$slides.eq(index).addClass('slick-center');
-
-            }
-
+            _.setSlideClasses(index);
             _.asNavFor(index);
             return;
+            
         }
 
         _.slideHandler(index);
