@@ -1489,7 +1489,7 @@
 
         _.destroy(true);
 
-        $.extend(_, _.initials);
+        $.extend(_, _.initials, { currentSlide: currentSlide });
 
         _.init();
 
