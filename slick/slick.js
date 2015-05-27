@@ -1287,13 +1287,13 @@
         if (event.keyCode === 37 && _.options.accessibility === true) {
             _.changeSlide({
                 data: {
-                    message: 'previous'
+                    message: _.options.rtl === true ? 'next' :  'previous'
                 }
             });
         } else if (event.keyCode === 39 && _.options.accessibility === true) {
             _.changeSlide({
                 data: {
-                    message: 'next'
+                    message: _.options.rtl === true ? 'previous' : 'next'
                 }
             });
         }
