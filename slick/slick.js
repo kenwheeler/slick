@@ -1,4 +1,4 @@
-/*
+/*!
      _ _      _       _
  ___| (_) ___| | __  (_)___
 / __| | |/ __| |/ /  | / __|
@@ -6,13 +6,15 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.5
+ Version: 1.5.6
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
-
+ License: https://github.com/kenwheeler/slick/blob/master/LICENSE
+          The MIT License (MIT)
+          Copyright (c) 2015 Ken Wheeler
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
 (function(factory) {
