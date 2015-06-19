@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <script src="./bower_components/jquery/dist/jquery.js"></script>
+    <script src="./slick/slick.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="./slick/slick.css"/>
+    <title>DPB</title>
+
+    <style>
+    	.slicky{
+    		margin: 0 auto;
+    		width:800px;
+    		border:1px solid #666;
+    	}
+
+    	.slick-slide {
+    		background: #ccc;
+    		padding: 10px;
+    		margin: 10px;
+    	}
+
+    </style>
+</head>
+
+
+<body>
+	<div class="slicky" data-slick='{"slidesToShow": 3, "slidesToScroll": 3, "arrows": false, "infinite": false, "centerMode": true}'>
+
+	  <div>1</div>
+	  <div>2</div>
+	  <div>3</div>
+	  <div>4</div>
+	  <div>5</div>
+	  <div>6</div>
+
+	</div>
+</body>
+
+<script>
+
+$( document ).ready(function() {
+    $(".slicky").slick();
+});
+
+</script>
+</html>
