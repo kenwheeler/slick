@@ -975,14 +975,14 @@
         var counter = 0;
         var pagerQty = 0;
 
-        if (_.options.infinite === true) {
+        if (_.options.centerMode === true) {
+            pagerQty = _.slideCount;
+        } else if (_.options.infinite === true) {
             while (breakPoint < _.slideCount) {
                 ++pagerQty;
                 breakPoint = counter + _.options.slidesToShow;
                 counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
             }
-        } else if (_.options.centerMode === true) {
-            pagerQty = _.slideCount;
         } else {
             while (breakPoint < _.slideCount) {
                 ++pagerQty;
