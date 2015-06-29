@@ -232,6 +232,10 @@
             }
         }
 
+        if (!_.$slideTrack) {
+            return;
+        }
+
         _.$slides = _.$slideTrack.children(this.options.slide);
 
         _.$slideTrack.children(this.options.slide).detach();
@@ -2378,10 +2382,12 @@
             _.$nextArrow.remove();
         }
 
-        _.$slides
-            .removeClass('slick-slide slick-active slick-visible slick-current')
-            .attr('aria-hidden', 'true')
-            .css('width', '');
+        if (_.$slides) {
+             _.$slides
+                 .removeClass('slick-slide slick-active slick-visible slick-current')
+                 .attr('aria-hidden', 'true')
+                 .css('width', '');
+        }
 
     };
 
