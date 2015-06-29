@@ -1284,6 +1284,8 @@
 
         var _ = this;
 
+        if ($("input:focus").length !== 0) return;
+
         if (event.keyCode === 37 && _.options.accessibility === true) {
             _.changeSlide({
                 data: {
