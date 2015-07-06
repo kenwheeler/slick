@@ -668,17 +668,12 @@
     Slick.prototype.changeSlide = function(event, dontAnimate) {
 
         var _ = this,
-            $target = $(event.target),
-            indexOffset, slideOffset, unevenOffset;
+            $target = $(event.currentTarget),
+            indexOffset, slideOffset, unevenOffset, index;
 
         // If target is a link, prevent default action.
         if($target.is('a')) {
             event.preventDefault();
-        }
-
-        // If target is not the <li> element (ie: a child), find the <li>.
-        if(!$target.is('li')) {
-            $target = $target.closest('li');
         }
 
         unevenOffset = (_.slideCount % _.options.slidesToScroll !== 0);
@@ -701,8 +696,12 @@
                 break;
 
             case 'index':
-                var index = event.data.index === 0 ? 0 :
-                    event.data.index || $target.index() * _.options.slidesToScroll;
+                // If target is not the <li> element (ie: a child), find the <li>.
+                if(!$target.is('li')) {
+                    $target = $target.closest('li');
+                }
+
+                index = event.data.index === 0 ? 0 : event.data.index || $target.index() * _.options.slidesToScroll;
 
                 _.slideHandler(_.checkNavigable(index), false, dontAnimate);
                 $target.children().trigger('focus');
