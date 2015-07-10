@@ -45,15 +45,15 @@
                 appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
-                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="previous">Previous</button>',
-                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="next">Next</button>',
+                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button">Previous</button>',
+                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return '<button type="button" data-role="none">' + (i + 1) + '</button>';
+                    return '<button type="button" data-role="none" role="button" aria-required="false" tabindex="0">' + (i + 1) + '</button>';
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -446,7 +446,7 @@
             _.$nextArrow = $(_.options.nextArrow);
 
             if (_.htmlExpr.test(_.options.prevArrow)) {
-                _.$prevArrow.appendTo(_.options.appendArrows);
+                _.$prevArrow.prependTo(_.options.appendArrows);
             }
 
             if (_.htmlExpr.test(_.options.nextArrow)) {
@@ -526,9 +526,6 @@
 
         _.updateDots();
 
-        if (_.options.accessibility === true) {
-            _.$list.prop('tabIndex', 0);
-        }
 
         _.setSlideClasses(typeof _.currentSlide === 'number' ? _.currentSlide : 0);
 
@@ -1172,6 +1169,10 @@
         if (creation) {
             _.$slider.trigger('init', [_]);
         }
+        
+        if (_.options.accessibility === true) {
+            _.initADA();
+        };
 
     };
 
@@ -1283,19 +1284,21 @@
     Slick.prototype.keyHandler = function(event) {
 
         var _ = this;
-
-        if (event.keyCode === 37 && _.options.accessibility === true) {
-            _.changeSlide({
-                data: {
-                    message: 'previous'
-                }
-            });
-        } else if (event.keyCode === 39 && _.options.accessibility === true) {
-            _.changeSlide({
-                data: {
-                    message: 'next'
-                }
-            });
+         //Dont slide if the cursor is inside the form fields and arrow keys are pressed
+        if(!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
+            if (event.keyCode === 37 && _.options.accessibility === true) {
+                _.changeSlide({
+                    data: {
+                        message: 'previous'
+                    }
+                });
+            } else if (event.keyCode === 39 && _.options.accessibility === true) {
+                _.changeSlide({
+                    data: {
+                        message: 'next'
+                    }
+                });
+            }
         }
 
     };
@@ -1438,6 +1441,9 @@
         if (_.options.autoplay === true && _.paused === false) {
             _.autoPlay();
         }
+        if (_.options.accessibility === true) {
+            _.initADA();
+        }
 
     };
 
@@ -1550,6 +1556,10 @@
         _.setPosition();
 
         _.$slider.trigger('reInit', [_]);
+        
+        if (_.options.autoplay === true) {
+            _.focusHandler()
+        };
 
     };
 
@@ -2453,6 +2463,75 @@
             }
         }
 
+    };
+    Slick.prototype.initADA = function() {
+        var _ = this;
+        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
+            'aria-hidden': 'true',
+            'tabindex': '-1'
+        }).find('a, input, button, select').attr({
+            'tabindex': '-1'
+        });
+
+        _.$slideTrack.attr('role', 'listbox')
+
+        _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
+            $(this).attr({
+                'role': 'option',
+                'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
+            })
+        });
+
+        if (_.$dots !== null) {
+            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
+                $(this).attr({
+                    'role': 'presentation',
+                    'aria-selected': 'false',
+                    'aria-controls': 'navigation' + _.instanceUid + i + '',
+                    'id': 'slick-slide' + _.instanceUid + i + ''
+                })
+            })
+                .first().attr('aria-selected', 'true').end()
+                .find('button').attr('role', 'button').end()
+                .closest('div').attr('role', 'toolbar');
+        };
+        _.activateADA();
+
+    };
+
+    Slick.prototype.activateADA = function() {
+        var _ = this,
+        _isSlideOnFocus =_.$slider.find('*').is(':focus');
+        // _isSlideOnFocus = _.$slides.is(':focus') || _.$slides.find('*').is(':focus');
+
+        _.$slideTrack.find('.slick-active').attr({
+            'aria-hidden': 'false',
+            'tabindex': '0'
+        }).find('a, input, button, select').attr({
+            'tabindex': '0'
+        });
+
+        (_isSlideOnFocus) &&  _.$slideTrack.find('.slick-active').focus();
+
+    };
+
+    Slick.prototype.focusHandler = function() {
+        var _ = this;
+        _.$slider.on('focus.slick blur.slick', '*', function(event) {
+            event.stopImmediatePropagation();
+            var sf = $(this);
+            setTimeout(function() {
+                if (_.isPlay) {
+                    if (sf.is(':focus')) {
+                        _.autoPlayClear();
+                        _.paused = true;
+                    } else {
+                        _.paused = false;
+                        _.autoPlay();
+                    }
+                };
+            }, 0);
+        });
     };
 
     $.fn.slick = function() {
