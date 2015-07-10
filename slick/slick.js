@@ -570,7 +570,7 @@
                     'width':(100 / _.options.slidesPerRow) + '%',
                     'display': 'inline-block'
                 });
-        
+
         }
 
     };
@@ -1001,7 +1001,7 @@
             targetSlide;
 
         _.slideOffset = 0;
-        verticalHeight = _.$slides.first().outerHeight();
+        verticalHeight = _.$slides.first().outerHeight(true);
 
         if (_.options.infinite === true) {
             if (_.slideCount > _.options.slidesToShow) {
@@ -1516,7 +1516,7 @@
 
         var _ = this;
 
-        _.$slides = 
+        _.$slides =
             _.$slideTrack
                 .children(_.options.slide)
                 .addClass('slick-slide');
@@ -1895,9 +1895,9 @@
 
                 remainder = _.slideCount % _.options.slidesToShow;
                 indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
-                
+
                 if (_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow) {
-                    
+
                     allSlides
                         .slice(indexOffset - (_.options.slidesToShow - remainder), indexOffset + remainder)
                         .addClass('slick-active')
@@ -1984,9 +1984,9 @@
 
         var _ = this;
 
-        var targetElement = 
-            $(event.target).is('.slick-slide') ? 
-                $(event.target) : 
+        var targetElement =
+            $(event.target).is('.slick-slide') ?
+                $(event.target) :
                 $(event.target).parents('.slick-slide');
 
         var index = parseInt(targetElement.attr('data-slick-index'));
@@ -1998,7 +1998,7 @@
             _.setSlideClasses(index);
             _.asNavFor(index);
             return;
-            
+
         }
 
         _.slideHandler(index);
@@ -2094,7 +2094,7 @@
 
         if (_.options.fade === true) {
             if (dontAnimate !== true) {
-                
+
                 _.fadeSlideOut(oldSlide);
 
                 _.fadeSlide(animSlide, function() {
