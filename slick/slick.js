@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.5
+ Version: 1.5.6
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -423,7 +423,7 @@
 
             _.$prevArrow = $(_.options.prevArrow).addClass('slick-arrow');
             _.$nextArrow = $(_.options.nextArrow).addClass('slick-arrow');
-            
+
             if( _.slideCount > _.options.slidesToShow ) {
 
                 _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
@@ -487,7 +487,7 @@
 
         var _ = this;
 
-        _.$slides = 
+        _.$slides =
             _.$slider
                 .children( _.options.slide + ':not(.slick-cloned)')
                 .addClass('slick-slide');
@@ -590,8 +590,8 @@
             respondToWidth = Math.min(windowWidth, sliderWidth);
         }
 
-        if ( _.options.responsive && 
-            _.options.responsive.length && 
+        if ( _.options.responsive &&
+            _.options.responsive.length &&
             _.options.responsive !== null) {
 
             targetBreakpoint = null;
@@ -1188,7 +1188,7 @@
         if (creation) {
             _.$slider.trigger('init', [_]);
         }
-        
+
         if (_.options.accessibility === true) {
             _.initADA();
         }
@@ -1612,7 +1612,7 @@
         _.setPosition();
 
         _.$slider.trigger('reInit', [_]);
-        
+
         if (_.options.autoplay === true) {
             _.focusHandler();
         }
@@ -2485,8 +2485,8 @@
 
         centerOffset = Math.floor(_.options.slidesToShow / 2);
 
-        if ( _.options.arrows === true && 
-            _.slideCount > _.options.slidesToShow && 
+        if ( _.options.arrows === true &&
+            _.slideCount > _.options.slidesToShow &&
             !_.options.infinite ) {
 
             _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
