@@ -32,7 +32,7 @@ Then, before your closing ```<body>``` tag add:
 
 ````
 //Bower
-bower install --save slick.js
+bower install --save slick-carousel
 
 //NPM
 npm install slick-carousel
