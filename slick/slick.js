@@ -1191,7 +1191,7 @@
         
         if (_.options.accessibility === true) {
             _.initADA();
-        };
+        }
 
     };
 
@@ -1614,8 +1614,8 @@
         _.$slider.trigger('reInit', [_]);
         
         if (_.options.autoplay === true) {
-            _.focusHandler()
-        };
+            _.focusHandler();
+        }
 
     };
 
@@ -2558,13 +2558,13 @@
             'tabindex': '-1'
         });
 
-        _.$slideTrack.attr('role', 'listbox')
+        _.$slideTrack.attr('role', 'listbox');
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr({
                 'role': 'option',
                 'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
-            })
+            });
         });
 
         if (_.$dots !== null) {
@@ -2574,12 +2574,12 @@
                     'aria-selected': 'false',
                     'aria-controls': 'navigation' + _.instanceUid + i + '',
                     'id': 'slick-slide' + _.instanceUid + i + ''
-                })
+                });
             })
                 .first().attr('aria-selected', 'true').end()
                 .find('button').attr('role', 'button').end()
                 .closest('div').attr('role', 'toolbar');
-        };
+        }
         _.activateADA();
 
     };
@@ -2614,7 +2614,7 @@
                         _.paused = false;
                         _.autoPlay();
                     }
-                };
+                }
             }, 0);
         });
     };
