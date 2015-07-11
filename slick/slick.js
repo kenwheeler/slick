@@ -419,21 +419,33 @@
 
         var _ = this;
 
-        if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
+        if (_.options.arrows === true ) {
 
-            _.$prevArrow = $(_.options.prevArrow);
-            _.$nextArrow = $(_.options.nextArrow);
+            _.$prevArrow = $(_.options.prevArrow).addClass('slick-arrow');
+            _.$nextArrow = $(_.options.nextArrow).addClass('slick-arrow');
+            
+            if( _.slideCount > _.options.slidesToShow ) {
 
-            if (_.htmlExpr.test(_.options.prevArrow)) {
-                _.$prevArrow.prependTo(_.options.appendArrows);
-            }
+                _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden');
+                _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden');
 
-            if (_.htmlExpr.test(_.options.nextArrow)) {
-                _.$nextArrow.appendTo(_.options.appendArrows);
-            }
+                if (_.htmlExpr.test(_.options.prevArrow)) {
+                    _.$prevArrow.prependTo(_.options.appendArrows);
+                }
 
-            if (_.options.infinite !== true) {
-                _.$prevArrow.addClass('slick-disabled');
+                if (_.htmlExpr.test(_.options.nextArrow)) {
+                    _.$nextArrow.appendTo(_.options.appendArrows);
+                }
+
+                if (_.options.infinite !== true) {
+                    _.$prevArrow.addClass('slick-disabled');
+                }
+
+            } else {
+
+                _.$prevArrow.addClass('slick-hidden').attr('aria-hidden', 'true');
+                _.$nextArrow.addClass('slick-hidden').attr('aria-hidden', 'true');
+
             }
 
         }
@@ -805,11 +817,29 @@
         if (_.$dots) {
             _.$dots.remove();
         }
-        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
-            _.$prevArrow.remove();
+
+        if ( _.$prevArrow.length ) {
+
+            _.$prevArrow
+                .removeClass('slick-disabled slick-arrow slick-hidden')
+                .removeAttr('aria-hidden')
+                .css("display","");
+
+            if ( _.htmlExpr.test( _.options.prevArrow )) {
+                _.$prevArrow.remove();
+            }
         }
-        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
-            _.$nextArrow.remove();
+
+        if ( _.$nextArrow.length ) {
+
+            _.$nextArrow
+                .removeClass('slick-disabled slick-arrow slick-hidden')
+                .removeAttr('aria-hidden')
+                .css("display","");
+
+            if ( _.htmlExpr.test( _.options.nextArrow )) {
+                _.$nextArrow.remove();
+            }
         }
 
         if (_.$slides) {
@@ -2416,11 +2446,11 @@
             _.$dots.remove();
         }
 
-        if (_.$prevArrow && (typeof _.options.prevArrow !== 'object')) {
+        if (_.$prevArrow && _.htmlExpr.test(_.options.prevArrow)) {
             _.$prevArrow.remove();
         }
 
-        if (_.$nextArrow && (typeof _.options.nextArrow !== 'object')) {
+        if (_.$nextArrow && _.htmlExpr.test(_.options.nextArrow)) {
             _.$nextArrow.remove();
         }
 
@@ -2446,10 +2476,13 @@
 
         centerOffset = Math.floor(_.options.slidesToShow / 2);
 
-        if (_.options.arrows === true && _.options.infinite !==
-            true && _.slideCount > _.options.slidesToShow) {
+        if ( _.options.arrows === true && 
+            _.slideCount > _.options.slidesToShow && 
+            !_.options.infinite ) {
+
             _.$prevArrow.removeClass('slick-disabled');
             _.$nextArrow.removeClass('slick-disabled');
+
             if (_.currentSlide === 0) {
                 _.$prevArrow.addClass('slick-disabled');
                 _.$nextArrow.removeClass('slick-disabled');
@@ -2460,6 +2493,7 @@
                 _.$nextArrow.addClass('slick-disabled');
                 _.$prevArrow.removeClass('slick-disabled');
             }
+
         }
 
     };
