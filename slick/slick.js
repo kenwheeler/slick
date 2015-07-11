@@ -426,8 +426,8 @@
             
             if( _.slideCount > _.options.slidesToShow ) {
 
-                _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden');
-                _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden');
+                _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
+                _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
 
                 if (_.htmlExpr.test(_.options.prevArrow)) {
                     _.$prevArrow.prependTo(_.options.appendArrows);
@@ -438,13 +438,20 @@
                 }
 
                 if (_.options.infinite !== true) {
-                    _.$prevArrow.addClass('slick-disabled');
+                    _.$prevArrow
+                        .addClass('slick-disabled')
+                        .attr('aria-disabled', 'true');
                 }
 
             } else {
 
-                _.$prevArrow.addClass('slick-hidden').attr('aria-hidden', 'true');
-                _.$nextArrow.addClass('slick-hidden').attr('aria-hidden', 'true');
+                _.$prevArrow.add( _.$nextArrow )
+
+                    .addClass('slick-hidden')
+                    .attr({
+                        'aria-disabled': 'true',
+                        'tabindex': '-1'
+                    });
 
             }
 
@@ -824,7 +831,7 @@
 
             _.$prevArrow
                 .removeClass('slick-disabled slick-arrow slick-hidden')
-                .removeAttr('aria-hidden')
+                .removeAttr('aria-hidden aria-disabled tabindex')
                 .css("display","");
 
             if ( _.htmlExpr.test( _.options.prevArrow )) {
@@ -836,7 +843,7 @@
 
             _.$nextArrow
                 .removeClass('slick-disabled slick-arrow slick-hidden')
-                .removeAttr('aria-hidden')
+                .removeAttr('aria-hidden aria-disabled tabindex')
                 .css("display","");
 
             if ( _.htmlExpr.test( _.options.nextArrow )) {
@@ -2482,18 +2489,24 @@
             _.slideCount > _.options.slidesToShow && 
             !_.options.infinite ) {
 
-            _.$prevArrow.removeClass('slick-disabled');
-            _.$nextArrow.removeClass('slick-disabled');
+            _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+            _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
             if (_.currentSlide === 0) {
-                _.$prevArrow.addClass('slick-disabled');
-                _.$nextArrow.removeClass('slick-disabled');
+
+                _.$prevArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
+                _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+
             } else if (_.currentSlide >= _.slideCount - _.options.slidesToShow && _.options.centerMode === false) {
-                _.$nextArrow.addClass('slick-disabled');
-                _.$prevArrow.removeClass('slick-disabled');
+
+                _.$nextArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
+                _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+
             } else if (_.currentSlide >= _.slideCount - 1 && _.options.centerMode === true) {
-                _.$nextArrow.addClass('slick-disabled');
-                _.$prevArrow.removeClass('slick-disabled');
+
+                _.$nextArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
+                _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+
             }
 
         }
