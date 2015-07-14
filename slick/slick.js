@@ -1,4 +1,4 @@
-/*
+/*!
      _ _      _       _
  ___| (_) ___| | __  (_)___
 / __| | |/ __| |/ /  | / __|
@@ -12,7 +12,9 @@
     Docs: http://kenwheeler.github.io/slick
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
-
+ License: https://github.com/kenwheeler/slick/blob/master/LICENSE
+          The MIT License (MIT)
+          Copyright (c) 2015 Ken Wheeler
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
 (function(factory) {

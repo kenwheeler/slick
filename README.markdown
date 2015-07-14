@@ -220,7 +220,7 @@ jQuery 1.7
 
 #### License
 
-Copyright (c) 2014 Ken Wheeler
+Copyright (c) 2015 Ken Wheeler
 
 Licensed under the MIT license.
 
