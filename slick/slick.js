@@ -2440,6 +2440,25 @@
 
     };
 
+    // Slick.prototype.goToSlide = function() {
+
+        // var _ = this;
+        //
+        // var checkQuery;
+        // var sliderid  = _.$slider.slick().getSlick().instanceUid;
+        // var paramName = "slick" + sliderid;
+        // var queries   = window.location.search.slice(1).split('&');
+        //
+        // for (var query in queries) {
+        //     checkQuery = queries[query].split('=');
+        //
+        //     if (checkQuery[0] == paramName) {
+        //         _.goTo(parseInt( checkQuery[1], 10 ), false);
+        //     }
+        // }
+
+    // };
+
     Slick.prototype.visibility = function() {
 
         var _ = this;
