@@ -624,14 +624,13 @@
                             if (initial === true) {
                                 _.currentSlide = _.options.initialSlide;
                             }
-                            _.refresh(initial);
                         }
                         triggerBreakpoint = targetBreakpoint;
                     }
                 } else {
                     _.activeBreakpoint = targetBreakpoint;
                     if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-                        _.unslick(targetBreakpoint);
+                        
                     } else {
                         _.options = $.extend({}, _.originalSettings,
                             _.breakpointSettings[
