@@ -827,33 +827,32 @@
             _.$dots.remove();
         }
 
-        if ( _.options.arrows === true ) {
 
-            if ( _.$prevArrow && _.$prevArrow.length ) {
+        if ( _.$prevArrow && _.$prevArrow.length ) {
 
-                _.$prevArrow
-                    .removeClass('slick-disabled slick-arrow slick-hidden')
-                    .removeAttr('aria-hidden aria-disabled tabindex')
-                    .css("display","");
+            _.$prevArrow
+                .removeClass('slick-disabled slick-arrow slick-hidden')
+                .removeAttr('aria-hidden aria-disabled tabindex')
+                .css("display","");
 
-                if ( _.htmlExpr.test( _.options.prevArrow )) {
-                    _.$prevArrow.remove();
-                }
+            if ( _.htmlExpr.test( _.options.prevArrow )) {
+                _.$prevArrow.remove();
             }
-
-            if ( _.$nextArrow && _.$nextArrow.length ) {
-
-                _.$nextArrow
-                    .removeClass('slick-disabled slick-arrow slick-hidden')
-                    .removeAttr('aria-hidden aria-disabled tabindex')
-                    .css("display","");
-
-                if ( _.htmlExpr.test( _.options.nextArrow )) {
-                    _.$nextArrow.remove();
-                }
-            }
-
         }
+
+        if ( _.$nextArrow && _.$nextArrow.length ) {
+
+            _.$nextArrow
+                .removeClass('slick-disabled slick-arrow slick-hidden')
+                .removeAttr('aria-hidden aria-disabled tabindex')
+                .css("display","");
+
+            if ( _.htmlExpr.test( _.options.nextArrow )) {
+                _.$nextArrow.remove();
+            }
+            
+        }
+
 
         if (_.$slides) {
 
