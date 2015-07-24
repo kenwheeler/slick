@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.7
+ Version: 1.5.8
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -850,7 +850,7 @@
             if ( _.htmlExpr.test( _.options.nextArrow )) {
                 _.$nextArrow.remove();
             }
-            
+
         }
 
 
@@ -1481,8 +1481,8 @@
 
     };
 
-    Slick.prototype.preventDefault = function(e) {
-        e.preventDefault();
+    Slick.prototype.preventDefault = function(event) {
+        event.preventDefault();
     };
 
     Slick.prototype.progressiveLazyLoad = function() {
