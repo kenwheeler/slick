@@ -1185,7 +1185,7 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
-            //_.slickGoToSlide();
+            _.goToSlide();
 
         }
 
@@ -2538,24 +2538,22 @@
 
     };
 
-    // Slick.prototype.goToSlide = function() {
+    Slick.prototype.goToSlide = function() {
+        var _ = this;
 
-        // var _ = this;
-        //
-        // var checkQuery;
-        // var sliderid  = _.$slider.slick().getSlick().instanceUid;
-        // var paramName = "slick" + sliderid;
-        // var queries   = window.location.search.slice(1).split('&');
-        //
-        // for (var query in queries) {
-        //     checkQuery = queries[query].split('=');
-        //
-        //     if (checkQuery[0] == paramName) {
-        //         _.goTo(parseInt( checkQuery[1], 10 ), false);
-        //     }
-        // }
+        var checkQuery;
+        var sliderId  = _.instanceUid;
+        var paramName = "slick" + sliderId;
+        var queries   = window.location.search.slice(1).split('&');
 
-    // };
+        for (var query in queries) {
+            checkQuery = queries[query].split('=');
+
+            if (checkQuery[0] == paramName) {
+                _.goTo(parseInt( checkQuery[1], 10 ), false);
+            }
+        }
+    };
 
     Slick.prototype.visibility = function() {
 
