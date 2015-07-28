@@ -666,7 +666,7 @@
     Slick.prototype.changeSlide = function(event, dontAnimate) {
 
         var _ = this,
-            $target = $(event.target),
+            $target = $(event.currentTarget),
             indexOffset, slideOffset, unevenOffset;
 
         // If target is a link, prevent default action.
