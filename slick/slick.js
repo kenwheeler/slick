@@ -1185,7 +1185,7 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
-            _.goToSlide();
+            _.querySlide();
 
         }
 
@@ -2538,7 +2538,7 @@
 
     };
 
-    Slick.prototype.goToSlide = function() {
+    Slick.prototype.querySlide = function() {
         var _ = this;
 
         var checkQuery;
