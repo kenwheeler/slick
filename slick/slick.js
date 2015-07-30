@@ -1185,11 +1185,11 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
-            _.querySlide();
-
+            
         }
 
         if (creation) {
+            _.querySlide();
             _.$slider.trigger('init', [_]);
         }
 
