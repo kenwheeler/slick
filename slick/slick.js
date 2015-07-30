@@ -64,7 +64,6 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
-                preLoad: false,
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
@@ -828,7 +827,6 @@
             _.$dots.remove();
         }
 
-<<<<<<< HEAD
 
         if ( _.$prevArrow && _.$prevArrow.length ) {
 
@@ -837,25 +835,12 @@
                 .removeAttr('aria-hidden aria-disabled tabindex')
                 .css("display","");
 
-=======
-        if ( _.$prevArrow.length ) {
-
-            _.$prevArrow
-                .removeClass('slick-disabled slick-arrow slick-hidden')
-                .removeAttr('aria-hidden aria-disabled tabindex')
-                .css("display","");
-
->>>>>>> Added pre-loading feature with a preLoad option
             if ( _.htmlExpr.test( _.options.prevArrow )) {
                 _.$prevArrow.remove();
             }
         }
 
-<<<<<<< HEAD
         if ( _.$nextArrow && _.$nextArrow.length ) {
-=======
-        if ( _.$nextArrow.length ) {
->>>>>>> Added pre-loading feature with a preLoad option
 
             _.$nextArrow
                 .removeClass('slick-disabled slick-arrow slick-hidden')
@@ -1387,38 +1372,22 @@
         }
 
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
-        loadImages(loadRange);
 
-        if (_.options.preLoad === true) {
-            var preLoadNextRangeStart, preLoadNextRangeEnd, preLoadNextRange,
-                    preLoadPrevRangeStart, preLoadPrevPrevRangeEnd, preLoadPrevRange;
+        if (_.options.lazyLoad === 'anticipated') {
+            var prevSlide = rangeStart - 1,
+                nextSlide = rangeEnd,
+                $slides = _.$slider.find('.slick-slide');
 
-            var realSlides = _.$slider.find('.slick-slide:not(.slick-cloned)').get();
-
-            // Pre-loading next set of images
-            preLoadNextRangeStart = --rangeEnd < _.slideCount ? rangeEnd : 0;
-            preLoadNextRangeEnd = preLoadNextRangeStart + _.options.slidesToShow;
-
-            if (preLoadNextRangeEnd >= _.slideCount) {
-                preLoadNextRange = realSlides.slice(preLoadNextRangeStart)
-                        .concat(realSlides.slice(0, preLoadNextRangeEnd - _.slideCount));
-            } else {
-                preLoadNextRange = realSlides.slice(preLoadNextRangeStart, preLoadNextRangeEnd);
+            for (var i = 0; i < _.options.slidesToScroll; i++) {
+                if (prevSlide < 0) prevSlide = _.slideCount - 1;
+                loadRange = loadRange.add($slides.eq(prevSlide));
+                loadRange = loadRange.add($slides.eq(nextSlide));
+                prevSlide--;
+                nextSlide++;
             }
-            loadImages(preLoadNextRange);
-
-            // Pre-loading prev set of images
-            preLoadPrevPrevRangeEnd = --rangeStart > 0 ? rangeStart : _.slideCount;
-            preLoadPrevRangeStart = preLoadPrevPrevRangeEnd - _.options.slidesToShow;
-
-            if (preLoadPrevRangeStart < 0) {
-                preLoadPrevRange = realSlides.slice(0, preLoadPrevPrevRangeEnd).reverse()
-                        .concat(realSlides.slice(_.slideCount + preLoadPrevRangeStart).reverse);
-            } else {
-                preLoadPrevRange = realSlides.slice(preLoadPrevRangeStart, preLoadPrevPrevRangeEnd);
-            }
-            loadImages(preLoadPrevRange);
         }
+
+        loadImages(loadRange);
 
         if (_.slideCount <= _.options.slidesToShow) {
             cloneRange = _.$slider.find('.slick-slide');
@@ -2039,10 +2008,9 @@
 
         }
 
-        if (_.options.lazyLoad === 'ondemand') {
+        if (_.options.lazyLoad === 'ondemand' || _.options.lazyLoad === 'anticipated') {
             _.lazyLoad();
         }
-
     };
 
     Slick.prototype.setupInfinite = function() {
