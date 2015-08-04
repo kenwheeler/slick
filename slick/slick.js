@@ -1512,8 +1512,13 @@
 
     Slick.prototype.refresh = function( initializing ) {
 
-        var _ = this,
-            currentSlide = _.currentSlide;
+        var _ = this, currentSlide;
+
+        if (_.slideCount <= _.options.slidesToShow) {
+            _.currentSlide = 0;
+        }
+
+         currentSlide = _.currentSlide;
 
         _.destroy(true);
 
