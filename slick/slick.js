@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.9
+ Version: 1.5.10
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -72,6 +72,7 @@
                 rows: 1,
                 rtl: false,
                 slide: '',
+                slidesGutter: 0,
                 slidesPerRow: 1,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -272,7 +273,7 @@
                     duration: _.options.speed,
                     easing: _.options.easing,
                     step: function(now) {
-                        now = Math.ceil(now);
+                        now = Math.ceil(now) - _.options.slidesGutter;
                         if (_.options.vertical === false) {
                             animProps[_.animType] = 'translate(' +
                                 now + 'px, 0px)';
@@ -293,7 +294,7 @@
             } else {
 
                 _.applyTransition();
-                targetLeft = Math.ceil(targetLeft);
+                targetLeft = Math.ceil(targetLeft) - _.options.slidesGutter;
 
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
@@ -490,7 +491,9 @@
         _.$slides =
             _.$slider
                 .children( _.options.slide + ':not(.slick-cloned)')
-                .addClass('slick-slide');
+                .addClass('slick-slide')
+                  .css('padding-right', _.options.slidesGutter);
+
 
         _.slideCount = _.$slides.length;
 
@@ -1734,8 +1737,9 @@
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
         }
 
-        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
+        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width() - _.options.slidesGutter;
         if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+        if (_.options.slidesGutter > 0) _.$slideTrack.width(_.$slideTrack.width() + (_.options.slidesGutter * _.$slides.length));
 
     };
 
