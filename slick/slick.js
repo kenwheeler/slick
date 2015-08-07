@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.10
+ Version: 1.5.11
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -273,7 +273,7 @@
                     duration: _.options.speed,
                     easing: _.options.easing,
                     step: function(now) {
-                        now = Math.ceil(now) - _.options.slidesGutter;
+                        now = Math.ceil(now);
                         if (_.options.vertical === false) {
                             animProps[_.animType] = 'translate(' +
                                 now + 'px, 0px)';
@@ -294,7 +294,7 @@
             } else {
 
                 _.applyTransition();
-                targetLeft = Math.ceil(targetLeft) - _.options.slidesGutter;
+                targetLeft = Math.ceil(targetLeft);
 
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
@@ -1089,6 +1089,15 @@
                 targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
             }
         }
+        else {
+            if (slideIndex > 0) {
+                targetLeft -= _.options.slidesGutter;
+            }
+
+            if (slideIndex === (_.$slides.length - 1)) {
+                targetLeft -= _.options.slidesGutter;
+            }
+        }
 
         return targetLeft;
 
@@ -1728,7 +1737,11 @@
 
         if (_.options.vertical === false && _.options.variableWidth === false) {
             _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
-            _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+            var trackWidth = Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length));
+
+            (_.options.slidesGutter > 0) ?
+                _.$slideTrack.width(trackWidth + (_.options.slidesGutter * _.$slides.length)) :
+                _.$slideTrack.width(trackWidth);
 
         } else if (_.options.variableWidth === true) {
             _.$slideTrack.width(5000 * _.slideCount);
@@ -1739,7 +1752,6 @@
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width() - _.options.slidesGutter;
         if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
-        if (_.options.slidesGutter > 0) _.$slideTrack.width(_.$slideTrack.width() + (_.options.slidesGutter * _.$slides.length));
 
     };
 
