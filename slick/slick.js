@@ -2602,18 +2602,13 @@
     };
 
     Slick.prototype.activateADA = function() {
-        var _ = this,
-        _isSlideOnFocus =_.$slider.find('*').is(':focus');
-        // _isSlideOnFocus = _.$slides.is(':focus') || _.$slides.find('*').is(':focus');
+        var _ = this;
 
         _.$slideTrack.find('.slick-active').attr({
-            'aria-hidden': 'false',
-            'tabindex': '0'
+            'aria-hidden': 'false'
         }).find('a, input, button, select').attr({
             'tabindex': '0'
         });
-
-        (_isSlideOnFocus) &&  _.$slideTrack.find('.slick-active').focus();
 
     };
 
