@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.11
+ Version: 1.5.12
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -1094,7 +1094,7 @@
                 targetLeft -= _.options.slidesGutter;
             }
 
-            if (slideIndex === (_.$slides.length - 1)) {
+            if (_.$slides.length > 2 && slideIndex === (_.$slides.length - 1)) {
                 targetLeft -= _.options.slidesGutter;
             }
         }
