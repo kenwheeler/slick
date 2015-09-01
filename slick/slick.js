@@ -971,7 +971,34 @@
 
             _.$slideTrack.children(this.options.slide).detach();
 
-            _.$slidesCache.filter(filter).appendTo(_.$slideTrack);
+            if (_.options.rows > 1) {
+                _.$slidesCache.clone().appendTo(_.$slideTrack);
+                var filteredSlides = _.$slideTrack.find("> div > div > *").filter(filter);
+
+                if (filteredSlides.length > 0) {
+                    // remove all slides
+                    _.$slideTrack.find("> div > div > *").detach();
+
+                    // attach filtered slides to slide containers
+                    _.$slideTrack.find("> div > div").each(function() {
+                        if (filteredSlides.length) {
+                            var slide = filteredSlides.get(0);
+                            filteredSlides.splice(0,1);
+                            $(this).append(slide);
+                        }
+                    });
+
+                    // remove empty container slides
+                    _.$slideTrack.find("> div").each(function() {
+                        if ($(this).find("> div > *").length == 0) {
+                            $(this).detach();
+                        }
+                    });
+                }
+
+            } else {
+                _.$slidesCache.filter(filter).appendTo(_.$slideTrack);
+            }
 
             _.reinit();
 
