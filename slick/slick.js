@@ -1091,7 +1091,8 @@
         }
         else {
             if (slideIndex > 0) {
-                targetLeft -= _.options.slidesGutter;
+                targetLeft -= (slideIndex > 1) ?
+                    (_.options.slidesGutter * 2) : _.options.slidesGutter;
             }
 
             if (_.$slides.length > 2 && slideIndex === (_.$slides.length - 1)) {
