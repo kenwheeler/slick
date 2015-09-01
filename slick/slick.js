@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.5.8
+ Version: 1.5.14
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -72,6 +72,7 @@
                 rows: 1,
                 rtl: false,
                 slide: '',
+                slidesGutter: 0,
                 slidesPerRow: 1,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -490,7 +491,9 @@
         _.$slides =
             _.$slider
                 .children( _.options.slide + ':not(.slick-cloned)')
-                .addClass('slick-slide');
+                .addClass('slick-slide')
+                  .css('padding-right', _.options.slidesGutter);
+
 
         _.slideCount = _.$slides.length;
 
@@ -685,7 +688,7 @@
         switch (event.data.message) {
 
             case 'previous':
-                slideOffset = indexOffset === 0 ? _.options.slidesToScroll : _.options.slidesToShow - indexOffset;
+                slideOffset = indexOffset === 0 ? Math.abs(_.options.slidesToScroll) : _.options.slidesToShow - indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
                     _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate);
                 }
@@ -1084,6 +1087,18 @@
                 }
                 targetLeft = targetSlide[0] ? targetSlide[0].offsetLeft * -1 : 0;
                 targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
+            }
+        }
+        else {
+            if (slideIndex > 1) {
+                targetLeft -= _.options.slidesGutter * 2;
+            }
+            else if (slideIndex > 0) {
+                targetLeft -=  _.options.slidesGutter;
+            }
+
+            if (slideIndex === (_.slideCount - 1) && _.$slides.length > 3) {
+                targetLeft -= _.options.slidesGutter;
             }
         }
 
@@ -1739,7 +1754,11 @@
 
         if (_.options.vertical === false && _.options.variableWidth === false) {
             _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
-            _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+            var trackWidth = Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length));
+
+            (_.options.slidesGutter > 0) ?
+                _.$slideTrack.width(trackWidth + (_.options.slidesGutter * _.$slides.length)) :
+                _.$slideTrack.width(trackWidth);
 
         } else if (_.options.variableWidth === true) {
             _.$slideTrack.width(5000 * _.slideCount);
@@ -1748,7 +1767,7 @@
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
         }
 
-        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
+        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width() - _.options.slidesGutter;
         if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
 
     };
@@ -2126,7 +2145,7 @@
 
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
-        if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || index > _.getDotCount() * _.options.slidesToScroll)) {
+        if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || (_.options.dots && index > _.getDotCount() * _.options.slidesToScroll))) {
             if (_.options.fade === false) {
                 targetSlide = _.currentSlide;
                 if (dontAnimate !== true) {
