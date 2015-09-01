@@ -1090,12 +1090,14 @@
             }
         }
         else {
-            if (slideIndex > 0) {
-                targetLeft -= (slideIndex > 1) ?
-                    (_.options.slidesGutter * 2) : _.options.slidesGutter;
+            if (slideIndex > 1) {
+                targetLeft -= _.options.slidesGutter * 2;
+            }
+            else if (slideIndex > 0) {
+                targetLeft -=  _.options.slidesGutter;
             }
 
-            if (_.$slides.length > 2 && slideIndex === (_.$slides.length - 1)) {
+            if (slideIndex === (_.slideCount - 1) && _.$slides.length > 3) {
                 targetLeft -= _.options.slidesGutter;
             }
         }
