@@ -1078,7 +1078,7 @@
             targetLeft = targetSlide[0] ? targetSlide[0].offsetLeft * -1 : 0;
 
             if (_.options.centerMode === true) {
-                if (_.options.infinite === false) {
+                if (_.slideCount <= _.options.slidesToShow || _.options.infinite === false) {
                     targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex);
                 } else {
                     targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow + 1);
