@@ -87,7 +87,7 @@ describe('Actions', () => {
       expect(mockSlick.autoPlay).to.have.been.called;
     });
 
-    it('should set paused to falase', () => {
+    it('should set paused to false', () => {
       expect(mockSlick.paused).to.equal(false);
     });
 
