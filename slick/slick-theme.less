@@ -16,41 +16,19 @@
 @slick-opacity-on-hover: 1 !default;
 @slick-opacity-not-active: 0.25 !default;
 
-@function slick-image-url(@url) {
-    @if function-exists(image-url) {
-        @return image-url(@url);
-    }
-    @else {
-        @return url(@slick-loader-path + @url);
-    }
-}
-
-@function slick-font-url(@url) {
-    @if function-exists(font-url) {
-        @return font-url(@url);
-    }
-    @else {
-        @return url(@slick-font-path + @url);
-    }
-}
-
 /* Slider */
-
-.slick-list {
-    &.slick-loading {
-        background: #fff slick-image-url("ajax-loader.gif") center center no-repeat;
-    }
+.slick-loading .slick-list{
+    background: #fff url('./ajax-loader.gif') center center no-repeat;
 }
 
 /* Icons */
-@if @slick-font-family == "slick" {
-    @font-face {
-        font-family: "slick";
-        src: slick-font-url("slick.eot");
-        src: slick-font-url("slick.eot?#iefix") format("embedded-opentype"), slick-font-url("slick.woff") format("woff"), slick-font-url("slick.ttf") format("truetype"), slick-font-url("slick.svg#slick") format("svg");
-        font-weight: normal;
-        font-style: normal;
-    }
+@font-face{
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('./fonts/slick.eot');
+    src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
 }
 
 /* Arrows */
