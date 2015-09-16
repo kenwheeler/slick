@@ -76,14 +76,14 @@ export default {
         }
         _.$slideTrack.css(animProps);
 
-        if (callback) {
-          setTimeout(function() {
+        setTimeout(function() {
 
-            _.disableTransition();
+          _.disableTransition();
 
+          if (callback) {
             callback.call();
-          }, _.options.speed);
-        }
+          }
+        }, _.options.speed);
 
       }
 

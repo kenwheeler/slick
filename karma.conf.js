@@ -5,7 +5,7 @@ var webpack = require('webpack');
 
 module.exports = function (config) {
   config.set({
-    frameworks: ["phantomjs-shim", "mocha", "sinon-chai"],
+    frameworks: ["phantomjs-shim", "mocha"],
     basePath: ".",
     browsers: ["PhantomJS"],
     'PhantomJS_Desktop': {
@@ -19,6 +19,7 @@ module.exports = function (config) {
     },
     reporters: ["mocha", "coverage"],
     files: [
+      "node_modules/sinon/pkg/sinon.js",
       "test/specs/**/*.spec.js",
       "slick/slick.css",
       "slick/slick-theme.css"

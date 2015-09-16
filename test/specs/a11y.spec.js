@@ -1,5 +1,7 @@
 'use strict';
 
+import '../helpers/setup';
+
 import a11y from "../../src/a11y";
 import generateSlides from '../helpers/generate-slides';
 
@@ -58,7 +60,7 @@ describe('Accessibility', () => {
       mockSlick.instanceUid = 1;
       mockSlick.$dots = $('<ul/>');
       mockSlick.$dots.append(dot);
-      mockSlick.activateADA = sinon.spy();
+      mockSlick.activateADA = sinon.stub();
       a11y.initADA.call(mockSlick);
     });
 

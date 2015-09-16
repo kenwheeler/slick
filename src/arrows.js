@@ -52,13 +52,12 @@ export default {
 
     if (_.options.arrows === true &&
       _.slideCount > _.options.slidesToShow &&
-      !_.options.infinite) {
+      _.options.infinite === false) {
 
       _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
       _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
       if (_.currentSlide === 0) {
-
         _.$prevArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
         _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 

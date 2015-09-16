@@ -1,5 +1,7 @@
 'use strict';
 
+import '../helpers/setup';
+
 import Slick from "../../src/index";
 import generateSlides from '../helpers/generate-slides';
 

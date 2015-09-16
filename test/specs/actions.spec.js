@@ -1,7 +1,8 @@
 'use strict';
 
+import '../helpers/setup';
+
 import actions from "../../src/actions";
-import generateSlides from '../helpers/generate-slides';
 
 describe('Actions', () => {
 
@@ -10,7 +11,7 @@ describe('Actions', () => {
   describe('goTo', () => {
 
     before(() => {
-      mockSlick.changeSlide = sinon.spy();
+      mockSlick.changeSlide = sinon.stub();
       actions.goTo.call(mockSlick, 1, true);
     });
 
@@ -32,7 +33,7 @@ describe('Actions', () => {
   describe('next', () => {
 
     before(() => {
-      mockSlick.changeSlide = sinon.spy();
+      mockSlick.changeSlide = sinon.stub();
       actions.next.call(mockSlick);
     });
 
@@ -53,7 +54,7 @@ describe('Actions', () => {
   describe('pause', () => {
 
     before(() => {
-      mockSlick.autoPlayClear = sinon.spy();
+      mockSlick.autoPlayClear = sinon.stub();
       actions.pause.call(mockSlick);
     });
 
@@ -74,7 +75,7 @@ describe('Actions', () => {
   describe('play', () => {
 
     before(() => {
-      mockSlick.autoPlay = sinon.spy();
+      mockSlick.autoPlay = sinon.stub();
       actions.play.call(mockSlick);
     });
 
@@ -95,7 +96,7 @@ describe('Actions', () => {
   describe('prev', () => {
 
     before(() => {
-      mockSlick.changeSlide = sinon.spy();
+      mockSlick.changeSlide = sinon.stub();
       actions.prev.call(mockSlick);
     });
 
