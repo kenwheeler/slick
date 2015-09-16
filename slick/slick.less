@@ -56,7 +56,7 @@
         clear: both;
     }
 
-    .slick-loading & {
+    &.slick-loading {
         visibility: hidden;
     }
 }
@@ -64,7 +64,7 @@
     float: left;
     height: 100%;
     min-height: 1px;
-    [dir="rtl"] & {
+    &[dir="rtl"] {
         float: right;
     }
     img {
@@ -80,15 +80,15 @@
         pointer-events: none;
     }
 
-    .slick-initialized & {
+    &.slick-initialized {
         display: block;
     }
 
-    .slick-loading & {
+    &.slick-loading {
         visibility: hidden;
     }
 
-    .slick-vertical & {
+    &.slick-vertical {
         display: block;
         height: auto;
         border: 1px solid transparent;
