@@ -67,7 +67,10 @@ $slick-opacity-not-active: 0.25 !default;
     background: transparent;
     color: transparent;
     top: 50%;
-    margin-top: -10px;
+    margin-top: -10px\9; /*lte IE 8*/
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
     padding: 0;
     border: none;
     outline: none;
