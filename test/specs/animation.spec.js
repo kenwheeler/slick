@@ -15,7 +15,7 @@ describe('Animation', () => {
       mockSlick.$list = {
         animate: sinon.stub()
       };
-      mockSlick.$slides = mockSlick.$slides = $($.map([
+      mockSlick.$slides = $($.map([
         $('<div style="height: 200px"/>')
       ], (el) => {
         return $.makeArray(el);
