@@ -1536,6 +1536,7 @@
         $.extend(_, _.initials, { currentSlide: currentSlide });
 
         _.init();
+        _.updateArrows();
 
         if( !initializing ) {
 
