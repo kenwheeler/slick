@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -24,7 +25,7 @@ export default {
 
     }
   },
-  getDotCount() {
+  getDotCount(): number {
     var _ = this;
 
     var breakPoint = 0;

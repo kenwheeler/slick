@@ -1,0 +1,7 @@
+[ignore]
+.*/npmconf/test/fixtures/
+[include]
+./src
+[libs]
+
+[options]

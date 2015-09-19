@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -54,7 +55,7 @@ export default {
       _.$list.addClass('draggable');
     }
   },
-  destroy(refresh) {
+  destroy(refresh: boolean) {
     var _ = this;
 
     _.autoPlayClear();
@@ -126,7 +127,7 @@ export default {
       _.$slider.trigger('destroy', [_]);
     }
   },
-  init(creation) {
+  init(creation: boolean) {
     var _ = this;
 
     if (!$(_.$slider).hasClass('slick-initialized')) {
@@ -192,7 +193,7 @@ export default {
       _.progressiveLazyLoad();
     }
   },
-  refresh(initializing) {
+  refresh(initializing: boolean) {
     var _ = this,
       currentSlide, firstVisible;
 
@@ -356,7 +357,7 @@ export default {
       .attr('aria-hidden', 'true')
       .css('width', '');
   },
-  unslick(fromBreakpoint) {
+  unslick(fromBreakpoint: string) {
     var _ = this;
     _.$slider.trigger('unslick', [_, fromBreakpoint]);
     _.destroy();

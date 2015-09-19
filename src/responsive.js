@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -5,7 +6,7 @@ const $ = window.$ || window.jQuery;
 import assign from 'object-assign';
 
 export default {
-  checkResponsive(initial, forceUpdate) {
+  checkResponsive(initial: boolean, forceUpdate: boolean) {
     var _ = this,
       breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
     var sliderWidth = _.$slider.width();

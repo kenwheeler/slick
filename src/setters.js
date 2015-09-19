@@ -1,9 +1,10 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  setCSS(position) {
+  setCSS(position: number) {
     var _ = this,
       positionProps = {},
       x, y;
@@ -103,7 +104,7 @@ export default {
       _.$list.css('height', targetHeight);
     }
   },
-  setOption(option, value, refresh) {
+  setOption(option: string, value: any, refresh: boolean) {
     var _ = this,
       l, item;
 
@@ -208,7 +209,7 @@ export default {
     }
     _.transformsEnabled = _.options.useTransform && (_.animType !== null && _.animType !== false);
   },
-  setSlideClasses(index) {
+  setSlideClasses(index: number) {
     var _ = this,
       centerOffset, allSlides, indexOffset, remainder;
 
@@ -308,7 +309,7 @@ export default {
       _.lazyLoad();
     }
   },
-  setPaused(paused) {
+  setPaused(paused: boolean) {
     var _ = this;
 
     if (_.options.autoplay === true && _.options.pauseOnHover === true) {

@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -25,63 +26,65 @@ import touch from './touch';
 
 export default class Slick {
 
-  constructor(element, settings, callback) {
+  constructor(element: any, settings: Object, callback: Function) {
     var _ = this,
       dataSettings;
 
     let instanceUid = 0;
 
-    _.defaults = {
-      accessibility: true,
-      adaptiveHeight: false,
-      appendArrows: $(element),
-      appendDots: $(element),
-      arrows: true,
-      asNavFor: null,
-      prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button">Previous</button>',
-      nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button">Next</button>',
-      autoplay: false,
-      autoplaySpeed: 3000,
-      centerMode: false,
-      centerPadding: '50px',
-      cssEase: 'ease',
-      customPaging: function(slider, i) {
-        return '<button type="button" data-role="none" role="button" aria-required="false" tabindex="0">' + (i + 1) + '</button>';
-      },
-      dots: false,
-      dotsClass: 'slick-dots',
-      draggable: true,
-      easing: 'linear',
-      edgeFriction: 0.35,
-      fade: false,
-      focusOnSelect: false,
-      infinite: true,
-      initialSlide: 0,
-      lazyLoad: 'ondemand',
-      mobileFirst: false,
-      pauseOnHover: true,
-      pauseOnDotsHover: false,
-      respondTo: 'window',
-      responsive: null,
-      rows: 1,
-      rtl: false,
-      slide: '',
-      slidesPerRow: 1,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      speed: 500,
-      swipe: true,
-      swipeToSlide: false,
-      touchMove: true,
-      touchThreshold: 5,
-      useCSS: true,
-      useTransform: false,
-      variableWidth: false,
-      vertical: false,
-      verticalSwiping: false,
-      waitForAnimate: true,
-      zIndex: 1000
-    };
+    _ = assign(_ , {
+      defaults: {
+        accessibility: true,
+        adaptiveHeight: false,
+        appendArrows: $(element),
+        appendDots: $(element),
+        arrows: true,
+        asNavFor: null,
+        prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button">Previous</button>',
+        nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button">Next</button>',
+        autoplay: false,
+        autoplaySpeed: 3000,
+        centerMode: false,
+        centerPadding: '50px',
+        cssEase: 'ease',
+        customPaging: function(slider, i) {
+          return '<button type="button" data-role="none" role="button" aria-required="false" tabindex="0">' + (i + 1) + '</button>';
+        },
+        dots: false,
+        dotsClass: 'slick-dots',
+        draggable: true,
+        easing: 'linear',
+        edgeFriction: 0.35,
+        fade: false,
+        focusOnSelect: false,
+        infinite: true,
+        initialSlide: 0,
+        lazyLoad: 'ondemand',
+        mobileFirst: false,
+        pauseOnHover: true,
+        pauseOnDotsHover: false,
+        respondTo: 'window',
+        responsive: null,
+        rows: 1,
+        rtl: false,
+        slide: '',
+        slidesPerRow: 1,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        speed: 500,
+        swipe: true,
+        swipeToSlide: false,
+        touchMove: true,
+        touchThreshold: 5,
+        useCSS: true,
+        useTransform: false,
+        variableWidth: false,
+        vertical: false,
+        verticalSwiping: false,
+        waitForAnimate: true,
+        zIndex: 1000
+      }
+    });
 
     _ = assign(_, {
       animating: false,
@@ -162,10 +165,8 @@ export default class Slick {
     _.originalSettings = _.options;
 
     if (typeof document.mozHidden !== 'undefined') {
-      _.hidden = 'mozHidden';
       _.visibilityChange = 'mozvisibilitychange';
     } else if (typeof document.webkitHidden !== 'undefined') {
-      _.hidden = 'webkitHidden';
       _.visibilityChange = 'webkitvisibilitychange';
     }
 

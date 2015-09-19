@@ -1,9 +1,10 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  filterSlide(filter) {
+  filterSlide(filter: Function) {
     var _ = this;
 
     if (filter !== null) {

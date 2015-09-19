@@ -1,9 +1,10 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  asNavFor(index) {
+  asNavFor(index: number) {
     let _ = this,
       asNavFor = _.options.asNavFor;
 
@@ -20,7 +21,7 @@ export default {
       });
     }
   },
-  checkNavigable(index) {
+  checkNavigable(index: number): number {
     var _ = this,
       navigables, prevNavigable;
 
@@ -40,7 +41,7 @@ export default {
 
     return index;
   },
-  postSlide(index) {
+  postSlide(index: number) {
     var _ = this;
 
     _.$slider.trigger('afterChange', [_, index]);
@@ -58,7 +59,7 @@ export default {
       _.initADA();
     }
   },
-  selectHandler(event) {
+  selectHandler(event: Object) {
     var _ = this;
 
     var targetElement =
@@ -80,7 +81,7 @@ export default {
 
     _.slideHandler(index);
   },
-  slideHandler(index, sync, dontAnimate) {
+  slideHandler(index: number, sync: boolean, dontAnimate: boolean) {
     var targetSlide, animSlide, oldSlide, slideLeft, targetLeft = null,
       _ = this;
 
@@ -193,7 +194,7 @@ export default {
   visibility() {
     var _ = this;
 
-    if (document[_.hidden]) {
+    if (document.hidden) {
       _.paused = true;
       _.autoPlayClear();
     } else {

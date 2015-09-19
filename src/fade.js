@@ -1,9 +1,10 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  fadeSlide(slideIndex, callback) {
+  fadeSlide(slideIndex: number, callback: Function) {
     var _ = this;
 
     if (_.cssTransitions === false) {
@@ -36,7 +37,7 @@ export default {
 
     }
   },
-  fadeSlideOut(slideIndex) {
+  fadeSlideOut(slideIndex: number) {
     var _ = this;
 
     if (_.cssTransitions === false) {

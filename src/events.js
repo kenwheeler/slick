@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -143,7 +144,7 @@ export default {
     $(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
     $(document).on('ready.slick.slick-' + _.instanceUid, _.setPosition);
   },
-  keyHandler(event) {
+  keyHandler(event: Object) {
     var _ = this;
     //Dont slide if the cursor is inside the form fields and arrow keys are pressed
     if (!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
@@ -168,7 +169,7 @@ export default {
     _.checkResponsive();
     _.setPosition();
   },
-  preventDefault(event) {
+  preventDefault(event: Object) {
     event.preventDefault();
   },
   resize() {

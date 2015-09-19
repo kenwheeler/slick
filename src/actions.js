@@ -1,15 +1,16 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  goTo(slide, dontAnimate) {
+  goTo(slide: number, dontAnimate: boolean) {
     var _ = this;
 
     _.changeSlide({
       data: {
         message: 'index',
-        index: parseInt(slide)
+        index: slide
       }
     }, dontAnimate);
   },

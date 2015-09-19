@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -7,7 +8,7 @@ export default {
     var _ = this,
       loadRange, cloneRange, rangeStart, rangeEnd;
 
-    function loadImages(imagesScope) {
+    function loadImages(imagesScope: any) {
       $('img[data-lazy]', imagesScope).each(function() {
 
         var image = $(this),
@@ -70,12 +71,12 @@ export default {
   },
   progressiveLazyLoad() {
     var _ = this,
-      imgCount, targetImage;
+      imgCount;
 
     imgCount = $('img[data-lazy]', _.$slider).length;
 
     if (imgCount > 0) {
-      targetImage = $('img[data-lazy]', _.$slider).first();
+      let targetImage = $('img[data-lazy]', _.$slider).first();
       targetImage.attr('src', null);
       targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
           targetImage.removeAttr('data-lazy');

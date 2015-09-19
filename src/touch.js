@@ -1,9 +1,10 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  clickHandler(event) {
+  clickHandler(event: Object) {
     var _ = this;
 
     if (_.shouldClick === false) {
@@ -12,7 +13,7 @@ export default {
       event.preventDefault();
     }
   },
-  swipeDirection() {
+  swipeDirection(): string {
     var xDist, yDist, r, swipeAngle, _ = this;
 
     xDist = _.touchObject.startX - _.touchObject.curX;
@@ -43,7 +44,7 @@ export default {
 
     return 'vertical';
   },
-  swipeEnd(event) {
+  swipeEnd(event: Object) {
     var _ = this,
       slideCount;
 
@@ -85,7 +86,7 @@ export default {
       }
     }
   },
-  swipeHandler(event) {
+  swipeHandler(event: Object) {
     var _ = this;
 
     if ((_.options.swipe === false) || ('ontouchend' in document && _.options.swipe === false)) {
@@ -121,12 +122,14 @@ export default {
 
     }
   },
-  swipeMove(event) {
+  swipeMove(event: Object) {
     var _ = this,
       edgeWasHit = false,
-      curLeft, swipeDirection, swipeLength, positionOffset, touches;
+      curLeft, swipeDirection, swipeLength, positionOffset;
 
-    touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
+    let touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
+
+    if (!touches) return;
 
     if (!_.dragging || touches && touches.length !== 1) {
       return false;
@@ -192,7 +195,7 @@ export default {
 
     _.setCSS(_.swipeLeft);
   },
-  swipeStart(event) {
+  swipeStart(event: Object) {
     var _ = this,
       touches;
 

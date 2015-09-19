@@ -1,3 +1,4 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
@@ -12,7 +13,7 @@ export default {
       }, _.options.speed);
     }
   },
-  animateSlide(targetLeft, callback) {
+  animateSlide(targetLeft: number, callback: Function) {
     let animProps = {},
       _ = this;
 
@@ -89,7 +90,7 @@ export default {
 
     }
   },
-  applyTransition(slide) {
+  applyTransition(slide: number) {
     var _ = this,
       transition = {};
 
@@ -105,7 +106,7 @@ export default {
       _.$slides.eq(slide).css(transition);
     }
   },
-  disableTransition(slide) {
+  disableTransition(slide: number) {
     var _ = this,
       transition = {};
 

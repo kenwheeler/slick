@@ -1,13 +1,14 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  getCurrent() {
+  getCurrent(): number {
     var _ = this;
     return _.currentSlide;
   },
-  getLeft(slideIndex) {
+  getLeft(slideIndex: number): number {
     var _ = this,
       targetLeft,
       verticalHeight,
@@ -81,12 +82,12 @@ export default {
 
     return targetLeft;
   },
-  getOption(option) {
+  getOption(option: string): any {
     var _ = this;
 
     return _.options[option];
   },
-  getNavigableIndexes() {
+  getNavigableIndexes(): Array<number> {
     var _ = this,
       breakPoint = 0,
       counter = 0,
@@ -109,20 +110,19 @@ export default {
 
     return indexes;
   },
-  getSlick() {
+  getSlick(): Object {
     return this
   },
-  getSlideCount() {
-    var _ = this,
-      slidesTraversed, swipedSlide, centerOffset;
+  getSlideCount(): number {
+    var _ = this, slidesTraversed, swipedSlide;
 
-    centerOffset = _.options.centerMode === true ? _.slideWidth * Math.floor(_.options.slidesToShow / 2) : 0;
+    let centerOffset = _.options.centerMode === true ? _.slideWidth * Math.floor(_.options.slidesToShow / 2) : 0;
 
     if (_.options.swipeToSlide === true) {
       _.$slideTrack.find('.slick-slide').each(function(index, slide) {
         if (slide.offsetLeft - centerOffset + ($(slide).outerWidth() / 2) > (_.swipeLeft * -1)) {
           swipedSlide = slide;
-          return false;
+          return 0;
         }
       });
 

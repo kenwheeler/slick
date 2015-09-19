@@ -1,9 +1,10 @@
+/* @flow */
 'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
-  addSlide(markup, index, addBefore) {
+  addSlide(markup: any, index: any, addBefore: number) {
     let _ = this;
 
     if (typeof(index) === 'boolean') {
@@ -45,7 +46,7 @@ export default {
 
     _.reinit();
   },
-  changeSlide(event, dontAnimate) {
+  changeSlide(event: Object, dontAnimate: boolean) {
     var _ = this,
       $target = $(event.target),
       indexOffset, slideOffset, unevenOffset;
@@ -91,7 +92,7 @@ export default {
         return;
     }
   },
-  removeSlide(index, removeBefore, removeAll) {
+  removeSlide(index: number, removeBefore: number, removeAll: boolean) {
     var _ = this;
 
     if (typeof(index) === 'boolean') {
