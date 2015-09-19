@@ -3,6 +3,7 @@
 
 var webpack = require("webpack");
 var path = require("path");
+var info = require('./package.json');
 
 module.exports = {
   cache: true,
@@ -23,7 +24,7 @@ module.exports = {
     libraryTarget: "umd",
     library: "Slick",
     filename: "slick.min.js",
-    path: path.join(__dirname, "dist")
+    path: path.join(__dirname, "slick")
   },
   module: {
     loaders: [{
@@ -40,7 +41,14 @@ module.exports = {
         warnings: false
       }
     }),
-    new webpack.SourceMapDevToolPlugin("[file].map")
+    new webpack.BannerPlugin([
+' Version: ' + info.version,
+'  Author: Ken Wheeler',
+' Website: http://kenwheeler.github.io',
+'    Docs: http://kenwheeler.github.io/slick',
+'    Repo: http://github.com/kenwheeler/slick',
+'  Issues: http://github.com/kenwheeler/slick/issues',
+    ].join('\r\n'))
   ],
   resolve: {
     root: [__dirname],

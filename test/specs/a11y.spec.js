@@ -3,7 +3,6 @@
 import '../helpers/setup';
 
 import a11y from "../../src/a11y";
-import generateSlides from '../helpers/generate-slides';
 
 describe('Accessibility', () => {
 

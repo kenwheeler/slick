@@ -25,8 +25,8 @@ describe('Actions', () => {
           message: 'index',
           index: 1
         }
-      });
-    }, true);
+      }, true);
+    });
 
   });
 
