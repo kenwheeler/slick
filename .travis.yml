@@ -17,4 +17,4 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - npm run test
+  - npm run check-ci

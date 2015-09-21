@@ -1,127 +1,123 @@
 /* @flow */
-'use strict';
+/*eslint-disable max-statements, complexity, no-lonely-if */
 
 const $ = window.$ || window.jQuery;
 
 export default {
   addSlide(markup: any, index: any, addBefore: number) {
-    let _ = this;
-
-    if (typeof(index) === 'boolean') {
+    if (typeof index === "boolean") {
       addBefore = index;
       index = null;
-    } else if (index < 0 || (index >= _.slideCount)) {
+    } else if (index < 0 || index >= this.slideCount) {
       return false;
     }
 
-    _.unload();
+    this.unload();
 
-    if (typeof(index) === 'number') {
-      if (index === 0 && _.$slides.length === 0) {
-        $(markup).appendTo(_.$slideTrack);
+    if (typeof index === "number") {
+      if (index === 0 && this.$slides.length === 0) {
+        $(markup).appendTo(this.$slideTrack);
       } else if (addBefore) {
-        $(markup).insertBefore(_.$slides.eq(index));
+        $(markup).insertBefore(this.$slides.eq(index));
       } else {
-        $(markup).insertAfter(_.$slides.eq(index));
+        $(markup).insertAfter(this.$slides.eq(index));
       }
     } else {
       if (addBefore === true) {
-        $(markup).prependTo(_.$slideTrack);
+        $(markup).prependTo(this.$slideTrack);
       } else {
-        $(markup).appendTo(_.$slideTrack);
+        $(markup).appendTo(this.$slideTrack);
       }
     }
 
-    _.$slides = _.$slideTrack.children(this.options.slide);
+    this.$slides = this.$slideTrack.children(this.options.slide);
 
-    _.$slideTrack.children(this.options.slide).detach();
+    this.$slideTrack.children(this.options.slide).detach();
 
-    _.$slideTrack.append(_.$slides);
+    this.$slideTrack.append(this.$slides);
 
-    _.$slides.each(function(index, element) {
-      $(element).attr('data-slick-index', index);
+    this.$slides.each((i, element) => {
+      $(element).attr("data-slick-index", i);
     });
 
-    _.$slidesCache = _.$slides;
+    this.$slidesCache = this.$slides;
 
-    _.reinit();
+    this.reinit();
   },
   changeSlide(event: Object, dontAnimate: boolean) {
-    var _ = this,
-      $target = $(event.target),
-      indexOffset, slideOffset, unevenOffset;
+    let $target = $(event.target);
 
     // If target is a link, prevent default action.
-    if ($target.is('a')) {
+    if ($target.is("a")) {
       event.preventDefault();
     }
 
     // If target is not the <li> element (ie: a child), find the <li>.
-    if (!$target.is('li')) {
-      $target = $target.closest('li');
+    if (!$target.is("li")) {
+      $target = $target.closest("li");
     }
 
-    unevenOffset = (_.slideCount % _.options.slidesToScroll !== 0);
-    indexOffset = unevenOffset ? 0 : (_.slideCount - _.currentSlide) % _.options.slidesToScroll;
+    const unevenOffset = this.slideCount % this.options.slidesToScroll !== 0;
+    const indexOffset = unevenOffset ? 0 :
+      (this.slideCount - this.currentSlide) % this.options.slidesToScroll;
+    let slideOffset = null;
 
     switch (event.data.message) {
+    case "previous":
+      slideOffset = indexOffset === 0 ?
+        this.options.slidesToScroll : this.options.slidesToShow - indexOffset;
+      if (this.slideCount > this.options.slidesToShow) {
+        this.slideHandler(this.currentSlide - slideOffset, false, dontAnimate);
+      }
+      break;
 
-      case 'previous':
-        slideOffset = indexOffset === 0 ? _.options.slidesToScroll : _.options.slidesToShow - indexOffset;
-        if (_.slideCount > _.options.slidesToShow) {
-          _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate);
-        }
-        break;
+    case "next":
+      slideOffset = indexOffset === 0 ? this.options.slidesToScroll : indexOffset;
+      if (this.slideCount > this.options.slidesToShow) {
+        this.slideHandler(this.currentSlide + slideOffset, false, dontAnimate);
+      }
+      break;
 
-      case 'next':
-        slideOffset = indexOffset === 0 ? _.options.slidesToScroll : indexOffset;
-        if (_.slideCount > _.options.slidesToShow) {
-          _.slideHandler(_.currentSlide + slideOffset, false, dontAnimate);
-        }
-        break;
+    case "index":
+      const index = event.data.index === 0 ? 0 :
+        event.data.index || $target.index() * this.options.slidesToScroll;
 
-      case 'index':
-        var index = event.data.index === 0 ? 0 :
-          event.data.index || $target.index() * _.options.slidesToScroll;
+      this.slideHandler(this.checkNavigable(index), false, dontAnimate);
+      $target.children().trigger("focus");
+      break;
 
-        _.slideHandler(_.checkNavigable(index), false, dontAnimate);
-        $target.children().trigger('focus');
-        break;
-
-      default:
-        return;
+    default:
+      return;
     }
   },
   removeSlide(index: number, removeBefore: number, removeAll: boolean) {
-    var _ = this;
-
-    if (typeof(index) === 'boolean') {
+    if (typeof index === "boolean") {
       removeBefore = index;
-      index = removeBefore === true ? 0 : _.slideCount - 1;
+      index = removeBefore === true ? 0 : this.slideCount - 1;
     } else {
       index = removeBefore === true ? --index : index;
     }
 
-    if (_.slideCount < 1 || index < 0 || index > _.slideCount - 1) {
+    if (this.slideCount < 1 || index < 0 || index > this.slideCount - 1) {
       return false;
     }
 
-    _.unload();
+    this.unload();
 
     if (removeAll === true) {
-      _.$slideTrack.children().remove();
+      this.$slideTrack.children().remove();
     } else {
-      _.$slideTrack.children(this.options.slide).eq(index).remove();
+      this.$slideTrack.children(this.options.slide).eq(index).remove();
     }
 
-    _.$slides = _.$slideTrack.children(this.options.slide);
+    this.$slides = this.$slideTrack.children(this.options.slide);
 
-    _.$slideTrack.children(this.options.slide).detach();
+    this.$slideTrack.children(this.options.slide).detach();
 
-    _.$slideTrack.append(_.$slides);
+    this.$slideTrack.append(this.$slides);
 
-    _.$slidesCache = _.$slides;
+    this.$slidesCache = this.$slides;
 
-    _.reinit();
+    this.reinit();
   }
-}
+};

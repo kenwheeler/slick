@@ -1,121 +1,116 @@
 /* @flow */
-'use strict';
+/*eslint-disable max-statements, complexity */
 
 const $ = window.$ || window.jQuery;
 
 export default {
   animateHeight() {
-    let _ = this;
-    if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
-      var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
-      _.$list.animate({
+    if (this.options.slidesToShow === 1 &&
+        this.options.adaptiveHeight === true &&
+        this.options.vertical === false) {
+      const targetHeight = this.$slides.eq(this.currentSlide).outerHeight(true);
+      this.$list.animate({
         height: targetHeight
-      }, _.options.speed);
+      }, this.options.speed);
     }
   },
   animateSlide(targetLeft: number, callback: Function) {
-    let animProps = {},
-      _ = this;
+    const animProps = {};
 
-    _.animateHeight();
+    this.animateHeight();
 
-    if (_.options.rtl === true && _.options.vertical === false) {
+    if (this.options.rtl === true && this.options.vertical === false) {
       targetLeft = -targetLeft;
     }
-    if (_.transformsEnabled === false) {
-      if (_.options.vertical === false) {
-        _.$slideTrack.animate({
+    if (this.transformsEnabled === false) {
+      if (this.options.vertical === false) {
+        this.$slideTrack.animate({
           left: targetLeft
-        }, _.options.speed, _.options.easing, callback);
+        }, this.options.speed, this.options.easing, callback);
       } else {
-        _.$slideTrack.animate({
+        this.$slideTrack.animate({
           top: targetLeft
-        }, _.options.speed, _.options.easing, callback);
+        }, this.options.speed, this.options.easing, callback);
       }
 
-    } else {
-
-      if (_.cssTransitions === false) {
-        if (_.options.rtl === true) {
-          _.currentLeft = -(_.currentLeft);
-        }
-        $({
-          animStart: _.currentLeft
-        }).animate({
-          animStart: targetLeft
-        }, {
-          duration: _.options.speed,
-          easing: _.options.easing,
-          step: function(now) {
-            now = Math.ceil(now);
-            if (_.options.vertical === false) {
-              animProps[_.animType] = 'translate(' +
-                now + 'px, 0px)';
-              _.$slideTrack.css(animProps);
-            } else {
-              animProps[_.animType] = 'translate(0px,' +
-                now + 'px)';
-              _.$slideTrack.css(animProps);
-            }
-          },
-          complete: function() {
-            if (callback) {
-              callback.call();
-            }
+    } else if (this.cssTransitions === false) {
+      if (this.options.rtl === true) {
+        this.currentLeft = -this.currentLeft;
+      }
+      $({
+        animStart: this.currentLeft
+      }).animate({
+        animStart: targetLeft
+      }, {
+        duration: this.options.speed,
+        easing: this.options.easing,
+        step: (now) => {
+          now = Math.ceil(now);
+          if (this.options.vertical === false) {
+            animProps[this.animType] = "translate(" +
+              now + "px, 0px)";
+            this.$slideTrack.css(animProps);
+          } else {
+            animProps[this.animType] = "translate(0px," +
+              now + "px)";
+            this.$slideTrack.css(animProps);
           }
-        });
-
-      } else {
-
-        _.applyTransition();
-        targetLeft = Math.ceil(targetLeft);
-
-        if (_.options.vertical === false) {
-          animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
-        } else {
-          animProps[_.animType] = 'translate3d(0px,' + targetLeft + 'px, 0px)';
-        }
-        _.$slideTrack.css(animProps);
-
-        setTimeout(function() {
-
-          _.disableTransition();
-
+        },
+        complete: () => {
           if (callback) {
             callback.call();
           }
-        }, _.options.speed);
+        }
+      });
 
+    } else {
+
+      this.applyTransition();
+      targetLeft = Math.ceil(targetLeft);
+
+      if (this.options.vertical === false) {
+        animProps[this.animType] = "translate3d(" + targetLeft + "px, 0px, 0px)";
+      } else {
+        animProps[this.animType] = "translate3d(0px," + targetLeft + "px, 0px)";
       }
+      this.$slideTrack.css(animProps);
 
+      setTimeout(() => {
+
+        this.disableTransition();
+
+        if (callback) {
+          callback.call();
+        }
+      }, this.options.speed);
     }
   },
   applyTransition(slide: number) {
-    var _ = this,
-      transition = {};
+    const transition = {};
 
-    if (_.options.fade === false) {
-      transition[_.transitionType] = _.transformType + ' ' + _.options.speed + 'ms ' + _.options.cssEase;
+    if (this.options.fade === false) {
+      transition[this.transitionType] = this.transformType +
+        " " + this.options.speed + "ms " + this.options.cssEase;
     } else {
-      transition[_.transitionType] = 'opacity ' + _.options.speed + 'ms ' + _.options.cssEase;
+      transition[this.transitionType] = "opacity " +
+        this.options.speed + "ms " + this.options.cssEase;
     }
 
-    if (_.options.fade === false) {
-      _.$slideTrack.css(transition);
+    if (this.options.fade === false) {
+      this.$slideTrack.css(transition);
     } else {
-      _.$slides.eq(slide).css(transition);
+      this.$slides.eq(slide).css(transition);
     }
   },
   disableTransition(slide: number) {
-    var _ = this,
-      transition = {};
+    const transition = {};
 
-    transition[_.transitionType] = '';
+    transition[this.transitionType] = "";
 
-    if (_.options.fade === false) {
-      _.$slideTrack.css(transition);
+    if (this.options.fade === false) {
+      this.$slideTrack.css(transition);
     } else {
-      _.$slides.eq(slide).css(transition);
+      this.$slides.eq(slide).css(transition);
     }
   }
-}
+};

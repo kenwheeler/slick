@@ -1,216 +1,202 @@
 /* @flow */
-'use strict';
-
-const $ = window.$ || window.jQuery;
+/*eslint-disable max-statements, complexity, consistent-return */
 
 export default {
   clickHandler(event: Object) {
-    var _ = this;
 
-    if (_.shouldClick === false) {
+    if (this.shouldClick === false) {
       event.stopImmediatePropagation();
       event.stopPropagation();
       event.preventDefault();
     }
   },
   swipeDirection(): string {
-    var xDist, yDist, r, swipeAngle, _ = this;
+    const xDist = this.touchObject.startX - this.touchObject.curX;
+    const yDist = this.touchObject.startY - this.touchObject.curY;
+    const r = Math.atan2(yDist, xDist);
 
-    xDist = _.touchObject.startX - _.touchObject.curX;
-    yDist = _.touchObject.startY - _.touchObject.curY;
-    r = Math.atan2(yDist, xDist);
-
-    swipeAngle = Math.round(r * 180 / Math.PI);
+    let swipeAngle = Math.round(r * 180 / Math.PI);
     if (swipeAngle < 0) {
       swipeAngle = 360 - Math.abs(swipeAngle);
     }
 
-    if ((swipeAngle <= 45) && (swipeAngle >= 0)) {
-      return (_.options.rtl === false ? 'left' : 'right');
+    if (swipeAngle <= 45 && swipeAngle >= 0) {
+      return this.options.rtl === false ? "left" : "right";
     }
-    if ((swipeAngle <= 360) && (swipeAngle >= 315)) {
-      return (_.options.rtl === false ? 'left' : 'right');
+    if (swipeAngle <= 360 && swipeAngle >= 315) {
+      return this.options.rtl === false ? "left" : "right";
     }
-    if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
-      return (_.options.rtl === false ? 'right' : 'left');
+    if (swipeAngle >= 135 && swipeAngle <= 225) {
+      return this.options.rtl === false ? "right" : "left";
     }
-    if (_.options.verticalSwiping === true) {
-      if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
-        return 'left';
+    if (this.options.verticalSwiping === true) {
+      if (swipeAngle >= 35 && swipeAngle <= 135) {
+        return "left";
       } else {
-        return 'right';
+        return "right";
       }
     }
 
-    return 'vertical';
+    return "vertical";
   },
-  swipeEnd(event: Object) {
-    var _ = this,
-      slideCount;
+  swipeEnd() {
+    this.dragging = false;
 
-    _.dragging = false;
+    this.shouldClick = this.touchObject.swipeLength > 10 ? false : true;
 
-    _.shouldClick = (_.touchObject.swipeLength > 10) ? false : true;
-
-    if (_.touchObject.curX === undefined) {
+    if (this.touchObject.curX === undefined) {
       return false;
     }
 
-    if (_.touchObject.edgeHit === true) {
-      _.$slider.trigger('edge', [_, _.swipeDirection()]);
+    if (this.touchObject.edgeHit === true) {
+      this.$slider.trigger("edge", [this, this.swipeDirection()]);
     }
 
-    if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
+    if (this.touchObject.swipeLength >= this.touchObject.minSwipe) {
+      let slideCount = 0;
 
-      switch (_.swipeDirection()) {
-        case 'left':
-          slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide + _.getSlideCount()) : _.currentSlide + _.getSlideCount();
-          _.slideHandler(slideCount);
-          _.currentDirection = 0;
-          _.touchObject = {};
-          _.$slider.trigger('swipe', [_, 'left']);
-          break;
+      switch (this.swipeDirection()) {
+      case "left":
+        slideCount = this.options.swipeToSlide ?
+          this.checkNavigable(this.currentSlide + this.getSlideCount()) :
+          this.currentSlide + this.getSlideCount();
+        this.slideHandler(slideCount);
+        this.currentDirection = 0;
+        this.touchObject = {};
+        this.$slider.trigger("swipe", [this, "left"]);
+        break;
 
-        case 'right':
-          slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide - _.getSlideCount()) : _.currentSlide - _.getSlideCount();
-          _.slideHandler(slideCount);
-          _.currentDirection = 1;
-          _.touchObject = {};
-          _.$slider.trigger('swipe', [_, 'right']);
-          break;
+      case "right":
+        slideCount = this.options.swipeToSlide ?
+          this.checkNavigable(this.currentSlide - this.getSlideCount()) :
+          this.currentSlide - this.getSlideCount();
+        this.slideHandler(slideCount);
+        this.currentDirection = 1;
+        this.touchObject = {};
+        this.$slider.trigger("swipe", [this, "right"]);
+        break;
       }
-    } else {
-      if (_.touchObject.startX !== _.touchObject.curX) {
-        _.slideHandler(_.currentSlide);
-        _.touchObject = {};
-      }
+    } else if (this.touchObject.startX !== this.touchObject.curX) {
+      this.slideHandler(this.currentSlide);
+      this.touchObject = {};
     }
   },
   swipeHandler(event: Object) {
-    var _ = this;
-
-    if ((_.options.swipe === false) || ('ontouchend' in document && _.options.swipe === false)) {
+    if (this.options.swipe === false || "ontouchend" in document &&
+        this.options.swipe === false) {
       return;
-    } else if (_.options.draggable === false && event.type.indexOf('mouse') !== -1) {
+    } else if (this.options.draggable === false && event.type.indexOf("mouse") !== -1) {
       return;
     }
 
-    _.touchObject.fingerCount = event.originalEvent && event.originalEvent.touches !== undefined ?
+    this.touchObject.fingerCount = event.originalEvent &&
+      event.originalEvent.touches !== undefined ?
       event.originalEvent.touches.length : 1;
 
-    _.touchObject.minSwipe = _.listWidth / _.options
+    this.touchObject.minSwipe = this.listWidth / this.options
       .touchThreshold;
 
-    if (_.options.verticalSwiping === true) {
-      _.touchObject.minSwipe = _.listHeight / _.options
+    if (this.options.verticalSwiping === true) {
+      this.touchObject.minSwipe = this.listHeight / this.options
         .touchThreshold;
     }
 
     switch (event.data.action) {
+    case "start":
+      this.swipeStart(event);
+      break;
 
-      case 'start':
-        _.swipeStart(event);
-        break;
+    case "move":
+      this.swipeMove(event);
+      break;
 
-      case 'move':
-        _.swipeMove(event);
-        break;
-
-      case 'end':
-        _.swipeEnd(event);
-        break;
-
+    case "end":
+      this.swipeEnd(event);
+      break;
     }
   },
   swipeMove(event: Object) {
-    var _ = this,
-      edgeWasHit = false,
-      curLeft, swipeDirection, swipeLength, positionOffset;
+    const touches = "touches" in event.originalEvent ? event.originalEvent.touches : null;
 
-    let touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
-
-    if (!touches) return;
-
-    if (!_.dragging || touches && touches.length !== 1) {
+    if (!this.dragging || touches && touches.length !== 1) {
       return false;
     }
 
-    curLeft = _.getLeft(_.currentSlide);
+    const curLeft = this.getLeft(this.currentSlide);
 
-    _.touchObject.curX = touches !== undefined ? touches[0].pageX : event.clientX;
-    _.touchObject.curY = touches !== undefined ? touches[0].pageY : event.clientY;
+    this.touchObject.curX = touches !== null ? touches[0].pageX : event.clientX;
+    this.touchObject.curY = touches !== null ? touches[0].pageY : event.clientY;
 
-    _.touchObject.swipeLength = Math.round(Math.sqrt(
-      Math.pow(_.touchObject.curX - _.touchObject.startX, 2)));
+    this.touchObject.swipeLength = Math.round(Math.sqrt(
+      Math.pow(this.touchObject.curX - this.touchObject.startX, 2)));
 
-    if (_.options.verticalSwiping === true) {
-      _.touchObject.swipeLength = Math.round(Math.sqrt(
-        Math.pow(_.touchObject.curY - _.touchObject.startY, 2)));
+    if (this.options.verticalSwiping === true) {
+      this.touchObject.swipeLength = Math.round(Math.sqrt(
+        Math.pow(this.touchObject.curY - this.touchObject.startY, 2)));
     }
 
-    swipeDirection = _.swipeDirection();
+    const swipeDirection = this.swipeDirection();
 
-    if (swipeDirection === 'vertical') {
+    if (swipeDirection === "vertical") {
       return;
     }
 
-    if (event.originalEvent !== undefined && _.touchObject.swipeLength > 4) {
+    if (typeof event.originalEvent !== undefined && this.touchObject.swipeLength > 4) {
       event.preventDefault();
     }
 
-    positionOffset = (_.options.rtl === false ? 1 : -1) * (_.touchObject.curX > _.touchObject.startX ? 1 : -1);
-    if (_.options.verticalSwiping === true) {
-      positionOffset = _.touchObject.curY > _.touchObject.startY ? 1 : -1;
+    let positionOffset = (this.options.rtl === false ? 1 : -1) *
+      (this.touchObject.curX > this.touchObject.startX ? 1 : -1);
+    if (this.options.verticalSwiping === true) {
+      positionOffset = this.touchObject.curY > this.touchObject.startY ? 1 : -1;
     }
 
+    let swipeLength = this.touchObject.swipeLength;
 
-    swipeLength = _.touchObject.swipeLength;
+    this.touchObject.edgeHit = false;
 
-    _.touchObject.edgeHit = false;
-
-    if (_.options.infinite === false) {
-      if ((_.currentSlide === 0 && swipeDirection === 'right') || (_.currentSlide >= _.getDotCount() && swipeDirection === 'left')) {
-        swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
-        _.touchObject.edgeHit = true;
+    if (this.options.infinite === false) {
+      if (this.currentSlide === 0 && swipeDirection === "right" ||
+        this.currentSlide >= this.getDotCount() && swipeDirection === "left") {
+        swipeLength = this.touchObject.swipeLength * this.options.edgeFriction;
+        this.touchObject.edgeHit = true;
       }
     }
 
-    if (_.options.vertical === false) {
-      _.swipeLeft = curLeft + swipeLength * positionOffset;
+    if (this.options.vertical === false) {
+      this.swipeLeft = curLeft + swipeLength * positionOffset;
     } else {
-      _.swipeLeft = curLeft + (swipeLength * (_.$list.height() / _.listWidth)) * positionOffset;
+      this.swipeLeft = curLeft +
+        swipeLength * (this.$list.height() / this.listWidth) * positionOffset;
     }
-    if (_.options.verticalSwiping === true) {
-      _.swipeLeft = curLeft + swipeLength * positionOffset;
+    if (this.options.verticalSwiping === true) {
+      this.swipeLeft = curLeft + swipeLength * positionOffset;
     }
 
-    if (_.options.fade === true || _.options.touchMove === false) {
+    if (this.options.fade === true || this.options.touchMove === false) {
       return false;
     }
 
-    if (_.animating === true) {
-      _.swipeLeft = null;
+    if (this.animating === true) {
+      this.swipeLeft = null;
       return false;
     }
 
-    _.setCSS(_.swipeLeft);
+    this.setCSS(this.swipeLeft);
   },
   swipeStart(event: Object) {
-    var _ = this,
-      touches;
+    const touches = "touches" in event.originalEvent ? event.originalEvent.touches : null;
 
-    if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
-      _.touchObject = {};
+    if (this.touchObject.fingerCount !== 1 || this.slideCount <= this.options.slidesToShow) {
+      this.touchObject = {};
       return false;
     }
 
-    if (event.originalEvent !== undefined && event.originalEvent.touches !== undefined) {
-      touches = event.originalEvent.touches[0];
-    }
+    this.touchObject.startX = this.touchObject.curX =
+      touches !== null ? touches.pageX : event.clientX;
+    this.touchObject.startY = this.touchObject.curY =
+      touches !== null ? touches.pageY : event.clientY;
 
-    _.touchObject.startX = _.touchObject.curX = touches !== undefined ? touches.pageX : event.clientX;
-    _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches.pageY : event.clientY;
-
-    _.dragging = true;
+    this.dragging = true;
   }
-}
+};

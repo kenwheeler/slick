@@ -1,137 +1,148 @@
 /* @flow */
-'use strict';
+/*eslint-disable max-statements, complexity */
 
 const $ = window.$ || window.jQuery;
 
 export default {
   getCurrent(): number {
-    var _ = this;
-    return _.currentSlide;
+    return this.currentSlide;
   },
   getLeft(slideIndex: number): number {
-    var _ = this,
-      targetLeft,
-      verticalHeight,
-      verticalOffset = 0,
-      targetSlide;
+    this.slideOffset = 0;
 
-    _.slideOffset = 0;
-    verticalHeight = _.$slides.first().outerHeight(true);
+    const verticalHeight = this.$slides.first().outerHeight(true);
+    let targetLeft = 0;
+    let targetSlide = 0;
+    let verticalOffset = 0;
 
-    if (_.options.infinite === true) {
-      if (_.slideCount > _.options.slidesToShow) {
-        _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
-        verticalOffset = (verticalHeight * _.options.slidesToShow) * -1;
+    if (this.options.infinite === true) {
+      if (this.slideCount > this.options.slidesToShow) {
+        this.slideOffset = this.slideWidth * this.options.slidesToShow * -1;
+        verticalOffset = verticalHeight * this.options.slidesToShow * -1;
       }
-      if (_.slideCount % _.options.slidesToScroll !== 0) {
-        if (slideIndex + _.options.slidesToScroll > _.slideCount && _.slideCount > _.options.slidesToShow) {
-          if (slideIndex > _.slideCount) {
-            _.slideOffset = ((_.options.slidesToShow - (slideIndex - _.slideCount)) * _.slideWidth) * -1;
-            verticalOffset = ((_.options.slidesToShow - (slideIndex - _.slideCount)) * verticalHeight) * -1;
+      if (this.slideCount % this.options.slidesToScroll !== 0) {
+        if (slideIndex + this.options.slidesToScroll > this.slideCount &&
+          this.slideCount > this.options.slidesToShow) {
+
+          if (slideIndex > this.slideCount) {
+            this.slideOffset = (this.options.slidesToShow -
+              (slideIndex - this.slideCount) * this.slideWidth) * -1;
+            verticalOffset = (this.options.slidesToShow -
+              (slideIndex - this.slideCount) * verticalHeight) * -1;
           } else {
-            _.slideOffset = ((_.slideCount % _.options.slidesToScroll) * _.slideWidth) * -1;
-            verticalOffset = ((_.slideCount % _.options.slidesToScroll) * verticalHeight) * -1;
+            this.slideOffset = this.slideCount % this.options.slidesToScroll *
+              this.slideWidth * -1;
+            verticalOffset = this.slideCount % this.options.slidesToScroll *
+              verticalHeight * -1;
           }
+
         }
       }
-    } else {
-      if (slideIndex + _.options.slidesToShow > _.slideCount) {
-        _.slideOffset = ((slideIndex + _.options.slidesToShow) - _.slideCount) * _.slideWidth;
-        verticalOffset = ((slideIndex + _.options.slidesToShow) - _.slideCount) * verticalHeight;
-      }
+    } else if (slideIndex + this.options.slidesToShow > this.slideCount) {
+      this.slideOffset = slideIndex + this.options.slidesToShow - this.slideCount *
+        this.slideWidth;
+      verticalOffset = slideIndex + this.options.slidesToShow - this.slideCount *
+        verticalHeight;
     }
 
-    if (_.slideCount <= _.options.slidesToShow) {
-      _.slideOffset = 0;
+    if (this.slideCount <= this.options.slidesToShow) {
+      this.slideOffset = 0;
       verticalOffset = 0;
     }
 
-    if (_.options.centerMode === true && _.options.infinite === true) {
-      _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
-    } else if (_.options.centerMode === true) {
-      _.slideOffset = 0;
-      _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
+    if (this.options.centerMode === true && this.options.infinite === true) {
+      this.slideOffset += this.slideWidth * Math.floor(this.options.slidesToShow / 2) -
+        this.slideWidth;
+    } else if (this.options.centerMode === true) {
+      this.slideOffset = 0;
+      this.slideOffset += this.slideWidth * Math.floor(this.options.slidesToShow / 2);
     }
 
-    if (_.options.vertical === false) {
-      targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
+    if (this.options.vertical === false) {
+      targetLeft = slideIndex * this.slideWidth * -1 + this.slideOffset;
     } else {
-      targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+      targetLeft = slideIndex * verticalHeight * -1 + verticalOffset;
     }
 
-    if (_.options.variableWidth === true) {
+    if (this.options.variableWidth === true) {
 
-      if (_.slideCount <= _.options.slidesToShow || _.options.infinite === false) {
-        targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex);
+      if (this.slideCount <= this.options.slidesToShow ||
+          this.options.infinite === false) {
+        targetSlide = this.$slideTrack.children(".slick-slide")
+          .eq(slideIndex);
       } else {
-        targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow);
+        targetSlide = this.$slideTrack.children(".slick-slide")
+          .eq(slideIndex + this.options.slidesToShow);
       }
 
       targetLeft = targetSlide[0] ? targetSlide[0].offsetLeft * -1 : 0;
 
-      if (_.options.centerMode === true) {
-        if (_.slideCount <= _.options.slidesToShow || _.options.infinite === false) {
-          targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex);
+      if (this.options.centerMode === true) {
+        if (this.slideCount <= this.options.slidesToShow ||
+            this.options.infinite === false) {
+          targetSlide = this.$slideTrack.children(".slick-slide")
+            .eq(slideIndex);
         } else {
-          targetSlide = _.$slideTrack.children('.slick-slide').eq(slideIndex + _.options.slidesToShow + 1);
+          targetSlide = this.$slideTrack.children(".slick-slide")
+            .eq(slideIndex + this.options.slidesToShow + 1);
         }
         targetLeft = targetSlide[0] ? targetSlide[0].offsetLeft * -1 : 0;
-        targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
+        targetLeft += (this.$list.width() - targetSlide.outerWidth()) / 2;
       }
     }
 
     return targetLeft;
   },
   getOption(option: string): any {
-    var _ = this;
-
-    return _.options[option];
+    return this.options[option];
   },
   getNavigableIndexes(): Array<number> {
-    var _ = this,
-      breakPoint = 0,
-      counter = 0,
-      indexes = [],
-      max;
+    const indexes = [];
 
-    if (_.options.infinite === false) {
-      max = _.slideCount;
+    let breakPoint = 0;
+    let counter = 0;
+    let max = 0;
+
+    if (this.options.infinite === false) {
+      max = this.slideCount;
     } else {
-      breakPoint = _.options.slidesToScroll * -1;
-      counter = _.options.slidesToScroll * -1;
-      max = _.slideCount * 2;
+      breakPoint = this.options.slidesToScroll * -1;
+      counter = this.options.slidesToScroll * -1;
+      max = this.slideCount * 2;
     }
 
     while (breakPoint < max) {
       indexes.push(breakPoint);
-      breakPoint = counter + _.options.slidesToScroll;
-      counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+      breakPoint = counter + this.options.slidesToScroll;
+      counter += this.options.slidesToScroll <= this.options.slidesToShow ?
+        this.options.slidesToScroll : this.options.slidesToShow;
     }
 
     return indexes;
   },
   getSlick(): Object {
-    return this
+    return this;
   },
   getSlideCount(): number {
-    var _ = this, slidesTraversed, swipedSlide;
+    let swipedSlide = 0;
 
-    let centerOffset = _.options.centerMode === true ? _.slideWidth * Math.floor(_.options.slidesToShow / 2) : 0;
+    const centerOffset = this.options.centerMode === true ? this.slideWidth *
+      Math.floor(this.options.slidesToShow / 2) : 0;
 
-    if (_.options.swipeToSlide === true) {
-      _.$slideTrack.find('.slick-slide').each(function(index, slide) {
-        if (slide.offsetLeft - centerOffset + ($(slide).outerWidth() / 2) > (_.swipeLeft * -1)) {
+    if (this.options.swipeToSlide === true) {
+      this.$slideTrack.find(".slick-slide").each((index, slide) => {
+        if (slide.offsetLeft - centerOffset + $(slide).outerWidth() / 2 >
+            this.swipeLeft * -1) {
           swipedSlide = slide;
           return 0;
         }
       });
 
-      slidesTraversed = Math.abs($(swipedSlide).attr('data-slick-index') - _.currentSlide) || 1;
-
-      return slidesTraversed;
+      return Math.abs($(swipedSlide).attr("data-slick-index") -
+        this.currentSlide) || 1;
 
     } else {
-      return _.options.slidesToScroll;
+      return this.options.slidesToScroll;
     }
   }
-}
+};

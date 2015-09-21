@@ -1,324 +1,317 @@
 /* @flow */
-'use strict';
+/*eslint-disable max-statements, complexity, max-depth */
 
 const $ = window.$ || window.jQuery;
 
 export default {
   setCSS(position: number) {
-    var _ = this,
-      positionProps = {},
-      x, y;
+    let positionProps = {};
 
-    if (_.options.rtl === true) {
+    if (this.options.rtl === true) {
       position = -position;
     }
-    x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
-    y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
+    const x = this.positionProp === "left" ? Math.ceil(position) + "px" : "0px";
+    const y = this.positionProp === "top" ? Math.ceil(position) + "px" : "0px";
 
-    positionProps[_.positionProp] = position;
+    positionProps[this.positionProp] = position;
 
-    if (_.transformsEnabled === false) {
-      _.$slideTrack.css(positionProps);
+    if (this.transformsEnabled === false) {
+      this.$slideTrack.css(positionProps);
     } else {
       positionProps = {};
-      if (_.cssTransitions === false) {
-        positionProps[_.animType] = 'translate(' + x + ', ' + y + ')';
-        _.$slideTrack.css(positionProps);
+      if (this.cssTransitions === false) {
+        positionProps[this.animType] = "translate(" + x + ", " + y + ")";
+        this.$slideTrack.css(positionProps);
       } else {
-        positionProps[_.animType] = 'translate3d(' + x + ', ' + y + ', 0px)';
-        _.$slideTrack.css(positionProps);
+        positionProps[this.animType] = "translate3d(" + x + ", " + y + ", 0px)";
+        this.$slideTrack.css(positionProps);
       }
     }
   },
   setDimensions() {
-    var _ = this;
-
-    if (_.options.vertical === false) {
-      if (_.options.centerMode === true) {
-        _.$list.css({
-          padding: ('0px ' + _.options.centerPadding)
+    if (this.options.vertical === false) {
+      if (this.options.centerMode === true) {
+        this.$list.css({
+          padding: "0px " + this.options.centerPadding
         });
       }
     } else {
-      _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
-      if (_.options.centerMode === true) {
-        _.$list.css({
-          padding: (_.options.centerPadding + ' 0px')
+      this.$list.height(this.$slides.first().outerHeight(true) * this.options.slidesToShow);
+      if (this.options.centerMode === true) {
+        this.$list.css({
+          padding: this.options.centerPadding + " 0px"
         });
       }
     }
 
-    _.listWidth = _.$list.width();
-    _.listHeight = _.$list.height();
+    this.listWidth = this.$list.width();
+    this.listHeight = this.$list.height();
 
 
-    if (_.options.vertical === false && _.options.variableWidth === false) {
-      _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
-      _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+    if (this.options.vertical === false && this.options.variableWidth === false) {
+      this.slideWidth = Math.ceil(this.listWidth / this.options.slidesToShow);
+      this.$slideTrack.width(Math.ceil(this.slideWidth *
+          this.$slideTrack.children(".slick-slide").length));
 
-    } else if (_.options.variableWidth === true) {
-      _.$slideTrack.width(5000 * _.slideCount);
+    } else if (this.options.variableWidth === true) {
+      this.$slideTrack.width(5000 * this.slideCount);
     } else {
-      _.slideWidth = Math.ceil(_.listWidth);
-      _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
+      this.slideWidth = Math.ceil(this.listWidth);
+      this.$slideTrack.height(Math.ceil(
+        this.$slides.first().outerHeight(true) *
+        this.$slideTrack.children(".slick-slide").length));
     }
 
-    var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
-    if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+    const offset = this.$slides.first().outerWidth(true) - this.$slides.first().width();
+    if (this.options.variableWidth === false) {
+      this.$slideTrack.children(".slick-slide").width(this.slideWidth - offset);
+    }
   },
   setFade() {
-    var _ = this,
-      targetLeft;
-
-    _.$slides.each(function(index, element) {
-      targetLeft = (_.slideWidth * index) * -1;
-      if (_.options.rtl === true) {
+    this.$slides.each((index, element) => {
+      const targetLeft = this.slideWidth * index * -1;
+      if (this.options.rtl === true) {
         $(element).css({
-          position: 'relative',
+          position: "relative",
           right: targetLeft,
           top: 0,
-          zIndex: _.options.zIndex - 2,
+          zIndex: this.options.zIndex - 2,
           opacity: 0
         });
       } else {
         $(element).css({
-          position: 'relative',
+          position: "relative",
           left: targetLeft,
           top: 0,
-          zIndex: _.options.zIndex - 2,
+          zIndex: this.options.zIndex - 2,
           opacity: 0
         });
       }
     });
 
-    _.$slides.eq(_.currentSlide).css({
-      zIndex: _.options.zIndex - 1,
+    this.$slides.eq(this.currentSlide).css({
+      zIndex: this.options.zIndex - 1,
       opacity: 1
     });
   },
   setHeight() {
-    var _ = this;
-
-    if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
-      var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
-      _.$list.css('height', targetHeight);
+    if (this.options.slidesToShow === 1 &&
+      this.options.adaptiveHeight === true && this.options.vertical === false) {
+      const targetHeight = this.$slides.eq(this.currentSlide).outerHeight(true);
+      this.$list.css("height", targetHeight);
     }
   },
   setOption(option: string, value: any, refresh: boolean) {
-    var _ = this,
-      l, item;
-
     if (option === "responsive" && $.type(value) === "array") {
+      let item = null;
       for (item in value) {
-        if ($.type(_.options.responsive) !== "array") {
-          _.options.responsive = [value[item]];
+        if ($.type(this.options.responsive) !== "array") {
+          this.options.responsive = [value[item]];
         } else {
-          l = _.options.responsive.length - 1;
+          let l = this.options.responsive.length - 1;
           // loop through the responsive object and splice out duplicates.
           while (l >= 0) {
-            if (_.options.responsive[l].breakpoint === value[item].breakpoint) {
-              _.options.responsive.splice(l, 1);
+            if (this.options.responsive[l].breakpoint === value[item].breakpoint) {
+              this.options.responsive.splice(l, 1);
             }
             l--;
           }
-          _.options.responsive.push(value[item]);
+          this.options.responsive.push(value[item]);
         }
       }
     } else {
-      _.options[option] = value;
+      this.options[option] = value;
     }
 
     if (refresh === true) {
-      _.unload();
-      _.reinit();
+      this.unload();
+      this.reinit();
     }
   },
   setPosition() {
-    var _ = this;
+    this.setDimensions();
 
-    _.setDimensions();
+    this.setHeight();
 
-    _.setHeight();
-
-    if (_.options.fade === false) {
-      _.setCSS(_.getLeft(_.currentSlide));
+    if (this.options.fade === false) {
+      this.setCSS(this.getLeft(this.currentSlide));
     } else {
-      _.setFade();
+      this.setFade();
     }
 
-    _.$slider.trigger('setPosition', [_]);
+    this.$slider.trigger("setPosition", [this]);
   },
   setProps() {
-    var _ = this,
-      bodyStyle = document.body.style;
+    const bodyStyle = document.body.style;
 
-    _.positionProp = _.options.vertical === true ? 'top' : 'left';
+    this.positionProp = this.options.vertical === true ? "top" : "left";
 
-    if (_.positionProp === 'top') {
-      _.$slider.addClass('slick-vertical');
+    if (this.positionProp === "top") {
+      this.$slider.addClass("slick-vertical");
     } else {
-      _.$slider.removeClass('slick-vertical');
+      this.$slider.removeClass("slick-vertical");
     }
 
     if (bodyStyle.WebkitTransition !== undefined ||
       bodyStyle.MozTransition !== undefined ||
       bodyStyle.msTransition !== undefined) {
-      if (_.options.useCSS === true) {
-        _.cssTransitions = true;
+      if (this.options.useCSS === true) {
+        this.cssTransitions = true;
       }
     }
 
-    if (_.options.fade) {
-      if (typeof _.options.zIndex === 'number') {
-        if (_.options.zIndex < 3) {
-          _.options.zIndex = 3;
+    if (this.options.fade) {
+      if (typeof this.options.zIndex === "number") {
+        if (this.options.zIndex < 3) {
+          this.options.zIndex = 3;
         }
       } else {
-        _.options.zIndex = _.defaults.zIndex;
+        this.options.zIndex = this.defaults.zIndex;
       }
     }
 
     if (bodyStyle.OTransform !== undefined) {
-      _.animType = 'OTransform';
-      _.transformType = '-o-transform';
-      _.transitionType = 'OTransition';
-      if (bodyStyle.perspectiveProperty === undefined && bodyStyle.webkitPerspective === undefined) _.animType = false;
+      this.animType = "OTransform";
+      this.transformType = "-o-transform";
+      this.transitionType = "OTransition";
+      if (bodyStyle.perspectiveProperty === undefined &&
+        bodyStyle.webkitPerspective === undefined) { this.animType = false; }
     }
     if (bodyStyle.MozTransform !== undefined) {
-      _.animType = 'MozTransform';
-      _.transformType = '-moz-transform';
-      _.transitionType = 'MozTransition';
-      if (bodyStyle.perspectiveProperty === undefined && bodyStyle.MozPerspective === undefined) _.animType = false;
+      this.animType = "MozTransform";
+      this.transformType = "-moz-transform";
+      this.transitionType = "MozTransition";
+      if (bodyStyle.perspectiveProperty === undefined &&
+        bodyStyle.MozPerspective === undefined) { this.animType = false; }
     }
     if (bodyStyle.webkitTransform !== undefined) {
-      _.animType = 'webkitTransform';
-      _.transformType = '-webkit-transform';
-      _.transitionType = 'webkitTransition';
-      if (bodyStyle.perspectiveProperty === undefined && bodyStyle.webkitPerspective === undefined) _.animType = false;
+      this.animType = "webkitTransform";
+      this.transformType = "-webkit-transform";
+      this.transitionType = "webkitTransition";
+      if (bodyStyle.perspectiveProperty === undefined &&
+        bodyStyle.webkitPerspective === undefined) { this.animType = false; }
     }
     if (bodyStyle.msTransform !== undefined) {
-      _.animType = 'msTransform';
-      _.transformType = '-ms-transform';
-      _.transitionType = 'msTransition';
-      if (bodyStyle.msTransform === undefined) _.animType = false;
+      this.animType = "msTransform";
+      this.transformType = "-ms-transform";
+      this.transitionType = "msTransition";
+      if (bodyStyle.msTransform === undefined) { this.animType = false; }
     }
-    if (bodyStyle.transform !== undefined && _.animType !== false) {
-      _.animType = 'transform';
-      _.transformType = 'transform';
-      _.transitionType = 'transition';
+    if (bodyStyle.transform !== undefined && this.animType !== false) {
+      this.animType = "transform";
+      this.transformType = "transform";
+      this.transitionType = "transition";
     }
-    _.transformsEnabled = _.options.useTransform && (_.animType !== null && _.animType !== false);
+    this.transformsEnabled = this.options.useTransform &&
+      (this.animType !== null && this.animType !== false);
   },
   setSlideClasses(index: number) {
-    var _ = this,
-      centerOffset, allSlides, indexOffset, remainder;
+    const allSlides = this.$slider
+      .find(".slick-slide")
+      .removeClass("slick-active slick-center slick-current")
+      .attr("aria-hidden", "true");
 
-    allSlides = _.$slider
-      .find('.slick-slide')
-      .removeClass('slick-active slick-center slick-current')
-      .attr('aria-hidden', 'true');
-
-    _.$slides
+    this.$slides
       .eq(index)
-      .addClass('slick-current');
+      .addClass("slick-current");
 
-    if (_.options.centerMode === true) {
+    if (this.options.centerMode === true) {
 
-      centerOffset = Math.floor(_.options.slidesToShow / 2);
+      const centerOffset = Math.floor(this.options.slidesToShow / 2);
 
-      if (_.options.infinite === true) {
+      if (this.options.infinite === true) {
 
-        if (index >= centerOffset && index <= (_.slideCount - 1) - centerOffset) {
+        if (index >= centerOffset && index <= this.slideCount - 1 - centerOffset) {
 
-          _.$slides
+          this.$slides
             .slice(index - centerOffset, index + centerOffset + 1)
-            .addClass('slick-active')
-            .attr('aria-hidden', 'false');
+            .addClass("slick-active")
+            .attr("aria-hidden", "false");
 
         } else {
 
-          indexOffset = _.options.slidesToShow + index;
+          const indexOffset = this.options.slidesToShow + index;
           allSlides
             .slice(indexOffset - centerOffset + 1, indexOffset + centerOffset + 2)
-            .addClass('slick-active')
-            .attr('aria-hidden', 'false');
+            .addClass("slick-active")
+            .attr("aria-hidden", "false");
 
         }
 
         if (index === 0) {
 
           allSlides
-            .eq(allSlides.length - 1 - _.options.slidesToShow)
-            .addClass('slick-center');
+            .eq(allSlides.length - 1 - this.options.slidesToShow)
+            .addClass("slick-center");
 
-        } else if (index === _.slideCount - 1) {
+        } else if (index === this.slideCount - 1) {
 
           allSlides
-            .eq(_.options.slidesToShow)
-            .addClass('slick-center');
+            .eq(this.options.slidesToShow)
+            .addClass("slick-center");
 
         }
 
       }
 
-      _.$slides
+      this.$slides
         .eq(index)
-        .addClass('slick-center');
+        .addClass("slick-center");
+
+      return;
+
+    }
+
+    if (index >= 0 && index <= this.slideCount - this.options.slidesToShow) {
+
+      this.$slides
+        .slice(index, index + this.options.slidesToShow)
+        .addClass("slick-active")
+        .attr("aria-hidden", "false");
+
+    } else if (allSlides.length <= this.options.slidesToShow) {
+
+      allSlides
+        .addClass("slick-active")
+        .attr("aria-hidden", "false");
 
     } else {
 
-      if (index >= 0 && index <= (_.slideCount - _.options.slidesToShow)) {
+      const remainder = this.slideCount % this.options.slidesToShow;
+      const indexOffset = this.options.infinite === true ?
+        this.options.slidesToShow + index : index;
 
-        _.$slides
-          .slice(index, index + _.options.slidesToShow)
-          .addClass('slick-active')
-          .attr('aria-hidden', 'false');
-
-      } else if (allSlides.length <= _.options.slidesToShow) {
+      if (this.options.slidesToShow === this.options.slidesToScroll &&
+        this.slideCount - index < this.options.slidesToShow) {
 
         allSlides
-          .addClass('slick-active')
-          .attr('aria-hidden', 'false');
+          .slice(indexOffset - (this.options.slidesToShow - remainder), indexOffset + remainder)
+          .addClass("slick-active")
+          .attr("aria-hidden", "false");
 
       } else {
 
-        remainder = _.slideCount % _.options.slidesToShow;
-        indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
-
-        if (_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow) {
-
-          allSlides
-            .slice(indexOffset - (_.options.slidesToShow - remainder), indexOffset + remainder)
-            .addClass('slick-active')
-            .attr('aria-hidden', 'false');
-
-        } else {
-
-          allSlides
-            .slice(indexOffset, indexOffset + _.options.slidesToShow)
-            .addClass('slick-active')
-            .attr('aria-hidden', 'false');
-
-        }
+        allSlides
+          .slice(indexOffset, indexOffset + this.options.slidesToShow)
+          .addClass("slick-active")
+          .attr("aria-hidden", "false");
 
       }
 
     }
 
-    if (_.options.lazyLoad === 'ondemand') {
-      _.lazyLoad();
+    if (this.options.lazyLoad === "ondemand") {
+      this.lazyLoad();
     }
   },
   setPaused(paused: boolean) {
-    var _ = this;
-
-    if (_.options.autoplay === true && _.options.pauseOnHover === true) {
-      _.paused = paused;
+    if (this.options.autoplay === true && this.options.pauseOnHover === true) {
+      this.paused = paused;
       if (!paused) {
-        _.autoPlay();
+        this.autoPlay();
       } else {
-        _.autoPlayClear();
+        this.autoPlayClear();
       }
     }
   }
-}
+};

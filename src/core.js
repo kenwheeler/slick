@@ -1,20 +1,18 @@
 /* @flow */
-'use strict';
+/*eslint-disable max-statements, complexity */
 
 const $ = window.$ || window.jQuery;
 
 export default {
   asNavFor(index: number) {
-    let _ = this,
-      asNavFor = _.options.asNavFor;
-
-    if (asNavFor && asNavFor !== null) {
-      asNavFor = $(asNavFor).not(_.$slider);
+    let asNavFor = null;
+    if (this.options.asNavFor && this.options.asNavFor !== null) {
+      asNavFor = $(this.options.asNavFor).not(this.$slider);
     }
 
-    if (asNavFor !== null && typeof asNavFor === 'object') {
-      asNavFor.each(function() {
-        var target = $(this).slick('getSlick');
+    if (asNavFor !== null && typeof asNavFor === "object") {
+      asNavFor.each((i, el) => {
+        const target = $(el).slick("getSlick");
         if (!target.unslicked) {
           target.slideHandler(index, true);
         }
@@ -22,15 +20,13 @@ export default {
     }
   },
   checkNavigable(index: number): number {
-    var _ = this,
-      navigables, prevNavigable;
-
-    navigables = _.getNavigableIndexes();
-    prevNavigable = 0;
+    const navigables = this.getNavigableIndexes();
+    let prevNavigable = 0;
     if (index > navigables[navigables.length - 1]) {
       index = navigables[navigables.length - 1];
     } else {
-      for (var n in navigables) {
+      let n = 0;
+      for (n in navigables) {
         if (index < navigables[n]) {
           index = prevNavigable;
           break;
@@ -42,166 +38,157 @@ export default {
     return index;
   },
   postSlide(index: number) {
-    var _ = this;
+    this.$slider.trigger("afterChange", [this, index]);
 
-    _.$slider.trigger('afterChange', [_, index]);
+    this.animating = false;
 
-    _.animating = false;
+    this.setPosition();
 
-    _.setPosition();
+    this.swipeLeft = null;
 
-    _.swipeLeft = null;
-
-    if (_.options.autoplay === true && _.paused === false) {
-      _.autoPlay();
+    if (this.options.autoplay === true && this.paused === false) {
+      this.autoPlay();
     }
-    if (_.options.accessibility === true) {
-      _.initADA();
+    if (this.options.accessibility === true) {
+      this.initADA();
     }
   },
   selectHandler(event: Object) {
-    var _ = this;
-
-    var targetElement =
-      $(event.target).is('.slick-slide') ?
+    const targetElement =
+      $(event.target).is(".slick-slide") ?
       $(event.target) :
-      $(event.target).parents('.slick-slide');
+      $(event.target).parents(".slick-slide");
 
-    var index = parseInt(targetElement.attr('data-slick-index'));
+    let index = parseInt(targetElement.attr("data-slick-index"));
 
-    if (!index) index = 0;
+    if (!index) { index = 0; }
 
-    if (_.slideCount <= _.options.slidesToShow) {
+    if (this.slideCount <= this.options.slidesToShow) {
 
-      _.setSlideClasses(index);
-      _.asNavFor(index);
+      this.setSlideClasses(index);
+      this.asNavFor(index);
       return;
 
     }
 
-    _.slideHandler(index);
+    this.slideHandler(index);
   },
   slideHandler(index: number, sync: boolean, dontAnimate: boolean) {
-    var targetSlide, animSlide, oldSlide, slideLeft, targetLeft = null,
-      _ = this;
-
     sync = sync || false;
 
-    if (_.animating === true && _.options.waitForAnimate === true) {
+    if (this.animating === true && this.options.waitForAnimate === true) {
       return;
     }
 
-    if (_.options.fade === true && _.currentSlide === index) {
+    if (this.options.fade === true && this.currentSlide === index) {
       return;
     }
 
-    if (_.slideCount <= _.options.slidesToShow) {
+    if (this.slideCount <= this.options.slidesToShow) {
       return;
     }
 
     if (sync === false) {
-      _.asNavFor(index);
+      this.asNavFor(index);
     }
 
-    targetSlide = index;
-    targetLeft = _.getLeft(targetSlide);
-    slideLeft = _.getLeft(_.currentSlide);
+    let targetSlide = index;
+    const targetLeft = this.getLeft(targetSlide);
+    const slideLeft = this.getLeft(this.currentSlide);
 
-    _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
+    this.currentLeft = this.swipeLeft === null ? slideLeft : this.swipeLeft;
 
-    if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || index > _.getDotCount() * _.options.slidesToScroll)) {
-      if (_.options.fade === false) {
-        targetSlide = _.currentSlide;
+    if (this.options.infinite === false && this.options.centerMode === false &&
+        (index < 0 || index > this.getDotCount() * this.options.slidesToScroll)) {
+      if (this.options.fade === false) {
+        targetSlide = this.currentSlide;
         if (dontAnimate !== true) {
-          _.animateSlide(slideLeft, function() {
-            _.postSlide(targetSlide);
+          this.animateSlide(slideLeft, () => {
+            this.postSlide(targetSlide);
           });
         } else {
-          _.postSlide(targetSlide);
+          this.postSlide(targetSlide);
         }
       }
       return;
-    } else if (_.options.infinite === false && _.options.centerMode === true && (index < 0 || index > (_.slideCount - _.options.slidesToScroll))) {
-      if (_.options.fade === false) {
-        targetSlide = _.currentSlide;
+    } else if (this.options.infinite === false && this.options.centerMode === true &&
+        (index < 0 || index > this.slideCount - this.options.slidesToScroll)) {
+      if (this.options.fade === false) {
+        targetSlide = this.currentSlide;
         if (dontAnimate !== true) {
-          _.animateSlide(slideLeft, function() {
-            _.postSlide(targetSlide);
+          this.animateSlide(slideLeft, () => {
+            this.postSlide(targetSlide);
           });
         } else {
-          _.postSlide(targetSlide);
+          this.postSlide(targetSlide);
         }
       }
       return;
     }
 
-    if (_.options.autoplay === true) {
-      clearInterval(_.autoPlayTimer);
+    if (this.options.autoplay === true) {
+      clearInterval(this.autoPlayTimer);
     }
+
+    let animSlide = targetSlide;
 
     if (targetSlide < 0) {
-      if (_.slideCount % _.options.slidesToScroll !== 0) {
-        animSlide = _.slideCount - (_.slideCount % _.options.slidesToScroll);
+      if (this.slideCount % this.options.slidesToScroll !== 0) {
+        animSlide = this.slideCount - this.slideCount % this.options.slidesToScroll;
       } else {
-        animSlide = _.slideCount + targetSlide;
+        animSlide = this.slideCount + targetSlide;
       }
-    } else if (targetSlide >= _.slideCount) {
-      if (_.slideCount % _.options.slidesToScroll !== 0) {
+    } else if (targetSlide >= this.slideCount) {
+      if (this.slideCount % this.options.slidesToScroll !== 0) {
         animSlide = 0;
       } else {
-        animSlide = targetSlide - _.slideCount;
+        animSlide = targetSlide - this.slideCount;
       }
-    } else {
-      animSlide = targetSlide;
     }
 
-    _.animating = true;
+    this.animating = true;
 
-    _.$slider.trigger('beforeChange', [_, _.currentSlide, animSlide]);
+    this.$slider.trigger("beforeChange", [this, this.currentSlide, animSlide]);
 
-    oldSlide = _.currentSlide;
-    _.currentSlide = animSlide;
+    const oldSlide = this.currentSlide;
+    this.currentSlide = animSlide;
 
-    _.setSlideClasses(_.currentSlide);
+    this.setSlideClasses(this.currentSlide);
 
-    _.updateDots();
-    _.updateArrows();
+    this.updateDots();
+    this.updateArrows();
 
-    if (_.options.fade === true) {
+    if (this.options.fade === true) {
       if (dontAnimate !== true) {
 
-        _.fadeSlideOut(oldSlide);
+        this.fadeSlideOut(oldSlide);
 
-        _.fadeSlide(animSlide, function() {
-          _.postSlide(animSlide);
+        this.fadeSlide(animSlide, () => {
+          this.postSlide(animSlide);
         });
 
       } else {
-        _.postSlide(animSlide);
+        this.postSlide(animSlide);
       }
-      _.animateHeight();
+      this.animateHeight();
       return;
     }
 
     if (dontAnimate !== true) {
-      _.animateSlide(targetLeft, function() {
-        _.postSlide(animSlide);
+      this.animateSlide(targetLeft, () => {
+        this.postSlide(animSlide);
       });
     } else {
-      _.postSlide(animSlide);
+      this.postSlide(animSlide);
     }
   },
   visibility() {
-    var _ = this;
-
     if (document.hidden) {
-      _.paused = true;
-      _.autoPlayClear();
-    } else {
-      if (_.options.autoplay === true) {
-        _.paused = false;
-        _.autoPlay();
-      }
+      this.paused = true;
+      this.autoPlayClear();
+    } else if (this.options.autoplay === true) {
+      this.paused = false;
+      this.autoPlay();
     }
   }
-}
+};

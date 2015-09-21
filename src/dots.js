@@ -1,71 +1,66 @@
 /* @flow */
-'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
   buildDots() {
-    var _ = this,
-      i, dotString;
+    let dotString = "";
 
-    if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
+    if (this.options.dots === true && this.slideCount > this.options.slidesToShow) {
 
-      dotString = '<ul class="' + _.options.dotsClass + '">';
+      dotString = "<ul class=\"" + this.options.dotsClass + "\">";
 
-      for (i = 0; i <= _.getDotCount(); i += 1) {
-        dotString += '<li>' + _.options.customPaging.call(this, _, i) + '</li>';
+      for (let i = 0; i <= this.getDotCount(); i += 1) {
+        dotString += "<li>" + this.options.customPaging.call(this, this, i) + "</li>";
       }
 
-      dotString += '</ul>';
+      dotString += "</ul>";
 
-      _.$dots = $(dotString).appendTo(
-        _.options.appendDots);
+      this.$dots = $(dotString).appendTo(
+        this.options.appendDots);
 
-      _.$dots.find('li').first().addClass('slick-active').attr('aria-hidden', 'false');
+      this.$dots.find("li").first().addClass("slick-active").attr("aria-hidden", "false");
 
     }
   },
   getDotCount(): number {
-    var _ = this;
+    let breakPoint = 0;
+    let counter = 0;
+    let pagerQty = 0;
 
-    var breakPoint = 0;
-    var counter = 0;
-    var pagerQty = 0;
-
-    if (_.options.infinite === true) {
-      while (breakPoint < _.slideCount) {
+    if (this.options.infinite === true) {
+      while (breakPoint < this.slideCount) {
         ++pagerQty;
-        breakPoint = counter + _.options.slidesToShow;
-        counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+        breakPoint = counter + this.options.slidesToShow;
+        counter += this.options.slidesToScroll <= this.options.slidesToShow ?
+          this.options.slidesToScroll : this.options.slidesToShow;
       }
-    } else if (_.options.centerMode === true) {
-      pagerQty = _.slideCount;
+    } else if (this.options.centerMode === true) {
+      pagerQty = this.slideCount;
     } else {
-      while (breakPoint < _.slideCount) {
+      while (breakPoint < this.slideCount) {
         ++pagerQty;
-        breakPoint = counter + _.options.slidesToShow;
-        counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+        breakPoint = counter + this.options.slidesToShow;
+        counter += this.options.slidesToScroll <= this.options.slidesToShow ?
+          this.options.slidesToScroll : this.options.slidesToShow;
       }
     }
-
     return pagerQty - 1;
   },
   updateDots() {
-    var _ = this;
+    if (this.$dots !== null) {
 
-    if (_.$dots !== null) {
+      this.$dots
+        .find("li")
+        .removeClass("slick-active")
+        .attr("aria-hidden", "true");
 
-      _.$dots
-        .find('li')
-        .removeClass('slick-active')
-        .attr('aria-hidden', 'true');
-
-      _.$dots
-        .find('li')
-        .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
-        .addClass('slick-active')
-        .attr('aria-hidden', 'false');
+      this.$dots
+        .find("li")
+        .eq(Math.floor(this.currentSlide / this.options.slidesToScroll))
+        .addClass("slick-active")
+        .attr("aria-hidden", "false");
 
     }
   }
-}
+};

@@ -1,44 +1,41 @@
 /* @flow */
-'use strict';
 
 const $ = window.$ || window.jQuery;
 
 export default {
   buildArrows() {
-    var _ = this;
+    if (this.options.arrows === true) {
 
-    if (_.options.arrows === true) {
+      this.$prevArrow = $(this.options.prevArrow).addClass("slick-arrow");
+      this.$nextArrow = $(this.options.nextArrow).addClass("slick-arrow");
 
-      _.$prevArrow = $(_.options.prevArrow).addClass('slick-arrow');
-      _.$nextArrow = $(_.options.nextArrow).addClass('slick-arrow');
+      if (this.slideCount > this.options.slidesToShow) {
 
-      if (_.slideCount > _.options.slidesToShow) {
+        this.$prevArrow.removeClass("slick-hidden").removeAttr("aria-hidden tabindex");
+        this.$nextArrow.removeClass("slick-hidden").removeAttr("aria-hidden tabindex");
 
-        _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
-        _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
-
-        if (_.htmlExpr.test(_.options.prevArrow)) {
-          _.$prevArrow.prependTo(_.options.appendArrows);
+        if (this.htmlExpr.test(this.options.prevArrow)) {
+          this.$prevArrow.prependTo(this.options.appendArrows);
         }
 
-        if (_.htmlExpr.test(_.options.nextArrow)) {
-          _.$nextArrow.appendTo(_.options.appendArrows);
+        if (this.htmlExpr.test(this.options.nextArrow)) {
+          this.$nextArrow.appendTo(this.options.appendArrows);
         }
 
-        if (_.options.infinite !== true) {
-          _.$prevArrow
-            .addClass('slick-disabled')
-            .attr('aria-disabled', 'true');
+        if (this.options.infinite !== true) {
+          this.$prevArrow
+            .addClass("slick-disabled")
+            .attr("aria-disabled", "true");
         }
 
       } else {
 
-        _.$prevArrow.add(_.$nextArrow)
+        this.$prevArrow.add(this.$nextArrow)
 
-        .addClass('slick-hidden')
+        .addClass("slick-hidden")
           .attr({
-            'aria-disabled': 'true',
-            'tabindex': '-1'
+            "aria-disabled": "true",
+            "tabindex": "-1"
           });
 
       }
@@ -46,34 +43,30 @@ export default {
     }
   },
   updateArrows() {
-    var _ = this,
-      centerOffset;
+    if (this.options.arrows === true &&
+      this.slideCount > this.options.slidesToShow &&
+      this.options.infinite === false) {
 
-    centerOffset = Math.floor(_.options.slidesToShow / 2);
+      this.$prevArrow.removeClass("slick-disabled").attr("aria-disabled", "false");
+      this.$nextArrow.removeClass("slick-disabled").attr("aria-disabled", "false");
 
-    if (_.options.arrows === true &&
-      _.slideCount > _.options.slidesToShow &&
-      _.options.infinite === false) {
+      if (this.currentSlide === 0) {
+        this.$prevArrow.addClass("slick-disabled").attr("aria-disabled", "true");
+        this.$nextArrow.removeClass("slick-disabled").attr("aria-disabled", "false");
 
-      _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
-      _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+      } else if (this.currentSlide >= this.slideCount - this.options.slidesToShow &&
+          this.options.centerMode === false) {
 
-      if (_.currentSlide === 0) {
-        _.$prevArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
-        _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+        this.$nextArrow.addClass("slick-disabled").attr("aria-disabled", "true");
+        this.$prevArrow.removeClass("slick-disabled").attr("aria-disabled", "false");
 
-      } else if (_.currentSlide >= _.slideCount - _.options.slidesToShow && _.options.centerMode === false) {
+      } else if (this.currentSlide >= this.slideCount - 1 && this.options.centerMode === true) {
 
-        _.$nextArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
-        _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
-
-      } else if (_.currentSlide >= _.slideCount - 1 && _.options.centerMode === true) {
-
-        _.$nextArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
-        _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+        this.$nextArrow.addClass("slick-disabled").attr("aria-disabled", "true");
+        this.$prevArrow.removeClass("slick-disabled").attr("aria-disabled", "false");
 
       }
 
     }
   }
-}
+};

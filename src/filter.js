@@ -1,37 +1,31 @@
 /* @flow */
-'use strict';
-
-const $ = window.$ || window.jQuery;
+/*eslint-disable max-statements, complexity */
 
 export default {
   filterSlide(filter: Function) {
-    var _ = this;
-
     if (filter !== null) {
 
-      _.unload();
+      this.unload();
 
-      _.$slideTrack.children(this.options.slide).detach();
+      this.$slideTrack.children(this.options.slide).detach();
 
-      _.$slidesCache.filter(filter).appendTo(_.$slideTrack);
+      this.$slidesCache.filter(filter).appendTo(this.$slideTrack);
 
-      _.reinit();
+      this.reinit();
 
     }
   },
   unfilterSlides() {
-    var _ = this;
+    if (this.$slidesCache !== null) {
 
-    if (_.$slidesCache !== null) {
+      this.unload();
 
-      _.unload();
+      this.$slideTrack.children(this.options.slide).detach();
 
-      _.$slideTrack.children(this.options.slide).detach();
+      this.$slidesCache.appendTo(this.$slideTrack);
 
-      _.$slidesCache.appendTo(_.$slideTrack);
-
-      _.reinit();
+      this.reinit();
 
     }
   }
-}
+};

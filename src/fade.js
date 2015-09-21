@@ -1,61 +1,54 @@
 /* @flow */
-'use strict';
-
-const $ = window.$ || window.jQuery;
 
 export default {
   fadeSlide(slideIndex: number, callback: Function) {
-    var _ = this;
+    if (this.cssTransitions === false) {
 
-    if (_.cssTransitions === false) {
-
-      _.$slides.eq(slideIndex).css({
-        zIndex: _.options.zIndex
+      this.$slides.eq(slideIndex).css({
+        zIndex: this.options.zIndex
       });
 
-      _.$slides.eq(slideIndex).animate({
+      this.$slides.eq(slideIndex).animate({
         opacity: 1
-      }, _.options.speed, _.options.easing, callback);
+      }, this.options.speed, this.options.easing, callback);
 
     } else {
 
-      _.applyTransition(slideIndex);
+      this.applyTransition(slideIndex);
 
-      _.$slides.eq(slideIndex).css({
+      this.$slides.eq(slideIndex).css({
         opacity: 1,
-        zIndex: _.options.zIndex
+        zIndex: this.options.zIndex
       });
 
       if (callback) {
-        setTimeout(function() {
+        setTimeout(() => {
 
-          _.disableTransition(slideIndex);
+          this.disableTransition(slideIndex);
 
           callback.call();
-        }, _.options.speed);
+        }, this.options.speed);
       }
 
     }
   },
   fadeSlideOut(slideIndex: number) {
-    var _ = this;
+    if (this.cssTransitions === false) {
 
-    if (_.cssTransitions === false) {
-
-      _.$slides.eq(slideIndex).animate({
+      this.$slides.eq(slideIndex).animate({
         opacity: 0,
-        zIndex: _.options.zIndex - 2
-      }, _.options.speed, _.options.easing);
+        zIndex: this.options.zIndex - 2
+      }, this.options.speed, this.options.easing);
 
     } else {
 
-      _.applyTransition(slideIndex);
+      this.applyTransition(slideIndex);
 
-      _.$slides.eq(slideIndex).css({
+      this.$slides.eq(slideIndex).css({
         opacity: 0,
-        zIndex: _.options.zIndex - 2
+        zIndex: this.options.zIndex - 2
       });
 
     }
   }
-}
+};

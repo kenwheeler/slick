@@ -1,0 +1,4 @@
+---
+"extends":
+  - "defaults/configurations/walmart/es6-browser"
+"plugins": ["flowtype"]

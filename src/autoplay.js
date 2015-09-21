@@ -1,57 +1,44 @@
 /* @flow */
-'use strict';
-
-const $ = window.$ || window.jQuery;
 
 export default {
   autoPlay() {
-    var _ = this;
-
-    if (_.autoPlayTimer) {
-      clearInterval(_.autoPlayTimer);
+    if (this.autoPlayTimer) {
+      clearInterval(this.autoPlayTimer);
     }
 
-    if (_.slideCount > _.options.slidesToShow && _.paused !== true) {
-      _.autoPlayTimer = setInterval(_.autoPlayIterator,
-        _.options.autoplaySpeed);
+    if (this.slideCount > this.options.slidesToShow && this.paused !== true) {
+      this.autoPlayTimer = setInterval(this.autoPlayIterator,
+        this.options.autoplaySpeed);
     }
   },
   autoPlayClear() {
-    var _ = this;
-    if (_.autoPlayTimer) {
-      clearInterval(_.autoPlayTimer);
+    if (this.autoPlayTimer) {
+      clearInterval(this.autoPlayTimer);
     }
   },
   autoPlayIterator() {
-    var _ = this;
+    if (this.options.infinite === false) {
 
-    if (_.options.infinite === false) {
+      if (this.direction === 1) {
 
-      if (_.direction === 1) {
-
-        if ((_.currentSlide + 1) === _.slideCount -
-          1) {
-          _.direction = 0;
+        if (this.currentSlide + 1 === this.slideCount - 1) {
+          this.direction = 0;
         }
 
-        _.slideHandler(_.currentSlide + _.options.slidesToScroll);
+        this.slideHandler(this.currentSlide + this.options.slidesToScroll);
 
       } else {
 
-        if ((_.currentSlide - 1 === 0)) {
-
-          _.direction = 1;
-
+        if (this.currentSlide - 1 === 0) {
+          this.direction = 1;
         }
 
-        _.slideHandler(_.currentSlide - _.options.slidesToScroll);
+        this.slideHandler(this.currentSlide - this.options.slidesToScroll);
 
       }
 
     } else {
-
-      _.slideHandler(_.currentSlide + _.options.slidesToScroll);
-
+      this.slideHandler(this.currentSlide + this.options.slidesToScroll);
     }
   }
-}
+};

@@ -1,132 +1,130 @@
 /* @flow */
-'use strict';
+/*eslint-disable max-statements, complexity, max-depth */
 
 const $ = window.$ || window.jQuery;
 
-import assign from 'object-assign';
+import assign from "object-assign";
 
 export default {
   checkResponsive(initial: boolean, forceUpdate: boolean) {
-    var _ = this,
-      breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
-    var sliderWidth = _.$slider.width();
-    var windowWidth = window.innerWidth || $(window).width();
+    const sliderWidth = this.$slider.width();
+    const windowWidth = window.innerWidth || $(window).width();
 
-    if (_.respondTo === 'window') {
+    let respondToWidth = null;
+    let triggerBreakpoint = false;
+
+    if (this.respondTo === "window") {
       respondToWidth = windowWidth;
-    } else if (_.respondTo === 'slider') {
+    } else if (this.respondTo === "slider") {
       respondToWidth = sliderWidth;
-    } else if (_.respondTo === 'min') {
+    } else if (this.respondTo === "min") {
       respondToWidth = Math.min(windowWidth, sliderWidth);
     }
 
-    if (_.options.responsive &&
-      _.options.responsive.length &&
-      _.options.responsive !== null) {
+    if (this.options.responsive &&
+      this.options.responsive.length &&
+      this.options.responsive !== null) {
 
-      targetBreakpoint = null;
+      let targetBreakpoint = null;
+      let breakpoint = null;
 
-      for (breakpoint in _.breakpoints) {
-        if (_.breakpoints.hasOwnProperty(breakpoint)) {
-          if (_.originalSettings.mobileFirst === false) {
-            if (respondToWidth < _.breakpoints[breakpoint]) {
-              targetBreakpoint = _.breakpoints[breakpoint];
+      for (breakpoint in this.breakpoints) {
+        if (this.breakpoints.hasOwnProperty(breakpoint)) {
+          if (this.originalSettings.mobileFirst === false) {
+            if (respondToWidth < this.breakpoints[breakpoint]) {
+              targetBreakpoint = this.breakpoints[breakpoint];
             }
-          } else {
-            if (respondToWidth > _.breakpoints[breakpoint]) {
-              targetBreakpoint = _.breakpoints[breakpoint];
-            }
+          } else if (respondToWidth > this.breakpoints[breakpoint]) {
+            targetBreakpoint = this.breakpoints[breakpoint];
           }
         }
       }
 
       if (targetBreakpoint !== null) {
-        if (_.activeBreakpoint !== null) {
-          if (targetBreakpoint !== _.activeBreakpoint || forceUpdate) {
-            _.activeBreakpoint =
+        if (this.activeBreakpoint !== null) {
+          if (targetBreakpoint !== this.activeBreakpoint || forceUpdate) {
+            this.activeBreakpoint =
               targetBreakpoint;
-            if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-              _.unslick(targetBreakpoint);
+            if (this.breakpointSettings[targetBreakpoint] === "unslick") {
+              this.unslick(targetBreakpoint);
             } else {
-              _.options = assign({}, _.originalSettings,
-                _.breakpointSettings[
+              this.options = assign({}, this.originalSettings,
+                this.breakpointSettings[
                   targetBreakpoint]);
               if (initial === true) {
-                _.currentSlide = _.options.initialSlide;
+                this.currentSlide = this.options.initialSlide;
               }
-              _.refresh(initial);
+              this.refresh(initial);
             }
             triggerBreakpoint = targetBreakpoint;
           }
         } else {
-          _.activeBreakpoint = targetBreakpoint;
-          if (_.breakpointSettings[targetBreakpoint] === 'unslick') {
-            _.unslick(targetBreakpoint);
+          this.activeBreakpoint = targetBreakpoint;
+          if (this.breakpointSettings[targetBreakpoint] === "unslick") {
+            this.unslick(targetBreakpoint);
           } else {
-            _.options = assign({}, _.originalSettings,
-              _.breakpointSettings[
+            this.options = assign({}, this.originalSettings,
+              this.breakpointSettings[
                 targetBreakpoint]);
             if (initial === true) {
-              _.currentSlide = _.options.initialSlide;
+              this.currentSlide = this.options.initialSlide;
             }
-            _.refresh(initial);
+            this.refresh(initial);
           }
           triggerBreakpoint = targetBreakpoint;
         }
-      } else {
-        if (_.activeBreakpoint !== null) {
-          _.activeBreakpoint = null;
-          _.options = _.originalSettings;
-          if (initial === true) {
-            _.currentSlide = _.options.initialSlide;
-          }
-          _.refresh(initial);
-          triggerBreakpoint = targetBreakpoint;
+      } else if (this.activeBreakpoint !== null) {
+        this.activeBreakpoint = null;
+        this.options = this.originalSettings;
+        if (initial === true) {
+          this.currentSlide = this.options.initialSlide;
         }
+        this.refresh(initial);
+        triggerBreakpoint = targetBreakpoint;
       }
 
       // only trigger breakpoints during an actual break. not on initialize.
       if (!initial && triggerBreakpoint !== false) {
-        _.$slider.trigger('breakpoint', [_, triggerBreakpoint]);
+        this.$slider.trigger("breakpoint", [this, triggerBreakpoint]);
       }
     }
   },
   registerBreakpoints() {
-    var _ = this,
-      breakpoint, currentBreakpoint, l,
-      responsiveSettings = _.options.responsive || null;
+    const responsiveSettings = this.options.responsive || null;
 
     if ($.type(responsiveSettings) === "array" && responsiveSettings.length) {
 
-      _.respondTo = _.options.respondTo || 'window';
+      this.respondTo = this.options.respondTo || "window";
+
+      let breakpoint = null;
 
       for (breakpoint in responsiveSettings) {
 
-        l = _.breakpoints.length - 1;
-        currentBreakpoint = responsiveSettings[breakpoint].breakpoint;
+        const currentBreakpoint = responsiveSettings[breakpoint].breakpoint;
 
         if (responsiveSettings.hasOwnProperty(breakpoint)) {
 
+          let l = this.breakpoints.length - 1;
           // loop through the breakpoints and cut out any existing
-          // ones with the same breakpoint number, we don't want dupes.
+          // ones with the same breakpoint number, we don"t want dupes.
           while (l >= 0) {
-            if (_.breakpoints[l] && _.breakpoints[l] === currentBreakpoint) {
-              _.breakpoints.splice(l, 1);
+            if (this.breakpoints[l] && this.breakpoints[l] === currentBreakpoint) {
+              this.breakpoints.splice(l, 1);
             }
             l--;
           }
 
-          _.breakpoints.push(currentBreakpoint);
-          _.breakpointSettings[currentBreakpoint] = responsiveSettings[breakpoint].settings;
+          this.breakpoints.push(currentBreakpoint);
+          this.breakpointSettings[currentBreakpoint] = responsiveSettings[breakpoint].settings;
 
         }
 
       }
 
-      _.breakpoints.sort(function(a, b) {
-        return (_.options.mobileFirst) ? a - b : b - a;
+      this.breakpoints.sort((a, b) => {
+        return this.options.mobileFirst ? a - b : b - a;
       });
 
     }
   }
-}
+};
