@@ -2,7 +2,7 @@
 /*eslint-disable max-statements, complexity */
 
 export default {
-  filterSlide(filter: Function) {
+  filter(filter: Function) {
     if (filter !== null) {
 
       this.unload();
@@ -15,7 +15,7 @@ export default {
 
     }
   },
-  unfilterSlides() {
+  unfilter() {
     if (this.$slidesCache !== null) {
 
       this.unload();

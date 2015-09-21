@@ -26,9 +26,9 @@ export default {
 
           if (slideIndex > this.slideCount) {
             this.slideOffset = (this.options.slidesToShow -
-              (slideIndex - this.slideCount) * this.slideWidth) * -1;
+              (slideIndex - this.slideCount)) * this.slideWidth * -1;
             verticalOffset = (this.options.slidesToShow -
-              (slideIndex - this.slideCount) * verticalHeight) * -1;
+              (slideIndex - this.slideCount)) * verticalHeight * -1;
           } else {
             this.slideOffset = this.slideCount % this.options.slidesToScroll *
               this.slideWidth * -1;

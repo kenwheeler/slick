@@ -1,5 +1,5 @@
 /* @flow */
-/*eslint-disable max-statements, complexity, max-len, prefer-spread */
+/*eslint-disable max-statements, complexity, max-len, prefer-spread, no-proto */
 
 const $ = window.$ || window.jQuery;
 
@@ -24,8 +24,9 @@ import setters from "./setters";
 import slides from "./slides";
 import touch from "./touch";
 
+let instanceUid = 0;
+
 const Slick = function Slick(element: any, settings: Object, callback: Function) {
-  let instanceUid = 0;
 
   assign(this, {
     defaults: {
@@ -81,7 +82,7 @@ const Slick = function Slick(element: any, settings: Object, callback: Function)
     }
   });
 
-  assign(this, {
+  this.initials = assign(this, {
     animating: false,
     dragging: false,
     autoPlayTimer: null,
@@ -108,8 +109,8 @@ const Slick = function Slick(element: any, settings: Object, callback: Function)
     unslicked: false
   });
 
-  this.prototype = assign(
-    {},
+  assign(
+    this.__proto__,
     a11y,
     actions,
     animation,

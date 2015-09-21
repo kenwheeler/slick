@@ -14,7 +14,7 @@ export default {
 
     this.slideCount = this.$slides.length;
 
-    this.$slides.each(function (index, element) {
+    this.$slides.each((index, element) => {
       $(element)
         .attr("data-slick-index", index)
         .data("originalStyling", $(element).attr("style") || "");
