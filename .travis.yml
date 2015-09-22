@@ -1,0 +1,20 @@
+language: node_js
+
+node_js:
+  - 0.10
+  - 0.12
+
+# Use container-based Travis infrastructure.
+sudo: false
+
+branches:
+  only:
+    - master
+
+before_install:
+  # GUI for real browsers.
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+
+script:
+  - npm run check-ci
