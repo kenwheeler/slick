@@ -56,6 +56,7 @@
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
+                arrowsAroundDots: false,
                 draggable: true,
                 easing: 'linear',
                 edgeFriction: 0.35,
@@ -98,6 +99,7 @@
                 currentSlide: 0,
                 direction: 1,
                 $dots: null,
+                $dotsWrapper: null,
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
@@ -479,6 +481,14 @@
                 _.options.appendDots);
 
             _.$dots.find('li').first().addClass('slick-active').attr('aria-hidden', 'false');
+
+            if( _.options.arrowsAroundDots ){
+                _.$dotsWrapper = _.$dots.wrap('<div class="' + _.options.dotsClass + '-wrapper">').parent();
+                _.$dotsWrapper.prepend(_.$prevArrow);
+                _.$dotsWrapper.append(_.$nextArrow);
+                _.$prevArrow.wrap('<div class="slick-prev-wrap">');
+                _.$nextArrow.wrap('<div class="slick-next-wrap">');
+            }
 
         }
 
