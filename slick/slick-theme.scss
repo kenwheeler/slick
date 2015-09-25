@@ -131,6 +131,28 @@ $slick-opacity-not-active: 0.25 !default;
     margin-bottom: 30px;
 }
 
+.slick-dots-wrapper {
+    position: absolute;
+    bottom: -45px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    .slick-prev-wrap, .slick-next-wrap {
+        display: inline-block;
+    }
+    .slick-prev, .slick-next {
+        position: relative;
+        top: 0;
+        left: auto;
+        right: auto;
+        margin: 0 10px;
+        @include translate(0, 110%);
+    }
+    .slick-dots {
+        bottom: 0;
+    }
+}
+
 .slick-dots {
     position: absolute;
     bottom: -45px;
@@ -139,6 +161,10 @@ $slick-opacity-not-active: 0.25 !default;
     text-align: center;
     padding: 0;
     width: 100%;
+    .slick-dots-wrapper & {
+        position: relative;
+        display: inline;
+    }
     li {
         position: relative;
         display: inline-block;
