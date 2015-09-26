@@ -71,6 +71,7 @@
                 responsive: null,
                 rows: 1,
                 rtl: false,
+                skipSlideIndexes: [],
                 slide: '',
                 slidesPerRow: 1,
                 slidesToShow: 1,
@@ -394,7 +395,7 @@
                     _.direction = 0;
                 }
 
-                _.slideHandler(_.currentSlide + _.options.slidesToScroll);
+                _.slideHandler(_.checkNavigable(_.currentSlide + _.options.slidesToScroll, 1));
 
             } else {
 
@@ -404,13 +405,13 @@
 
                 }
 
-                _.slideHandler(_.currentSlide - _.options.slidesToScroll);
+                _.slideHandler(_.checkNavigable(_.currentSlide - _.options.slidesToScroll, -1));
 
             }
 
         } else {
 
-            _.slideHandler(_.currentSlide + _.options.slidesToScroll);
+            _.slideHandler(_.checkNavigable(_.currentSlide + _.options.slidesToScroll, 1));
 
         }
 
@@ -686,14 +687,14 @@
             case 'previous':
                 slideOffset = indexOffset === 0 ? _.options.slidesToScroll : _.options.slidesToShow - indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
-                    _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate);
+                    _.slideHandler(_.checkNavigable(_.currentSlide - slideOffset, -1), false, dontAnimate);
                 }
                 break;
 
             case 'next':
                 slideOffset = indexOffset === 0 ? _.options.slidesToScroll : indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
-                    _.slideHandler(_.currentSlide + slideOffset, false, dontAnimate);
+                    _.slideHandler(_.checkNavigable(_.currentSlide + slideOffset, 1), false, dontAnimate);
                 }
                 break;
 
@@ -701,7 +702,7 @@
                 var index = event.data.index === 0 ? 0 :
                     event.data.index || $target.index() * _.options.slidesToScroll;
 
-                _.slideHandler(_.checkNavigable(index), false, dontAnimate);
+                _.slideHandler(_.checkNavigable(index, 0), false, dontAnimate);
                 $target.children().trigger('focus');
                 break;
 
@@ -711,7 +712,7 @@
 
     };
 
-    Slick.prototype.checkNavigable = function(index) {
+    Slick.prototype.checkNavigable = function(index, direction) {
 
         var _ = this,
             navigables, prevNavigable;
@@ -720,11 +721,20 @@
         prevNavigable = 0;
         if (index > navigables[navigables.length - 1]) {
             index = navigables[navigables.length - 1];
+        } else if (index < navigables[0]) {
+            index = navigables[0];
         } else {
             for (var n in navigables) {
-                if (index < navigables[n]) {
-                    index = prevNavigable;
-                    break;
+                if (direction <= 0) {
+                    if (index < navigables[n]) {
+                        index = prevNavigable;
+                        break;
+                    }
+                } else {
+                    if (index <= navigables[n]) {
+                        index = navigables[n];
+                        break;
+                    }
                 }
                 prevNavigable = navigables[n];
             }
@@ -1106,6 +1116,7 @@
             breakPoint = 0,
             counter = 0,
             indexes = [],
+            skipIndexes = _.options.skipSlideIndexes,
             max;
 
         if (_.options.infinite === false) {
@@ -1114,10 +1125,15 @@
             breakPoint = _.options.slidesToScroll * -1;
             counter = _.options.slidesToScroll * -1;
             max = _.slideCount * 2;
+            for (var n in _.options.skipSlideIndexes) {
+                skipIndexes.push(_.options.skipSlideIndexes[n] + _.slideCount);
+            }
         }
 
         while (breakPoint < max) {
-            indexes.push(breakPoint);
+            if ($.inArray(breakPoint, _.options.skipSlideIndexes) == -1) {
+                indexes.push(breakPoint);
+            }
             breakPoint = counter + _.options.slidesToScroll;
             counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
         }
@@ -2094,7 +2110,7 @@
 
         }
 
-        _.slideHandler(index);
+        _.slideHandler(_.checkNavigable(index, 0));
 
     };
 
@@ -2287,7 +2303,7 @@
 
             switch (_.swipeDirection()) {
                 case 'left':
-                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide + _.getSlideCount()) : _.currentSlide + _.getSlideCount();
+                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide + _.getSlideCount(), -1) : _.currentSlide + _.getSlideCount();
                     _.slideHandler(slideCount);
                     _.currentDirection = 0;
                     _.touchObject = {};
@@ -2295,7 +2311,7 @@
                     break;
 
                 case 'right':
-                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide - _.getSlideCount()) : _.currentSlide - _.getSlideCount();
+                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide - _.getSlideCount(), 1) : _.currentSlide - _.getSlideCount();
                     _.slideHandler(slideCount);
                     _.currentDirection = 1;
                     _.touchObject = {};
