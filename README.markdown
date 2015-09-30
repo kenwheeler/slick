@@ -3,8 +3,10 @@ slick
 
 [1]: <https://github.com/kenwheeler/slick>
 
-_the last carousel you'll ever need_
+_Slick Tabs using Slick Carousel - modified version of Slick Carousel (Refer the original slick Carousel below)_
 
+This is slick tab created using the slick carousel mainly for the swipe tabs for device based interactions.
+Note: This library is not actively maintained.
 #### Demo
 
 [http://kenwheeler.github.io/slick](http://kenwheeler.github.io/slick/)
