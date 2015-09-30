@@ -994,6 +994,8 @@
                             $(this).detach();
                         }
                     });
+                } else {  // empty result
+                    _.$slideTrack.find("> div > div").detach();
                 }
 
             } else {
