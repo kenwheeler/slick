@@ -754,8 +754,8 @@
         }
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
-            _.$prevArrow && _.$prevArrow.off('click.slick', _.changeSlide);
-            _.$nextArrow && _.$nextArrow.off('click.slick', _.changeSlide);
+            _.$prevArrow && _.$prevArrow.off('click.slick touchstart.slick', _.changeSlide);
+            _.$nextArrow && _.$nextArrow.off('click.slick touchstart.slick', _.changeSlide);
         }
 
         _.$list.off('touchstart.slick mousedown.slick', _.swipeHandler);
@@ -1204,10 +1204,10 @@
         var _ = this;
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
-            _.$prevArrow.on('click.slick', {
+            _.$prevArrow.on('click.slick touchstart.slick', {
                 message: 'previous'
             }, _.changeSlide);
-            _.$nextArrow.on('click.slick', {
+            _.$nextArrow.on('click.slick touchstart.slick', {
                 message: 'next'
             }, _.changeSlide);
         }
