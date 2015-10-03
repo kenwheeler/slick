@@ -75,6 +75,7 @@ export default {
   },
   slideHandler(index: number, sync: boolean, dontAnimate: boolean) {
     sync = sync || false;
+    dontAnimate = dontAnimate || false;
 
     if (this.animating === true && this.options.waitForAnimate === true) {
       return;
@@ -102,7 +103,7 @@ export default {
         (index < 0 || index > this.getDotCount() * this.options.slidesToScroll)) {
       if (this.options.fade === false) {
         targetSlide = this.currentSlide;
-        if (dontAnimate !== true) {
+        if (dontAnimate === false) {
           this.animateSlide(slideLeft, () => {
             this.postSlide(targetSlide);
           });
@@ -115,7 +116,7 @@ export default {
         (index < 0 || index > this.slideCount - this.options.slidesToScroll)) {
       if (this.options.fade === false) {
         targetSlide = this.currentSlide;
-        if (dontAnimate !== true) {
+        if (dontAnimate === false) {
           this.animateSlide(slideLeft, () => {
             this.postSlide(targetSlide);
           });
@@ -159,7 +160,7 @@ export default {
     this.updateArrows();
 
     if (this.options.fade === true) {
-      if (dontAnimate !== true) {
+      if (dontAnimate === false) {
 
         this.fadeSlideOut(oldSlide);
 
@@ -174,7 +175,7 @@ export default {
       return;
     }
 
-    if (dontAnimate !== true) {
+    if (dontAnimate === false) {
       this.animateSlide(targetLeft, () => {
         this.postSlide(animSlide);
       });

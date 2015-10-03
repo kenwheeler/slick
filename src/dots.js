@@ -7,7 +7,6 @@ export default {
     let dotString = "";
 
     if (this.options.dots === true && this.slideCount > this.options.slidesToShow) {
-
       dotString = "<ul class=\"" + this.options.dotsClass + "\">";
 
       for (let i = 0; i <= this.getDotCount(); i += 1) {
