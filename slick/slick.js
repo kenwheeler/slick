@@ -501,8 +501,6 @@
                 .data('originalStyling', $(element).attr('style') || '');
         });
 
-        _.$slidesCache = _.$slides;
-
         _.$slider.addClass('slick-slider');
 
         _.$slideTrack = (_.slideCount === 0) ?
@@ -967,6 +965,8 @@
         var _ = this;
 
         if (filter !== null) {
+
+            _.$slidesCache = _.$slides;
 
             _.unload();
 
