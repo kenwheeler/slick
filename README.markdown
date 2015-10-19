@@ -194,7 +194,7 @@ $(element).slick({
 Destroy with:
 
 ```javascript
-$(element).unslick();
+$(element).slick('unslick');
 ```
 
 

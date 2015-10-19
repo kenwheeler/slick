@@ -2,55 +2,33 @@
 
 // Default Variables
 
-$slick-font-path: "./fonts/" !default;
-$slick-font-family: "slick" !default;
-$slick-loader-path: "./" !default;
-$slick-arrow-color: white !default;
-$slick-dot-color: black !default;
-$slick-dot-color-active: $slick-dot-color !default;
-$slick-prev-character: "←" !default;
-$slick-next-character: "→" !default;
-$slick-dot-character: "•" !default;
-$slick-dot-size: 6px !default;
-$slick-opacity-default: 0.75 !default;
-$slick-opacity-on-hover: 1 !default;
-$slick-opacity-not-active: 0.25 !default;
-
-@function slick-image-url($url) {
-    @if function-exists(image-url) {
-        @return image-url($url);
-    }
-    @else {
-        @return url($slick-loader-path + $url);
-    }
-}
-
-@function slick-font-url($url) {
-    @if function-exists(font-url) {
-        @return font-url($url);
-    }
-    @else {
-        @return url($slick-font-path + $url);
-    }
-}
+@slick-font-path: "./fonts/";
+@slick-font-family: "slick";
+@slick-loader-path: "./";
+@slick-arrow-color: white;
+@slick-dot-color: black;
+@slick-dot-color-active: @slick-dot-color;
+@slick-prev-character: "←";
+@slick-next-character: "→";
+@slick-dot-character: "•";
+@slick-dot-size: 6px;
+@slick-opacity-default: 0.75;
+@slick-opacity-on-hover: 1;
+@slick-opacity-not-active: 0.25;
 
 /* Slider */
-
-.slick-list {
-    .slick-loading & {
-        background: #fff slick-image-url("ajax-loader.gif") center center no-repeat;
-    }
+.slick-loading .slick-list{
+    background: #fff url('./ajax-loader.gif') center center no-repeat;
 }
 
 /* Icons */
-@if $slick-font-family == "slick" {
-    @font-face {
-        font-family: "slick";
-        src: slick-font-url("slick.eot");
-        src: slick-font-url("slick.eot?#iefix") format("embedded-opentype"), slick-font-url("slick.woff") format("woff"), slick-font-url("slick.ttf") format("truetype"), slick-font-url("slick.svg#slick") format("svg");
-        font-weight: normal;
-        font-style: normal;
-    }
+@font-face{
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('./fonts/slick.eot');
+    src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
 }
 
 /* Arrows */
@@ -67,7 +45,7 @@ $slick-opacity-not-active: 0.25 !default;
     background: transparent;
     color: transparent;
     top: 50%;
-    margin-top: -10px\9; /*lte IE 8*/
+    margin-top: -10px~'\9'; /*lte IE 8*/
     -webkit-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
     transform: translate(0, -50%);
@@ -79,48 +57,48 @@ $slick-opacity-not-active: 0.25 !default;
         background: transparent;
         color: transparent;
         &:before {
-            opacity: $slick-opacity-on-hover;
+            opacity: @slick-opacity-on-hover;
         }
     }
     &.slick-disabled:before {
-        opacity: $slick-opacity-not-active;
+        opacity: @slick-opacity-not-active;
     }
 }
 
 .slick-prev:before, .slick-next:before {
-    font-family: $slick-font-family;
+    font-family: @slick-font-family;
     font-size: 20px;
     line-height: 1;
-    color: $slick-arrow-color;
-    opacity: $slick-opacity-default;
+    color: @slick-arrow-color;
+    opacity: @slick-opacity-default;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 .slick-prev {
     left: -25px;
-    [dir="rtl"] & {
+    &[dir="rtl"] {
         left: auto;
         right: -25px;
     }
     &:before {
-        content: $slick-prev-character;
-        [dir="rtl"] & {
-            content: $slick-next-character;
+        content: @slick-prev-character;
+        &[dir="rtl"] {
+            content: @slick-next-character;
         }
     }
 }
 
 .slick-next {
     right: -25px;
-    [dir="rtl"] & {
+    &[dir="rtl"] {
         left: -25px;
         right: auto;
     }
     &:before {
-        content: $slick-next-character;
-        [dir="rtl"] & {
-            content: $slick-prev-character;
+        content: @slick-next-character;
+        &[dir="rtl"] {
+            content: @slick-prev-character;
         }
     }
 }
@@ -162,29 +140,29 @@ $slick-opacity-not-active: 0.25 !default;
             &:hover, &:focus {
                 outline: none;
                 &:before {
-                    opacity: $slick-opacity-on-hover;
+                    opacity: @slick-opacity-on-hover;
                 }
             }
             &:before {
                 position: absolute;
                 top: 0;
                 left: 0;
-                content: $slick-dot-character;
+                content: @slick-dot-character;
                 width: 20px;
                 height: 20px;
-                font-family: $slick-font-family;
-                font-size: $slick-dot-size;
+                font-family: @slick-font-family;
+                font-size: @slick-dot-size;
                 line-height: 20px;
                 text-align: center;
-                color: $slick-dot-color;
-                opacity: $slick-opacity-not-active;
+                color: @slick-dot-color;
+                opacity: @slick-opacity-not-active;
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
         }
         &.slick-active button:before {
-            color: $slick-dot-color-active;
-            opacity: $slick-opacity-default;
+            color: @slick-dot-color-active;
+            opacity: @slick-opacity-default;
         }
     }
 }
