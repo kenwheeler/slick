@@ -1140,7 +1140,7 @@
         centerOffset = _.options.centerMode === true ? _.slideWidth * Math.floor(_.options.slidesToShow / 2) : 0;
 
         if (_.options.swipeToSlide === true) {
-            _.$slideTrack.find('.slick-slide').each(function(index, slide) {
+            _.$slideTrack.children('.slick-slide').each(function(index, slide) {
                 if (slide.offsetLeft - centerOffset + ($(slide).outerWidth() / 2) > (_.swipeLeft * -1)) {
                     swipedSlide = slide;
                     return false;
@@ -1373,18 +1373,18 @@
             }
         }
 
-        loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
+        loadRange = _.$slideTrack.children('.slick-slide').slice(rangeStart, rangeEnd);
         loadImages(loadRange);
 
         if (_.slideCount <= _.options.slidesToShow) {
-            cloneRange = _.$slider.find('.slick-slide');
+            cloneRange = _.$slideTrack.children('.slick-slide');
             loadImages(cloneRange);
         } else
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-            cloneRange = _.$slider.find('.slick-cloned').slice(0, _.options.slidesToShow);
+            cloneRange = _.$slideTrack.children('.slick-clone').slice(0, _.options.slidesToShow);
             loadImages(cloneRange);
         } else if (_.currentSlide === 0) {
-            cloneRange = _.$slider.find('.slick-cloned').slice(_.options.slidesToShow * -1);
+            cloneRange = _.$slideTrack.children('.slick-clone').slice(_.options.slidesToShow * -1);
             loadImages(cloneRange);
         }
 
@@ -1917,8 +1917,8 @@
         var _ = this,
             centerOffset, allSlides, indexOffset, remainder;
 
-        allSlides = _.$slider
-            .find('.slick-slide')
+        allSlides = _.$slideTrack
+            .children('.slick-slide')
             .removeClass('slick-active slick-center slick-current')
             .attr('aria-hidden', 'true');
 
@@ -2049,7 +2049,7 @@
                         .attr('data-slick-index', slideIndex + _.slideCount)
                         .appendTo(_.$slideTrack).addClass('slick-cloned');
                 }
-                _.$slideTrack.find('.slick-cloned').find('[id]').each(function() {
+                _.$slideTrack.children('.slick-cloned').find('[id]').each(function() {
                     $(this).attr('id', '');
                 });
 
@@ -2569,7 +2569,7 @@
     };
     Slick.prototype.initADA = function() {
         var _ = this;
-        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
+        _.$slides.add(_.$slideTrack.children('.slick-cloned')).attr({
             'aria-hidden': 'true',
             'tabindex': '-1'
         }).find('a, input, button, select').attr({
@@ -2605,7 +2605,7 @@
     Slick.prototype.activateADA = function() {
         var _ = this;
 
-        _.$slideTrack.find('.slick-active').attr({
+        _.$slideTrack.children('.slick-active').attr({
             'aria-hidden': 'false'
         }).find('a, input, button, select').attr({
             'tabindex': '0'
