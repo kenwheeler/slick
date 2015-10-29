@@ -1381,10 +1381,10 @@
             loadImages(cloneRange);
         } else
         if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-            cloneRange = _.$slideTrack.children('.slick-clone').slice(0, _.options.slidesToShow);
+            cloneRange = _.$slideTrack.children('.slick-cloned').slice(0, _.options.slidesToShow);
             loadImages(cloneRange);
         } else if (_.currentSlide === 0) {
-            cloneRange = _.$slideTrack.children('.slick-clone').slice(_.options.slidesToShow * -1);
+            cloneRange = _.$slideTrack.children('.slick-cloned').slice(_.options.slidesToShow * -1);
             loadImages(cloneRange);
         }
 
