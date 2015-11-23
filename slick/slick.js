@@ -64,6 +64,13 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                lazyLoadSourceAttr: "data-lazy",
+                lazyLoadTargetAttr: "src",
+                onBeforeChange: null,
+                onAfterChange: null,
+                onInit: null,
+                onReInit: null,
+                onSetPosition: null,
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
@@ -1350,28 +1357,55 @@
             loadRange, cloneRange, rangeStart, rangeEnd;
 
         function loadImages(imagesScope) {
-            $('img[data-lazy]', imagesScope).each(function() {
-
-                var image = $(this),
-                    imageSource = $(this).attr('data-lazy'),
-                    imageToLoad = document.createElement('img');
-
-                imageToLoad.onload = function() {
-                    image
-                        .animate({ opacity: 0 }, 100, function() {
+            switch (_.options.lazyLoadTargetAttr) {
+                case "background-image":
+                    $('div[' + _.options.lazyLoadSourceAttr + ']', imagesScope).each(function() {
+                        var image = $(this),
+                            imageSource = $(this).attr(_.options.lazyLoadSourceAttr),
+                            imageToLoad = document.createElement('img');
+                            
+                        imageToLoad.onload = function() {
                             image
-                                .attr('src', imageSource)
-                                .animate({ opacity: 1 }, 200, function() {
+                                .animate({ opacity: 0 }, 100, function() {
                                     image
-                                        .removeAttr('data-lazy')
-                                        .removeClass('slick-loading');
+                                        .css({backgroundImage: "url('" + imageSource + "')"})
+                                        .animate({ opacity: 1 }, 200, function() {
+                                            image
+                                                .removeAttr(_.options.lazyLoadSourceAttr)
+                                                .removeClass('slick-loading');
+                                        });
                                 });
-                        });
-                };
+                        };
 
-                imageToLoad.src = imageSource;
+                        imageToLoad.src = imageSource;
+                    });
+                    break;
 
-            });
+                default:
+                    $('img[' + _.options.lazyLoadSourceAttr + ']', imagesScope).each(function() {
+                        var image = $(this),
+                            imageSource = $(this).attr(_.options.lazyLoadSourceAttr),
+                            imageToLoad = document.createElement('img');
+                            
+                        imageToLoad.onload = function() {
+                            image
+                                .animate({ opacity: 0 }, 100, function() {
+                                    image
+                                        .attr('src', imageSource)
+                                        .animate({ opacity: 1 }, 200, function() {
+                                            image
+                                                .removeAttr(_.options.lazyLoadSourceAttr)
+                                                .removeClass('slick-loading');
+                                        });
+                                });
+                        };
+
+                        imageToLoad.src = imageSource;
+                    });
+                    
+                    
+                    break;
+            }
         }
 
         if (_.options.centerMode === true) {
@@ -1509,24 +1543,43 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]', _.$slider).length;
+        switch (_.options.lazyLoadTargetAttr) {
+            case "background-image":
+                imgCount = $('*[' + _.options.lazyLoadSourceAttr + ']', _.$slider).length;
 
-        if (imgCount > 0) {
-            targetImage = $('img[data-lazy]', _.$slider).first();
-            targetImage.attr('src', null);
-            targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
-                    targetImage.removeAttr('data-lazy');
-                    _.progressiveLazyLoad();
+                if (imgCount > 0) {
+                    targetImage = $('*[' + _.options.lazyLoadSourceAttr + ']', _.$slider).first();
+                    targetImage
+                        .css({backgroundImage: "url('" + targetImage.attr(_.options.lazyLoadSourceAttr) + "')"})
+                        .removeClass('slick-loading')
+                        .removeAttr(_.options.lazyLoadSourceAttr);
 
-                    if (_.options.adaptiveHeight === true) {
-                        _.setPosition();
-                    }
-                })
-                .error(function() {
-                    targetImage.removeAttr('data-lazy');
-                    _.progressiveLazyLoad();
-                });
-        }
+                        _.progressiveLazyLoad();
+                }
+                break;
+
+            default:              
+                imgCount = $('img[' + _.options.lazyLoadSourceAttr + ']', _.$slider).length;
+
+                if (imgCount > 0) {
+                    targetImage = $('img[' + _.options.lazyLoadSourceAttr + ']', _.$slider).first();
+                    targetImage.attr('src', null);
+                    targetImage.attr('src', targetImage.attr(_.options.lazyLoadSourceAttr)).removeClass('slick-loading').load(function() {
+                        targetImage.removeAttr(_.options.lazyLoadSourceAttr);
+                        _.progressiveLazyLoad();
+
+                        if (_.options.adaptiveHeight === true) {
+                            _.setPosition();
+                        }
+                    })
+                    .error(function() {
+                        targetImage.removeAttr(_.options.lazyLoadSourceAttr);
+                        _.progressiveLazyLoad();
+                    });
+                }
+                break;
+                
+            }        
 
     };
 
