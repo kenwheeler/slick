@@ -91,7 +91,7 @@ respondTo | string | 'window' | Width that responsive object responds to. Can be
 responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
 slide | string | '' | Slide element query
-slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row. dver
+slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row.
 slidesToShow | int | 1 | # of slides to show at a time
 slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
@@ -136,7 +136,7 @@ beforeChange | event, slick, currentSlide, nextSlide | Before slide change callb
 breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
 destroy | event, slick | When slider is destroyed, or unslicked.
 edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
-init | event, slick | When Slick initializes for the first time callback
+init | event, slick | When Slick initializes for the first time callback. Note that this event should be defined before initializing the slider. 
 reInit | event, slick | Every time Slick (re-)initializes callback
 setPosition | event, slick | Every time Slick recalculates position
 swipe | event, slick, direction | Fires after swipe/drag
