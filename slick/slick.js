@@ -60,6 +60,7 @@
                 easing: 'linear',
                 edgeFriction: 0.35,
                 fade: false,
+                fadeInFirst: false,
                 focusOnSelect: false,
                 infinite: true,
                 initialSlide: 0,
@@ -2205,12 +2206,20 @@
 
         if (_.options.fade === true) {
             if (dontAnimate !== true) {
+                if (_.options.fadeInFirst === false) {
 
-                _.fadeSlideOut(oldSlide);
+                    _.fadeSlideOut(oldSlide);
 
-                _.fadeSlide(animSlide, function() {
-                    _.postSlide(animSlide);
-                });
+                    _.fadeSlide(animSlide, function() {
+                        _.postSlide(animSlide);
+                    });
+                } else {
+
+                    _.fadeSlide(animSlide, function() {
+                        _.fadeSlideOut(oldSlide);
+                        _.postSlide(animSlide);
+                    });
+                }
 
             } else {
                 _.postSlide(animSlide);
