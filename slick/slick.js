@@ -1457,6 +1457,15 @@
         _.paused = true;
 
     };
+    
+    Slick.prototype.stop = Slick.prototype.slickStop = function() {
+
+        var _ = this;
+
+        _.pause()
+        _.options.autoplay = false;
+
+    };
 
     Slick.prototype.play = Slick.prototype.slickPlay = function() {
 
