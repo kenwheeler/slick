@@ -64,6 +64,9 @@ Example:
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
 accessibility | boolean | true | Enables tabbing and arrow key navigation
+appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
+appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
+arrows | boolean | true | Enable Next/Prev arrows
 autoplay | boolean | false | Enables auto play of slides
 autoplaySpeed | int  | 3000 | Auto play change interval
 centerMode | boolean | false | Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.
@@ -76,20 +79,18 @@ draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
 edgeFriction | integer | 0.15 | Resistance when swiping edges of non-infinite carousels
 fade | boolean | false | Enables fade
-arrows | boolean | true | Enable Next/Prev arrows
-appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
-appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
-mobileFirst | boolean | false | Responsive settings use mobile first calculation
-prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
-nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
-pauseOnHover | boolean | true | Pauses autoplay on hover
+mobileFirst | boolean | false | Responsive settings use mobile first calculation
+nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
+pauseOnHover | boolean | true | Pauses autoplay on hover
+prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
 respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
 responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
+rtl | boolean | false | Change the slider's direction to become right-to-left
 slide | string | '' | Slide element query
 slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row.
 slidesToShow | int | 1 | # of slides to show at a time
@@ -104,7 +105,6 @@ useTransform | boolean | false | Enable/Disable CSS Transforms
 variableWidth | boolean | false | Disables automatic slide width calculation
 vertical | boolean | false | Vertical slide direction
 verticalSwiping | boolean | false | Changes swipe direction to vertical
-rtl | boolean | false | Change the slider's direction to become right-to-left
 waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 zIndex | number | 1000 | Set the zIndex values for slides, useful for IE9 and lower
 
