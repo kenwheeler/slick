@@ -1354,7 +1354,7 @@
 
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
-                    imageToLoad = image.clone(); // The image might have attribute sizes, important for Client Hints
+                    imageToLoad = image.clone()[0]; // The image might have attribute sizes, important for Client Hints
 
                 imageToLoad.onload = function() {
                     image
