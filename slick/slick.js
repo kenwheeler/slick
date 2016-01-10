@@ -2333,6 +2333,10 @@
 
         var _ = this;
 
+		if (_.options.stopSwipePropagation){
+			event.stopPropagation();
+		}
+
         if ((_.options.swipe === false) || ('ontouchend' in document && _.options.swipe === false)) {
             return;
         } else if (_.options.draggable === false && event.type.indexOf('mouse') !== -1) {
