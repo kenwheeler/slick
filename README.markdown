@@ -137,7 +137,7 @@ beforeChange | event, slick, currentSlide, nextSlide | Before slide change callb
 breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
 destroy | event, slick | When slider is destroyed, or unslicked.
 edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
-init | event, slick | When Slick initializes for the first time callback. Note that this event should be defined before initializing the slider. 
+init | event, slick | When Slick initializes for the first time callback. Note that this event should be defined before initializing the slider.
 reInit | event, slick | Every time Slick (re-)initializes callback
 setPosition | event, slick | Every time Slick recalculates position
 swipe | event, slick, direction | Fires after swipe/drag
