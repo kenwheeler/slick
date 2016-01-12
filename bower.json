@@ -1,6 +1,6 @@
 {
     "name": "slick-carousel",
-    "main": ["slick/slick.min.js", "slick/slick.css", "slick/slick-theme.css", "slick/fonts/*"],
+    "main": ["slick/slick.js", "slick/slick.css", "slick/slick-theme.css", "slick/fonts/*"],
     "version": "1.5.8",
     "homepage": "https://github.com/kenwheeler/slick",
     "authors": [
