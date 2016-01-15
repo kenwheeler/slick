@@ -140,7 +140,7 @@
 
             dataSettings = $(element).data('slick') || {};
 
-            _.options = $.extend({}, _.defaults, dataSettings, settings);
+            _.options = $.extend({}, _.defaults, settings, dataSettings);
 
             _.currentSlide = _.options.initialSlide;
 
