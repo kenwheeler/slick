@@ -140,7 +140,7 @@
 
             dataSettings = $(element).data('slick') || {};
 
-            _.options = $.extend({}, _.defaults, dataSettings, settings);
+            _.options = $.extend({}, _.defaults, settings, dataSettings);
 
             _.currentSlide = _.options.initialSlide;
 
@@ -540,7 +540,7 @@
         newSlides = document.createDocumentFragment();
         originalSlides = _.$slider.children();
 
-        if(_.options.rows >= 1) {
+        if(_.options.rows > 1) {
 
             slidesPerSection = _.options.slidesPerRow * _.options.rows;
             numOfSlides = Math.ceil(
@@ -789,7 +789,7 @@
 
         var _ = this, originalSlides;
 
-        if(_.options.rows >= 1) {
+        if(_.options.rows > 1) {
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
             _.$slider.html(originalSlides);
