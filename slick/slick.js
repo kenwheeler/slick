@@ -470,7 +470,7 @@
             dot = $('<ul />', {'class': _.options.dotsClass});
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
-                dot.append($('<li />').text(_.options.customPaging.call(this, _, i)));
+                dot.append($('<li />').append(_.options.customPaging.call(this, _, i)));
             }
 
             _.$dots = dot.appendTo(_.options.appendDots);
