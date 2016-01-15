@@ -52,7 +52,7 @@
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return '<button type="button" data-role="none" role="button" aria-required="false" tabindex="0">' + (i + 1) + '</button>';
+                    return $('<button type="button" data-role="none" role="button" aria-required="false" tabindex="0" />').text(i + 1);
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -463,20 +463,17 @@
     Slick.prototype.buildDots = function() {
 
         var _ = this,
-            i, dotString;
+            i, dot;
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
-            dotString = '<ul class="' + _.options.dotsClass + '">';
+            dot = $('<ul />').addClass(_.options.dotsClass);
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
-                dotString += '<li>' + _.options.customPaging.call(this, _, i) + '</li>';
+                dot.append($('<li />').append(_.options.customPaging.call(this, _, i)));
             }
 
-            dotString += '</ul>';
-
-            _.$dots = $(dotString).appendTo(
-                _.options.appendDots);
+            _.$dots = dot.appendTo(_.options.appendDots);
 
             _.$dots.find('li').first().addClass('slick-active').attr('aria-hidden', 'false');
 
@@ -563,7 +560,7 @@
                 newSlides.appendChild(slide);
             }
 
-            _.$slider.html(newSlides);
+            _.$slider.empty().append(newSlides);
             _.$slider.children().children().children()
                 .css({
                     'width':(100 / _.options.slidesPerRow) + '%',
@@ -793,7 +790,7 @@
         if(_.options.rows > 1) {
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
-            _.$slider.html(originalSlides);
+            _.$slider.empty().append(originalSlides);
         }
 
     };
