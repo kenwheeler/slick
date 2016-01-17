@@ -64,6 +64,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                lazyLoadBuffer: 2,
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnDotsHover: false,
@@ -1382,10 +1383,9 @@
             }
         } else {
             rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
-            rangeEnd = rangeStart + _.options.slidesToShow;
+            rangeEnd = rangeStart + _.options.lazyLoadBuffer;
             if (_.options.fade === true) {
                 if (rangeStart > 0) rangeStart--;
-                if (rangeEnd <= _.slideCount) rangeEnd++;
             }
         }
 
