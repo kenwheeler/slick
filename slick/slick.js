@@ -1461,6 +1461,7 @@
         var _ = this;
 
         _.paused = false;
+        _.options.autoplay = true;
         _.autoPlay();
 
     };
@@ -2079,7 +2080,7 @@
 
         var _ = this;
 
-        if (_.options.autoplay === true && _.options.pauseOnHover === true) {
+        if ( _.options.autoplay === true && _.options.pauseOnHover === true ) {
             _.paused = paused;
             if (!paused) {
                 _.autoPlay();
