@@ -1001,7 +1001,7 @@
         } else if (_.options.centerMode === true) {
             pagerQty = _.slideCount;
         } else {
-            counter = _.slideCount % _.options.slidesToShow == 0 ? counter : counter + 1;
+            counter = _.slideCount % _.options.slidesToScroll == 0 ? counter : counter + 1;
             while (breakPoint < _.slideCount) {
                 ++pagerQty;
                 breakPoint = counter + _.options.slidesToScroll;
