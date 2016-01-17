@@ -90,6 +90,7 @@ pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
 responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
+skipSlideIndexes | array | [] | Array of slide indexes that should not be made the active slide and that should be skipped over when sliding to a new slide.
 slide | string | '' | Slide element query
 slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row.
 slidesToShow | int | 1 | # of slides to show at a time
