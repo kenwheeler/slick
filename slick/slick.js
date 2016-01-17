@@ -318,7 +318,7 @@
 
     };
 
-    Slick.prototype.asNavFor = function(index) {
+    Slick.prototype.asNavFor = function(index, dontAnimate) {
 
         var _ = this,
             asNavFor = _.options.asNavFor;
@@ -331,7 +331,7 @@
             asNavFor.each(function() {
                 var target = $(this).slick('getSlick');
                 if(!target.unslicked) {
-                    target.slideHandler(index, true);
+                    target.slideHandler(index, true, dontAnimate);
                 }
             });
         }
@@ -2134,7 +2134,7 @@
         }
 
         if (sync === false) {
-            _.asNavFor(index);
+            _.asNavFor(index, dontAnimate);
         }
 
         targetSlide = index;
