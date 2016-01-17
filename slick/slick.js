@@ -318,14 +318,23 @@
 
     };
 
-    Slick.prototype.asNavFor = function(index) {
-
+    Slick.prototype.getNavTarget = function() {
+        
         var _ = this,
             asNavFor = _.options.asNavFor;
 
         if ( asNavFor && asNavFor !== null ) {
             asNavFor = $(asNavFor).not(_.$slider);
         }
+
+        return asNavFor;
+
+    };
+
+    Slick.prototype.asNavFor = function(index) {
+
+        var _ = this,
+            asNavFor = _.getNavTarget();
 
         if ( asNavFor !== null && typeof asNavFor === 'object' ) {
             asNavFor.each(function() {
@@ -2118,7 +2127,7 @@
     Slick.prototype.slideHandler = function(index, sync, dontAnimate) {
 
         var targetSlide, animSlide, oldSlide, slideLeft, targetLeft = null,
-            _ = this;
+            _ = this, navTarget;
 
         sync = sync || false;
 
@@ -2198,6 +2207,17 @@
         _.currentSlide = animSlide;
 
         _.setSlideClasses(_.currentSlide);
+        
+        if ( _.options.asNavFor ) {
+            
+            navTarget = _.getNavTarget();
+            navTarget = navTarget.slick('getSlick');
+
+            if ( navTarget.slideCount <= navTarget.options.slidesToShow ) {
+                navTarget.setSlideClasses(_.currentSlide);
+            }
+
+        }
 
         _.updateDots();
         _.updateArrows();
