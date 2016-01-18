@@ -91,7 +91,6 @@
 
             _.initials = {
                 animating: false,
-                dragging: false,
                 autoPlayTimer: null,
                 currentDirection: 0,
                 currentLeft: null,
@@ -2308,7 +2307,7 @@
         var _ = this,
             slideCount;
 
-        _.dragging = false;
+        _.$list.removeClass('dragging');
 
         _.shouldClick = (_.touchObject.swipeLength > 10) ? false : true;
 
@@ -2395,7 +2394,7 @@
 
         touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
 
-        if (!_.dragging || touches && touches.length !== 1) {
+        if (!_.$list.hasClass('dragging') || touches && touches.length !== 1) {
             return false;
         }
 
@@ -2478,7 +2477,7 @@
         _.touchObject.startX = _.touchObject.curX = touches !== undefined ? touches.pageX : event.clientX;
         _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches.pageY : event.clientY;
 
-        _.dragging = true;
+        _.$list.addClass('dragging');
 
     };
 
