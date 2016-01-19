@@ -121,12 +121,12 @@
             _.activeBreakpoint = null;
             _.animType = null;
             _.animProp = null;
+            _.autoPlaying = false;
             _.breakpoints = [];
             _.breakpointSettings = [];
             _.cssTransitions = false;
             _.hidden = 'hidden';
             _.paused = false;
-            _.autoPlaying = false;
             _.positionProp = null;
             _.respondTo = null;
             _.rowCount = 1;
