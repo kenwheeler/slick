@@ -126,6 +126,7 @@
             _.cssTransitions = false;
             _.hidden = 'hidden';
             _.paused = false;
+            _.autoPlaying = false;
             _.positionProp = null;
             _.respondTo = null;
             _.rowCount = 1;
@@ -747,7 +748,7 @@
 
             $('li', _.$dots).off('click.slick', _.changeSlide);
 
-            if (_.options.pauseOnDotsHover === true && _.options.autoplay === true) {
+            if (_.options.pauseOnDotsHover === true) {
 
                 $('li', _.$dots)
                     .off('mouseenter.slick', $.proxy(_.setPaused, _, true))
@@ -1249,7 +1250,7 @@
             }, _.changeSlide);
         }
 
-        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.options.autoplay === true) {
+        if (_.options.dots === true && _.options.pauseOnDotsHover === true) {
             $('li', _.$dots)
                 .on('mouseenter.slick', $.proxy(_.setPaused, _, true))
                 .on('mouseleave.slick', $.proxy(_.setPaused, _, false));
@@ -1323,6 +1324,7 @@
 
         if (_.options.autoplay === true) {
 
+            _.autoPlaying = true;
             _.autoPlay();
 
         }
@@ -1462,6 +1464,7 @@
 
         _.autoPlayClear();
         _.paused = true;
+        _.autoPlaying = false;
 
     };
 
@@ -1470,7 +1473,7 @@
         var _ = this;
 
         _.paused = false;
-        _.options.autoplay = true;
+        _.autoPlaying = true;
         _.autoPlay();
 
     };
@@ -1487,7 +1490,7 @@
 
         _.swipeLeft = null;
 
-        if (_.options.autoplay === true && _.paused === false) {
+        if (_.autoPlaying === true && _.paused === false) {
             _.autoPlay();
         }
         if (_.options.accessibility === true) {
@@ -2089,7 +2092,7 @@
 
         var _ = this;
 
-        if ( _.options.autoplay === true && _.options.pauseOnHover === true ) {
+        if ( _.autoPlaying === true && _.options.pauseOnHover === true ) {
             _.paused = paused;
             if (!paused) {
                 _.autoPlay();
@@ -2179,7 +2182,7 @@
             return;
         }
 
-        if (_.options.autoplay === true) {
+        if (_.autoPlaying === true) {
             clearInterval(_.autoPlayTimer);
         }
 
@@ -2597,7 +2600,7 @@
             _.paused = true;
             _.autoPlayClear();
         } else {
-            if (_.options.autoplay === true) {
+            if (_.autoPlaying === true) {
                 _.paused = false;
                 _.autoPlay();
             }
