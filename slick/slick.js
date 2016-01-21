@@ -175,7 +175,6 @@
 
             _.registerBreakpoints();
             _.init(true);
-            _.checkResponsive(true);
 
         }
 
@@ -1211,6 +1210,7 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
+            _.checkResponsive(true);
 
         }
 
