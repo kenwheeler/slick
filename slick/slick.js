@@ -1542,7 +1542,7 @@
 
         var _ = this, currentSlide, firstVisible;
 
-        firstVisible = _.slideCount - _.options.slidesToShow;
+        firstVisible = Math.floor(_.slideCount - _.options.slidesToShow);
 
         // check that the new breakpoint can actually accept the
         // "current slide" as the current slide, otherwise we need
