@@ -1,0 +1,25 @@
+{
+    "name": "kenwheeler/slick-carousel",
+    "description": "the last carousel you'll ever need",
+    "type": "component",
+    "keywords": [
+        "responsive",
+        "carousel",
+        "jquery"
+    ],
+    "homepage": "https://github.com/kenwheeler/slick",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ken Wheeler",
+            "email": "ken_wheeler@me.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/kenwheeler/slick/issues",
+        "source": "https://github.com/kenwheeler/slick"
+    },
+    "require": {
+        "components/jquery": ">=1.7"
+    }
+}
