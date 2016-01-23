@@ -2408,6 +2408,7 @@
             slideCount;
 
         _.dragging = false;
+        _.interrupted = false;
 
         _.shouldClick = (_.touchObject.swipeLength > 10) ? false : true;
 
@@ -2564,6 +2565,8 @@
 
         var _ = this,
             touches;
+
+        _.interrupted = true;
 
         if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
             _.touchObject = {};
