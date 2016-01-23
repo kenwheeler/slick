@@ -1013,7 +1013,7 @@
 
             setTimeout(function() {
 
-                if( _.options.autoplay && _.options.pauseOnFocus ) {
+                if( _.options.pauseOnFocus ) {
                     _.focussed = $sf.is(':focus');
                     _.autoPlay();
                 }
@@ -1344,14 +1344,10 @@
 
         var _ = this;
 
-        if ( _.options.autoplay ) {
-
-            if ( _.options.pauseOnHover ) {
-                
-                _.$list.on('mouseenter.slick', $.proxy(_.interrupt, _, true));
-                _.$list.on('mouseleave.slick', $.proxy(_.interrupt, _, false));
-
-            }
+        if ( _.options.pauseOnHover ) {
+            
+            _.$list.on('mouseenter.slick', $.proxy(_.interrupt, _, true));
+            _.$list.on('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
         }
 
