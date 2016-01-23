@@ -1846,7 +1846,7 @@
                 }
             }
         } else {
-            _.options[option] = value;
+            _.originalSettings[option] = _.options[option] = value;
         }
 
         if (refresh === true) {
