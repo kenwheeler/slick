@@ -185,6 +185,17 @@
 
     }());
 
+    Slick.prototype.activateADA = function() {
+        var _ = this;
+
+        _.$slideTrack.find('.slick-active').attr({
+            'aria-hidden': 'false'
+        }).find('a, input, button, select').attr({
+            'tabindex': '0'
+        });
+
+    };
+
     Slick.prototype.addSlide = Slick.prototype.slickAdd = function(markup, index, addBefore) {
 
         var _ = this;
@@ -984,6 +995,29 @@
 
     };
 
+    Slick.prototype.focusHandler = function() {
+
+        var _ = this;
+
+        _.$slider
+            .off('focus.slick blur.slick')
+            .on('focus.slick blur.slick', 
+                '*:not(.slick-arrow)', function(event) {
+
+            event.stopImmediatePropagation();
+            var $sf = $(this);
+
+            setTimeout(function() {
+
+                if( _.options.autoplay && _.options.pauseOnFocus ) {
+                    _.focussed = $sf.is(':focus');
+                }
+
+            }, 0);
+
+        });
+    };
+
     Slick.prototype.getCurrent = Slick.prototype.slickCurrentSlide = function() {
 
         var _ = this;
@@ -1228,6 +1262,41 @@
             _.autoPlay();
 
         }
+
+    };
+
+    Slick.prototype.initADA = function() {
+        var _ = this;
+        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
+            'aria-hidden': 'true',
+            'tabindex': '-1'
+        }).find('a, input, button, select').attr({
+            'tabindex': '-1'
+        });
+
+        _.$slideTrack.attr('role', 'listbox');
+
+        _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
+            $(this).attr({
+                'role': 'option',
+                'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
+            });
+        });
+
+        if (_.$dots !== null) {
+            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
+                $(this).attr({
+                    'role': 'presentation',
+                    'aria-selected': 'false',
+                    'aria-controls': 'navigation' + _.instanceUid + i + '',
+                    'id': 'slick-slide' + _.instanceUid + i + ''
+                });
+            })
+                .first().attr('aria-selected', 'true').end()
+                .find('button').attr('role', 'button').end()
+                .closest('div').attr('role', 'toolbar');
+        }
+        _.activateADA();
 
     };
 
@@ -2615,75 +2684,6 @@
 
         }
 
-    };
-
-    Slick.prototype.initADA = function() {
-        var _ = this;
-        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
-            'aria-hidden': 'true',
-            'tabindex': '-1'
-        }).find('a, input, button, select').attr({
-            'tabindex': '-1'
-        });
-
-        _.$slideTrack.attr('role', 'listbox');
-
-        _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            $(this).attr({
-                'role': 'option',
-                'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
-            });
-        });
-
-        if (_.$dots !== null) {
-            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
-                $(this).attr({
-                    'role': 'presentation',
-                    'aria-selected': 'false',
-                    'aria-controls': 'navigation' + _.instanceUid + i + '',
-                    'id': 'slick-slide' + _.instanceUid + i + ''
-                });
-            })
-                .first().attr('aria-selected', 'true').end()
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
-        }
-        _.activateADA();
-
-    };
-
-    Slick.prototype.activateADA = function() {
-        var _ = this;
-
-        _.$slideTrack.find('.slick-active').attr({
-            'aria-hidden': 'false'
-        }).find('a, input, button, select').attr({
-            'tabindex': '0'
-        });
-
-    };
-
-    Slick.prototype.focusHandler = function() {
-
-        var _ = this;
-
-        _.$slider
-            .off('focus.slick blur.slick')
-            .on('focus.slick blur.slick', 
-                '*:not(.slick-arrow)', function(event) {
-
-            event.stopImmediatePropagation();
-            var $sf = $(this);
-
-            setTimeout(function() {
-
-                if( _.options.autoplay && _.options.pauseOnFocus ) {
-                    _.focussed = $sf.is(':focus');
-                }
-
-            }, 0);
-
-        });
     };
 
     $.fn.slick = function() {
