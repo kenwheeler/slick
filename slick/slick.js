@@ -836,7 +836,7 @@
             _.$prevArrow
                 .removeClass('slick-disabled slick-arrow slick-hidden')
                 .removeAttr('aria-hidden aria-disabled tabindex')
-                .css("display","");
+                .css('display','');
 
             if ( _.htmlExpr.test( _.options.prevArrow )) {
                 _.$prevArrow.remove();
@@ -848,7 +848,7 @@
             _.$nextArrow
                 .removeClass('slick-disabled slick-arrow slick-hidden')
                 .removeAttr('aria-hidden aria-disabled tabindex')
-                .css("display","");
+                .css('display','');
 
             if ( _.htmlExpr.test( _.options.nextArrow )) {
                 _.$nextArrow.remove();
@@ -1587,7 +1587,7 @@
         var _ = this, breakpoint, currentBreakpoint, l,
             responsiveSettings = _.options.responsive || null;
 
-        if ( $.type(responsiveSettings) === "array" && responsiveSettings.length ) {
+        if ( $.type(responsiveSettings) === 'array' && responsiveSettings.length ) {
 
             _.respondTo = _.options.respondTo || 'window';
 
@@ -1836,10 +1836,10 @@
 
         var _ = this, l, item;
 
-        if( option === "responsive" && $.type(value) === "array" ) {
+        if( option === 'responsive' && $.type(value) === 'array' ) {
 
             for ( item in value ) {
-                if( $.type( _.options.responsive ) !== "array" ) {
+                if( $.type( _.options.responsive ) !== 'array' ) {
                     _.options.responsive = [ value[item] ];
                 } else {
                     l = _.options.responsive.length-1;
