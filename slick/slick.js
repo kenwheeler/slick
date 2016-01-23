@@ -1569,20 +1569,24 @@
 
         var _ = this;
 
-        _.$slider.trigger('afterChange', [_, index]);
+        if( !_.unslicked ) {
+            
+            _.$slider.trigger('afterChange', [_, index]);
 
-        _.animating = false;
+            _.animating = false;
 
-        _.setPosition();
+            _.setPosition();
 
-        _.swipeLeft = null;
+            _.swipeLeft = null;
 
-        if ( _.options.autoplay ) {
-            _.autoPlay();
-        }
+            if ( _.options.autoplay ) {
+                _.autoPlay();
+            }
 
-        if (_.options.accessibility === true) {
-            _.initADA();
+            if (_.options.accessibility === true) {
+                _.initADA();
+            }
+
         }
 
     };
