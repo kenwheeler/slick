@@ -752,15 +752,10 @@
 
         if (_.options.dots && _.$dots !== null) {
 
-            $('li', _.$dots).off('click.slick', _.changeSlide);
-
-            if ( _.options.pauseOnDotsHover && _.options.autoplay ) {
-
-                $('li', _.$dots)
-                    .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
-                    .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
-
-            }
+            $('li', _.$dots)
+                .off('click.slick', _.changeSlide)
+                .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
+                .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
         }
 
@@ -780,8 +775,7 @@
 
         $(document).off(_.visibilityChange, _.visibility);
 
-        _.$list.off('mouseenter.slick', $.proxy(_.interrupt, _, true));
-        _.$list.off('mouseleave.slick', $.proxy(_.interrupt, _, false));
+        _.cleanUpSlideEvents();
 
         if (_.options.accessibility === true) {
             _.$list.off('keydown.slick', _.keyHandler);
@@ -799,6 +793,16 @@
 
         $(window).off('load.slick.slick-' + _.instanceUid, _.setPosition);
         $(document).off('ready.slick.slick-' + _.instanceUid, _.setPosition);
+    
+    };
+
+    Slick.prototype.cleanUpSlideEvents = function() {
+
+        var _ = this;
+
+        _.$list.off('mouseenter.slick', $.proxy(_.interrupt, _, true));
+        _.$list.off('mouseleave.slick', $.proxy(_.interrupt, _, false));
+
     };
 
     Slick.prototype.cleanUpRows = function() {
@@ -1011,6 +1015,7 @@
 
                 if( _.options.autoplay && _.options.pauseOnFocus ) {
                     _.focussed = $sf.is(':focus');
+                    _.autoPlay();
                 }
 
             }, 0);
@@ -1335,6 +1340,23 @@
 
     };
 
+    Slick.prototype.initSlideEvents = function() {
+
+        var _ = this;
+
+        if ( _.options.autoplay ) {
+
+            if ( _.options.pauseOnHover ) {
+                
+                _.$list.on('mouseenter.slick', $.proxy(_.interrupt, _, true));
+                _.$list.on('mouseleave.slick', $.proxy(_.interrupt, _, false));
+
+            }
+
+        }
+
+    };
+
     Slick.prototype.initializeEvents = function() {
 
         var _ = this;
@@ -1342,6 +1364,7 @@
         _.initArrowEvents();
 
         _.initDotEvents();
+        _.initSlideEvents();
 
         _.$list.on('touchstart.slick mousedown.slick', {
             action: 'start'
@@ -1359,9 +1382,6 @@
         _.$list.on('click.slick', _.clickHandler);
 
         $(document).on(_.visibilityChange, $.proxy(_.visibility, _));
-
-        _.$list.on('mouseenter.slick', $.proxy(_.interrupt, _, true));
-        _.$list.on('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
@@ -1720,6 +1740,8 @@
         _.buildDots();
         _.updateDots();
         _.initDotEvents();
+        _.cleanUpSlideEvents();
+        _.initSlideEvents();
 
         _.checkResponsive(false, true);
 
