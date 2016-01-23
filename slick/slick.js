@@ -1099,11 +1099,15 @@
         }
 
         if (_.options.centerMode === true && _.options.infinite === true) {
-            _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
-        } else if (_.options.centerMode === true) {
-            _.slideOffset = 0;
-            _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
-        }
+			if (_.slideCount <= _.options.slidesToShow) {
+				_.slideOffset = ((_.slideWidth * Math.floor(_.options.slidesToShow)) / 2) - ((_.slideWidth * _.slideCount) / 2);
+			} else {
+				_.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
+			}
+		} else if (_.options.centerMode === true) {
+			_.slideOffset = 0;
+			_.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
+		}
 
         if (_.options.vertical === false) {
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
