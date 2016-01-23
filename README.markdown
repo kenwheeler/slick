@@ -86,6 +86,7 @@ nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <b
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
+pauseOnFocus | boolean | true | Pauses autoplay when slider is focussed
 pauseOnHover | boolean | true | Pauses autoplay on hover
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
