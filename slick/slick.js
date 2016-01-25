@@ -1635,22 +1635,22 @@
 
     Slick.prototype.refresh = function( initializing ) {
 
-        var _ = this, currentSlide, firstVisible;
+        var _ = this, currentSlide, lastVisibleIndex;
 
-        firstVisible = _.slideCount - _.options.slidesToShow;
+        lastVisibleIndex = _.slideCount - _.options.slidesToShow;
 
-        // check that the new breakpoint can actually accept the
-        // "current slide" as the current slide, otherwise we need
-        // to set it to the closest possible value.
-        if ( !_.options.infinite ) {
-            if ( _.slideCount <= _.options.slidesToShow ) {
-                _.currentSlide = 0;
-            } else if ( _.currentSlide > firstVisible ) {
-                _.currentSlide = firstVisible;
-            }
+        // in non-infinite sliders, we don't want to go past the
+        // last visible index.
+        if( !_.options.infinite && ( _.currentSlide > lastVisibleIndex )) {
+            _.currentSlide = lastVisibleIndex;
         }
 
-         currentSlide = _.currentSlide;
+        // if less slides than to show, go to start.
+        if ( _.slideCount <= _.options.slidesToShow ) {
+            _.currentSlide = 0;
+        }
+
+        currentSlide = _.currentSlide;
 
         _.destroy(true);
 
