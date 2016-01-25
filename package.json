@@ -1,6 +1,6 @@
 {
   "name": "slick-carousel",
-  "version": "1.5.9",
+  "version": "1.5.10",
   "description": "the last carousel you'll ever need",
   "main": "slick/slick.js",
   "repository": {
@@ -10,9 +10,36 @@
   "keywords": [
     "carousel",
     "slick",
-    "responsive"
+    "responsive",
+    "js",
+    "slider"
   ],
-  "author": "Ken Wheeler",
+  "author": "Ken Wheeler <ken_wheeler@me.com>",
+  "contributors": [
+    {
+      "name": "ken wheeler",
+      "email": "ken_wheeler@me.com",
+      "url": "http://kenwheeler.github.io/"
+    },
+    {
+      "name": "simon goellner",
+      "email": "simey.me@gmail.com",
+      "url": "http://simey.me"
+    },
+    {
+      "name": "ahmad el-alfy",
+      "email": "ahmadalfy@gmail.com",
+      "url": "http://www.alfy.me"
+    },
+    {
+      "name": "leggomuhgreggo",
+      "email": "gwestneat@gmail.com"
+    },
+    {
+      "name": "ashley mcknight",
+      "email": "ash@sharpteef.net"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kenwheeler/slick/issues"
