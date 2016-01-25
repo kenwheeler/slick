@@ -193,6 +193,12 @@ $(element).slick({
   speed: 500
 });
  ```
+ 
+Change the speed with:
+
+```javascript
+$(element).slick('slickSetOption', 'speed', 5000, true);
+```
 
 Destroy with:
 
