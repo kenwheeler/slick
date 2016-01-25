@@ -1180,14 +1180,16 @@
         var _ = this;
 
         if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
-            _.$prevArrow.off('click.slick');
-            _.$prevArrow.on('click.slick', {
-                message: 'previous'
-            }, _.changeSlide);
-            _.$nextArrow.off('click.slick');
-            _.$nextArrow.on('click.slick', {
-                message: 'next'
-            }, _.changeSlide);
+            _.$prevArrow
+               .off('click.slick')
+               .on('click.slick', {
+                    message: 'previous'
+               }, _.changeSlide);
+            _.$nextArrow
+               .off('click.slick')
+               .on('click.slick', {
+                    message: 'next'
+               }, _.changeSlide);
         }
 
     };
