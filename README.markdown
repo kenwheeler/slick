@@ -169,6 +169,7 @@ Method | Argument | Description
 ------ | -------- | -----------
 slick | options : object | Initializes Slick
 unslick |  | Destroys Slick
+refresh |  | Refreshes Slick
 slickNext |  |  Triggers next slide
 slickPrev | | Triggers previous slide
 slickPause | | Pause Autoplay
