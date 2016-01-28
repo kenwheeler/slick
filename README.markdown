@@ -59,7 +59,7 @@ Example:
 </div>
 ```
 
-#### Settings
+### Settings
 
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
@@ -90,7 +90,7 @@ pauseOnFocus | boolean | true | Pauses autoplay when slider is focussed
 pauseOnHover | boolean | true | Pauses autoplay on hover
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
-responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
+responsive | array | null | Array of objects [containing breakpoints and settings objects (see example)](#responsive-option-example). Enables settings at given `breakpoint`. Set `settings` to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
 slide | string | '' | Slide element query
 slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row.
@@ -109,6 +109,45 @@ verticalSwiping | boolean | false | Changes swipe direction to vertical
 rtl | boolean | false | Change the slider's direction to become right-to-left
 waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 zIndex | number | 1000 | Set the zIndex values for slides, useful for IE9 and lower
+
+##### Responsive Option Example
+The responsive option, and value, is quite unique and powerful.
+You can use it like so:
+
+```
+$(".slider").slick({
+  
+  // normal options...
+  infinite: false,
+
+  // the magic
+  responsive: [{
+
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        infinite: true
+      }
+
+    }, {
+
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        dots: true
+      }
+
+    }, {
+
+      breakpoint: 300,
+      settings: "unslick" // destroys slick
+
+    }]
+});
+```
+
+
+
 
 ### Events
 
@@ -167,20 +206,23 @@ $('.your-element').slick('setPosition');
 
 Method | Argument | Description
 ------ | -------- | -----------
-slick | options : object | Initializes Slick
-unslick |  | Destroys Slick
-slickNext |  |  Triggers next slide
-slickPrev | | Triggers previous slide
-slickPause | | Pause Autoplay
-slickPlay | | Start Autoplay (_will also set `autoplay` option to `true`_)
-slickGoTo | index : int, dontAnimate : bool | Goes to slide by index, skipping animation if second parameter is set to true
-slickCurrentSlide |  |  Returns the current slide index
-slickAdd | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
-slickRemove | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
-slickFilter | filter : selector or function | Filters slides using jQuery .filter syntax
-slickUnfilter | | Removes applied filter
-slickGetOption | option : string(option name) | Gets an option value.
-slickSetOption | option : string(option name), value : depends on option, refresh : boolean | Sets an option live. Set refresh to true if it is an option that changes the display
+`slick` | options : object | Initializes Slick
+`unslick` |  | Destroys Slick
+`slickNext` |  |  Triggers next slide
+`slickPrev` | | Triggers previous slide
+`slickPause` | | Pause Autoplay
+`slickPlay` | | Start Autoplay (_will also set `autoplay` option to `true`_)
+`slickGoTo` | index : int, dontAnimate : bool | Goes to slide by index, skipping animation if second parameter is set to true
+`slickCurrentSlide` |  |  Returns the current slide index
+`slickAdd` | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
+`slickRemove` | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
+`slickFilter` | filter : selector or function | Filters slides using jQuery .filter syntax
+`slickUnfilter` | | Removes applied filter
+`slickGetOption` | option : string(option name) | Gets an option value.
+`slickSetOption` `slickSetOptions` | change an option, `refresh` is always `boolean` and will update UI changes...
+ | `option, value, refresh` | change a [single `option`](https://github.com/kenwheeler/slick#settings) to given `value`; `refresh` is optional.
+ | `"responsive", [{ breakpoint: n, settings: {} }, ... ], refresh` | change or add [whole sets of responsive options](#responsive-option-example)
+ | `{ option: value, option: value, ... }, refresh` | change  [multiple `option`s](https://github.com/kenwheeler/slick#settings) to corresponding `value`s.
 
 
 #### Example
