@@ -1959,6 +1959,20 @@
 
     };
 
+    Slick.prototype.setOptions = Slick.prototype.slickSetOptions = function(options, refresh) {
+
+        var _ = this;
+
+        $.each(options, function(option, value) {
+            _.setOption(option, value);
+        });
+
+        if (refresh === true) {
+            _.unload();
+            _.reinit();
+        }
+    };
+
     Slick.prototype.setPosition = function() {
 
         var _ = this;

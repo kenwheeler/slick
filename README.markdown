@@ -181,6 +181,7 @@ slickFilter | filter : selector or function | Filters slides using jQuery .filte
 slickUnfilter | | Removes applied filter
 slickGetOption | option : string(option name) | Gets an option value.
 slickSetOption | option : string(option name), value : depends on option, refresh : boolean | Sets an option live. Set refresh to true if it is an option that changes the display
+slickSetOptions | options : object(key value pairs of options to override), refresh : boolean | Sets options live. Set refresh to true if any of the options will change the display
 
 
 #### Example
