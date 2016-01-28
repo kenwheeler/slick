@@ -1290,15 +1290,21 @@
         if (_.$dots !== null) {
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
                 $(this).attr({
-                    'role': 'presentation',
-                    'aria-selected': 'false',
-                    'aria-controls': 'navigation' + _.instanceUid + i + '',
-                    'id': 'slick-slide' + _.instanceUid + i + ''
+                    'role': 'presentation'
                 });
-            })
-                .first().attr('aria-selected', 'true').end()
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
+
+                $(this).children().attr({
+                    'role': 'tab',
+                    'id': 'slick-slide-control' + _.instanceUid + i + '',
+                    'aria-controls': 'slick-slide' + _.instanceUid + i + '',
+                    'aria-label': (i + 1) + ' of ' + _.slideCount,
+                    'tabindex': '-1'
+                });
+            }).first().find('li').children().attr({
+                    'aria-selected': 'true',
+                    'tabindex': '0'    
+                }).focus().end()
+
         }
         _.activateADA();
 
