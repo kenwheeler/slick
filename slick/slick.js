@@ -1755,9 +1755,8 @@
         _.setPosition();
         _.focusHandler();
 
-        if ( _.options.autoplay ) {
-            _.autoPlay();
-        }
+        _.paused = !_.options.autoplay;
+        _.autoPlay();
 
         _.$slider.trigger('reInit', [_]);
 
