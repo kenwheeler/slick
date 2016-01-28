@@ -1279,12 +1279,11 @@
             'tabindex': '-1'
         });
 
-        _.$slideTrack.attr('role', 'listbox');
-
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr({
-                'role': 'option',
-                'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
+                'role': 'tabpanel',
+                'id': 'slick-slide' + _.instanceUid + i + '',
+                'aria-describedby': 'slick-slide-control' + _.instanceUid + i + ''
             });
         });
 
