@@ -1298,12 +1298,13 @@
                         'id': 'slick-slide-control' + _.instanceUid + i + '',
                         'aria-controls': 'slick-slide' + _.instanceUid + i + '',
                         'aria-label': (i + 1) + ' of ' + _.slideCount,
+                        'aria-selected': null,
                         'tabindex': '-1'
                     });
-            })
-                .first().attr('aria-selected', 'true').end()
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
+            }).eq(_.currentSlide).find('button').attr({
+                'aria-selected': 'true',
+                'tabindex': '0'
+            }).end();
         }
         _.activateADA();
 
