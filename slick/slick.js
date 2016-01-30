@@ -1953,7 +1953,7 @@
             value = arguments[1];
             refresh = arguments[2];
 
-            if ( arguments[0] === 'responsive' && $.type(value) === 'array' ) {
+            if ( arguments[0] === 'responsive' && $.type( arguments[1] ) === 'array' ) {
             
                 type = 'responsive';
 
