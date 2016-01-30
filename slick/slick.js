@@ -1924,9 +1924,7 @@
     };
 
     Slick.prototype.setOption = 
-    Slick.prototype.slickSetOption = 
-    Slick.prototype.setOptions =
-    Slick.prototype.slickSetOptions = function() {
+    Slick.prototype.slickSetOption = function() {
 
         /**
          * accepts arguments in format of:

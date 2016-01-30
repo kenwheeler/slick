@@ -219,7 +219,7 @@ Method | Argument | Description
 `slickFilter` | filter : selector or function | Filters slides using jQuery .filter syntax
 `slickUnfilter` | | Removes applied filter
 `slickGetOption` | option : string(option name) | Gets an option value.
-`slickSetOption` `slickSetOptions` | change an option, `refresh` is always `boolean` and will update UI changes...
+`slickSetOption` | change an option, `refresh` is always `boolean` and will update UI changes...
  | `option, value, refresh` | change a [single `option`](https://github.com/kenwheeler/slick#settings) to given `value`; `refresh` is optional.
  | `"responsive", [{ breakpoint: n, settings: {} }, ... ], refresh` | change or add [whole sets of responsive options](#responsive-option-example)
  | `{ option: value, option: value, ... }, refresh` | change  [multiple `option`s](https://github.com/kenwheeler/slick#settings) to corresponding `value`s.
