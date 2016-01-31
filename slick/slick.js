@@ -1461,6 +1461,7 @@
                                         .removeAttr('data-lazy')
                                         .removeClass('slick-loading');
                                 });
+                            _.$slider.trigger('lazyLoaded', [_, image]);
                         });
                 };
 
