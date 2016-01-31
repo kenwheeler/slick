@@ -1365,6 +1365,7 @@
                                         .removeClass('slick-loading');
                                 });
                         });
+                    _.$slider.trigger('lazyLoaded', [_]);
                 };
 
                 imageToLoad.src = imageSource;
