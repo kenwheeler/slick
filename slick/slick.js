@@ -483,6 +483,8 @@
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
+            _.$slider.addClass('slick-dotted');
+        
             dot = $('<ul />').addClass(_.options.dotsClass);
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
@@ -895,6 +897,7 @@
 
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
+        _.$slider.removeClass('slick-dotted');
 
         _.unslicked = true;
 
