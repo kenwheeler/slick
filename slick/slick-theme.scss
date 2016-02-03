@@ -125,17 +125,18 @@ $slick-opacity-not-active: 0.25 !default;
 
 /* Dots */
 
-.slick-slider {
+.slick-dotted.slick-slider {
     margin-bottom: 30px;
 }
 
 .slick-dots {
     position: absolute;
-    bottom: -45px;
+    bottom: -25px;
     list-style: none;
     display: block;
     text-align: center;
     padding: 0;
+    margin: 0;
     width: 100%;
     li {
         position: relative;

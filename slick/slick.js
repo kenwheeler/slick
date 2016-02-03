@@ -483,6 +483,8 @@
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
+            _.$slider.addClass('slick-dotted');
+        
             dot = $('<ul />').addClass(_.options.dotsClass);
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
@@ -678,7 +680,7 @@
     Slick.prototype.changeSlide = function(event, dontAnimate) {
 
         var _ = this,
-            $target = $(event.target),
+            $target = $(event.currentTarget),
             indexOffset, slideOffset, unevenOffset;
 
         // If target is a link, prevent default action.
@@ -895,6 +897,7 @@
 
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
+        _.$slider.removeClass('slick-dotted');
 
         _.unslicked = true;
 
@@ -1430,13 +1433,13 @@
             if (event.keyCode === 37 && _.options.accessibility === true) {
                 _.changeSlide({
                     data: {
-                        message: 'previous'
+                        message: _.options.rtl === true ? 'next' :  'previous'
                     }
                 });
             } else if (event.keyCode === 39 && _.options.accessibility === true) {
                 _.changeSlide({
                     data: {
-                        message: 'next'
+                        message: _.options.rtl === true ? 'previous' : 'next'
                     }
                 });
             }
@@ -1466,6 +1469,7 @@
                                         .removeAttr('data-lazy')
                                         .removeClass('slick-loading');
                                 });
+                            _.$slider.trigger('lazyLoaded', [_, image]);
                         });
                 };
 
@@ -1760,9 +1764,8 @@
         _.setPosition();
         _.focusHandler();
 
-        if ( _.options.autoplay ) {
-            _.autoPlay();
-        }
+        _.paused = !_.options.autoplay;
+        _.autoPlay();
 
         _.$slider.trigger('reInit', [_]);
 
@@ -1929,37 +1932,100 @@
 
     };
 
-    Slick.prototype.setOption = Slick.prototype.slickSetOption = function(option, value, refresh) {
+    Slick.prototype.setOption = 
+    Slick.prototype.slickSetOption = function() {
 
-        var _ = this, l, item;
+        /**
+         * accepts arguments in format of:
+         *
+         *  - for changing a single option's value:
+         *     .slick("setOption", option, value, refresh )
+         *
+         *  - for changing a set of responsive options:
+         *     .slick("setOption", 'responsive', [{}, ...], refresh )
+         *
+         *  - for updating multiple values at once (not responsive)
+         *     .slick("setOption", { 'option': value, ... }, refresh )
+         */
 
-        if( option === 'responsive' && $.type(value) === 'array' ) {
+        var _ = this, l, item, option, value, refresh = false, type;
 
-            for ( item in value ) {
-                if( $.type( _.options.responsive ) !== 'array' ) {
-                    _.options.responsive = [ value[item] ];
-                } else {
-                    l = _.options.responsive.length-1;
-                    // loop through the responsive object and splice out duplicates.
-                    while( l >= 0 ) {
-                        if( _.options.responsive[l].breakpoint === value[item].breakpoint ) {
-                            _.options.responsive.splice(l,1);
-                        }
-                        l--;
-                    }
-                    _.options.responsive.push( value[item] );
-                }
+        if( $.type( arguments[0] ) === 'object' ) {
+
+            option =  arguments[0];
+            refresh = arguments[1];
+            type = 'multiple';
+
+        } else if ( $.type( arguments[0] ) === 'string' ) {
+
+            option =  arguments[0];
+            value = arguments[1];
+            refresh = arguments[2];
+
+            if ( arguments[0] === 'responsive' && $.type( arguments[1] ) === 'array' ) {
+            
+                type = 'responsive';
+
+            } else if ( typeof arguments[1] !== 'undefined' ) {
+
+                type = 'single';
+
             }
-
-        } else {
-
-            _.options[option] = value;
 
         }
 
-        if ( refresh === true ) {
+        if ( type === 'single' ) {
+
+            _.options[option] = value;
+
+
+        } else if ( type === 'multiple' ) {
+
+            $.each( option , function( opt, val ) {
+
+                _.options[opt] = val;
+
+            });
+
+
+        } else if ( type === 'responsive' ) {
+
+            for ( item in value ) {
+
+                if( $.type( _.options.responsive ) !== 'array' ) {
+
+                    _.options.responsive = [ value[item] ];
+
+                } else {
+
+                    l = _.options.responsive.length-1;
+
+                    // loop through the responsive object and splice out duplicates.
+                    while( l >= 0 ) {
+
+                        if( _.options.responsive[l].breakpoint === value[item].breakpoint ) {
+
+                            _.options.responsive.splice(l,1);
+
+                        }
+
+                        l--;
+
+                    }
+
+                    _.options.responsive.push( value[item] );
+
+                }
+
+            }
+
+        }
+
+        if ( refresh ) {
+
             _.unload();
             _.reinit();
+
         }
 
     };
