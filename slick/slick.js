@@ -1451,6 +1451,7 @@
             loadRange, cloneRange, rangeStart, rangeEnd;
 
         function loadImages(imagesScope) {
+
             $('img[data-lazy]', imagesScope).each(function() {
 
                 var image = $(this),
@@ -1458,6 +1459,7 @@
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
+
                     image
                         .animate({ opacity: 0 }, 100, function() {
                             image
@@ -1467,13 +1469,15 @@
                                         .removeAttr('data-lazy')
                                         .removeClass('slick-loading');
                                 });
-                            _.$slider.trigger('lazyLoaded', [_, image]);
+                            _.$slider.trigger('lazyLoaded', [_, image, imageSource]);
                         });
+
                 };
 
                 imageToLoad.src = imageSource;
 
             });
+
         }
 
         if (_.options.centerMode === true) {
@@ -1611,31 +1615,77 @@
     };
 
     Slick.prototype.preventDefault = function(event) {
+
         event.preventDefault();
+
     };
 
-    Slick.prototype.progressiveLazyLoad = function() {
+    Slick.prototype.progressiveLazyLoad = function( tryCount ) {
+
+        tryCount = tryCount || 1;
 
         var _ = this,
-            imgCount, targetImage;
+            $imgsToLoad = $( 'img[data-lazy]', _.$slider ),
+            image,
+            imageSource,
+            imageToLoad;
 
-        imgCount = $('img[data-lazy]', _.$slider).length;
+        if ( $imgsToLoad.length ) {
 
-        if (imgCount > 0) {
-            targetImage = $('img[data-lazy]', _.$slider).first();
-            targetImage.attr('src', null);
-            targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
-                    targetImage.removeAttr('data-lazy');
+            image = $imgsToLoad.first();
+            imageSource = image.attr('data-lazy');
+            imageToLoad = document.createElement('img');
+
+            imageToLoad.onload = function() {
+
+                image
+                    .attr( 'src', imageSource )
+                    .removeAttr('data-lazy')
+                    .removeClass('slick-loading');
+
+                if ( _.options.adaptiveHeight === true ) {
+                    _.setPosition();
+                }
+
+                _.$slider.trigger('lazyLoaded', [ _, image, imageSource ]);
+                _.progressiveLazyLoad();
+
+            };
+
+            imageToLoad.onerror = function() {
+
+                if ( tryCount < 3 ) {
+
+                    /**
+                     * try to load the image 3 times,
+                     * leave a slight delay so we don't get
+                     * servers blocking the request.
+                     */
+                    setTimeout( function() {
+                        _.progressiveLazyLoad( tryCount + 1 );
+                    }, 500 );
+
+                } else {
+
+                    _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
+
+                    image
+                        .removeAttr( 'data-lazy' )
+                        .removeClass( 'slick-loading' )
+                        .addClass( 'slick-lazyload-error' );
+
                     _.progressiveLazyLoad();
 
-                    if (_.options.adaptiveHeight === true) {
-                        _.setPosition();
-                    }
-                })
-                .error(function() {
-                    targetImage.removeAttr('data-lazy');
-                    _.progressiveLazyLoad();
-                });
+                }
+
+            };
+
+            imageToLoad.src = imageSource;
+
+        } else {
+
+            _.$slider.trigger('allImagesLoaded', [ _ ]);
+
         }
 
     };
