@@ -2,9 +2,9 @@
 
 // Default Variables
 
-$slick-font-path: "./fonts/" !default;
+$slick-font-path-default: "./fonts/" !default;
 $slick-font-family: "slick" !default;
-$slick-loader-path: "./" !default;
+$slick-loader-path-default: "./" !default;
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
 $slick-dot-color-active: $slick-dot-color !default;
@@ -17,20 +17,30 @@ $slick-opacity-on-hover: 1 !default;
 $slick-opacity-not-active: 0.25 !default;
 
 @function slick-image-url($url) {
+
+    @if variable-exists(slick-loader-path) {
+        @return url($slick-loader-path + $url);
+    }
+
     @if function-exists(image-url) {
         @return image-url($url);
     }
     @else {
-        @return url($slick-loader-path + $url);
+        @return url($slick-loader-path-default + $url);
     }
 }
 
 @function slick-font-url($url) {
+    
+    @if variable-exists(slick-font-path) {
+        @return url($slick-font-path + $url);
+    }
+    
     @if function-exists(font-url) {
         @return font-url($url);
     }
     @else {
-        @return url($slick-font-path + $url);
+        @return url($slick-font-path-default + $url);
     }
 }
 
