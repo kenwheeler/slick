@@ -1457,7 +1457,7 @@
             $('img[' + _.options.lazyLoadKey + ']', imagesScope).each(function() {
 
                 var image = $(this),
-                    imageSource = $(this).attr(key),
+                    imageSource = $(this).attr(_.options.lazyLoadKey),
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
@@ -1467,7 +1467,7 @@
                                 .attr('src', imageSource)
                                 .animate({ opacity: 1 }, 200, function() {
                                     image
-                                        .removeAttr(key)
+                                        .removeAttr(_.options.lazyLoadKey)
                                         .removeClass('slick-loading');
                                 });
                             _.$slider.trigger('lazyLoaded', [_, image]);
