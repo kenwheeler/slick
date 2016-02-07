@@ -63,6 +63,7 @@
                 focusOnSelect: false,
                 infinite: true,
                 initialSlide: 0,
+                lazyLoadAttr: 'lazy',
                 lazyLoad: 'ondemand',
                 mobileFirst: false,
                 pauseOnHover: true,
@@ -99,6 +100,7 @@
                 currentSlide: 0,
                 direction: 1,
                 $dots: null,
+                lazyLoadKey: 'data-' + _.defaults.lazyLoadAttr,
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
@@ -530,7 +532,7 @@
             _.options.slidesToScroll = 1;
         }
 
-        $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('img[' + _.options.lazyLoadKey + ']', _.$slider).not('[src]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1452,10 +1454,10 @@
             loadRange, cloneRange, rangeStart, rangeEnd;
 
         function loadImages(imagesScope) {
-            $('img[data-lazy]', imagesScope).each(function() {
+            $('img[' + _.options.lazyLoadKey + ']', imagesScope).each(function() {
 
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy'),
+                    imageSource = $(this).attr(_.options.lazyLoadKey),
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
@@ -1465,7 +1467,7 @@
                                 .attr('src', imageSource)
                                 .animate({ opacity: 1 }, 200, function() {
                                     image
-                                        .removeAttr('data-lazy')
+                                        .removeAttr(_.options.lazyLoadKey)
                                         .removeClass('slick-loading');
                                 });
                             _.$slider.trigger('lazyLoaded', [_, image]);
@@ -1473,7 +1475,6 @@
                 };
 
                 imageToLoad.src = imageSource;
-
             });
         }
 
@@ -1620,13 +1621,13 @@
         var _ = this,
             imgCount, targetImage;
 
-        imgCount = $('img[data-lazy]', _.$slider).length;
+        imgCount = $('img[' + _.options.lazyLoadKey + ']', _.$slider).length;
 
         if (imgCount > 0) {
-            targetImage = $('img[data-lazy]', _.$slider).first();
+            targetImage = $('img[' + _.options.lazyLoadKey + ']', _.$slider).first();
             targetImage.attr('src', null);
-            targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
-                    targetImage.removeAttr('data-lazy');
+            targetImage.attr('src', targetImage.attr(_.options.lazyLoadKey)).removeClass('slick-loading').load(function() {
+                    targetImage.removeAttr(_.options.lazyLoadKey);
                     _.progressiveLazyLoad();
 
                     if (_.options.adaptiveHeight === true) {
@@ -1634,7 +1635,7 @@
                     }
                 })
                 .error(function() {
-                    targetImage.removeAttr('data-lazy');
+                    targetImage.removeAttr(_.options.lazyLoadKey);
                     _.progressiveLazyLoad();
                 });
         }
