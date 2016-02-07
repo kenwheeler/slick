@@ -63,16 +63,9 @@
                 focusOnSelect: false,
                 infinite: true,
                 initialSlide: 0,
-                lazyLoad: 'ondemand',
-<<<<<<< HEAD
                 lazyLoadAttr: 'lazy',
-                onBeforeChange: null,
-                onAfterChange: null,
-                onInit: null,
-                onReInit: null,
-=======
+                lazyLoad: 'ondemand',
                 mobileFirst: false,
->>>>>>> upstream/master
                 pauseOnHover: true,
                 pauseOnFocus: true,
                 pauseOnDotsHover: false,
@@ -107,6 +100,7 @@
                 currentSlide: 0,
                 direction: 1,
                 $dots: null,
+                lazyLoadKey: 'data-' + _.defaults.lazyLoadAttr,
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
@@ -122,11 +116,7 @@
                 $list: null,
                 touchObject: {},
                 transformsEnabled: false,
-<<<<<<< HEAD
-                lazyLoadKey: 'data-' + _.defaults.lazyLoadAttr
-=======
                 unslicked: false
->>>>>>> upstream/master
             };
 
             $.extend(_, _.initials);
@@ -1464,23 +1454,10 @@
             loadRange, cloneRange, rangeStart, rangeEnd;
 
         function loadImages(imagesScope) {
-<<<<<<< HEAD
-
             $('img[' + _.options.lazyLoadKey + ']', imagesScope).each(function() {
-                var image = $(this),
-                    imageSource = $(this).attr(key);
-
-                image
-                  .load(function() { image.animate({ opacity: 1 }, 200); })
-                  .css({ opacity: 0 })
-                  .attr('src', imageSource)
-                  .removeAttr(key)
-                  .removeClass('slick-loading');
-=======
-            $('img[data-lazy]', imagesScope).each(function() {
 
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy'),
+                    imageSource = $(this).attr(key),
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
@@ -1490,7 +1467,7 @@
                                 .attr('src', imageSource)
                                 .animate({ opacity: 1 }, 200, function() {
                                     image
-                                        .removeAttr('data-lazy')
+                                        .removeAttr(key)
                                         .removeClass('slick-loading');
                                 });
                             _.$slider.trigger('lazyLoaded', [_, image]);
@@ -1498,8 +1475,6 @@
                 };
 
                 imageToLoad.src = imageSource;
-
->>>>>>> upstream/master
             });
         }
 
@@ -1646,27 +1621,13 @@
         var _ = this,
             imgCount, targetImage;
 
-<<<<<<< HEAD
-        imgCount = $('img[' + _.options.lazyLoadKey + ']').length;
+        imgCount = $('img[' + _.options.lazyLoadKey + ']', _.$slider).length;
 
         if (imgCount > 0) {
             targetImage = $('img[' + _.options.lazyLoadKey + ']', _.$slider).first();
-            targetImage.attr('src', targetImage.attr(_.options.lazyLoadKey)).removeClass('slick-loading').load(function() {
-                targetImage.removeAttr(_.options.lazyLoadKey);
-                _.progressiveLazyLoad();
-            })
-         .error(function () {
-          targetImage.removeAttr(_.options.lazyLoadKey);
-          _.progressiveLazyLoad();
-         });
-=======
-        imgCount = $('img[data-lazy]', _.$slider).length;
-
-        if (imgCount > 0) {
-            targetImage = $('img[data-lazy]', _.$slider).first();
             targetImage.attr('src', null);
-            targetImage.attr('src', targetImage.attr('data-lazy')).removeClass('slick-loading').load(function() {
-                    targetImage.removeAttr('data-lazy');
+            targetImage.attr('src', targetImage.attr(_.options.lazyLoadKey)).removeClass('slick-loading').load(function() {
+                    targetImage.removeAttr(_.options.lazyLoadKey);
                     _.progressiveLazyLoad();
 
                     if (_.options.adaptiveHeight === true) {
@@ -1674,10 +1635,9 @@
                     }
                 })
                 .error(function() {
-                    targetImage.removeAttr('data-lazy');
+                    targetImage.removeAttr(_.options.lazyLoadKey);
                     _.progressiveLazyLoad();
                 });
->>>>>>> upstream/master
         }
 
     };
