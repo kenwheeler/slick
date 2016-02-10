@@ -2370,8 +2370,16 @@
         var beforeChangeEvent = jQuery.Event('beforeChange');
         _.$slider.trigger(beforeChangeEvent, [_, _.currentSlide, animSlide]);
 
-        if(beforeChangeEvent.defaultPrevented) {
+        if (beforeChangeEvent.defaultPrevented) {
             _.animating = false;
+            if (dontAnimate !== true) {
+                _.animateSlide(slideLeft, function() {
+                    _.postSlide(_.currentSlide);
+                });
+            } else {
+                _.postSlide(_.currentSlide);
+            }
+
             return;
         }
 
