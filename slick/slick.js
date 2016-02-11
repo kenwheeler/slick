@@ -759,6 +759,9 @@
                 .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
                 .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
+            if (_.options.accessibility === true) {
+                _.$dots.off('keydown.slick', _.keyHandler);
+            }
         }
 
         _.$slider.off('focus.slick blur.slick');
@@ -1355,6 +1358,10 @@
             $('li', _.$dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
+
+            if (_.options.accessibility === true) {
+                _.$dots.on('keydown.slick', _.keyHandler);
+            }
         }
 
         if ( _.options.dots === true && _.options.pauseOnDotsHover === true ) {
