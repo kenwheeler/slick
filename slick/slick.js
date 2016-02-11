@@ -1613,6 +1613,7 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
+                _.$slides.get(_.currentSlide).focus();
             }
 
         }
