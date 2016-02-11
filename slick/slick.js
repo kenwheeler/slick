@@ -1274,7 +1274,7 @@
 
     Slick.prototype.initADA = function() {
         var _ = this,
-                slickDotGroups = _.slideCount / _.options.slidesToShow,
+                slickDotGroups = Math.ceil(_.slideCount / _.options.slidesToShow),
                 tabControlIndexes = _.getNavigableIndexes().filter(function (val) {
                     return (val >= 0) && (val <= _.slideCount);
                 });
