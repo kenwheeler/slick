@@ -81,8 +81,8 @@ arrows | boolean | true | Enable Next/Prev arrows
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
 appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
 mobileFirst | boolean | false | Responsive settings use mobile first calculation
-prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
-nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
+prevArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-prev">Previous</button>` | Allows you to select a node or customize the HTML for the "Previous" arrow.
+nextArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-next">Next</button>` | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
