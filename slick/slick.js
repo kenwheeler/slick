@@ -2370,7 +2370,7 @@
         var beforeChangeEvent = jQuery.Event('beforeChange');
         _.$slider.trigger(beforeChangeEvent, [_, _.currentSlide, animSlide]);
 
-        if (beforeChangeEvent.defaultPrevented) {
+        if (beforeChangeEvent.isDefaultPrevented()) {
             _.animating = false;
             if (dontAnimate !== true) {
                 _.animateSlide(slideLeft, function() {
