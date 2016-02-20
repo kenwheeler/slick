@@ -4,18 +4,14 @@
 ====================================================================
 
 
-
-
 ###### `[  paste your jsfiddle link here  ]`  
 
-use this jsfiddle base: 
-http://jsfiddle.net/simeydotme/fmo50w7n/ to reproduce your bug, 
+use this jsfiddle to reproduce your bug: 
+http://jsfiddle.net/simeydotme/fmo50w7n/ 
 we will likely close your issue without it.
 
 
 ====================================================================
-
-
 
 
 #### Steps to reproduce the problem
@@ -27,16 +23,12 @@ we will likely close your issue without it.
 ====================================================================
 
 
-
-
-#### What is the expected behavior?
+#### What is the expected behaviour?
 
 ...  
 
 
 ====================================================================
-
-
 
 
 #### What is observed behaviour?
@@ -47,8 +39,6 @@ we will likely close your issue without it.
 ====================================================================
 
 
-
-
 #### More Details
 
 - Which browsers/versions does it happen on?
@@ -56,4 +46,5 @@ we will likely close your issue without it.
 - Did this work before?
 
 
-[fiddle]: http://jsfiddle.net/simeydotme/fmo50w7n/
+
+
