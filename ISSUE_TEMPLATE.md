@@ -7,7 +7,10 @@
 
 
 ###### `[  paste your jsfiddle link here  ]`  
-- [ ] use this _[`jsfiddle base`][fiddle]_ to reproduce your bug, we will likely close your issue without it.
+
+use this jsfiddle base: 
+http://jsfiddle.net/simeydotme/fmo50w7n/ to reproduce your bug, 
+we will likely close your issue without it.
 
 
 ====================================================================
