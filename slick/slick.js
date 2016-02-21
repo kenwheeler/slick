@@ -1474,6 +1474,17 @@
 
                 };
 
+                imageToLoad.onerror = function() {
+
+                    image
+                        .removeAttr( 'data-lazy' )
+                        .removeClass( 'slick-loading' )
+                        .addClass( 'slick-lazyload-error' );
+
+                    _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
+
+                };
+
                 imageToLoad.src = imageSource;
 
             });
@@ -1667,12 +1678,12 @@
 
                 } else {
 
-                    _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
-
                     image
                         .removeAttr( 'data-lazy' )
                         .removeClass( 'slick-loading' )
                         .addClass( 'slick-lazyload-error' );
+
+                    _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
 
                     _.progressiveLazyLoad();
 
