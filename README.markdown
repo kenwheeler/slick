@@ -182,7 +182,8 @@ init | event, slick | When Slick initializes for the first time callback. Note t
 reInit | event, slick | Every time Slick (re-)initializes callback
 setPosition | event, slick | Every time Slick recalculates position
 swipe | event, slick, direction | Fires after swipe/drag
-lazyLoaded | event, slick, image | Fires after image loads lazily
+lazyLoaded | event, slick, image, imageSource | Fires after image loads lazily
+lazyLoadError | event, slick, image, imageSource | Fires after image fails to load
 
 
 #### Methods
