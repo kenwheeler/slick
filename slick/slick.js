@@ -531,6 +531,7 @@
         }
 
         $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('img[data-lazy-srcset]', _.$slider).not('[srcset]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1474,6 +1475,29 @@
                 imageToLoad.src = imageSource;
 
             });
+
+             $('img[data-lazy-srcset]', imagesScope).each(function() {
+
+                var image = $(this),
+                    imageSource = $(this).attr('data-lazy-srcset'),
+                    imageToLoad = document.createElement('img');
+
+                imageToLoad.onload = function() {
+                    image
+                        .animate({ opacity: 0 }, 100, function() {
+                            image
+                                .attr('srcset', imageSource)
+                                .animate({ opacity: 1 }, 200, function() {
+                                    image
+                                        .removeAttr('data-lazy-srcset')
+                                        .removeClass('slick-loading');
+                                });
+                        });
+                };
+
+                imageToLoad.srcset = imageSource;
+
+            });
         }
 
         if (_.options.centerMode === true) {
@@ -1617,9 +1641,10 @@
     Slick.prototype.progressiveLazyLoad = function() {
 
         var _ = this,
-            imgCount, targetImage;
+            imgCount, targetImage, imgCountSrcset, targetImageSrcset;
 
         imgCount = $('img[data-lazy]', _.$slider).length;
+        imgCountSrcset = $('img[data-lazy-srcset]', _.$slider).length;
 
         if (imgCount > 0) {
             targetImage = $('img[data-lazy]', _.$slider).first();
@@ -1634,6 +1659,22 @@
                 })
                 .error(function() {
                     targetImage.removeAttr('data-lazy');
+                    _.progressiveLazyLoad();
+                });
+        }
+
+        if (imgCountSrcset > 0) {
+            targetImageSrcset = $('img[data-lazy-srcset]', _.$slider).first();
+            targetImageSrcset.attr('srcset', targetImageSrcset.attr('data-lazy-srcset')).removeClass('slick-loading').load(function() {
+                    targetImageSrcset.removeAttr('data-lazy-srcset');
+                    _.progressiveLazyLoad();
+
+                    if (_.options.adaptiveHeight === true) {
+                        _.setPosition();
+                    }
+                })
+                .error(function() {
+                    targetImageSrcset.removeAttr('data-lazy-srcset');
                     _.progressiveLazyLoad();
                 });
         }
