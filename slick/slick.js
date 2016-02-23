@@ -2373,6 +2373,14 @@
             return;
         }
 
+        if(_.options.infinite === false && (index + _.options.slidesToShow) > _.slideCount){
+            return;
+        }
+
+        if(_.options.infinite === false && index < 0){
+            return;
+        }
+
         if (sync === false) {
             _.asNavFor(index);
         }
