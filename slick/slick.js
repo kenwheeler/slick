@@ -2480,37 +2480,68 @@
 
         _.dragging = false;
         _.interrupted = false;
+        _.shouldClick = ( _.touchObject.swipeLength > 10 ) ? false : true;
 
-        _.shouldClick = (_.touchObject.swipeLength > 10) ? false : true;
-
-        if (_.touchObject.curX === undefined) {
+        if ( _.touchObject.curX === undefined ) {
             return false;
         }
 
-        if (_.touchObject.edgeHit === true) {
-            _.$slider.trigger('edge', [_, _.swipeDirection()]);
+        if ( _.touchObject.edgeHit === true ) {
+            _.$slider.trigger('edge', [_, _.swipeDirection() ]);
         }
 
-        if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
+        if ( _.touchObject.swipeLength >= _.touchObject.minSwipe ) {
+
             direction = _.swipeDirection();
-            if(direction != 'vertical'){
-                if(direction == 'left' || direction == 'down') {
-                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide + _.getSlideCount()) : _.currentSlide + _.getSlideCount();
+
+            switch ( direction ) {
+
+                case 'left':
+                case 'down':
+
+                    slideCount =
+                        _.options.swipeToSlide ?
+                            _.checkNavigable( _.currentSlide + _.getSlideCount() ) :
+                            _.currentSlide + _.getSlideCount();
+
                     _.currentDirection = 0;
-                }
-                else if(direction == 'right' || direction == 'up') {
-                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide - _.getSlideCount()) : _.currentSlide - _.getSlideCount();
+
+                    break;
+
+                case 'right':
+                case 'up':
+
+                    slideCount =
+                        _.options.swipeToSlide ?
+                            _.checkNavigable( _.currentSlide - _.getSlideCount() ) :
+                            _.currentSlide - _.getSlideCount();
+
                     _.currentDirection = 1;
-                }
-                _.slideHandler(slideCount);
-                _.touchObject = {};
-                _.$slider.trigger('swipe', [_, direction]);
+
+                    break;
+
+                default:
+
+
             }
+
+            if( direction != 'vertical' ) {
+
+                _.slideHandler( slideCount );
+                _.touchObject = {};
+                _.$slider.trigger('swipe', [_, direction ]);
+
+            }
+
         } else {
-            if (_.touchObject.startX !== _.touchObject.curX) {
-                _.slideHandler(_.currentSlide);
+
+            if ( _.touchObject.startX !== _.touchObject.curX ) {
+
+                _.slideHandler( _.currentSlide );
                 _.touchObject = {};
+
             }
+
         }
 
     };
