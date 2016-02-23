@@ -36,6 +36,9 @@ bower install --save slick-carousel
 
 # NPM
 npm install slick-carousel
+
+# RubyGems (for Rails)
+gem install jquery-slick-rails
 ```
 
 #### Contributing
