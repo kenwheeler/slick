@@ -332,7 +332,7 @@
     };
 
     Slick.prototype.getNavTarget = function() {
-        
+
         var _ = this,
             asNavFor = _.options.asNavFor;
 
@@ -484,7 +484,7 @@
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
 
             _.$slider.addClass('slick-dotted');
-        
+
             dot = $('<ul />').addClass(_.options.dotsClass);
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
@@ -795,7 +795,7 @@
 
         $(window).off('load.slick.slick-' + _.instanceUid, _.setPosition);
         $(document).off('ready.slick.slick-' + _.instanceUid, _.setPosition);
-    
+
     };
 
     Slick.prototype.cleanUpSlideEvents = function() {
@@ -1008,7 +1008,7 @@
 
         _.$slider
             .off('focus.slick blur.slick')
-            .on('focus.slick blur.slick', 
+            .on('focus.slick blur.slick',
                 '*:not(.slick-arrow)', function(event) {
 
             event.stopImmediatePropagation();
@@ -1337,7 +1337,7 @@
         }
 
         if ( _.options.dots === true && _.options.pauseOnDotsHover === true ) {
-            
+
             $('li', _.$dots)
                 .on('mouseenter.slick', $.proxy(_.interrupt, _, true))
                 .on('mouseleave.slick', $.proxy(_.interrupt, _, false));
@@ -1351,7 +1351,7 @@
         var _ = this;
 
         if ( _.options.pauseOnHover ) {
-            
+
             _.$list.on('mouseenter.slick', $.proxy(_.interrupt, _, true));
             _.$list.on('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
@@ -1592,7 +1592,7 @@
         var _ = this;
 
         if( !_.unslicked ) {
-            
+
             _.$slider.trigger('afterChange', [_, index]);
 
             _.animating = false;
@@ -1991,7 +1991,7 @@
 
     };
 
-    Slick.prototype.setOption = 
+    Slick.prototype.setOption =
     Slick.prototype.slickSetOption = function() {
 
         /**
@@ -2022,7 +2022,7 @@
             refresh = arguments[2];
 
             if ( arguments[0] === 'responsive' && $.type( arguments[1] ) === 'array' ) {
-            
+
                 type = 'responsive';
 
             } else if ( typeof arguments[1] !== 'undefined' ) {
@@ -2326,7 +2326,7 @@
             _.autoPlay();
         }
         _.interrupted = toggle;
-        
+
     };
 
     Slick.prototype.selectHandler = function(event) {
@@ -2437,9 +2437,9 @@
         _.currentSlide = animSlide;
 
         _.setSlideClasses(_.currentSlide);
-        
+
         if ( _.options.asNavFor ) {
-            
+
             navTarget = _.getNavTarget();
             navTarget = navTarget.slick('getSlick');
 
@@ -2523,9 +2523,9 @@
         }
         if (_.options.verticalSwiping === true) {
             if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
-                return 'left';
+                return 'down';
             } else {
-                return 'right';
+                return 'up';
             }
         }
 
@@ -2536,45 +2536,73 @@
     Slick.prototype.swipeEnd = function(event) {
 
         var _ = this,
-            slideCount;
+            slideCount,
+            direction;
 
         _.dragging = false;
         _.interrupted = false;
+        _.shouldClick = ( _.touchObject.swipeLength > 10 ) ? false : true;
 
-        _.shouldClick = (_.touchObject.swipeLength > 10) ? false : true;
-
-        if (_.touchObject.curX === undefined) {
+        if ( _.touchObject.curX === undefined ) {
             return false;
         }
 
-        if (_.touchObject.edgeHit === true) {
-            _.$slider.trigger('edge', [_, _.swipeDirection()]);
+        if ( _.touchObject.edgeHit === true ) {
+            _.$slider.trigger('edge', [_, _.swipeDirection() ]);
         }
 
-        if (_.touchObject.swipeLength >= _.touchObject.minSwipe) {
+        if ( _.touchObject.swipeLength >= _.touchObject.minSwipe ) {
 
-            switch (_.swipeDirection()) {
+            direction = _.swipeDirection();
+
+            switch ( direction ) {
+
                 case 'left':
-                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide + _.getSlideCount()) : _.currentSlide + _.getSlideCount();
-                    _.slideHandler(slideCount);
+                case 'down':
+
+                    slideCount =
+                        _.options.swipeToSlide ?
+                            _.checkNavigable( _.currentSlide + _.getSlideCount() ) :
+                            _.currentSlide + _.getSlideCount();
+
                     _.currentDirection = 0;
-                    _.touchObject = {};
-                    _.$slider.trigger('swipe', [_, 'left']);
+
                     break;
 
                 case 'right':
-                    slideCount = _.options.swipeToSlide ? _.checkNavigable(_.currentSlide - _.getSlideCount()) : _.currentSlide - _.getSlideCount();
-                    _.slideHandler(slideCount);
+                case 'up':
+
+                    slideCount =
+                        _.options.swipeToSlide ?
+                            _.checkNavigable( _.currentSlide - _.getSlideCount() ) :
+                            _.currentSlide - _.getSlideCount();
+
                     _.currentDirection = 1;
-                    _.touchObject = {};
-                    _.$slider.trigger('swipe', [_, 'right']);
+
                     break;
+
+                default:
+
+
             }
-        } else {
-            if (_.touchObject.startX !== _.touchObject.curX) {
-                _.slideHandler(_.currentSlide);
+
+            if( direction != 'vertical' ) {
+
+                _.slideHandler( slideCount );
                 _.touchObject = {};
+                _.$slider.trigger('swipe', [_, direction ]);
+
             }
+
+        } else {
+
+            if ( _.touchObject.startX !== _.touchObject.curX ) {
+
+                _.slideHandler( _.currentSlide );
+                _.touchObject = {};
+
+            }
+
         }
 
     };
