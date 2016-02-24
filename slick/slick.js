@@ -1049,7 +1049,9 @@
             }
         } else if (_.options.centerMode === true) {
             pagerQty = _.slideCount;
-        } else {
+        } else if(!_.options.asNavFor) {
+            pagerQty = 1 + Math.ceil((_.slideCount - _.options.slidesToShow) / _.options.slidesToScroll);
+        }else {
             while (breakPoint < _.slideCount) {
                 ++pagerQty;
                 breakPoint = counter + _.options.slidesToScroll;
@@ -2370,14 +2372,6 @@
         }
 
         if (_.slideCount <= _.options.slidesToShow) {
-            return;
-        }
-
-        if(_.options.infinite === false && (index + _.options.slidesToShow) > _.slideCount){
-            return;
-        }
-
-        if(_.options.infinite === false && index < 0){
             return;
         }
 
