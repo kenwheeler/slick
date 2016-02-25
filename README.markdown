@@ -15,28 +15,28 @@ CDN hosted slick is a great way to get set up quick:
 
 In your ```<head>``` add:
 
-````
+```html
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
 
-// Add the slick-theme.css if you want default styling
+<!-- Add the slick-theme.css if you want default styling -->
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
-````
+```
 
 Then, before your closing ```<body>``` tag add:
 
-```
+```html
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 ```
 
 #### Package Managers
 
-````
-//Bower
+```sh
+# Bower
 bower install --save slick-carousel
 
-//NPM
+# NPM
 npm install slick-carousel
-````
+```
 
 #### Contributing
 
@@ -48,7 +48,7 @@ In slick 1.5 you can now add settings using the data-slick attribute. You still 
 
 Example:
 
-```markup
+```html
 <div data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
   <div><h3>1</h3></div>
   <div><h3>2</h3></div>
@@ -81,8 +81,8 @@ arrows | boolean | true | Enable Next/Prev arrows
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
 appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
 mobileFirst | boolean | false | Responsive settings use mobile first calculation
-prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
-nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
+prevArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-prev">Previous</button>` | Allows you to select a node or customize the HTML for the "Previous" arrow.
+nextArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-next">Next</button>` | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
@@ -93,7 +93,7 @@ respondTo | string | 'window' | Width that responsive object responds to. Can be
 responsive | array | null | Array of objects [containing breakpoints and settings objects (see example)](#responsive-option-example). Enables settings at given `breakpoint`. Set `settings` to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
 slide | string | '' | Slide element query
-slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row.
+slidesPerRow | int | 1 | With grid mode initialized via the rows option, this sets how many slides are in each grid row.
 slidesToShow | int | 1 | # of slides to show at a time
 slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
@@ -114,9 +114,9 @@ zIndex | number | 1000 | Set the zIndex values for slides, useful for IE9 and lo
 The responsive option, and value, is quite unique and powerful.
 You can use it like so:
 
-```
+```javascript
 $(".slider").slick({
-  
+
   // normal options...
   infinite: false,
 
@@ -182,7 +182,8 @@ init | event, slick | When Slick initializes for the first time callback. Note t
 reInit | event, slick | Every time Slick (re-)initializes callback
 setPosition | event, slick | Every time Slick recalculates position
 swipe | event, slick, direction | Fires after swipe/drag
-lazyLoaded | event, slick, image | Fires after image loads lazily
+lazyLoaded | event, slick, image, imageSource | Fires after image loads lazily
+lazyLoadError | event, slick, image, imageSource | Fires after image fails to load
 
 
 #### Methods
@@ -236,7 +237,7 @@ $(element).slick({
   speed: 500
 });
  ```
- 
+
 Change the speed with:
 
 ```javascript
