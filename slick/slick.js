@@ -64,6 +64,7 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                maxSlideyFingers: 1,
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnFocus: true,
@@ -2654,7 +2655,7 @@
 
         touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
 
-        if (!_.dragging || touches && touches.length !== 1) {
+        if (!_.dragging || touches && (touches.length > _.options.maxSlideyFingers || touches.length < 1) ) {
             return false;
         }
 
@@ -2727,7 +2728,7 @@
 
         _.interrupted = true;
 
-        if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
+        if (_.touchObject.fingerCount > _.options.maxSlideyFingers || _.touchObject.fingerCount < 1 || _.slideCount <= _.options.slidesToShow) {
             _.touchObject = {};
             return false;
         }
