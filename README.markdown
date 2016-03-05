@@ -15,28 +15,28 @@ CDN hosted slick is a great way to get set up quick:
 
 In your ```<head>``` add:
 
-````
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.8/slick.css"/>
+```html
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
 
-// Add the slick-theme.css if you want default styling
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.8/slick-theme.css"/>
-````
+<!-- Add the slick-theme.css if you want default styling -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
+```
 
 Then, before your closing ```<body>``` tag add:
 
-```
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.8/slick.min.js"></script>
+```html
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
 ```
 
 #### Package Managers
 
-````
-//Bower
+```sh
+# Bower
 bower install --save slick-carousel
 
-//NPM
+# NPM
 npm install slick-carousel
-````
+```
 
 #### Contributing
 
@@ -48,7 +48,7 @@ In slick 1.5 you can now add settings using the data-slick attribute. You still 
 
 Example:
 
-```markup
+```html
 <div data-slick='{"slidesToShow": 4, "slidesToScroll": 4}'>
   <div><h3>1</h3></div>
   <div><h3>2</h3></div>
@@ -59,7 +59,7 @@ Example:
 </div>
 ```
 
-#### Settings
+### Settings
 
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
@@ -83,18 +83,19 @@ arrows | boolean | true | Enable Next/Prev arrows
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
 appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
 mobileFirst | boolean | false | Responsive settings use mobile first calculation
-prevArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-prev">Previous</button> | Allows you to select a node or customize the HTML for the "Previous" arrow.
-nextArrow | string (html|jQuery selector) | object (DOM node|jQuery object) | <button type="button" class="slick-next">Next</button> | Allows you to select a node or customize the HTML for the "Next" arrow.
+prevArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-prev">Previous</button>` | Allows you to select a node or customize the HTML for the "Previous" arrow.
+nextArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-next">Next</button>` | Allows you to select a node or customize the HTML for the "Next" arrow.
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
-lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique
+lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
+pauseOnFocus | boolean | true | Pauses autoplay when slider is focussed
 pauseOnHover | boolean | true | Pauses autoplay on hover
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
 respondTo | string | 'window' | Width that responsive object responds to. Can be 'window', 'slider' or 'min' (the smaller of the two).
-responsive | object | null | Object containing breakpoints and settings objects (see demo). Enables settings sets at given screen width. Set settings to "unslick" instead of an object to disable slick at a given breakpoint.
+responsive | array | null | Array of objects [containing breakpoints and settings objects (see example)](#responsive-option-example). Enables settings at given `breakpoint`. Set `settings` to "unslick" instead of an object to disable slick at a given breakpoint.
 rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPerRow to set how many slides should be in each row.
 slide | string | '' | Slide element query
-slidesPerRow | int | 1 | With grid mode intialized via the rows option, this sets how many slides are in each grid row. dver
+slidesPerRow | int | 1 | With grid mode initialized via the rows option, this sets how many slides are in each grid row.
 slidesToShow | int | 1 | # of slides to show at a time
 slidesToScroll | int | 1 | # of slides to scroll at a time
 speed | int | 300 | Transition speed
@@ -103,6 +104,7 @@ swipeToSlide | boolean | false | Swipe to slide irrespective of slidesToScroll
 touchMove | boolean | true | Enables slide moving with touch
 touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.
 useCSS | boolean | true | Enable/Disable CSS Transitions
+useTransform | boolean | true | Enable/Disable CSS Transforms
 variableWidth | boolean | false | Disables automatic slide width calculation
 vertical | boolean | false | Vertical slide direction
 verticalSwiping | boolean | false | Changes swipe direction to vertical
@@ -110,9 +112,48 @@ rtl | boolean | false | Change the slider's direction to become right-to-left
 waitForAnimate | boolean | true | Ignores requests to advance the slide while animating
 zIndex | number | 1000 | Set the zIndex values for slides, useful for IE9 and lower
 
+##### Responsive Option Example
+The responsive option, and value, is quite unique and powerful.
+You can use it like so:
+
+```javascript
+$(".slider").slick({
+
+  // normal options...
+  infinite: false,
+
+  // the magic
+  responsive: [{
+
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        infinite: true
+      }
+
+    }, {
+
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        dots: true
+      }
+
+    }, {
+
+      breakpoint: 300,
+      settings: "unslick" // destroys slick
+
+    }]
+});
+```
+
+
+
+
 ### Events
 
-In slick 1.4, callback methods have been deprecated and replaced with events. Use them before the initialization of slick as shown below:
+In slick 1.4, callback methods were deprecated and replaced with events. Use them before the initialization of slick as shown below:
 
 ```javascript
 // On swipe event
@@ -139,10 +180,12 @@ beforeChange | event, slick, currentSlide, nextSlide | Before slide change callb
 breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
 destroy | event, slick | When slider is destroyed, or unslicked.
 edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
-init | event, slick | When Slick initializes for the first time callback
+init | event, slick | When Slick initializes for the first time callback. Note that this event should be defined before initializing the slider.
 reInit | event, slick | Every time Slick (re-)initializes callback
 setPosition | event, slick | Every time Slick recalculates position
 swipe | event, slick, direction | Fires after swipe/drag
+lazyLoaded | event, slick, image, imageSource | Fires after image loads lazily
+lazyLoadError | event, slick, image, imageSource | Fires after image fails to load
 
 
 #### Methods
@@ -167,20 +210,23 @@ $('.your-element').slick('setPosition');
 
 Method | Argument | Description
 ------ | -------- | -----------
-slick | options : object | Initializes Slick
-unslick |  | Destroys Slick
-slickNext |  |  Triggers next slide
-slickPrev | | Triggers previous slide
-slickPause | | Pause Autoplay
-slickPlay | | Start Autoplay
-slickGoTo | index : int, dontAnimate : bool | Goes to slide by index, skipping animation if second parameter is set to true
-slickCurrentSlide |  |  Returns the current slide index
-slickAdd | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
-slickRemove | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
-slickFilter | filter : selector or function | Filters slides using jQuery .filter syntax
-slickUnfilter | | Removes applied filter
-slickGetOption | option : string(option name) | Gets an option value.
-slickSetOption | option : string(option name), value : depends on option, refresh : boolean | Sets an option live. Set refresh to true if it is an option that changes the display
+`slick` | options : object | Initializes Slick
+`unslick` |  | Destroys Slick
+`slickNext` |  |  Triggers next slide
+`slickPrev` | | Triggers previous slide
+`slickPause` | | Pause Autoplay
+`slickPlay` | | Start Autoplay (_will also set `autoplay` option to `true`_)
+`slickGoTo` | index : int, dontAnimate : bool | Goes to slide by index, skipping animation if second parameter is set to true
+`slickCurrentSlide` |  |  Returns the current slide index
+`slickAdd` | element : html or DOM object, index: int, addBefore: bool | Add a slide. If an index is provided, will add at that index, or before if addBefore is set. If no index is provided, add to the end or to the beginning if addBefore is set. Accepts HTML String || Object
+`slickRemove` | index: int, removeBefore: bool | Remove slide by index. If removeBefore is set true, remove slide preceding index, or the first slide if no index is specified. If removeBefore is set to false, remove the slide following index, or the last slide if no index is set.
+`slickFilter` | filter : selector or function | Filters slides using jQuery .filter syntax
+`slickUnfilter` | | Removes applied filter
+`slickGetOption` | option : string(option name) | Gets an option value.
+`slickSetOption` | change an option, `refresh` is always `boolean` and will update UI changes...
+ | `option, value, refresh` | change a [single `option`](https://github.com/kenwheeler/slick#settings) to given `value`; `refresh` is optional.
+ | `"responsive", [{ breakpoint: n, settings: {} }, ... ], refresh` | change or add [whole sets of responsive options](#responsive-option-example)
+ | `{ option: value, option: value, ... }, refresh` | change  [multiple `option`s](https://github.com/kenwheeler/slick#settings) to corresponding `value`s.
 
 
 #### Example
@@ -193,6 +239,12 @@ $(element).slick({
   speed: 500
 });
  ```
+
+Change the speed with:
+
+```javascript
+$(element).slick('slickSetOption', 'speed', 5000, true);
+```
 
 Destroy with:
 
@@ -216,6 +268,9 @@ $slick-next-character | string | '\2192' | Unicode character code for the next a
 $slick-dot-character | string | '\2022' | Unicode character code for the navigation dot icon
 $slick-dot-size | pixels | 6px | Size of the navigation dots
 
+#### Browser support
+
+Slick works on IE8+ in addition to other modern browsers such as Chrome, Firefox, and Safari.
 
 #### Dependencies
 
