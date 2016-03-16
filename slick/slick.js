@@ -138,7 +138,7 @@
             _.transformType = null;
             _.transitionType = null;
             _.visibilityChange = 'visibilitychange';
-            _.windowWidth = 0;
+            _.windowWidth = $(window).width();
             _.windowTimer = null;
 
             dataSettings = $(element).data('slick') || {};
