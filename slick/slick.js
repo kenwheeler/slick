@@ -1049,7 +1049,7 @@
                 verticalOffset = ((slideIndex + _.options.slidesToShow) - _.slideCount) * verticalHeight;
             }
         }
-        _.slideOffset = Math.abs(_.slideOffset);
+
         if (_.slideCount <= _.options.slidesToShow) {
             _.slideOffset = 0;
             verticalOffset = 0;
