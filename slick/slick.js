@@ -2248,8 +2248,6 @@
                 remainder = _.slideCount % _.options.slidesToShow;
                 indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
 
-               // this query causes trouble with slides marked active, therefore removed
-               // if (_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow)
                 if ((_.slideCount - index) < _.options.slidesToShow) {
 
                     allSlides
