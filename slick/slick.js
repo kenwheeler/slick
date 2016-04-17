@@ -1500,8 +1500,13 @@
                 rangeEnd = 2 + (_.options.slidesToShow / 2 + 1) + _.currentSlide;
             }
         } else {
-            rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
+            if (_.options.infinite === true) {
+                rangeStart = _.options.slidesToShow + _.currentSlide;
+            } else {
+                rangeStart = _.currentSlide - Math.max(0, _.currentSlide + _.options.slidesToShow - _.slideCount);
+            }
             rangeEnd = Math.ceil(rangeStart + _.options.slidesToShow);
+            
             if (_.options.fade === true) {
                 if (rangeStart > 0) rangeStart--;
                 if (rangeEnd <= _.slideCount) rangeEnd++;
