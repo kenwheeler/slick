@@ -1177,8 +1177,13 @@
         if (_.options.infinite === false) {
             max = _.slideCount;
         } else {
-            breakPoint = _.options.slidesToScroll * -1;
-            counter = _.options.slidesToScroll * -1;
+             if (_.options.centerMode === true || _.options.swipeToSlide === true) {
+                breakPoint = Math.floor(_.options.slidesToShow / 2) * -1;
+                counter = Math.floor(_.options.slidesToShow / 2) * -1;
+            } else {
+                breakPoint = _.options.slidesToScroll * -1;
+                counter = _.options.slidesToScroll * -1;
+            }
             max = _.slideCount * 2;
         }
 
