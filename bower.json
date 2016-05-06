@@ -6,7 +6,7 @@
         "slick/slick.less",
         "slick/slick.scss"
     ],
-    "version": "1.5.9",
+    "version": "1.6.0",
     "homepage": "https://github.com/kenwheeler/slick",
     "authors": [
         "Ken Wheeler <ken_wheeler@me.com>"
