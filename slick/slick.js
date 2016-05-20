@@ -140,6 +140,7 @@
             _.visibilityChange = 'visibilitychange';
             _.windowWidth = 0;
             _.windowTimer = null;
+            _.isTriggeredAutomatically = false;
 
             dataSettings = $(element).data('slick') || {};
 
@@ -395,6 +396,8 @@
 
         var _ = this;
 
+        _.isTriggeredAutomatically = false;
+
         if (_.autoPlayTimer) {
             clearInterval(_.autoPlayTimer);
         }
@@ -405,6 +408,8 @@
 
         var _ = this,
             slideTo = _.currentSlide + _.options.slidesToScroll;
+
+        _.isTriggeredAutomatically = true;
 
         if ( !_.paused && !_.interrupted && !_.focussed ) {
 
