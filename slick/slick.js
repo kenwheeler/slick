@@ -2676,6 +2676,9 @@
         swipeDirection = _.swipeDirection();
 
         if (swipeDirection === 'vertical') {
+            if (_.options.verticalSwiping === false) {
+              _.dragging = false;
+            }
             return;
         }
 
