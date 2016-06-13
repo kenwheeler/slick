@@ -1104,7 +1104,7 @@
 
         if (_.options.centerMode === true && _.options.infinite === true) {
             _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
-            if (0 == _.options.slidesToShow % 2) {
+            if (0 === _.options.slidesToShow % 2 && _.slideCount > _.options.slidesToShow) {
                 _.slideOffset -= _.slideWidth;
             }
         } else if (_.options.centerMode === true) {
