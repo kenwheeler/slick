@@ -1637,7 +1637,9 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
-                _.$slides.get(_.currentSlide).focus();
+                _.$slides.get(_.currentSlide).find('a, input, button, select').attr({
+                    'tabindex': '0'
+                });
             }
 
         }
