@@ -5,14 +5,12 @@
 \__ \ | | (__|   < _ | \__ \
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
-
  Version: 1.6.0
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
-
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
 (function(factory) {
@@ -86,6 +84,7 @@
                 variableWidth: false,
                 vertical: false,
                 verticalSwiping: false,
+                verticalKeys: false,
                 waitForAnimate: true,
                 zIndex: 1000
             };
@@ -1430,19 +1429,24 @@
         var _ = this;
          //Dont slide if the cursor is inside the form fields and arrow keys are pressed
         if(!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
-            if (event.keyCode === 37 && _.options.accessibility === true) {
+
+            var prevKey = _.options.verticalKeys === true ? 38 : 37;
+            var nextKey = _.options.verticalKeys === true ? 40 : 39;
+
+            if (event.keyCode === prevKey && _.options.accessibility === true) {
                 _.changeSlide({
                     data: {
                         message: _.options.rtl === true ? 'next' :  'previous'
                     }
                 });
-            } else if (event.keyCode === 39 && _.options.accessibility === true) {
+            } else if (event.keyCode === nextKey && _.options.accessibility === true) {
                 _.changeSlide({
                     data: {
                         message: _.options.rtl === true ? 'previous' : 'next'
                     }
                 });
             }
+
         }
 
     };
