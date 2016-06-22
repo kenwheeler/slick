@@ -440,8 +440,10 @@
 
             _.$prevArrow = $(_.options.prevArrow).addClass('slick-arrow');
             _.$nextArrow = $(_.options.nextArrow).addClass('slick-arrow');
+            
+            _.$slider.addClass('slick-arrowed');
 
-            if( _.slideCount > _.options.slidesToShow ) {
+            if ( _.slideCount > _.options.slidesToShow ) {
 
                 _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
                 _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
@@ -898,6 +900,7 @@
         _.$slider.removeClass('slick-slider');
         _.$slider.removeClass('slick-initialized');
         _.$slider.removeClass('slick-dotted');
+        _.$slider.removeClass('slick-arrowed');
 
         _.unslicked = true;
 
