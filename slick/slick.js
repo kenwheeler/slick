@@ -2893,4 +2893,6 @@
         return _;
     };
 
+    return Slick;
+
 }));
