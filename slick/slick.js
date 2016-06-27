@@ -1637,7 +1637,8 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
-                _.$slides.get(_.currentSlide).find('a, input, button, select').attr({
+                var $currentSlide = $(_.$slides.get(_.currentSlide));
+                $currentSlide.find('a, input, button, select').attr({
                     'tabindex': '0'
                 });
             }
