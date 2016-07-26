@@ -812,7 +812,6 @@
 
         _.originalSlides.removeAttr('style');
         _.$slider.empty().append(_.originalSlides);
-
     };
 
     Slick.prototype.clickHandler = function(event) {
@@ -1732,6 +1731,10 @@
         _.destroy(true);
 
         $.extend(_, _.initials, { currentSlide: currentSlide });
+
+        if(_.options.rows > 1){
+            _.currentSlide = 0;
+        }
 
         _.init();
 
