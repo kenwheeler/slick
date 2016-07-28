@@ -52,7 +52,7 @@
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text(i + 1);
+                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text('Slide ' + (i + 1));
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -1011,7 +1011,9 @@
             .on('focus.slick blur.slick',
                 '*:not(.slick-arrow)', function(event) {
 
-            event.stopImmediatePropagation();
+            // stopImmediatePropagation kills the ability to
+            // check for focus inside the slider from external JS.
+            // event.stopImmediatePropagation();
             var $sf = $(this);
 
             setTimeout(function() {
@@ -1287,10 +1289,10 @@
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr('role', 'option');
-            
+
             //Evenly distribute aria-describedby tags through available dots.
             var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
-            
+
             if (_.options.dots === true) {
                 $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
             }

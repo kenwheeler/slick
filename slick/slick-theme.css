@@ -38,7 +38,6 @@
 
     color: transparent;
     border: none;
-    outline: none;
     background: transparent;
 }
 .slick-prev:hover,
@@ -47,7 +46,6 @@
 .slick-next:focus
 {
     color: transparent;
-    outline: none;
     background: transparent;
 }
 .slick-prev:hover:before,
@@ -162,13 +160,7 @@
 
     color: transparent;
     border: 0;
-    outline: none;
     background: transparent;
-}
-.slick-dots li button:hover,
-.slick-dots li button:focus
-{
-    outline: none;
 }
 .slick-dots li button:hover:before,
 .slick-dots li button:focus:before
