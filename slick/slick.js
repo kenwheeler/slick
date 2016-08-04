@@ -145,7 +145,7 @@
 
             _.options = $.extend({}, _.defaults, settings, dataSettings);
 
-            if (!_.options.infinite && _.options.initialSlide > 0) {
+            if (!_.options.centerMode && _.options.initialSlide > 0) {
                 _.currentSlide = Math.floor(_.options.initialSlide / _.options.slidesToShow) * _.options.slidesToShow;
             } else {
                 _.currentSlide = _.options.initialSlide;
