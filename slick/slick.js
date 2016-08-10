@@ -44,15 +44,15 @@
                 appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
-                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button">Previous slide</button>',
-                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button">Next slide</button>',
+                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous slide" tabindex="0" role="button">Previous slide</button>',
+                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next slide" tabindex="0" role="button">Next slide</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text('Slide ' + i + 1);
+                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text('Slide ' + (i + 1));
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -187,6 +187,13 @@
 
     Slick.prototype.activateADA = function() {
         var _ = this;
+
+        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
+            'aria-hidden': 'true',
+            'tabindex': '-1'
+        }).find('a, input, button, select').attr({
+            'tabindex': '-1'
+        });
 
         _.$slideTrack.find('.slick-active').attr({
             'aria-hidden': 'false'
@@ -1276,41 +1283,58 @@
 
     Slick.prototype.initADA = function() {
         var _ = this;
-        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
-            'aria-hidden': 'true',
-            'tabindex': '-1'
-        }).find('a, input, button, select').attr({
-            'tabindex': '-1'
-        });
-
-        _.$slideTrack.attr('role', 'listbox');
+        var currentIdSet;
+        var slideId;
+        var slideLabelledBy;
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr('role', 'option');
 
-            //Evenly distribute aria-describedby tags through available dots.
-            var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
+            //Evenly distribute aria-labelledby tags through available dots.
+            var labelledBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
 
             if (_.options.dots === true) {
-                $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
+                slideId = '' + _.instanceUid + labelledBySlideId;
+                slideLabelledBy = slideId;
+
+                // Prevent duplicate slide IDs by appending index
+                if (currentIdSet === slideId) {
+                    slideId = '' + slideId + i;
+                }
+
+                $(this)
+                    .attr('id', 'slickSlide' + slideId)
+                    .attr('role', 'tabpanel')
+                    .attr('aria-labelledby', 'slickDot' + slideLabelledBy);
+
+                currentIdSet = '' + _.instanceUid + labelledBySlideId;
             }
         });
 
         if (_.$dots !== null) {
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
                 $(this).attr({
-                    'role': 'presentation',
+                    'role': 'tab',
                     'aria-selected': 'false',
-                    'aria-controls': 'navigation' + _.instanceUid + i + '',
-                    'id': 'slick-slide' + _.instanceUid + i + ''
+                    'aria-controls': 'slickSlide' + _.instanceUid + i,
+                    'id': 'slickDot' + _.instanceUid + i + ''
                 });
             })
-                .first().attr('aria-selected', 'true').end()
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
+                .first().attr('aria-selected', 'true');
         }
         _.activateADA();
 
+    };
+
+    Slick.prototype.updateADA = function() {
+        var _ = this;
+
+        if (_.$dots !== null) {
+            _.$dots.find('li').attr('aria-selected', 'false');
+            _.$dots.find('.slick-active').attr('aria-selected', 'true');
+        }
+
+        _.activateADA();
     };
 
     Slick.prototype.initArrowEvents = function() {
@@ -1612,7 +1636,7 @@
             }
 
             if (_.options.accessibility === true) {
-                _.initADA();
+                _.updateADA();
             }
 
         }
@@ -2843,14 +2867,12 @@
 
             _.$dots
                 .find('li')
-                .removeClass('slick-active')
-                .attr('aria-hidden', 'true');
+                .removeClass('slick-active');
 
             _.$dots
                 .find('li')
                 .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
-                .addClass('slick-active')
-                .attr('aria-hidden', 'false');
+                .addClass('slick-active');
 
         }
 
