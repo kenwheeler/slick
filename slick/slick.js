@@ -681,10 +681,11 @@
 
         var _ = this,
             $target = $(event.currentTarget),
+            $realTarget = $(event.target),
             indexOffset, slideOffset, unevenOffset;
 
         // If target is a link, prevent default action.
-        if($target.is('a')) {
+        if($realTarget.is('a')) {
             event.preventDefault();
         }
 
