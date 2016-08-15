@@ -684,10 +684,14 @@
             $realTarget = $(event.target),
             indexOffset, slideOffset, unevenOffset;
 
-        // If target is a link, prevent default action.
-        if($realTarget.is('a')) {
-            event.preventDefault();
-        }
+        do {
+            // If target is a link, prevent default action.
+            if ($realTarget.is('a')) {
+                event.preventDefault();
+            }
+
+            $realTarget = $realTarget.parent()
+        } while($.contains($target, $realTarget) || $target.is($realTarget))
 
         // If target is not the <li> element (ie: a child), find the <li>.
         if(!$target.is('li')) {
