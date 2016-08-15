@@ -688,6 +688,7 @@
             // If target is a link, prevent default action.
             if ($realTarget.is('a')) {
                 event.preventDefault();
+                break;
             }
 
             $realTarget = $realTarget.parent()
