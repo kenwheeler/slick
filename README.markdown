@@ -1,6 +1,10 @@
 slick
 -------
 
+### Hire Space Changes
+ * Added a `gulp` build task for the js file
+ * Increased the Navigational Index range to help with making the centered tiles clickable
+
 [1]: <https://github.com/kenwheeler/slick>
 
 _the last carousel you'll ever need_
