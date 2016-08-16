@@ -46,5 +46,11 @@
   },
   "dependencies": {
     "jquery": ">=1.7.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^2.0.0"
   }
 }
