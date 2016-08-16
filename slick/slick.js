@@ -1176,6 +1176,11 @@
 
         if (_.options.infinite === false) {
             max = _.slideCount;
+        } else if (_.options.centerMode === true) {
+            var half = -(Math.ceil(_.options.slidesToShow / 2));
+            breakPoint = _.options.slidesToScroll * half;
+            counter = _.options.slidesToScroll * half;
+            max = _.slideCount * 2;
         } else {
             breakPoint = _.options.slidesToScroll * -1;
             counter = _.options.slidesToScroll * -1;
