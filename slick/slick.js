@@ -2771,7 +2771,7 @@
 
         var _ = this;
 
-        $('.slick-cloned', _.$slider).remove();
+        _.$slideTrack.children('.slick-cloned').remove();
 
         if (_.$dots) {
             _.$dots.remove();
