@@ -2761,7 +2761,10 @@
 
             _.$slideTrack.children(this.options.slide).detach();
 
-            _.$slidesCache.appendTo(_.$slideTrack);
+            //_.$slidesCache.appendTo(_.$slideTrack);
+            _.$slidesCache.each(function(index){
+                $(this).attr('data-slick-index', index);
+            }).appendTo(_.$slideTrack);
 
             _.reinit();
 
