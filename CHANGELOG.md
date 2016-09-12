@@ -12,10 +12,14 @@
 - $prevArrow
 - adaptiveHeight
 - responsive
+- variableWidth
+- vertical
+- verticalSwiping
 
 ### Methods
 
 - addSlide
+- removeSlide
 - buildArrows
 - checkResponsive
 - initArrowEvents
@@ -23,3 +27,7 @@
 - setHeight
 - updateArrows
 - animateHeight
+- slickGoTo || goTo
+- unfilterSlides
+- filterSlides
+- getCurrent
