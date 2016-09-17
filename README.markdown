@@ -99,7 +99,7 @@ rows | int | 1 | Setting this to more than 1 initializes grid mode. Use slidesPe
 slide | string | '' | Slide element query
 slidesPerRow | int | 1 | With grid mode initialized via the rows option, this sets how many slides are in each grid row.
 slidesToShow | int | 1 | # of slides to show at a time
-slidesToScroll | int | 1 | # of slides to scroll at a time
+slidesToScroll | int | 1 | # of slides to scroll at a time / If you have more than one rows : slidesToScroll  = nb SlidesToScroll / rows
 speed | int | 300 | Transition speed
 swipe | boolean | true | Enables touch swipe
 swipeToSlide | boolean | false | Swipe to slide irrespective of slidesToScroll
