@@ -2230,10 +2230,13 @@
 
                 }
 
-            } else {
-                //correctSlidesSelector
-                //    .addClass('slick-active')
-                //    .attr('aria-hidden', 'false');
+            }
+            
+            if (allSlides.length <= _.options.slidesToShow) {
+                allSlides
+                    .addClass('slick-active')
+                    .attr('aria-hidden', 'false');
+
             }
 
             _.$slides
