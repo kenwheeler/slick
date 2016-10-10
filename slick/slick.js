@@ -208,21 +208,31 @@
 
         _.unload();
 
+        var currentSlideChange = false;
+
         if (typeof(index) === 'number') {
             if (index === 0 && _.$slides.length === 0) {
                 $(markup).appendTo(_.$slideTrack);
             } else if (addBefore) {
                 $(markup).insertBefore(_.$slides.eq(index));
+
+                currentSlideChange = index <= _.currentSlide;
             } else {
                 $(markup).insertAfter(_.$slides.eq(index));
+
+                currentSlideChange = index < _.currentSlide;
             }
         } else {
             if (addBefore === true) {
                 $(markup).prependTo(_.$slideTrack);
+                currentSlideChange = true;
             } else {
                 $(markup).appendTo(_.$slideTrack);
             }
         }
+
+        if(_.$slides.length !== 0 && currentSlideChange)
+            _.currentSlide++;
 
         _.$slides = _.$slideTrack.children(this.options.slide);
 
