@@ -177,7 +177,6 @@
 
 
             _.registerBreakpoints();
-            _.init(true);
 
         }
 
@@ -1289,10 +1288,10 @@
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr('role', 'option');
-            
+
             //Evenly distribute aria-describedby tags through available dots.
             var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
-            
+
             if (_.options.dots === true) {
                 $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
             }
@@ -2886,8 +2885,10 @@
             i,
             ret;
         for (i = 0; i < l; i++) {
-            if (typeof opt == 'object' || typeof opt == 'undefined')
+            if (typeof opt == 'object' || typeof opt == 'undefined') {
                 _[i].slick = new Slick(_[i], opt);
+                _[i].slick.init(true);
+            }
             else
                 ret = _[i].slick[opt].apply(_[i].slick, args);
             if (typeof ret != 'undefined') return ret;
