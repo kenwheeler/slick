@@ -2,8 +2,6 @@
     "name": "slick-carousel",
     "main": [
         "slick/slick.js",
-        "slick/slick.css",
-        "slick/slick.less",
         "slick/slick.scss"
     ],
     "version": "1.6.0",
