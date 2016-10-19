@@ -1288,14 +1288,10 @@
         _.$slideTrack.attr('role', 'listbox');
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            $(this).attr('role', 'option');
-            
-            //Evenly distribute aria-describedby tags through available dots.
-            var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
-            
-            if (_.options.dots === true) {
-                $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
-            }
+            $(this).attr({
+                'role': 'option',
+                'aria-describedby': 'slick-slide' + _.instanceUid + i + ''
+            });
         });
 
         if (_.$dots !== null) {
@@ -2439,7 +2435,22 @@
 
         _.animating = true;
 
-        _.$slider.trigger('beforeChange', [_, _.currentSlide, animSlide]);
+
+        var beforeChangeEvent = jQuery.Event('beforeChange');
+        _.$slider.trigger(beforeChangeEvent, [_, _.currentSlide, animSlide]);
+
+        if (beforeChangeEvent.isDefaultPrevented()) {
+            _.animating = false;
+            if (dontAnimate !== true) {
+                _.animateSlide(slideLeft, function() {
+                    _.postSlide(_.currentSlide);
+                });
+            } else {
+                _.postSlide(_.currentSlide);
+            }
+
+            return;
+        }
 
         oldSlide = _.currentSlide;
         _.currentSlide = animSlide;
