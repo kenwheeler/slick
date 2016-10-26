@@ -847,7 +847,6 @@
             _.$dots.remove();
         }
 
-
         if ( _.$prevArrow && _.$prevArrow.length ) {
 
             _.$prevArrow
@@ -870,7 +869,6 @@
             if ( _.htmlExpr.test( _.options.nextArrow )) {
                 _.$nextArrow.remove();
             }
-
         }
 
 
@@ -1289,10 +1287,10 @@
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
             $(this).attr('role', 'option');
-            
+
             //Evenly distribute aria-describedby tags through available dots.
             var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
-            
+
             if (_.options.dots === true) {
                 $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
             }
@@ -1517,6 +1515,21 @@
         }
 
         loadRange = _.$slider.find('.slick-slide').slice(rangeStart, rangeEnd);
+
+        if (_.options.lazyLoad === 'anticipated') {
+            var prevSlide = rangeStart - 1,
+                nextSlide = rangeEnd,
+                $slides = _.$slider.find('.slick-slide');
+
+            for (var i = 0; i < _.options.slidesToScroll; i++) {
+                if (prevSlide < 0) prevSlide = _.slideCount - 1;
+                loadRange = loadRange.add($slides.eq(prevSlide));
+                loadRange = loadRange.add($slides.eq(nextSlide));
+                prevSlide--;
+                nextSlide++;
+            }
+        }
+
         loadImages(loadRange);
 
         if (_.slideCount <= _.options.slidesToShow) {
@@ -2276,10 +2289,9 @@
 
         }
 
-        if (_.options.lazyLoad === 'ondemand') {
+        if (_.options.lazyLoad === 'ondemand' || _.options.lazyLoad === 'anticipated') {
             _.lazyLoad();
         }
-
     };
 
     Slick.prototype.setupInfinite = function() {
