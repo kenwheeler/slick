@@ -199,6 +199,10 @@
     Slick.prototype.addSlide = Slick.prototype.slickAdd = function(markup, index, addBefore) {
 
         var _ = this;
+         
+        if (typeof(markup) != 'string') {
+            throw new TypeError('Add-Slide function expects a string');
+        }
 
         if (typeof(index) === 'boolean') {
             addBefore = index;
