@@ -1773,9 +1773,9 @@
             for ( breakpoint in responsiveSettings ) {
 
                 l = _.breakpoints.length-1;
-                currentBreakpoint = responsiveSettings[breakpoint].breakpoint;
 
                 if (responsiveSettings.hasOwnProperty(breakpoint)) {
+                    currentBreakpoint = responsiveSettings[breakpoint].breakpoint;
 
                     // loop through the breakpoints and cut out any existing
                     // ones with the same breakpoint number, we don't want dupes.
