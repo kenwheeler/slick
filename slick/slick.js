@@ -1462,7 +1462,7 @@
 
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
-                    imageToLoad = document.createElement('img');
+                    imageToLoad = image.clone()[0]; // The image might have attribute sizes, important for Client Hints
 
                 imageToLoad.onload = function() {
 
