@@ -163,7 +163,7 @@
             _.changeSlide = $.proxy(_.changeSlide, _);
             _.clickHandler = $.proxy(_.clickHandler, _);
             _.selectHandler = $.proxy(_.selectHandler, _);
-            _.setPosition = $.proxy(_.setPosition, _);
+            _.setSlickPosition = $.proxy(_.setSlickPosition, _);
             _.swipeHandler = $.proxy(_.swipeHandler, _);
             _.dragHandler = $.proxy(_.dragHandler, _);
             _.keyHandler = $.proxy(_.keyHandler, _);
@@ -793,8 +793,8 @@
 
         $('[draggable!=true]', _.$slideTrack).off('dragstart', _.preventDefault);
 
-        $(window).off('load.slick.slick-' + _.instanceUid, _.setPosition);
-        $(document).off('ready.slick.slick-' + _.instanceUid, _.setPosition);
+        $(window).off('load.slick.slick-' + _.instanceUid, _.setSlickPosition);
+        $(document).off('ready.slick.slick-' + _.instanceUid, _.setSlickPosition);
 
     };
 
@@ -1405,8 +1405,8 @@
 
         $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
-        $(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
-        $(document).on('ready.slick.slick-' + _.instanceUid, _.setPosition);
+        $(window).on('load.slick.slick-' + _.instanceUid, _.setSlickPosition);
+        $(document).on('ready.slick.slick-' + _.instanceUid, _.setSlickPosition);
 
     };
 
@@ -1563,7 +1563,7 @@
 
         var _ = this;
 
-        _.setPosition();
+        _.setSlickPosition();
 
         _.$slideTrack.css({
             opacity: 1
@@ -1596,7 +1596,7 @@
         var _ = this;
 
         _.checkResponsive();
-        _.setPosition();
+        _.setSlickPosition();
 
     };
 
@@ -1631,7 +1631,7 @@
 
             _.animating = false;
 
-            _.setPosition();
+            _.setSlickPosition();
 
             _.swipeLeft = null;
 
@@ -1703,7 +1703,7 @@
                     .removeClass('slick-loading');
 
                 if ( _.options.adaptiveHeight === true ) {
-                    _.setPosition();
+                    _.setSlickPosition();
                 }
 
                 _.$slider.trigger('lazyLoaded', [ _, image, imageSource ]);
@@ -1868,7 +1868,7 @@
 
         _.setSlideClasses(typeof _.currentSlide === 'number' ? _.currentSlide : 0);
 
-        _.setPosition();
+        _.setSlickPosition();
         _.focusHandler();
 
         _.paused = !_.options.autoplay;
@@ -1887,7 +1887,7 @@
             _.windowDelay = window.setTimeout(function() {
                 _.windowWidth = $(window).width();
                 _.checkResponsive();
-                if( !_.unslicked ) { _.setPosition(); }
+                if( !_.unslicked ) { _.setSlickPosition(); }
             }, 50);
         }
     };
@@ -2137,7 +2137,7 @@
 
     };
 
-    Slick.prototype.setPosition = function() {
+    Slick.prototype.setSlickPosition = function() {
 
         var _ = this;
 
@@ -2151,7 +2151,7 @@
             _.setFade();
         }
 
-        _.$slider.trigger('setPosition', [_]);
+        _.$slider.trigger('setSlickPosition', [_]);
 
     };
 
