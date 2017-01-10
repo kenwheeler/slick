@@ -84,6 +84,7 @@ fade | boolean | false | Enables fade
 arrows | boolean | true | Enable Next/Prev arrows
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
 appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
+maxSlideyFingers | number | 1 | Change how many fingers can be used for a swipe gesture
 mobileFirst | boolean | false | Responsive settings use mobile first calculation
 prevArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-prev">Previous</button>` | Allows you to select a node or customize the HTML for the "Previous" arrow.
 nextArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-next">Next</button>` | Allows you to select a node or customize the HTML for the "Next" arrow.
