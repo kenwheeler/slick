@@ -1,7 +1,11 @@
 {
     "name": "slick-carousel",
-    "main": ["slick/slick.min.js", "slick/slick.css", "slick/slick-theme.css", "slick/fonts/*"],
-    "version": "1.5.9",
+    "main": [
+        "slick/slick.js",
+        "slick/slick.css",
+        "slick/slick.less",
+        "slick/slick.scss"
+    ],
     "homepage": "https://github.com/kenwheeler/slick",
     "authors": [
         "Ken Wheeler <ken_wheeler@me.com>"
@@ -19,6 +23,7 @@
         "bower_components",
         "test",
         "tests",
+        "package.json",
         "index.html"
     ],
     "dependencies": {
