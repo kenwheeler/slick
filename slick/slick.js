@@ -1453,7 +1453,7 @@
     Slick.prototype.lazyLoad = function() {
 
         var _ = this,
-            loadRange, cloneRange, rangeStart, rangeEnd;
+            loadRange, cloneRange, rangeStart, rangeEnd, slideToBegin;
 
         function loadImages(imagesScope) {
 
@@ -1518,7 +1518,8 @@
                 rangeEnd = 2 + (_.options.slidesToShow / 2 + 1) + _.currentSlide;
             }
         } else {
-            rangeStart = _.options.infinite ? _.options.slidesToShow + _.currentSlide : _.currentSlide;
+            slideToBegin =  _.currentSlide - Math.max(0, _.currentSlide + _.options.slidesToShow - _.slideCount);
+            rangeStart = _.options.infinite ? _.options.slidesToShow + slideToBegin : slideToBegin;
             rangeEnd = Math.ceil(rangeStart + _.options.slidesToShow);
             if (_.options.fade === true) {
                 if (rangeStart > 0) rangeStart--;
