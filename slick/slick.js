@@ -524,7 +524,7 @@
             _.$slides.wrapAll('<div class="slick-track"/>').parent();
 
         _.$list = _.$slideTrack.wrap(
-            '<div aria-live="polite" class="slick-list"/>').parent();
+            '<div aria-live="polite" class="slick-list" role="list" aria-label="carousel"/>').parent();
         _.$slideTrack.css('opacity', 0);
 
         if (_.options.centerMode === true || _.options.swipeToSlide === true) {
@@ -1297,20 +1297,17 @@
         var slideControlIndex = tabControlIndexes.indexOf(i);
 
         $(this).attr({
-          'role': 'tabpanel',
-          'id': 'slick-slide' + _.instanceUid + i
+          'role': 'listitem',
+          'id': 'slick-slide' + _.instanceUid + i,
+          'aria-label': 'slide ' + (i + 1) + ' of ' + _.slideCount
         });
 
-        if (slideControlIndex !== -1) {
-          $(this).attr({
-            'aria-labelledby': 'slick-slide-control' + _.instanceUid + slideControlIndex
-          });
-        }
+
       });
 
       if (_.$dots !== null) {
         _.$dots.attr({
-          'role':'tablist',
+          'role':'toolbar',
           'aria-label':'carousel'
         }).find('li').each(function(i) {
           var mappedSlideIndex = tabControlIndexes[i];
@@ -1318,7 +1315,7 @@
           $(this).attr('role','presentation');
 
           $(this).find('button').first().attr({
-            'role': 'tab',
+            'role': 'option',
             'id': 'slick-slide-control' + _.instanceUid + i,
             'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
             'aria-label': (i + 1) + ' of ' + _.slideCount,
