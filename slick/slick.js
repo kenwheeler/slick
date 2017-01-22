@@ -15,8 +15,6 @@
 
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
-
-
 (function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
@@ -1134,7 +1132,6 @@
             }
 
             if (_.options.rtl === true) {
-
                 if (targetSlide[0]) {
                     targetLeft = (_.$slideTrack.width() - targetSlide[0].offsetLeft - targetSlide.width()) * -1;
                 } else {
@@ -1947,9 +1944,9 @@
         if (_.options.rtl === true) {
             position = -position;
         }
-
         x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
         y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
+         
         positionProps[_.positionProp] = position;
 
         if (_.transformsEnabled === false) {
