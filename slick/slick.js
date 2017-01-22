@@ -15,6 +15,8 @@
 
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
+
+
 (function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
@@ -86,6 +88,7 @@
                 variableWidth: false,
                 vertical: false,
                 verticalSwiping: false,
+                verticalReverse: false,
                 waitForAnimate: true,
                 zIndex: 1000
             };
@@ -1111,7 +1114,15 @@
         if (_.options.vertical === false) {
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
+
+            if (_.options.verticalReverse === false) {
             targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+            } else {
+
+            _.$slideTrack.css({"display": "flex", "flex-direction": "column-reverse"});
+            targetLeft = ((_.slideCount * verticalHeight) * -1) + (slideIndex * - verticalOffset) / _.options.slidesToShow;
+            }
+
         }
 
         if (_.options.variableWidth === true) {
@@ -1123,6 +1134,7 @@
             }
 
             if (_.options.rtl === true) {
+
                 if (targetSlide[0]) {
                     targetLeft = (_.$slideTrack.width() - targetSlide[0].offsetLeft - targetSlide.width()) * -1;
                 } else {
@@ -1935,9 +1947,9 @@
         if (_.options.rtl === true) {
             position = -position;
         }
+
         x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
         y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
-
         positionProps[_.positionProp] = position;
 
         if (_.transformsEnabled === false) {
@@ -2568,11 +2580,23 @@
             return (_.options.rtl === false ? 'right' : 'left');
         }
         if (_.options.verticalSwiping === true) {
+
+          if (_.options.verticalReverse === false) {
+
             if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
                 return 'down';
             } else {
                 return 'up';
             }
+
+          } else {
+
+            if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
+                return 'up';
+            } else {
+                return 'down';
+            }
+          }
         }
 
         return 'vertical';
