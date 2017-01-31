@@ -1503,6 +1503,8 @@
 
                 };
 
+                if (imageSrcSet) imageToLoad.srcset = imageSrcSet;
+                if (imageSizes) imageToLoad.sizes = imageSizes;
                 imageToLoad.src = imageSource;
 
             });
@@ -1738,6 +1740,8 @@
 
             };
 
+            if (imageSrcSet) imageToLoad.srcset = imageSrcSet;
+            if (imageSizes) imageToLoad.sizes = imageSizes;
             imageToLoad.src = imageSource;
 
         } else {
