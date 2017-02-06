@@ -1405,7 +1405,7 @@
         $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
         $(window).on('load.slick.slick-' + _.instanceUid, _.setPosition);
-        $(document).ready(_.setPosition);
+        $(_.setPosition);
 
     };
 
