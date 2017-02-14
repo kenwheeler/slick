@@ -744,6 +744,10 @@
                 prevNavigable = navigables[n];
             }
         }
+         
+        if (index + _.options.slidesToShow > navigables.length) {
+            index = navigables.length - _.options.slidesToShow;
+        }
 
         return index;
     };
