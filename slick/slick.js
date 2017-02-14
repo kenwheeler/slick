@@ -594,7 +594,7 @@
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
         var sliderWidth = _.$slider.width();
-        var windowWidth = window.innerWidth || $(window).width();
+        var windowWidth = $(window).width();
 
         if (_.respondTo === 'window') {
             respondToWidth = windowWidth;
