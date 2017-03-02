@@ -87,7 +87,8 @@
                 vertical: false,
                 verticalSwiping: false,
                 waitForAnimate: true,
-                zIndex: 1000
+                zIndex: 1000,
+                preventSwipeOnScroll: false
             };
 
             _.initials = {
@@ -114,7 +115,8 @@
                 $list: null,
                 touchObject: {},
                 transformsEnabled: false,
-                unslicked: false
+                unslicked: false,
+                isScrolling: false
             };
 
             $.extend(_, _.initials);
@@ -2593,6 +2595,10 @@
             return false;
         }
 
+        if (_.options.preventSwipeOnScroll && _.isScrolling && _.touchObject.swipeLength === undefined) {
+            return false;
+        }
+
         if ( _.touchObject.edgeHit === true ) {
             _.$slider.trigger('edge', [_, _.swipeDirection() ]);
         }
@@ -2696,7 +2702,7 @@
 
         var _ = this,
             edgeWasHit = false,
-            curLeft, swipeDirection, swipeLength, positionOffset, touches;
+            curLeft, swipeDirection, swipeLength, positionOffset, touches, delta;
 
         touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
 
@@ -2708,6 +2714,17 @@
 
         _.touchObject.curX = touches !== undefined ? touches[0].pageX : event.clientX;
         _.touchObject.curY = touches !== undefined ? touches[0].pageY : event.clientY;
+
+        delta = {
+            x: _.touchObject.curX - _.touchObject.startX,
+            y: _.touchObject.curY - _.touchObject.startY
+        }
+
+        _.isScrolling = !!( _.isScrolling || Math.abs(delta.x) < Math.abs(delta.y)*2 );
+
+        if (_.options.preventSwipeOnScroll && _.isScrolling && _.touchObject.swipeLength === undefined) {
+            return false;
+        }
 
         _.touchObject.swipeLength = Math.round(Math.sqrt(
             Math.pow(_.touchObject.curX - _.touchObject.startX, 2)));
@@ -2786,7 +2803,7 @@
         _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches.pageY : event.clientY;
 
         _.dragging = true;
-
+        _.isScrolling = false;
     };
 
     Slick.prototype.unfilterSlides = Slick.prototype.slickUnfilter = function() {
