@@ -52,7 +52,9 @@
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                      return $('<button type="button" data-role="none"/>').text(i + 1);
+                  var button = '<button type="button" data-role="none" aria-describedby="slick-slide-describedby-' + i +'">' + (i + 1) + '</button>';
+                  var span = '<span class="slick-hidden" id="slick-slide-describedby-' + i + '">' + (i + 1) + ' of ' + _.slideCount + '</span>';
+                  return button + span;
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -1315,10 +1317,8 @@
           $(this).attr('role','presentation');
 
           $(this).find('button').first().attr({
-            'role': 'option',
             'id': 'slick-slide-control' + _.instanceUid + i,
             'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
-            'aria-label': (i + 1) + ' of ' + _.slideCount,
             'aria-selected': 'false'
           });
 
