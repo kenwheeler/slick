@@ -2396,8 +2396,6 @@
 
         if (_.slideCount <= _.options.slidesToShow) {
 
-            //_.setSlideClasses(index);
-            //_.asNavFor(index);
             _.slideHandler(index, false, true);
             return;
 
@@ -2421,10 +2419,6 @@
         if (_.options.fade === true && _.currentSlide === index) {
             return;
         }
-
-        /*if (_.slideCount <= _.options.slidesToShow) {
-            return;
-        }*/
 
         if (sync === false) {
             _.asNavFor(index);
