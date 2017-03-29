@@ -1634,7 +1634,9 @@
 
             _.animating = false;
 
-            _.setPosition();
+            if (_.slideCount > _.options.slidesToShow) {
+                _.setPosition();
+            }
 
             _.swipeLeft = null;
 
@@ -2394,8 +2396,9 @@
 
         if (_.slideCount <= _.options.slidesToShow) {
 
-            _.setSlideClasses(index);
-            _.asNavFor(index);
+            //_.setSlideClasses(index);
+            //_.asNavFor(index);
+            _.slideHandler(index, false, true);
             return;
 
         }
@@ -2419,9 +2422,9 @@
             return;
         }
 
-        if (_.slideCount <= _.options.slidesToShow) {
+        /*if (_.slideCount <= _.options.slidesToShow) {
             return;
-        }
+        }*/
 
         if (sync === false) {
             _.asNavFor(index);
