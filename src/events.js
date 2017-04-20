@@ -131,7 +131,7 @@ export default {
     $("[draggable!=true]", this.$slideTrack).on("dragstart", this.preventDefault);
 
     $(window).on("load.slick.slick-" + this.instanceUid, this.setPosition);
-    $(document).on("ready.slick.slick-" + this.instanceUid, this.setPosition);
+    $(this.setPosition);
   },
   keyHandler(event: Object) {
     //Dont slide if the cursor is inside the form fields and arrow keys are pressed
