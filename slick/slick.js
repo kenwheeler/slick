@@ -1628,9 +1628,9 @@
 
         if( !_.unslicked ) {
 
-            _.$slider.trigger('afterChange', [_, index]);
-
             _.animating = false;
+
+            _.$slider.trigger('afterChange', [_, index]);
 
             _.setPosition();
 
