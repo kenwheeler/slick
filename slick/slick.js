@@ -319,12 +319,7 @@
                 _.$slideTrack.css(animProps);
 
                 if (callback) {
-                    setTimeout(function() {
-
-                        _.disableTransition();
-
-                        callback.call();
-                    }, _.options.speed);
+                    callback.call();
                 }
 
             }
