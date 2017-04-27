@@ -2686,6 +2686,10 @@
         switch (event.data.action) {
 
             case 'start':
+                if (_.options.autoplay === true) {
+                    _.paused = true;
+                    _.autoPlayClear();
+                }
                 _.swipeStart(event);
                 break;
 
@@ -2695,8 +2699,11 @@
 
             case 'end':
                 _.swipeEnd(event);
+                if (_.options.autoplay === true) {
+                    _.paused = false;
+                    _.autoPlay();
+                }
                 break;
-
         }
 
     };
