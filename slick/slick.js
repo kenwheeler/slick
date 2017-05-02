@@ -1982,7 +1982,17 @@
 
         if (_.options.vertical === false && _.options.variableWidth === false) {
             _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
-            _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+             
+            if (_.slideCount < _.options.slidesToShow) {
+                _.$slideTrack.width("100%");
+
+                _.$slideTrack.children('.slick-slide').width(Math.floor(100 / _.$slideTrack.children('.slick-slide').length) + "%");
+            } else {
+                _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+
+                var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
+                if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+            }
 
         } else if (_.options.variableWidth === true) {
             _.$slideTrack.width(5000 * _.slideCount);
@@ -1990,9 +2000,6 @@
             _.slideWidth = Math.ceil(_.listWidth);
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
         }
-
-        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
-        if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
 
     };
 
