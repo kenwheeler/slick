@@ -245,8 +245,17 @@
 
     Slick.prototype.animateHeight = function() {
         var _ = this;
-        if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
+        if (_.options.slidesToShow >= 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
+            // fallback in case no slides match the expression below
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
+
+            // loop through and find the biggest visible slide
+            _.$slides.each(function(index) {
+                if(index >= _.currentSlide && index < (_.currentSlide + _.options.slidesToShow)) {
+                    targetHeight = Math.max(targetHeight, $(this).outerHeight(true));
+                }
+            });
+
             _.$list.animate({
                 height: targetHeight
             }, _.options.speed);
