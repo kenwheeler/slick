@@ -52,7 +52,7 @@
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text(i + 1);
+                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text('Slide ' + (i + 1));
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -1010,7 +1010,9 @@
             .on('focus.slick blur.slick',
                 '*:not(.slick-arrow)', function(event) {
 
-            event.stopImmediatePropagation();
+            // stopImmediatePropagation kills the ability to
+            // check for focus inside the slider from external JS.
+            // event.stopImmediatePropagation();
             var $sf = $(this);
 
             setTimeout(function() {
