@@ -39,6 +39,7 @@
 
             _.defaults = {
                 accessibility: true,
+                ariaPolite: true,
                 adaptiveHeight: false,
                 appendArrows: $(element),
                 appendDots: $(element),
@@ -503,7 +504,7 @@
 
     Slick.prototype.buildOut = function() {
 
-        var _ = this;
+        var _ = this, wrapperTemplate;
 
         _.$slides =
             _.$slider
@@ -524,8 +525,14 @@
             $('<div class="slick-track"/>').appendTo(_.$slider) :
             _.$slides.wrapAll('<div class="slick-track"/>').parent();
 
+        if(_.options.ariaPolite) {
+            wrapperTemplate = '<div aria-live="polite" class="slick-list"/>';
+        } else {
+            wrapperTemplate = '<div class="slick-list"/>'
+        }
+
         _.$list = _.$slideTrack.wrap(
-            '<div aria-live="polite" class="slick-list"/>').parent();
+            wrapperTemplate).parent();
         _.$slideTrack.css('opacity', 0);
 
         if (_.options.centerMode === true || _.options.swipeToSlide === true) {
