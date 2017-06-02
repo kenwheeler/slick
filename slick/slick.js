@@ -483,7 +483,7 @@
         var _ = this,
             i, dot;
 
-        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
+        if (_.options.dots === true) {
 
             _.$slider.addClass('slick-dotted');
 
@@ -1041,10 +1041,14 @@
         var pagerQty = 0;
 
         if (_.options.infinite === true) {
-            while (breakPoint < _.slideCount) {
-                ++pagerQty;
-                breakPoint = counter + _.options.slidesToScroll;
-                counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+            if (_.slideCount <= _.options.slidesToShow) {
+                 ++pagerQty;
+            } else {
+                while (breakPoint < _.slideCount) {
+                    ++pagerQty;
+                    breakPoint = counter + _.options.slidesToScroll;
+                    counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+                }
             }
         } else if (_.options.centerMode === true) {
             pagerQty = _.slideCount;
@@ -1337,7 +1341,7 @@
 
         var _ = this;
 
-        if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
+        if (_.options.dots === true) {
             $('li', _.$dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
@@ -1632,7 +1636,9 @@
 
             _.animating = false;
 
-            _.setPosition();
+            if (_.slideCount > _.options.slidesToShow) {
+                _.setPosition();
+            }
 
             _.swipeLeft = null;
 
@@ -2392,8 +2398,7 @@
 
         if (_.slideCount <= _.options.slidesToShow) {
 
-            _.setSlideClasses(index);
-            _.asNavFor(index);
+            _.slideHandler(index, false, true);
             return;
 
         }
@@ -2414,10 +2419,6 @@
         }
 
         if (_.options.fade === true && _.currentSlide === index) {
-            return;
-        }
-
-        if (_.slideCount <= _.options.slidesToShow) {
             return;
         }
 
