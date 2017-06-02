@@ -245,8 +245,20 @@
 
     Slick.prototype.animateHeight = function() {
         var _ = this;
-        if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
-            var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
+        if (_.options.adaptiveHeight === true && _.options.vertical === false) {
+            var targetHeight = 0;
+            var slideHeight = 0;
+            var slidesToShow = _.slickGetOption("slidesToShow") || 1;
+
+            for (var i = 0; i < slidesToShow; i++) {
+                if (_.$slides.eq(_.currentSlide + i).outerHeight(true) !== null) {
+                    slideHeight = _.$slides.eq(_.currentSlide + i).outerHeight(true);
+
+                    if (slideHeight > targetHeight)
+                        targetHeight = slideHeight;
+                }
+            }
+
             _.$list.animate({
                 height: targetHeight
             }, _.options.speed);
@@ -2039,8 +2051,20 @@
 
         var _ = this;
 
-        if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
-            var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
+        if (_.options.adaptiveHeight === true && _.options.vertical === false) {
+            var targetHeight = 0;
+            var slideHeight = 0;
+            var slidesToShow = _.slickGetOption("slidesToShow") || 1;
+
+            for (var i = 0; i < slidesToShow; i++) {
+                if (_.$slides.eq(_.currentSlide + i).outerHeight(true) !== null) {
+                    slideHeight = _.$slides.eq(_.currentSlide + i).outerHeight(true);
+
+                    if (slideHeight > targetHeight)
+                        targetHeight = slideHeight;
+                }
+            }
+
             _.$list.css('height', targetHeight);
         }
 
