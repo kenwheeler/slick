@@ -445,8 +445,8 @@
 
             if( _.slideCount > _.options.slidesToShow ) {
 
-                _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
-                _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
+                _.$prevArrow.removeClass('slick-hidden').removeAttr('aria-hidden aria-disabled tabindex');
+                _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden aria-disabled tabindex');
 
                 if (_.htmlExpr.test(_.options.prevArrow)) {
                     _.$prevArrow.prependTo(_.options.appendArrows);
