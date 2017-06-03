@@ -28,9 +28,12 @@
     margin: 0;
     padding: 0;
 }
-.slick-list:focus
+.slick-slide:focus
 {
-    outline: none;
+    outline: 0;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
 }
 .slick-list.dragging
 {
