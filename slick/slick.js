@@ -2938,8 +2938,10 @@
             i,
             ret;
         for (i = 0; i < l; i++) {
-            if (typeof opt == 'object' || typeof opt == 'undefined')
+            if (typeof opt == 'object' || typeof opt == 'undefined') {
                 _[i].slick = new Slick(_[i], opt);
+                $(_[i]).data('slickInstance', _[i].slick);
+            }
             else
                 ret = _[i].slick[opt].apply(_[i].slick, args);
             if (typeof ret != 'undefined') return ret;
