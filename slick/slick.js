@@ -2353,13 +2353,17 @@
                         infiniteCount); i -= 1) {
                     slideIndex = i - 1;
                     $(_.$slides[slideIndex]).clone(true).attr('id', '')
-                        .attr('data-slick-index', slideIndex - _.slideCount)
+                        .attr({'data-slick-index': slideIndex - _.slideCount,
+                        	      'data-slick-cloned-from': slideIndex
+                        })
                         .prependTo(_.$slideTrack).addClass('slick-cloned');
                 }
                 for (i = 0; i < infiniteCount; i += 1) {
                     slideIndex = i;
                     $(_.$slides[slideIndex]).clone(true).attr('id', '')
-                        .attr('data-slick-index', slideIndex + _.slideCount)
+                        .attr({'data-slick-index': slideIndex + _.slideCount,
+                        	      'data-slick-cloned-from': slideIndex
+                        })
                         .appendTo(_.$slideTrack).addClass('slick-cloned');
                 }
                 _.$slideTrack.find('.slick-cloned').find('[id]').each(function() {
