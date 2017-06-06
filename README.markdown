@@ -77,6 +77,7 @@ cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
 dots | boolean | false | Current slide indicator dots
 dotsClass | string | 'slick-dots' | Class for slide indicator dots container
+dotsMax | int | false | Set settings to keep number of dots under a maximum
 draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
 edgeFriction | integer | 0.15 | Resistance when swiping edges of non-infinite carousels
