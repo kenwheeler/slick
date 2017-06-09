@@ -1187,7 +1187,7 @@
             max = _.slideCount * 2;
         }
 
-        while (breakPoint < max) {
+        while (breakPoint < max && breakPoint > 0) {
             indexes.push(breakPoint);
             breakPoint = counter + _.options.slidesToScroll;
             counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
