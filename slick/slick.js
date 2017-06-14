@@ -1298,7 +1298,7 @@
         });
 
         if (_.$dots !== null) {
-            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
+            _.$dots.find('li').each(function(i) {
                 $(this).attr({
                     'role': 'presentation'
                 }).find('button').attr({
