@@ -1306,7 +1306,6 @@
                 $(this).attr({
                     'role': 'presentation',
                     'aria-selected': 'false',
-                    'aria-controls': 'navigation' + _.instanceUid + i + '',
                     'id': 'slick-slide' + _.instanceUid + i + ''
                 });
             })
