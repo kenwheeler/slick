@@ -1288,11 +1288,7 @@
             'tabindex': '-1'
         });
 
-        _.$slideTrack.attr('role', 'listbox');
-
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            $(this).attr('role', 'option');
-
             //Evenly distribute aria-describedby tags through available dots.
             var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
 
