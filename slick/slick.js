@@ -2891,7 +2891,7 @@
                     .end()
                 .find('button')
                     .attr({
-                        'aria-selected': false
+                        'aria-pressed': false
                     });
 
             _.$dots
@@ -2900,7 +2900,7 @@
                 .addClass('slick-active')
                 .find('button')
                 .attr({
-                    'aria-selected': true
+                    'aria-pressed': true
                 });
 
         }
