@@ -2893,12 +2893,21 @@
 
             _.$dots
                 .find('li')
-                .removeClass('slick-active');
+                    .removeClass('slick-active')
+                    .end()
+                .find('button')
+                    .attr({
+                        'aria-selected': false
+                    });
 
             _.$dots
                 .find('li')
                 .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
-                .addClass('slick-active');
+                .addClass('slick-active')
+                .find('button')
+                .attr({
+                    'aria-selected': true
+                });
 
         }
 
