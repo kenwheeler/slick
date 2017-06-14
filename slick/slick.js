@@ -1299,9 +1299,7 @@
 
         if (_.$dots !== null) {
             _.$dots.find('li').each(function(i) {
-                $(this).attr({
-                    'role': 'presentation'
-                }).find('button').attr({
+                $(this).find('button').attr({
                     'id': 'slick-slide' + _.instanceUid + i + ''
                 });
             });
