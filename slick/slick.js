@@ -1304,12 +1304,11 @@
         if (_.$dots !== null) {
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
                 $(this).attr({
-                    'role': 'presentation',
+                    'role': 'presentation'
+                }).find('button').attr({
                     'id': 'slick-slide' + _.instanceUid + i + ''
                 });
-            })
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
+            });
         }
         _.activateADA();
 
