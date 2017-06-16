@@ -44,15 +44,17 @@
                 appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
-                prevArrow: '<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button">Previous</button>',
-                nextArrow: '<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button">Next</button>',
+                prevArrow: '<button data-role="none" class="slick-prev">Previous</button>',
+                nextArrow: '<button data-role="none" class="slick-next">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return $('<button type="button" data-role="none" role="button" tabindex="0" />').text(i + 1);
+                  var button = '<button type="button" data-role="none" aria-describedby="slick-slide-describedby-' + i +'">' + (i + 1) + '</button>';
+                  var span = '<span class="slick-hidden" id="slick-slide-describedby-' + i + '">' + (i + 1) + ' of ' + _.slideCount + '</span>';
+                  return button + span;
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -191,7 +193,8 @@
         var _ = this;
 
         _.$slideTrack.find('.slick-active').attr({
-            'aria-hidden': 'false'
+            'aria-hidden': 'false',
+            'tabindex': '0'
         }).find('a, input, button, select').attr({
             'tabindex': '0'
         });
@@ -495,7 +498,7 @@
 
             _.$dots = dot.appendTo(_.options.appendDots);
 
-            _.$dots.find('li').first().addClass('slick-active').attr('aria-hidden', 'false');
+            _.$dots.find('li').first().addClass('slick-active');
 
         }
 
@@ -525,7 +528,7 @@
             _.$slides.wrapAll('<div class="slick-track"/>').parent();
 
         _.$list = _.$slideTrack.wrap(
-            '<div aria-live="polite" class="slick-list"/>').parent();
+            '<div aria-live="polite" class="slick-list" role="list" aria-label="carousel"/>').parent();
         _.$slideTrack.css('opacity', 0);
 
         if (_.options.centerMode === true || _.options.swipeToSlide === true) {
@@ -761,6 +764,10 @@
                 .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
                 .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
+                // Accessibility change
+                if (_.options.accessibility === true) {
+                  _.$dots.off('keydown.slick', _.keyHandler);
+                }
         }
 
         _.$slider.off('focus.slick blur.slick');
@@ -1279,42 +1286,54 @@
 
     };
 
+    // Accessibility changes
     Slick.prototype.initADA = function() {
-        var _ = this;
-        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
-            'aria-hidden': 'true',
-            'tabindex': '-1'
-        }).find('a, input, button, select').attr({
-            'tabindex': '-1'
+      var _ = this,
+        slickDotGroups = Math.ceil(_.slideCount / _.options.slidesToShow),
+        tabControlIndexes = _.getNavigableIndexes().filter(function(val) {
+          return (val >= 0) && (val <= _.slideCount);
         });
 
-        _.$slideTrack.attr('role', 'listbox');
+      _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
+        'aria-hidden': 'true',
+        'tabindex': '-1'
+      }).find('a, input, button, select').attr({
+        'tabindex': '-1'
+      });
 
-        _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            $(this).attr('role', 'option');
+      _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
+        var slideControlIndex = tabControlIndexes.indexOf(i);
 
-            //Evenly distribute aria-describedby tags through available dots.
-            var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
-
-            if (_.options.dots === true) {
-                $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
-            }
+        $(this).attr({
+          'role': 'listitem',
+          'id': 'slick-slide' + _.instanceUid + i,
+          'aria-label': 'slide ' + (i + 1) + ' of ' + _.slideCount
         });
 
-        if (_.$dots !== null) {
-            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
-                $(this).attr({
-                    'role': 'presentation',
-                    'aria-selected': 'false',
-                    'aria-controls': 'navigation' + _.instanceUid + i + '',
-                    'id': 'slick-slide' + _.instanceUid + i + ''
-                });
-            })
-                .first().attr('aria-selected', 'true').end()
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
-        }
-        _.activateADA();
+
+      });
+
+      if (_.$dots !== null) {
+        _.$dots.attr({
+          'role':'toolbar',
+          'aria-label':'carousel'
+        }).find('li').each(function(i) {
+          var mappedSlideIndex = tabControlIndexes[i];
+
+          $(this).attr('role','presentation');
+
+          $(this).find('button').first().attr({
+            'id': 'slick-slide-control' + _.instanceUid + i,
+            'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
+            'aria-selected': 'false'
+          });
+
+        }).eq(_.currentSlide).find('button').attr({
+          'aria-selected': 'true'
+        }).end();
+
+      }
+      _.activateADA();
 
     };
 
@@ -1345,6 +1364,10 @@
             $('li', _.$dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
+
+            if (_.options.accessibility === true) {
+              _.$dots.on('keydown.slick', _.keyHandler);
+            }
         }
 
         if ( _.options.dots === true && _.options.pauseOnDotsHover === true ) {
@@ -2897,14 +2920,12 @@
 
             _.$dots
                 .find('li')
-                .removeClass('slick-active')
-                .attr('aria-hidden', 'true');
+                .removeClass('slick-active');
 
             _.$dots
                 .find('li')
                 .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
-                .addClass('slick-active')
-                .attr('aria-hidden', 'false');
+                .addClass('slick-active');
 
         }
 
