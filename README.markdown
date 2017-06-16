@@ -17,7 +17,7 @@ to serve the files as close, and fast as possible to your users:
 - https://cdnjs.com/libraries/slick-carousel
 - https://www.jsdelivr.com/projects/jquery.slick
 
-#####Example using jsDelivr
+##### Example using jsDelivr
 
 Just add a link to the css file in your `<head>`:
 ```html
