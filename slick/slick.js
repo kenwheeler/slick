@@ -1289,12 +1289,7 @@
         });
 
         _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            //Evenly distribute aria-describedby tags through available dots.
-            var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
-
-            if (_.options.dots === true) {
-                $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
-            }
+            $(this).attr('role', 'option');
         });
 
         if (_.$dots !== null) {
