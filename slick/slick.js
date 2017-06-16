@@ -1280,42 +1280,43 @@
     };
 
     Slick.prototype.initADA = function() {
-        var _ = this;
-        _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
-            'aria-hidden': 'true',
-            'tabindex': '-1'
-        }).find('a, input, button, select').attr({
-            'tabindex': '-1'
-        });
+        if (this.$slides !== null) {
+            var _ = this;
+            _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
+                'aria-hidden': 'true',
+                'tabindex': '-1'
+            }).find('a, input, button, select').attr({
+                'tabindex': '-1'
+            });
 
-        _.$slideTrack.attr('role', 'listbox');
+            _.$slideTrack.attr('role', 'listbox');
 
-        _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            $(this).attr('role', 'option');
+            _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function (i) {
+                $(this).attr('role', 'option');
 
-            //Evenly distribute aria-describedby tags through available dots.
-            var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
+                //Evenly distribute aria-describedby tags through available dots.
+                var describedBySlideId = _.options.centerMode ? i : Math.floor(i / _.options.slidesToShow);
 
-            if (_.options.dots === true) {
-                $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
+                if (_.options.dots === true) {
+                    $(this).attr('aria-describedby', 'slick-slide' + _.instanceUid + describedBySlideId + '');
+                }
+            });
+
+            if (_.$dots !== null) {
+                _.$dots.attr('role', 'tablist').find('li').each(function (i) {
+                    $(this).attr({
+                        'role': 'presentation',
+                        'aria-selected': 'false',
+                        'aria-controls': 'navigation' + _.instanceUid + i + '',
+                        'id': 'slick-slide' + _.instanceUid + i + ''
+                    });
+                })
+                    .first().attr('aria-selected', 'true').end()
+                    .find('button').attr('role', 'button').end()
+                    .closest('div').attr('role', 'toolbar');
             }
-        });
-
-        if (_.$dots !== null) {
-            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
-                $(this).attr({
-                    'role': 'presentation',
-                    'aria-selected': 'false',
-                    'aria-controls': 'navigation' + _.instanceUid + i + '',
-                    'id': 'slick-slide' + _.instanceUid + i + ''
-                });
-            })
-                .first().attr('aria-selected', 'true').end()
-                .find('button').attr('role', 'button').end()
-                .closest('div').attr('role', 'toolbar');
+            _.activateADA();
         }
-        _.activateADA();
-
     };
 
     Slick.prototype.initArrowEvents = function() {
