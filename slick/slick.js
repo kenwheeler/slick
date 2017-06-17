@@ -44,15 +44,15 @@
                 appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
-                prevArrow: '<button class="slick-prev" aria-label="Previous" tabindex="0">Previous</button>',
-                nextArrow: '<button class="slick-next" aria-label="Next" tabindex="0">Next</button>',
+                prevArrow: '<button class="slick-prev" aria-label="Previous" type="button">Previous</button>',
+                nextArrow: '<button class="slick-next" aria-label="Next" type="button">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return $('<button tabindex="0" />').text(i + 1);
+                    return $('<button type="button" />').text(i + 1);
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
