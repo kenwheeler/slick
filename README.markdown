@@ -68,9 +68,10 @@ Example:
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
 accessibility | boolean | true | Enables tabbing and arrow key navigation
-adaptiveHeight | boolean | false | Adapts slider height to the current slide
+adaptiveHeight | boolean | false | Enables adaptive height for single slide horizontal carousels
 autoplay | boolean | false | Enables auto play of slides
 autoplaySpeed | int  | 3000 | Auto play change interval
+asNavFor | string | null | Set the slider to be the navigation of other slider (Class, ID Name or jQuery object)
 centerMode | boolean | false | Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.
 centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing
@@ -81,6 +82,7 @@ draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
 edgeFriction | integer | 0.15 | Resistance when swiping edges of non-infinite carousels
 fade | boolean | false | Enables fade
+focusOnSelect | boolean | false | Enable focus on selected element (click)
 arrows | boolean | true | Enable Next/Prev arrows
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
 appendDots | string | $(element) | Change where the navigation dots are attached (Selector, htmlString, Array, Element, jQuery object)
