@@ -1,0 +1,59 @@
+<!doctype html>
+	<html lang="en">
+		<head>
+			<link href="../slick/slick.css" rel="stylesheet" />
+			<link href="../slick/slick-theme.css" rel="stylesheet" />
+			<link href="style.css" rel="stylesheet" />
+			
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+			<script type="text/javascript" src="../slick/slick.js"></script>
+			<meta charset="UTF-8">
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('.filtering').slick({
+						dots: true,
+						speed: 500,
+						slidesToShow: 4,
+						slidesToScroll: 4
+					});
+					
+					var filtered = false;
+					
+					$('.js-filter').on('click', function() {
+						if (filtered === false) {
+							$('.filtering').slick('slickFilter', ':even');
+							$(this).text('Unfilter Slides');
+							filtered = true;
+						} else {
+							$('.filtering').slick('slickUnfilter');
+							$(this).text('Filter Slides');
+							filtered = false;
+						}
+					})
+				});
+			</script>
+		</head>
+		<body>
+			<h1>Filtering</h1>
+			
+			<section class="slider filtering">
+			    <div><h3>1</h3></div>
+			    <div><h3>2</h3></div>
+			    <div><h3>3</h3></div>
+			    <div><h3>4</h3></div>
+			    <div><h3>5</h3></div>
+			    <div><h3>6</h3></div>
+			    <div><h3>7</h3></div>
+			    <div><h3>8</h3></div>
+			    <div><h3>9</h3></div>
+			    <div><h3>10</h3></div>
+			    <div><h3>11</h3></div>
+			    <div><h3>12</h3></div>
+			</section>
+			
+			<div class="buttons">
+				<button class="button js-filter">Filter Slides</button>
+			</div>
+		</body>
+	</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+	<html lang="en">
+		<head>
+			<link href="../slick/slick.css" rel="stylesheet" />
+			<link href="../slick/slick-theme.css" rel="stylesheet" />
+			<link href="style.css" rel="stylesheet" />
+			
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+			<script type="text/javascript" src="../slick/slick.js"></script>
+			<meta charset="UTF-8">
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('.fade').slick({
+						dots: true,
+						infinite: true,
+						speed: 500,
+						fade: true,
+						slide: 'div',
+						cssEase: 'linear'
+					});
+				});
+			</script>
+		</head>
+		<body>
+			<h1>Fade</h1>
+			
+			<section class="slider fade">
+				<div><div class="image"><img data-lazy="http://kenwheeler.github.io/slick/img/fonz1.png" /></div></div>
+				<div><div class="image"><img data-lazy="http://kenwheeler.github.io/slick/img/fonz2.png" /></div></div>
+				<div><div class="image"><img data-lazy="http://kenwheeler.github.io/slick/img/fonz3.png" /></div></div>
+			</section>
+		</body>
+	</html>

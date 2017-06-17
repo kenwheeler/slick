@@ -1,0 +1,53 @@
+<!doctype html>
+	<html lang="en">
+		<head>
+			<link href="../slick/slick.css" rel="stylesheet" />
+			<link href="../slick/slick-theme.css" rel="stylesheet" />
+			<link href="style.css" rel="stylesheet" />
+			
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+			<script type="text/javascript" src="../slick/slick.js"></script>
+			<meta charset="UTF-8">
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('.center-mode').slick({
+						centerMode: true,
+						infinite: true,
+						centerPadding: '60px',
+						slidesToShow: 3,
+						speed: 500,
+						responsive: [{
+							breakpoint: 768,
+							settings: {
+								arrows: false,
+								centerMode: true,
+								centerPadding: '40px',
+								slidesToShow: 3
+							}
+						}, {
+							breakpoint: 480,
+							settings: {
+								arrows: true,
+								centerMode: true,
+								centerPadding: '40px',
+								slidesToShow: 1
+							}
+						}]
+					});
+				});
+			</script>
+		</head>
+		<body>
+			<h1>Center Mode</h1>
+			
+			<section class="slider center-mode">
+			    <div><h3>1</h3></div>
+			    <div><h3>2</h3></div>
+			    <div><h3>3</h3></div>
+			    <div><h3>4</h3></div>
+			    <div><h3>5</h3></div>
+			    <div><h3>6</h3></div>
+			</section>
+		</body>
+	</html>

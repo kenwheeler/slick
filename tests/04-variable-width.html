@@ -1,0 +1,39 @@
+<!doctype html>
+	<html lang="en">
+		<head>
+			<link href="../slick/slick.css" rel="stylesheet" />
+			<link href="../slick/slick-theme.css" rel="stylesheet" />
+			<link href="style.css" rel="stylesheet" />
+			
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+			<script type="text/javascript" src="../slick/slick.js"></script>
+			<meta charset="UTF-8">
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+					$('.variable-width').slick({
+						dots: true,
+						infinite: true,
+						speed: 500,
+						slidesToShow: 1,
+						centerMode: true,
+						variableWidth: true
+					});
+				});
+			</script>
+		</head>
+		<body>
+			<h1>Variable Width</h1>
+			
+			<section class="slider variable-width">
+			    <div style="width: 200px;"><h3>200</h3></div>
+			    <div style="width: 175px;"><h3>175</h3></div>
+			    <div style="width: 150px;"><h3>150</h3></div>
+			    <div style="width: 300px;"><h3>300</h3></div>
+			    <div style="width: 225px;"><h3>225</h3></div>
+			    <div style="width: 125px;"><h3>125</h3></div>
+			    <div style="width: 200px;"><h3>200</h3></div>
+			    <div style="width: 175px;"><h3>175</h3></div>
+			</section>
+		</body>
+	</html>
