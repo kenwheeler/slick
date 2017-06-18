@@ -475,6 +475,14 @@
 
             }
 
+        } else {
+          _.$prevArrow.add( _.$nextArrow )
+
+              .addClass('slick-hidden')
+              .attr({
+                  'aria-disabled': 'true',
+                  'tabindex': '-1'
+              });
         }
 
     };
