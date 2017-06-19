@@ -1284,9 +1284,9 @@
 
     Slick.prototype.initADA = function() {
         var _ = this,
-                slickDotGroups = Math.ceil(_.slideCount / _.options.slidesToShow),
+                numDotGroups = Math.ceil(_.slideCount / _.options.slidesToShow),
                 tabControlIndexes = _.getNavigableIndexes().filter(function (val) {
-                    return (val >= 0) && (val <= _.slideCount);
+                    return (val >= 0) && (val < _.slideCount);
                 });
 
         _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
@@ -1302,7 +1302,7 @@
             $(this).attr({
                 'role': 'tabpanel',
                 'id': 'slick-slide' + _.instanceUid + i
-            });
+            }).children(':first').attr('tabindex', -1);            
 
             if (slideControlIndex !== -1) {
                 $(this).attr({
@@ -1310,6 +1310,7 @@
                 });
             }
         });
+
 
         if (_.$dots !== null) {
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
@@ -1323,7 +1324,7 @@
                     'role': 'tab',
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
-                    'aria-label': (i + 1) + ' of ' + slickDotGroups,
+                    'aria-label': (i + 1) + ' of ' + numDotGroups,
                     'aria-selected': null,
                     'tabindex': '-1'
                 });
@@ -1333,6 +1334,11 @@
                 'tabindex': '0'
             }).end();
         }
+
+        for (var i=_.currentSlide, max=i+_.options.slidesToShow; i < max; i++) {
+            _.$slides.eq(i).attr('tabindex', 0).children(':first').attr('tabindex', 0);
+        }
+
         _.activateADA();
 
     };
@@ -1671,10 +1677,11 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
-                var $currentSlide = $(_.$slides.get(_.currentSlide));
-                $currentSlide.find('a, input, button, select').attr({
-                    'tabindex': '0'
-                });
+                // for non-autoplay: once active slide (group) has updated, set focus on first newly showing slide 
+                if (!_.options.autoplay) {
+                    var $currentSlide = $(_.$slides.get(_.currentSlide));
+                    $currentSlide.children(':first').attr('tabindex', 0).focus();
+                }
             }
 
         }
