@@ -60,6 +60,7 @@
                 easing: 'linear',
                 edgeFriction: 0.35,
                 fade: false,
+                fixedSlideWidth: undefined,
                 focusOnSelect: false,
                 infinite: true,
                 initialSlide: 0,
@@ -1954,9 +1955,15 @@
 
         if (_.options.vertical === false) {
             if (_.options.centerMode === true) {
-                _.$list.css({
-                    padding: ('0px ' + _.options.centerPadding)
-                });
+                if (_.options.fixedSlideWidth !== undefined) {
+                    _.$list.css({
+                        padding: ('0px ' + Math.floor((_.$slider.width() - _.options.fixedSlideWidth) / 2) + 'px')
+                    });
+                } else {
+                    _.$list.css({
+                        padding: ('0px ' + _.options.centerPadding)
+                    });
+                }
             }
         } else {
             _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
@@ -1972,9 +1979,14 @@
 
 
         if (_.options.vertical === false && _.options.variableWidth === false) {
-            _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
-            _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
-
+            if (_.options.fixedSlideWidth !== undefined) {
+                _.slideWidth = Math.min(_.options.fixedSlideWidth, Math.ceil(_.listWidth / _.options.slidesToShow));
+                _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+            }
+            else {
+                _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
+                _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
+            }
         } else if (_.options.variableWidth === true) {
             _.$slideTrack.width(5000 * _.slideCount);
         } else {
