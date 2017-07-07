@@ -1285,7 +1285,7 @@
     Slick.prototype.initADA = function() {
         var _ = this,
                 numDotGroups = Math.ceil(_.slideCount / _.options.slidesToShow),
-                tabControlIndexes = _.getNavigableIndexes().filter(function (val) {
+                tabControlIndexes = _.getNavigableIndexes().filter(function(val) {
                     return (val >= 0) && (val < _.slideCount);
                 });
 
@@ -1301,8 +1301,9 @@
 
             $(this).attr({
                 'role': 'tabpanel',
-                'id': 'slick-slide' + _.instanceUid + i
-            }).children(':first').attr('tabindex', -1);            
+                'id': 'slick-slide' + _.instanceUid + i,
+                'tabindex': -1
+            });            
 
             if (slideControlIndex !== -1) {
                 $(this).attr({
@@ -1336,7 +1337,7 @@
         }
 
         for (var i=_.currentSlide, max=i+_.options.slidesToShow; i < max; i++) {
-            _.$slides.eq(i).attr('tabindex', 0).children(':first').attr('tabindex', 0);
+            _.$slides.eq(i).attr('tabindex', 0);
         }
 
         _.activateADA();
@@ -1680,7 +1681,7 @@
                 // for non-autoplay: once active slide (group) has updated, set focus on first newly showing slide 
                 if (!_.options.autoplay) {
                     var $currentSlide = $(_.$slides.get(_.currentSlide));
-                    $currentSlide.children(':first').attr('tabindex', 0).focus();
+                    $currentSlide.attr('tabindex', 0).focus();
                 }
             }
 
