@@ -1296,24 +1296,23 @@
             'tabindex': '-1'
         });
 
-        _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
-            var slideControlIndex = tabControlIndexes.indexOf(i);
-
-            $(this).attr({
-                'role': 'tabpanel',
-                'id': 'slick-slide' + _.instanceUid + i,
-                'tabindex': -1
-            });            
-
-            if (slideControlIndex !== -1) {
-                $(this).attr({
-                    'aria-describedby': 'slick-slide-control' + _.instanceUid + slideControlIndex
-                });
-            }
-        });
-
-
         if (_.$dots !== null) {
+            _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
+                var slideControlIndex = tabControlIndexes.indexOf(i);
+
+                $(this).attr({
+                    'role': 'tabpanel',
+                    'id': 'slick-slide' + _.instanceUid + i,
+                    'tabindex': -1
+                });            
+
+                if (slideControlIndex !== -1) {
+                    $(this).attr({
+                        'aria-describedby': 'slick-slide-control' + _.instanceUid + slideControlIndex
+                    });
+                }
+            });
+
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
                 var mappedSlideIndex = tabControlIndexes[i];
         
