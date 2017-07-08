@@ -1010,8 +1010,7 @@
 
         _.$slider
             .off('focus.slick blur.slick')
-            .on('focus.slick blur.slick',
-                '*:not(.slick-arrow)', function(event) {
+            .on('focus.slick blur.slick', '*', function(event) {
 
             event.stopImmediatePropagation();
             var $sf = $(this);
