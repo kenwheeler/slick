@@ -2941,20 +2941,12 @@
             _.$dots
                 .find('li')
                     .removeClass('slick-active')
-                    .end()
-                .find('button')
-                    .attr({
-                        'aria-pressed': false
-                    });
+                    .end();
 
             _.$dots
                 .find('li')
                 .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
-                .addClass('slick-active')
-                .find('button')
-                .attr({
-                    'aria-pressed': true
-                });
+                .addClass('slick-active');
 
         }
 
