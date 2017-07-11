@@ -81,6 +81,7 @@
                 swipeToSlide: false,
                 touchMove: true,
                 touchThreshold: 5,
+                track: false,
                 useCSS: true,
                 useTransform: true,
                 variableWidth: false,
@@ -107,7 +108,10 @@
                 scrolling: false,
                 slideCount: null,
                 slideWidth: null,
+                $slideParent: null,
                 $slideTrack: null,
+                slideTrackIsParent: false,
+                $slideTrackOriginalParent: null,
                 $slides: null,
                 sliding: false,
                 slideOffset: 0,
@@ -434,6 +438,37 @@
 
     };
 
+    Slick.prototype.buildSlideParent = function() {
+
+        var _ = this;
+
+        if (_.options.track) {
+            var $slideTrack;
+
+            if (typeof _.options.track === 'function') {
+                $slideTrack = _.options.track.call(_.$slider);
+            } else {
+                $slideTrack = $(_.options.track);
+            }
+
+            if ($slideTrack.length === 1) {
+                _.$slideTrackOriginalParent = $slideTrack.parent();
+
+                _.$slideTrack = $slideTrack
+                    .addClass('slick-track')
+                    .data('originalTrackStyling', $slideTrack.attr('style') || '' );
+
+                _.$slideParent = $slideTrack;
+
+                _.slideTrackIsParent = true;
+            }
+        }
+
+        if (!_.$slideParent) {
+            _.$slideParent = _.$slider;
+        }
+    };
+
     Slick.prototype.buildArrows = function() {
 
         var _ = this;
@@ -506,7 +541,7 @@
         var _ = this;
 
         _.$slides =
-            _.$slider
+            _.$slideParent
                 .children( _.options.slide + ':not(.slick-cloned)')
                 .addClass('slick-slide');
 
@@ -520,9 +555,11 @@
 
         _.$slider.addClass('slick-slider');
 
-        _.$slideTrack = (_.slideCount === 0) ?
-            $('<div class="slick-track"/>').appendTo(_.$slider) :
-            _.$slides.wrapAll('<div class="slick-track"/>').parent();
+        if (!_.$slideTrack) {
+            _.$slideTrack = (_.slideCount === 0) ?
+                $('<div class="slick-track"/>').appendTo(_.$slider) :
+                _.$slides.wrapAll('<div class="slick-track"/>').parent();
+        }
 
         _.$list = _.$slideTrack.wrap(
             '<div class="slick-list"/>').parent();
@@ -556,7 +593,7 @@
         var _ = this, a, b, c, newSlides, numOfSlides, originalSlides,slidesPerSection;
 
         newSlides = document.createDocumentFragment();
-        originalSlides = _.$slider.children();
+        originalSlides = _.$slideParent.children();
 
         if(_.options.rows > 1) {
 
@@ -823,7 +860,8 @@
         if(_.options.rows > 1) {
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
-            _.$slider.empty().append(originalSlides);
+
+            _.$slideParent.empty().append(originalSlides);
         }
 
     };
@@ -897,7 +935,17 @@
 
             _.$list.detach();
 
-            _.$slider.append(_.$slides);
+            if (_.slideTrackIsParent) {
+
+                _.$slideTrack
+                    .attr('style', _.$slideTrack.data('originalTrackStyling'))
+                    .removeClass('slick-track')
+                    .append(_.$slides);
+                _.$slideTrackOriginalParent.append(_.$slideTrack);
+
+            } else {
+                _.$slider.append(_.$slides);
+            }
         }
 
         _.cleanUpRows();
@@ -1256,6 +1304,7 @@
 
             $(_.$slider).addClass('slick-initialized');
 
+            _.buildSlideParent();
             _.buildRows();
             _.buildOut();
             _.setProps();
