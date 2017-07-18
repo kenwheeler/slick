@@ -3,6 +3,9 @@
 
 const $ = window.$ || window.jQuery;
 
+const $window = $(window);
+const $document = $(document);
+
 export default {
   cleanUpEvents() {
     if (this.options.dots && this.$dots !== null) {
@@ -27,7 +30,7 @@ export default {
 
     this.$list.off("click.slick", this.clickHandler);
 
-    $(document).off(this.visibilityChange, this.visibility);
+    $document.off(this.visibilityChange, this.visibility);
 
     this.$list.off("mouseenter.slick", $.proxy(this.setPaused, this, true));
     this.$list.off("mouseleave.slick", $.proxy(this.setPaused, this, false));
@@ -40,14 +43,14 @@ export default {
       $(this.$slideTrack).children().off("click.slick", this.selectHandler);
     }
 
-    $(window).off("orientationchange.slick.slick-" + this.instanceUid, this.orientationChange);
+    $window.off("orientationchange.slick.slick-" + this.instanceUid, this.orientationChange);
 
-    $(window).off("resize.slick.slick-" + this.instanceUid, this.resize);
+    $window.off("resize.slick.slick-" + this.instanceUid, this.resize);
 
     $("[draggable!=true]", this.$slideTrack).off("dragstart", this.preventDefault);
 
-    $(window).off("load.slick.slick-" + this.instanceUid, this.setPosition);
-    $(document).off("ready.slick.slick-" + this.instanceUid, this.setPosition);
+    $window.off("load.slick.slick-" + this.instanceUid, this.setPosition);
+    $document.off("ready.slick.slick-" + this.instanceUid, this.setPosition);
   },
   focusHandler() {
     this.$slider.on("focus.slick blur.slick", "*", (event) => {
@@ -110,7 +113,7 @@ export default {
 
     this.$list.on("click.slick", this.clickHandler);
 
-    $(document).on(this.visibilityChange, $.proxy(this.visibility, this));
+    $document.on(this.visibilityChange, $.proxy(this.visibility, this));
 
     this.$list.on("mouseenter.slick", $.proxy(this.setPaused, this, true));
     this.$list.on("mouseleave.slick", $.proxy(this.setPaused, this, false));
@@ -123,15 +126,15 @@ export default {
       $(this.$slideTrack).children().on("click.slick", this.selectHandler);
     }
 
-    $(window).on("orientationchange.slick.slick-" + this.instanceUid,
+    $window.on("orientationchange.slick.slick-" + this.instanceUid,
       $.proxy(this.orientationChange, this));
 
-    $(window).on("resize.slick.slick-" + this.instanceUid, $.proxy(this.resize, this));
+    $window.on("resize.slick.slick-" + this.instanceUid, $.proxy(this.resize, this));
 
     $("[draggable!=true]", this.$slideTrack).on("dragstart", this.preventDefault);
 
-    $(window).on("load.slick.slick-" + this.instanceUid, this.setPosition);
-    $(document).on("ready.slick.slick-" + this.instanceUid, this.setPosition);
+    $window.on("load.slick.slick-" + this.instanceUid, this.setPosition);
+    $(this.setPosition);
   },
   keyHandler(event: Object) {
     //Dont slide if the cursor is inside the form fields and arrow keys are pressed
@@ -159,10 +162,10 @@ export default {
     event.preventDefault();
   },
   resize() {
-    if ($(window).width() !== this.windowWidth) {
+    if ($window.width() !== this.windowWidth) {
       clearTimeout(this.windowDelay);
       this.windowDelay = window.setTimeout(() => {
-        this.windowWidth = $(window).width();
+        this.windowWidth = $window.width();
         this.checkResponsive();
         if (!this.unslicked) {
           this.setPosition();
