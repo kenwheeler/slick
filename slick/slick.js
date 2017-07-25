@@ -1186,19 +1186,22 @@
             indexes = [],
             max;
 
-        if (_.options.infinite === false) {
-            max = _.slideCount;
+        if(_.options.infinite === false) {
+            max = _.slideCount - _.options.slidesToShow + 1;
+            if (_.options.centerMode === true) max = _.slideCount;
         } else {
             breakPoint = _.options.slidesToScroll * -1;
             counter = _.options.slidesToScroll * -1;
             max = _.slideCount * 2;
         }
 
-        while (breakPoint < max) {
+        while (breakPoint < max){
             indexes.push(breakPoint);
             breakPoint = counter + _.options.slidesToScroll;
-            counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+            counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll  : _.options.slidesToShow;
         }
+
+        if(indexes.indexOf(_.slideCount-_.options.slidesToShow) === -1) indexes.push(_.slideCount-_.options.slidesToShow);
 
         return indexes;
 
