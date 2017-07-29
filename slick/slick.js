@@ -2692,6 +2692,15 @@
                 _.$slider.trigger('swipe', [_, direction ]);
 
             }
+            else{
+                
+                if ( _.touchObject.startX !== _.touchObject.curX ) {
+
+                    _.slideHandler( _.currentSlide );
+                    _.touchObject = {};
+
+                }
+            }
 
         } else {
 
