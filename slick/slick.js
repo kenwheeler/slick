@@ -1069,7 +1069,7 @@
             }
         }
 
-        return pagerQty - 1;
+        return pagerQty + _.options.slidesToShow - _.options.slidesToScroll - 1;
 
     };
 
