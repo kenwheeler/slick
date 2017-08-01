@@ -110,7 +110,6 @@
                 slideWidth: null,
                 $slideParent: null,
                 $slideTrack: null,
-                slideTrackIsParent: false,
                 $slideTrackOriginalParent: null,
                 $slides: null,
                 sliding: false,
@@ -459,8 +458,6 @@
                     .data('originalTrackStyling', $slideTrack.attr('style') || '' );
 
                 _.$slideParent = $slideTrack;
-
-                _.slideTrackIsParent = true;
             }
         }
 
@@ -935,7 +932,7 @@
 
             _.$list.detach();
 
-            if (_.slideTrackIsParent) {
+            if (_.$slideTrack === _.$slideParent) {
 
                 _.$slideTrack
                     .attr('style', _.$slideTrack.data('originalTrackStyling'))
