@@ -110,7 +110,6 @@
                 slideWidth: null,
                 $slideParent: null,
                 $slideTrack: null,
-                $slideTrackOriginalParent: null,
                 $slides: null,
                 sliding: false,
                 slideOffset: 0,
@@ -451,7 +450,6 @@
             }
 
             if ($slideTrack.length === 1) {
-                _.$slideTrackOriginalParent = $slideTrack.parent();
 
                 _.$slideTrack = $slideTrack
                     .addClass('slick-track')
@@ -930,19 +928,20 @@
 
             _.$slideTrack.detach();
 
-            _.$list.detach();
-
             if (_.$slideTrack === _.$slideParent) {
 
                 _.$slideTrack
                     .attr('style', _.$slideTrack.data('originalTrackStyling'))
                     .removeClass('slick-track')
                     .append(_.$slides);
-                _.$slideTrackOriginalParent.append(_.$slideTrack);
+
+                _.$list.parent().append(_.$slideTrack);
 
             } else {
                 _.$slider.append(_.$slides);
             }
+
+            _.$list.detach();
         }
 
         _.cleanUpRows();
@@ -1354,7 +1353,7 @@
                     'role': 'tabpanel',
                     'id': 'slick-slide' + _.instanceUid + i,
                     'tabindex': -1
-                });            
+                });
 
                 if (slideControlIndex !== -1) {
                     $(this).attr({
@@ -1365,7 +1364,7 @@
 
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
                 var mappedSlideIndex = tabControlIndexes[i];
-        
+
                 $(this).attr({
                     'role': 'presentation'
                 });
@@ -1412,7 +1411,7 @@
             if (_.options.accessibility === true) {
                 _.$prevArrow.on('keydown.slick', _.keyHandler);
                 _.$nextArrow.on('keydown.slick', _.keyHandler);
-            }   
+            }
         }
 
     };
@@ -1732,7 +1731,7 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
-                // for non-autoplay: once active slide (group) has updated, set focus on first newly showing slide 
+                // for non-autoplay: once active slide (group) has updated, set focus on first newly showing slide
                 if (!_.options.autoplay) {
                     var $currentSlide = $(_.$slides.get(_.currentSlide));
                     $currentSlide.attr('tabindex', 0).focus();
