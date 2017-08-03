@@ -773,8 +773,8 @@
             _.$nextArrow && _.$nextArrow.off('click.slick', _.changeSlide);
 
             if (_.options.accessibility === true) {
-                _.$prevArrow.off('keydown.slick', _.keyHandler);
-                _.$nextArrow.off('keydown.slick', _.keyHandler);
+                _.$prevArrow && _.$prevArrow.off('keydown.slick', _.keyHandler);
+                _.$nextArrow && _.$nextArrow.off('keydown.slick', _.keyHandler);
             }
         }
 
