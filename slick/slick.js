@@ -61,6 +61,7 @@
                 edgeFriction: 0.35,
                 fade: false,
                 focusOnSelect: false,
+                focusOnChange: false,
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
@@ -1089,7 +1090,7 @@
             if (_.slideCount > _.options.slidesToShow) {
                 _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
                 coef = -1
-                
+
                 if (_.options.vertical === true && _.options.centerMode === true) {
                     if (_.options.slidesToShow === 2) {
                         coef = -1.5;
@@ -1318,7 +1319,7 @@
                     'role': 'tabpanel',
                     'id': 'slick-slide' + _.instanceUid + i,
                     'tabindex': -1
-                });            
+                });
 
                 if (slideControlIndex !== -1) {
                     $(this).attr({
@@ -1329,7 +1330,7 @@
 
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
                 var mappedSlideIndex = tabControlIndexes[i];
-        
+
                 $(this).attr({
                     'role': 'presentation'
                 });
@@ -1376,7 +1377,7 @@
             if (_.options.accessibility === true) {
                 _.$prevArrow.on('keydown.slick', _.keyHandler);
                 _.$nextArrow.on('keydown.slick', _.keyHandler);
-            }   
+            }
         }
 
     };
@@ -1696,8 +1697,8 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
-                // for non-autoplay: once active slide (group) has updated, set focus on first newly showing slide 
-                if (!_.options.autoplay) {
+                // for non-autoplay: once active slide (group) has updated, set focus on first newly showing slide
+                if (_.options.focusOnChange) {
                     var $currentSlide = $(_.$slides.get(_.currentSlide));
                     $currentSlide.attr('tabindex', 0).focus();
                 }
