@@ -818,15 +818,10 @@
     };
 
     Slick.prototype.cleanUpRows = function() {
+        var _ = this;
 
-        var _ = this, originalSlides;
-
-        if(_.options.rows > 1) {
-            originalSlides = _.$slides.children().children();
-            originalSlides.removeAttr('style');
-            _.$slider.empty().append(originalSlides);
-        }
-
+        _.originalSlides.removeAttr('style');
+        _.$slider.empty().append(_.originalSlides);
     };
 
     Slick.prototype.clickHandler = function(event) {
@@ -1267,6 +1262,7 @@
 
             $(_.$slider).addClass('slick-initialized');
 
+            _.getOriginalSlides();
             _.buildRows();
             _.buildOut();
             _.setProps();
@@ -1295,6 +1291,11 @@
 
         }
 
+    };
+
+    Slick.prototype.getOriginalSlides = function(){
+        var _ = this;
+        _.originalSlides = _.$slider.children();
     };
 
     Slick.prototype.initADA = function() {
@@ -1833,6 +1834,10 @@
         _.destroy(true);
 
         $.extend(_, _.initials, { currentSlide: currentSlide });
+
+        if(_.options.rows > 1){
+            _.currentSlide = 0;
+        }
 
         _.init();
 
