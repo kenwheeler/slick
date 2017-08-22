@@ -86,6 +86,7 @@ draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
 edgeFriction | integer | 0.15 | Resistance when swiping edges of non-infinite carousels
 fade | boolean | false | Enables fade
+focusOnSelect | boolean | false | Enable focus on selected element (click)
 focusOnChange | boolean | false | Puts focus on slide after change
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
