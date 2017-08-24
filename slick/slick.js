@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.7.1
+ Version: 1.7.2
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
@@ -38,6 +38,8 @@
             var _ = this, dataSettings;
 
             _.defaults = {
+				shuffle:false,
+				shuffleFirst:true,
                 accessibility: true,
                 adaptiveHeight: false,
                 appendArrows: $(element),
@@ -1266,7 +1268,8 @@
         if (!$(_.$slider).hasClass('slick-initialized')) {
 
             $(_.$slider).addClass('slick-initialized');
-
+			
+			_.shuffleSlides();
             _.buildRows();
             _.buildOut();
             _.setProps();
@@ -2984,6 +2987,52 @@
 
     };
 
+	/*
+	
+	shuffle slides on load before initializing slick slider
+	
+	options:
+	
+	shuffle: true | false
+	shuffleFirst: true | false
+	
+	*/
+	Slick.prototype.shuffleSlides = function() {
+ 
+		var _ = this;
+		
+		if (_.options.shuffle === true) {
+        
+			if (_.options.shuffleFirst !== true) {
+				var slideItems = _.$slider.find('div').not(':first-child');
+			} 
+			else 
+			{
+				var slideItems = _.$slider.find('div');
+			}
+			
+			var slideGroup = slideItems.get(),
+				getRandom = function(max) {
+					return Math.floor(Math.random() * max);
+				},
+				shuffled = $.map(slideGroup, function(){
+					var random = getRandom(slideGroup.length),
+						randEl = $(slideGroup[random]).clone(true)[0];
+					slideGroup.splice(random, 1);
+					return randEl;
+			   });
+
+			slideItems.each(function(i){
+				$(this).replaceWith($(shuffled[i]));
+			});
+
+			return $(shuffled);
+
+        }
+		
+ 
+    };
+	
     $.fn.slick = function() {
         var _ = this,
             opt = arguments[0],

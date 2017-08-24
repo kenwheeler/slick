@@ -68,6 +68,8 @@ Example:
 
 Option | Type | Default | Description
 ------ | ---- | ------- | -----------
+shuffle |  boolean | false | Shuffles slick slides before slick gets initialized.
+shuffleFirst |  boolean | true | If set to false then the first slide will always be first.
 accessibility | boolean | true | Enables tabbing and arrow key navigation.  Unless `autoplay: true`, sets browser focus to current slide (or first of current slide set, if multiple `slidesToShow`) after slide change. For full a11y compliance enable focusOnChange in addition to this.
 adaptiveHeight | boolean | false | Adapts slider height to the current slide
 appendArrows | string | $(element) | Change where the navigation arrows are attached (Selector, htmlString, Array, Element, jQuery object)
