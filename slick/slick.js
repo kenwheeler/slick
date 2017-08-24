@@ -29,6 +29,20 @@
     'use strict';
     var Slick = window.Slick || {};
 
+    var makeURL = function(source_url) {
+        return 'url("' + source_url + '")';
+    };
+
+    $.fn.setImage = function(source_url) { // jquery method that sets an image
+
+        if (this.is('img')) {
+            this.attr('src', source_url);
+        } else {
+           this.css('background-image', makeURL(source_url)).trigger('load');
+        }
+        return this;
+    };
+
     Slick = (function() {
 
         var instanceUid = 0;
@@ -506,6 +520,10 @@
 
         var _ = this;
 
+        var noBackgroundImage = function(index, element){
+            return $(element).css('background-image') !== "none";
+        };
+
         _.$slides =
             _.$slider
                 .children( _.options.slide + ':not(.slick-cloned)')
@@ -533,7 +551,7 @@
             _.options.slidesToScroll = 1;
         }
 
-        $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('[data-lazy]', _.$slider).not('[src]').filter(noBackgroundImage).addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1512,15 +1530,15 @@
 
         function loadImages(imagesScope) {
 
-            $('img[data-lazy]', imagesScope).each(function() {
+            $('[data-lazy]', imagesScope).each(function() {
 
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
                     imageSrcSet = $(this).attr('data-srcset'),
                     imageSizes  = $(this).attr('data-sizes') || _.$slider.attr('data-sizes'),
-                    imageToLoad = document.createElement('img');
+                    imageToLoad = document.createElement(image[0].tagName.toLowerCase());
 
-                imageToLoad.onload = function() {
+                var imageToLoadSuccessCallback = function() {
 
                     image
                         .animate({ opacity: 0 }, 100, function() {
@@ -1536,7 +1554,7 @@
                             }
 
                             image
-                                .attr('src', imageSource)
+                                .setImage(imageSource)
                                 .animate({ opacity: 1 }, 200, function() {
                                     image
                                         .removeAttr('data-lazy data-srcset data-sizes')
@@ -1547,7 +1565,7 @@
 
                 };
 
-                imageToLoad.onerror = function() {
+                var imageToLoadErrorCallback = function() {
 
                     image
                         .removeAttr( 'data-lazy' )
@@ -1558,7 +1576,16 @@
 
                 };
 
-                imageToLoad.src = imageSource;
+                if (image.is('img')) {
+                    imageToLoad.onload = imageToLoadSuccessCallback;
+                    imageToLoad.onerror = imageToLoadErrorCallback;
+                    imageToLoad.src = imageSource;
+                } else {
+                    var bgImg = new Image();
+                    bgImg.onload = imageToLoadSuccessCallback; 
+                    bgImg.error = imageToLoadErrorCallback;
+                    bgImg.src = imageSource;
+                }
 
             });
 
@@ -1731,7 +1758,7 @@
         tryCount = tryCount || 1;
 
         var _ = this,
-            $imgsToLoad = $( 'img[data-lazy]', _.$slider ),
+            $imgsToLoad = $( '[data-lazy]', _.$slider ),
             image,
             imageSource,
             imageSrcSet,
@@ -1744,7 +1771,7 @@
             imageSource = image.attr('data-lazy');
             imageSrcSet = image.attr('data-srcset');
             imageSizes  = image.attr('data-sizes') || _.$slider.attr('data-sizes');
-            imageToLoad = document.createElement('img');
+            imageToLoad = document.createElement(image[0].tagName.toLowerCase());
 
             imageToLoad.onload = function() {
 
@@ -1759,7 +1786,7 @@
                 }
 
                 image
-                    .attr( 'src', imageSource )
+                    .setImage(imageSource)
                     .removeAttr('data-lazy data-srcset data-sizes')
                     .removeClass('slick-loading');
 
