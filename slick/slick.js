@@ -521,7 +521,7 @@
         var _ = this;
 
         var noBackgroundImage = function(index, element){
-            return $(element).css('background-image') !== "none";
+            return $(element).css('background-image') === "none";
         };
 
         _.$slides =
