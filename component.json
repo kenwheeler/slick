@@ -1,6 +1,6 @@
 {
     "name": "slick",
-    "repo": "kenwheeler/slick",
+    "repo": "midnight-studios/slick",
     "description": "the last carousel you'll ever need",
     "version": "1.7.1",
     "keywords": ["ui", "jquery", "carousel", "responsive", "slider"],
