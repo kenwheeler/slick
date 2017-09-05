@@ -1322,9 +1322,12 @@
                 });
 
                 if (slideControlIndex !== -1) {
-                    $(this).attr({
-                        'aria-describedby': 'slick-slide-control' + _.instanceUid + slideControlIndex
-                    });
+                   var ariaButtonControl = 'slick-slide-control' + _.instanceUid + slideControlIndex
+                   if ($('#' + ariaButtonControl).length) {
+                     $(this).attr({
+                         'aria-describedby': ariaButtonControl
+                     });
+                   }
                 }
             });
 
@@ -1697,7 +1700,7 @@
 
             if (_.options.accessibility === true) {
                 _.initADA();
-                
+
                 if (_.options.focusOnChange) {
                     var $currentSlide = $(_.$slides.get(_.currentSlide));
                     $currentSlide.attr('tabindex', 0).focus();
