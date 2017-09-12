@@ -2575,6 +2575,26 @@
             return;
         }
 
+        var slickWidth = _.$slideTrack.parent().width()
+        var allSlides = _.$slideTrack.children('.slick-slide')
+        var cumulativeSize = 0;
+
+        for(var i = _.currentSlide; i < _.slideCount; i++) {
+         cumulativeSize += $(allSlides[i]).width()
+        }
+
+        if(cumulativeSize < slickWidth) {
+         for(var i = _.currentSlide; i > 0; i--) {
+           cumulativeSize += $(allSlides[i]).width()
+           if(cumulativeSize >= slickWidth) {
+             targetLeft = _.getLeft(i)
+             animSlide = _.getLeft(i)
+             _.currentSlide = i
+             break;
+           }
+         }
+        }
+         
         if (dontAnimate !== true) {
             _.animateSlide(targetLeft, function() {
                 _.postSlide(animSlide);
