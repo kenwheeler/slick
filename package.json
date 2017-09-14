@@ -1,19 +1,13 @@
 {
   "name": "slick-carousel",
-  "version": "1.6.0",
+  "version": "1.8.0",
   "description": "the last carousel you'll ever need",
   "main": "slick/slick.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/kenwheeler/slick.git"
   },
-  "keywords": [
-    "carousel",
-    "slick",
-    "responsive",
-    "js",
-    "slider"
-  ],
+  "keywords": ["carousel", "slick", "responsive", "js", "slider"],
   "author": "Ken Wheeler <ken_wheeler@me.com>",
   "contributors": [
     {
@@ -44,7 +38,7 @@
   "bugs": {
     "url": "https://github.com/kenwheeler/slick/issues"
   },
-  "dependencies": {
-    "jquery": ">=1.7.2"
+  "peerDependencies": {
+    "jquery": ">=1.8.0"
   }
 }
