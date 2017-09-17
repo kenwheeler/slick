@@ -582,6 +582,7 @@
             }
 
             _.$slider.empty().append(newSlides);
+            _.$slider.data('slick_rows_wrapped', true);
             _.$slider.children().children().children()
                 .css({
                     'width':(100 / _.options.slidesPerRow) + '%',
@@ -825,6 +826,7 @@
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
             _.$slider.empty().append(originalSlides);
+            _.$slider.data('slick_rows_wrapped', false);
         }
 
     };
