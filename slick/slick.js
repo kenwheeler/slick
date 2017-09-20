@@ -822,7 +822,7 @@
 
         var _ = this, originalSlides;
 
-        if(_.options.rows > 0) {
+        if(_.$slider.data('slick_rows_wrapped')) {
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
             _.$slider.empty().append(originalSlides);
