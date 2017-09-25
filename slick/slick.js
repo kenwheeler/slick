@@ -36,7 +36,7 @@
     $.fn.setImage = function(source_url) { // jquery method that sets an image
 
         if (this.is('img')) {
-            this.attr('src', source_url);
+           this.attr('src', source_url);
         } else {
            this.css('background-image', makeURL(source_url)).trigger('load');
         }
