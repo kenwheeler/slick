@@ -1571,7 +1571,7 @@
 
                 };
                  
-                imageToCheck.src = imageSource;
+                imageToLoad.src = imageSource;
 
             });
 
