@@ -1574,17 +1574,12 @@
                     _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
 
                 };
+                 
+                var imageToCheck = image.is('img') ? imageToLoad : new Image();
 
-                if (image.is('img')) {
-                    imageToLoad.onload = imageToLoadSuccessCallback;
-                    imageToLoad.onerror = imageToLoadErrorCallback;
-                    imageToLoad.src = imageSource;
-                } else {
-                    var bgImg = new Image();
-                    bgImg.onload = imageToLoadSuccessCallback; 
-                    bgImg.error = imageToLoadErrorCallback;
-                    bgImg.src = imageSource;
-                }
+                imageToCheck.onload = imageToLoadSuccessCallback;
+                imageToCheck.onerror = imageToLoadErrorCallback;
+                imageToCheck.src = imageSource;
 
             });
 
