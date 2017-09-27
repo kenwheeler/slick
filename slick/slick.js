@@ -1535,9 +1535,10 @@
                     imageSource = $(this).attr('data-lazy'),
                     imageSrcSet = $(this).attr('data-srcset'),
                     imageSizes  = $(this).attr('data-sizes') || _.$slider.attr('data-sizes'),
-                    imageToLoad = document.createElement(image[0].tagName.toLowerCase());
+                    imageToLoad = document.createElement(image[0].tagName.toLowerCase()),
+                    imageToCheck = image.is('img') ? imageToLoad : new Image();
 
-                var imageToLoadSuccessCallback = function() {
+                imageToCheck.onload = function() {
 
                     image
                         .animate({ opacity: 0 }, 100, function() {
@@ -1564,7 +1565,7 @@
 
                 };
 
-                var imageToLoadErrorCallback = function() {
+                imageToCheck.onerror = function() {
 
                     image
                         .removeAttr( 'data-lazy' )
@@ -1575,10 +1576,6 @@
 
                 };
                  
-                var imageToCheck = image.is('img') ? imageToLoad : new Image();
-
-                imageToCheck.onload = imageToLoadSuccessCallback;
-                imageToCheck.onerror = imageToLoadErrorCallback;
                 imageToCheck.src = imageSource;
 
             });
