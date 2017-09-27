@@ -29,15 +29,11 @@
     'use strict';
     var Slick = window.Slick || {};
 
-    var makeURL = function(source_url) {
-        return 'url("' + source_url + '")';
-    };
-
     $.fn.setImage = function(source_url) { // jquery method that sets an image
         if (this.is('img')) {
            this.attr('src', source_url);
         } else {
-           this.css('background-image', makeURL(source_url)).trigger('load');
+           this.css('background-image', 'url("' + source_url + '")').trigger('load');
         }
         return this;
     };
