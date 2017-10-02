@@ -2956,9 +2956,11 @@
                     .end();
 
             _.$dots
-                .find('li')
-                .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
-                .addClass('slick-active');
+                .each(function() {
+                    $(this).find('li')
+                    .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
+                    .addClass('slick-active');
+                });
 
         }
 
