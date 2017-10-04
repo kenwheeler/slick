@@ -2476,6 +2476,10 @@
 
         sync = sync || false;
 
+        if (_.options.infinite === false && (index < 0 || index >= _.slideCount)) {
+            return;
+        }
+
         if (_.animating === true && _.options.waitForAnimate === true) {
             return;
         }
