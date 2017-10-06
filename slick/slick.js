@@ -1531,7 +1531,7 @@
                     imageSource = $(this).attr('data-lazy'),
                     imageSrcSet = $(this).attr('data-srcset'),
                     imageSizes  = $(this).attr('data-sizes') || _.$slider.attr('data-sizes'),
-                    imageToLoad = new Image();
+                    imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
 
