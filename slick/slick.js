@@ -1570,7 +1570,6 @@
                     _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
 
                 };
-                 
                 imageToLoad.src = imageSource;
 
             });
