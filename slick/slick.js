@@ -1756,7 +1756,7 @@
             imageSource = image.attr('data-lazy');
             imageSrcSet = image.attr('data-srcset');
             imageSizes  = image.attr('data-sizes') || _.$slider.attr('data-sizes');
-            imageToLoad = document.createElement(image[0].tagName.toLowerCase());
+            imageToLoad = document.createElement('img');
 
             imageToLoad.onload = function() {
 
