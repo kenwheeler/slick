@@ -16,6 +16,7 @@ to serve the files as close, and fast as possible to your users:
 
 - https://cdnjs.com/libraries/slick-carousel
 - https://www.jsdelivr.com/projects/jquery.slick
+- https://unpkg.com/slick-carousel
 
 ##### Example using jsDelivr
 
