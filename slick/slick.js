@@ -2494,7 +2494,13 @@
 
         _.currentLeft = _.swipeLeft === null ? slideLeft : _.swipeLeft;
 
-        if (_.options.infinite === false && _.options.centerMode === false && (index < 0 || index > _.getDotCount() * _.options.slidesToScroll)) {
+        if (
+            _.options.infinite === false &&
+            _.options.centerMode === false &&
+            (index < 0 ||
+              index >
+                _.getDotCount() * _.options.slidesToScroll + (_.options.slidesToShow - 1))
+          ) {
             if (_.options.fade === false) {
                 targetSlide = _.currentSlide;
                 if (dontAnimate !== true && _.slideCount > _.options.slidesToShow) {
