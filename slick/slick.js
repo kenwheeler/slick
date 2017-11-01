@@ -891,7 +891,8 @@
                 .removeAttr('aria-hidden')
                 .removeAttr('data-slick-index')
                 .each(function(){
-                    $(this).attr('style', $(this).data('originalStyling'));
+                    var slide = $(this);
+                    slide.attr('style', slide.data('originalStyling'));
                 });
 
             _.$slideTrack.children(this.options.slide).detach();
@@ -1315,9 +1316,10 @@
 
         if (_.$dots !== null) {
             _.$slides.not(_.$slideTrack.find('.slick-cloned')).each(function(i) {
+                var slide = $(this);
                 var slideControlIndex = tabControlIndexes.indexOf(i);
 
-                $(this).attr({
+                slide.attr({
                     'role': 'tabpanel',
                     'id': 'slick-slide' + _.instanceUid + i,
                     'tabindex': -1
@@ -1326,7 +1328,7 @@
                 if (slideControlIndex !== -1) {
                    var ariaButtonControl = 'slick-slide-control' + _.instanceUid + slideControlIndex
                    if ($('#' + ariaButtonControl).length) {
-                     $(this).attr({
+                    slide.attr({
                          'aria-describedby': ariaButtonControl
                      });
                    }
@@ -1334,13 +1336,14 @@
             });
 
             _.$dots.attr('role', 'tablist').find('li').each(function(i) {
+                var dot = $(this);
                 var mappedSlideIndex = tabControlIndexes[i];
 
-                $(this).attr({
+                dot.attr({
                     'role': 'presentation'
                 });
 
-                $(this).find('button').first().attr({
+                dot.find('button').first().attr({
                     'role': 'tab',
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
@@ -1524,9 +1527,9 @@
             $('img['+ _.options.lazyLoadSrcAttr +']', imagesScope).each(function() {
 
                 var image = $(this),
-                    imageSource = $(this).attr(_.options.lazyLoadSrcAttr),
-                    imageSrcSet = $(this).attr(_.options.lazyLoadSrcsetAttr),
-                    imageSizes  = $(this).attr('data-sizes') || _.$slider.attr('data-sizes'),
+                    imageSource = image.attr(_.options.lazyLoadSrcAttr),
+                    imageSrcSet = image.attr(_.options.lazyLoadSrcsetAttr),
+                    imageSizes  = image.attr('data-sizes') || _.$slider.attr('data-sizes'),
                     imageToLoad = document.createElement('img');
 
                 imageToLoad.onload = function() {
