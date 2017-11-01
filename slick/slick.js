@@ -65,6 +65,8 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
+                lazyLoadSrcAttr: 'data-lazy',
+                lazyLoadSrcsetAttr: 'data-srcset',
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnFocus: true,
@@ -533,7 +535,7 @@
             _.options.slidesToScroll = 1;
         }
 
-        $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('img['+ _.options.lazyLoadSrcAttr +']', _.$slider).not('[src]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1519,11 +1521,11 @@
 
         function loadImages(imagesScope) {
 
-            $('img[data-lazy]', imagesScope).each(function() {
+            $('img['+ _.options.lazyLoadSrcAttr +']', imagesScope).each(function() {
 
                 var image = $(this),
-                    imageSource = $(this).attr('data-lazy'),
-                    imageSrcSet = $(this).attr('data-srcset'),
+                    imageSource = $(this).attr(_.options.lazyLoadSrcAttr),
+                    imageSrcSet = $(this).attr(_.options.lazyLoadSrcsetAttr),
                     imageSizes  = $(this).attr('data-sizes') || _.$slider.attr('data-sizes'),
                     imageToLoad = document.createElement('img');
 
@@ -1546,7 +1548,7 @@
                                 .attr('src', imageSource)
                                 .animate({ opacity: 1 }, 200, function() {
                                     image
-                                        .removeAttr('data-lazy data-srcset data-sizes')
+                                        .removeAttr(_.options.lazyLoadSrcAttr +' '+ _.options.lazyLoadSrcsetAttr +' data-sizes')
                                         .removeClass('slick-loading');
                                 });
                             _.$slider.trigger('lazyLoaded', [_, image, imageSource]);
@@ -1557,9 +1559,9 @@
                 imageToLoad.onerror = function() {
 
                     image
-                        .removeAttr( 'data-lazy' )
-                        .removeClass( 'slick-loading' )
-                        .addClass( 'slick-lazyload-error' );
+                        .removeAttr(_.options.lazyLoadSrcAttr)
+                        .removeClass('slick-loading')
+                        .addClass('slick-lazyload-error');
 
                     _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
 
@@ -1738,7 +1740,7 @@
         tryCount = tryCount || 1;
 
         var _ = this,
-            $imgsToLoad = $( 'img[data-lazy]', _.$slider ),
+            $imgsToLoad = $( 'img['+ _.options.lazyLoadSrcAttr +']', _.$slider ),
             image,
             imageSource,
             imageSrcSet,
@@ -1748,8 +1750,8 @@
         if ( $imgsToLoad.length ) {
 
             image = $imgsToLoad.first();
-            imageSource = image.attr('data-lazy');
-            imageSrcSet = image.attr('data-srcset');
+            imageSource = image.attr(_.options.lazyLoadSrcAttr);
+            imageSrcSet = image.attr(_.options.lazyLoadSrcsetAttr);
             imageSizes  = image.attr('data-sizes') || _.$slider.attr('data-sizes');
             imageToLoad = document.createElement('img');
 
@@ -1767,7 +1769,7 @@
 
                 image
                     .attr( 'src', imageSource )
-                    .removeAttr('data-lazy data-srcset data-sizes')
+                    .removeAttr(_.options.lazyLoadSrcAttr +' '+ _.options.lazyLoadSrcsetAttr +' data-sizes')
                     .removeClass('slick-loading');
 
                 if ( _.options.adaptiveHeight === true ) {
@@ -1795,9 +1797,9 @@
                 } else {
 
                     image
-                        .removeAttr( 'data-lazy' )
-                        .removeClass( 'slick-loading' )
-                        .addClass( 'slick-lazyload-error' );
+                        .removeAttr(_.options.lazyLoadSrcAttr)
+                        .removeClass('slick-loading')
+                        .addClass('slick-lazyload-error');
 
                     _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
 
