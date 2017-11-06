@@ -91,7 +91,7 @@ focusOnSelect | boolean | false | Enable focus on selected element (click)
 focusOnChange | boolean | false | Puts focus on slide after change
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
-lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
+lazyLoad | string | 'ondemand' | Accepts 'ondemand', 'progressive', or 'anticipated' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads. 'anticipated' pre-loads the 1 next and 1 previous image.
 mobileFirst | boolean | false | Responsive settings use mobile first calculation
 nextArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-next">Next</button>` | Allows you to select a node or customize the HTML for the "Next" arrow.
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
