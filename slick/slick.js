@@ -369,7 +369,8 @@
         if ( asNavFor !== null && typeof asNavFor === 'object' ) {
             asNavFor.each(function() {
                 var target = $(this).slick('getSlick');
-                if(!target.unslicked) {
+                var should_slide = !target.unslicked && target.slideCount > target.options.slidesToShow;
+                if(should_slide) {
                     target.slideHandler(index, true);
                 }
             });
