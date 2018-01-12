@@ -50,6 +50,7 @@
                 autoplaySpeed: 3000,
                 centerMode: false,
                 centerPadding: '50px',
+                centerModeIgnoreSlidesToScroll: true,
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
                     return $('<button type="button" />').text(i + 1);
@@ -529,7 +530,7 @@
             '<div class="slick-list"/>').parent();
         _.$slideTrack.css('opacity', 0);
 
-        if (_.options.centerMode === true || _.options.swipeToSlide === true) {
+        if ((_.options.centerModeIgnoreSlidesToScroll && _.options.centerMode === true) || _.options.swipeToSlide === true) {
             _.options.slidesToScroll = 1;
         }
 

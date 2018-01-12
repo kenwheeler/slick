@@ -1,6 +1,6 @@
 {
   "name": "slick-carousel",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "the last carousel you'll ever need",
   "main": "slick/slick.js",
   "repository": {
@@ -38,6 +38,10 @@
     {
       "name": "ashley mcknight",
       "email": "ash@sharpteef.net"
+    },
+    {
+      "name": "jeff falcon",
+      "email": "jeff@tankadesign.com"
     }
   ],
   "license": "MIT",

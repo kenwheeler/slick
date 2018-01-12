@@ -78,6 +78,7 @@ asNavFor | string | $(element) | Enables syncing of multiple sliders
 autoplay | boolean | false | Enables auto play of slides
 autoplaySpeed | int  | 3000 | Auto play change interval
 centerMode | boolean | false | Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.
+centerModeIgnoreSlidesToScroll | boolean | true | When true, forces slidesToScroll = 1 when centerMode = true.
 centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
