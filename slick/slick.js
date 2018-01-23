@@ -2328,7 +2328,7 @@
                 if (index === 0) {
 
                     allSlides
-                        .eq(allSlides.length - 1 - _.options.slidesToShow)
+                        .eq(0)
                         .addClass('slick-center');
 
                 } else if (index === _.slideCount - 1) {
