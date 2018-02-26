@@ -1125,11 +1125,15 @@
 
         if (_.options.centerMode === true && _.slideCount <= _.options.slidesToShow) {
             _.slideOffset = ((_.slideWidth * Math.floor(_.options.slidesToShow)) / 2) - ((_.slideWidth * _.slideCount) / 2);
+            verticalOffset = ((verticalHeight * Math.floor(_.options.slidesToShow)) / 2) - ((verticalHeight * _.slideCount) / 2);
         } else if (_.options.centerMode === true && _.options.infinite === true) {
             _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2) - _.slideWidth;
+            verticalOffset += verticalHeight * Math.floor(_.options.slidesToShow / 2) - verticalHeight;
         } else if (_.options.centerMode === true) {
             _.slideOffset = 0;
             _.slideOffset += _.slideWidth * Math.floor(_.options.slidesToShow / 2);
+            verticalOffset = 0;
+            verticalOffset += verticalHeight * Math.floor(_.options.slidesToShow / 2);
         }
 
         if (_.options.vertical === false) {
