@@ -2652,13 +2652,13 @@
 
         _.dragging = false;
         _.swiping = false;
+        _.interrupted = false;
 
         if (_.scrolling) {
             _.scrolling = false;
             return false;
         }
 
-        _.interrupted = false;
         _.shouldClick = ( _.touchObject.swipeLength > 10 ) ? false : true;
 
         if ( _.touchObject.curX === undefined ) {
