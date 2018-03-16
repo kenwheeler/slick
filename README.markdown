@@ -1,4 +1,4 @@
-slick
+slick (Clever Age Fork)
 -------
 
 [1]: <https://github.com/kenwheeler/slick>
@@ -83,6 +83,7 @@ cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
 dots | boolean | false | Current slide indicator dots
 dotsClass | string | 'slick-dots' | Class for slide indicator dots container
+dotsPrepend | boolean | true | Prepend instead of append for dots
 draggable | boolean | true | Enables desktop dragging
 easing | string |  'linear' | animate() fallback easing
 edgeFriction | integer | 0.15 | Resistance when swiping edges of non-infinite carousels
@@ -92,6 +93,7 @@ focusOnChange | boolean | false | Puts focus on slide after change
 infinite | boolean | true | Infinite looping
 initialSlide | integer | 0 | Slide to start on
 lazyLoad | string | 'ondemand' | Accepts 'ondemand' or 'progressive' for lazy load technique. 'ondemand' will load the image as soon as you slide to it, 'progressive' loads one image after the other when the page loads.
+loadImages | function | false | Override loadImages function (first param is the scope)
 mobileFirst | boolean | false | Responsive settings use mobile first calculation
 nextArrow | string (html \| jQuery selector) \| object (DOM node \| jQuery object) | `<button type="button" class="slick-next">Next</button>` | Allows you to select a node or customize the HTML for the "Next" arrow.
 pauseOnDotsHover | boolean | false | Pauses autoplay when a dot is hovered
@@ -111,6 +113,7 @@ swipe | boolean | true | Enables touch swipe
 swipeToSlide | boolean | false | Swipe to slide irrespective of slidesToScroll
 touchMove | boolean | true | Enables slide moving with touch
 touchThreshold | int | 5 | To advance slides, the user must swipe a length of (1/touchThreshold) * the width of the slider.
+ulMode | boolean | false | Force the preservation of a `ul > li` structure (auto if `ul > li` elements)
 useCSS | boolean | true | Enable/Disable CSS Transitions
 useTransform | boolean | true | Enable/Disable CSS Transforms
 variableWidth | boolean | false | Disables automatic slide width calculation
@@ -141,6 +144,8 @@ $(".slider").slick({
     }, {
 
       breakpoint: 600,
+      // ignore if landscape mode
+      cond : function() { is('portrait') },
       settings: {
         slidesToShow: 2,
         dots: true

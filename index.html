@@ -37,14 +37,27 @@
     .slick-slide {
       transition: all ease-in-out .3s;
       opacity: .2;
+      position: relative;
     }
-    
+
+    .slick-slide a {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
     .slick-active {
       opacity: .5;
     }
 
     .slick-current {
       opacity: 1;
+    }
+
+    /* for accessibility testing */
+    :focus {
+      border: solid 1px #a50d0d !important;
+      background: blue;
     }
   </style>
 </head>
@@ -53,12 +66,15 @@
   <section class="vertical-center-4 slider">
     <div>
       <img src="http://placehold.it/350x100?text=1">
+      <a href="#link-1">Link 1</a>
     </div>
     <div>
       <img src="http://placehold.it/350x100?text=2">
+      <a href="#link-2">Link 2</a>
     </div>
     <div>
       <img src="http://placehold.it/350x100?text=3">
+      <a href="#link-3">Link 3</a>
     </div>
     <div>
       <img src="http://placehold.it/350x100?text=4">
