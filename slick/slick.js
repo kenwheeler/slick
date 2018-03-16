@@ -2343,6 +2343,7 @@
 
             _.$slides
                 .eq(index)
+                .addClass('slick-active')
                 .addClass('slick-center');
 
         } else {
