@@ -1014,23 +1014,37 @@
 
         var _ = this;
 
+        // If any child element receives focus within the slider we need to pause the autoplay
         _.$slider
             .off('focus.slick blur.slick')
-            .on('focus.slick blur.slick', '*', function(event) {
+            .on(
+                'focus.slick',
+                '*', 
+                function(event) {
+                    var $sf = $(this);
 
-            event.stopImmediatePropagation();
-            var $sf = $(this);
-
-            setTimeout(function() {
-
-                if( _.options.pauseOnFocus ) {
-                    _.focussed = $sf.is(':focus');
-                    _.autoPlay();
+                    setTimeout(function() {
+                        if( _.options.pauseOnFocus ) {
+                            if ($sf.is(':focus')) {
+                                _.focussed = true;
+                                _.autoPlay();
+                            }
+                        }
+                    }, 0);
                 }
+            ).on(
+                'blur.slick',
+                '*', 
+                function(event) {
+                    var $sf = $(this);
 
-            }, 0);
-
-        });
+                    // When a blur occurs on any elements within the slider we become unfocused
+                    if( _.options.pauseOnFocus ) {
+                        _.focussed = false;
+                        _.autoPlay();
+                    }
+                }
+            );
     };
 
     Slick.prototype.getCurrent = Slick.prototype.slickCurrentSlide = function() {
