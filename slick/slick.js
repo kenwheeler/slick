@@ -1497,7 +1497,7 @@
                     action: 'start'
                 }
             }))
-        }, isTouch && canListenPassive ? {passive: true} : false);
+        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
 
         _.$list[0].addEventListener('touchmove.slick mousemove.slick', function (e) {
             _.swipeHandler($.extend({}, e, {
@@ -1505,7 +1505,7 @@
                     action: 'move'
                 }
             }))
-        }, isTouch && canListenPassive ? {passive: true} : false);
+        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
 
 
         _.$list[0].addEventListener('touchend.slick mouseup.slick', function (e) {
@@ -1514,14 +1514,14 @@
                     action: 'end'
                 }
             }))
-        }, isTouch && canListenPassive ? {passive: true} : false);
+        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
         _.$list[0].addEventListener('touchcancel.slick mouseleave.slick', function (e) {
             _.swipeHandler($.extend({}, e, {
                 data: {
                     action: 'end'
                 }
             }))
-        }, isTouch && canListenPassive ? {passive: true} : false);
+        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
 
         _.$list.on('click.slick', _.clickHandler);
 
