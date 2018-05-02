@@ -32,8 +32,10 @@
 .slick-dots { position: absolute; bottom: -25px; list-style: none; display: block; text-align: center; padding: 0; margin: 0; width: 100%; }
 
 .slick-dot { position: relative; display: inline-block; width: 20px; height: 20px; margin: 0 5px; padding: 0; cursor: pointer; }
-.slick-dot:not(.slick-active):hover, .slick-dot:not(.slick-active):focus { opacity: 0.75; }
-.slick-dot:not(.slick-active):hover button:before { opacity: 0.75; }
+.slick-dot:not(.slick-active):hover { opacity: 0.75; }
+.slick-dot:not(.slick-active):hover button:before { opacity: 1; }
+.slick-dot:not(.slick-active) button:focus { opacity: 0.75; }
+.slick-dot:not(.slick-active) button:focus:before { opacity: 1; }
 .slick-dot button { width: 16px; height: 16px; text-indent: 16px; border-radius: 16px; border: none; background-color: #767676; position: relative; cursor: pointer; }
 .slick-dot button:before { content: ''; display: block; width: 10px; height: 10px; border-radius: 10px; background: #fff; opacity: 0; position: absolute; left: 3px; top: 3px; }
 .slick-initialized:not(.slick-accessible) .slick-dot button { outline: none; }
