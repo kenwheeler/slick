@@ -1,6 +1,6 @@
 {
   "name": "slick-carousel",
-  "version": "1.6.0",
+  "version": "1.9.0",
   "description": "the last carousel you'll ever need",
   "main": "slick/slick.js",
   "repository": {
@@ -44,13 +44,13 @@
   "bugs": {
     "url": "https://github.com/kenwheeler/slick/issues"
   },
-  "dependencies": {
-    "jquery": ">=1.7.2"
+  "peerDependencies": {
+    "jquery": ">=1.8.0"
   },
-  "devDependencies": {
+  "dependencies": {
     "gulp": "^3.9.1",
-    "gulp-notify": "^2.2.0",
+    "gulp-notify": "^3.2.0",
     "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^2.0.0"
+    "gulp-uglify": "^3.0.0"
   }
 }
