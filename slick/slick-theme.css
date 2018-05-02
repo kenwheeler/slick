@@ -12,6 +12,7 @@
 .slick-arrow { position: absolute; display: block; height: 20px; width: 20px; line-height: 0px; font-size: 0px; cursor: pointer; background: transparent; color: transparent; top: 50%; -webkit-transform: translate(0, -50%); -ms-transform: translate(0, -50%); transform: translate(0, -50%); padding: 0; border: none; }
 .slick-arrow:hover, .slick-arrow:focus { background: transparent; color: transparent; }
 .slick-arrow:hover:before, .slick-arrow:focus:before { opacity: 0.75; }
+.slick-initialized:not(.slick-accessible) .slick-arrow:hover, .slick-initialized:not(.slick-accessible) .slick-arrow:focus { outline: none; }
 .slick-arrow.slick-disabled:before { opacity: 0.25; }
 .slick-arrow:before { font-family: "slick"; font-size: 20px; line-height: 1; color: white; opacity: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
@@ -35,5 +36,6 @@
 .slick-dot:not(.slick-active):hover button:before { opacity: 0.75; }
 .slick-dot button { width: 16px; height: 16px; text-indent: 16px; border-radius: 16px; border: none; background-color: #767676; position: relative; cursor: pointer; }
 .slick-dot button:before { content: ''; display: block; width: 10px; height: 10px; border-radius: 10px; background: #fff; opacity: 0; position: absolute; left: 3px; top: 3px; }
+.slick-initialized:not(.slick-accessible) .slick-dot button { outline: none; }
 
 .slick-active button:before { opacity: 1; }
