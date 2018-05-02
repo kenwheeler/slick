@@ -15,6 +15,8 @@ $slick-dot-color: #767676 !default;
 $slick-dot-color-active: $slick-dot-color !default;
 $slick-prev-character: "\2190" !default;
 $slick-next-character: "\2192" !default;
+$slick-dot-character: "\2022" !default;
+$slick-dot-size: 6px !default;
 $slick-opacity-default: 1 !default;
 $slick-opacity-on-hover: 0.75 !default;
 $slick-opacity-not-active: 0.25 !default;
@@ -164,57 +166,104 @@ $slick-opacity-not-active: 0.25 !default;
     width: 100%;
 }
 
-.slick-dot {
-    position: relative;
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin: 0 5px;
-    padding: 0;
-    cursor: pointer;
-    &:not(.slick-active) {
-        &:hover {
-            opacity: $slick-opacity-on-hover;
-            button:before {
-                opacity: 1;
-            }
-        }
-        button:focus {
-            opacity: $slick-opacity-on-hover;
-            &:before {
-                opacity: 1;
-            }
-        }
-    }
-    button {
-        width: 16px;
-        height: 16px;
-        text-indent: 16px;
-        border-radius: 16px;
-        border: none;
-        background-color: $slick-dot-color;
+.slick-initialized:not(.slick-accessible) {
+    .slick-dot {
         position: relative;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        margin: 0 5px;
+        padding: 0;
         cursor: pointer;
-        &:before {
-            content: '';
+        button {
+            border: 0;
+            background: transparent;
             display: block;
-            width: 10px;
-            height: 10px;
-            border-radius: 10px;
-            background: #fff;
-            opacity: 0;
-            position: absolute;
-            left: 3px;
-            top: 3px;
-        }
-        .slick-initialized:not(.slick-accessible) & {
+            height: 20px;
+            width: 20px;
             outline: none;
+            line-height: 0px;
+            font-size: 0px;
+            color: transparent;
+            padding: 5px;
+            cursor: pointer;
+            &:hover, &:focus {
+                outline: none;
+                &:before {
+                    opacity: $slick-opacity-on-hover;
+                }
+            }
+            &:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: $slick-dot-character;
+                width: 20px;
+                height: 20px;
+                font-family: $slick-font-family;
+                font-size: $slick-dot-size;
+                line-height: 20px;
+                text-align: center;
+                color: $slick-dot-color;
+                opacity: $slick-opacity-not-active;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+        &.slick-active button:before {
+            color: $slick-dot-color-active;
+            opacity: $slick-opacity-default;
         }
     }
 }
 
-.slick-active {
-    button:before {
-        opacity: $slick-opacity-default;
+.slick-accessible {
+    .slick-dots {
+        bottom: -2.5rem;
+    }
+    .slick-dot {
+        position: relative;
+        display: inline-block;
+        margin: 0 5px;
+        padding: 0;
+        cursor: pointer;
+        &:not(.slick-active) {
+            &:hover {
+                opacity: $slick-opacity-on-hover;
+            }
+            button:focus {
+                border-color: $slick-dot-color;
+                opacity: $slick-opacity-on-hover;
+            }
+        }
+        button {
+            border: 3px solid transparent;
+            border-radius: 4em;
+            position: relative;
+            cursor: pointer;
+            padding: 0;
+            .slick-initialized:not(.slick-accessible) & {
+                outline: none;
+            }
+        }
+    }
+    .slick-dot-content {
+        display: inline-block;
+        font-size: 0.75rem;
+        line-height: 1.5rem;
+        min-width: 1.5rem;
+        min-height: 1.5rem;
+        background: #ddd;
+        border-radius: 4em;
+        color: #000;
+    }
+    .slick-dot-count {
+        @include visually-hidden();
+    }
+    .slick-active {
+        button {
+            opacity: $slick-opacity-default;
+            border-color: $slick-dot-color;
+        }
     }
 }
