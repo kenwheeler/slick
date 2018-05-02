@@ -1377,7 +1377,6 @@
                     'aria-selected': null,
                     'tabindex': '-1'
                 });
-
             }).eq(_.currentSlide).find('button').attr({
                 'aria-selected': 'true',
                 'tabindex': '0'
@@ -1391,7 +1390,6 @@
             _.$slides.eq(i).removeAttr('tabindex');
           }
         }
-
         _.activateADA();
 
     };
