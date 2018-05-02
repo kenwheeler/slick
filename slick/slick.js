@@ -1213,6 +1213,11 @@
 
         if (_.options.infinite === false) {
             max = _.slideCount;
+        } else if (_.options.centerMode === true) {
+            var half = -(Math.ceil(_.options.slidesToShow / 2));
+            breakPoint = _.options.slidesToScroll * half;
+            counter = _.options.slidesToScroll * half;
+            max = _.slideCount * 2;
         } else {
             breakPoint = _.options.slidesToScroll * -1;
             counter = _.options.slidesToScroll * -1;
@@ -1372,7 +1377,6 @@
                     'aria-selected': null,
                     'tabindex': '-1'
                 });
-
             }).eq(_.currentSlide).find('button').attr({
                 'aria-selected': 'true',
                 'tabindex': '0'
@@ -1386,7 +1390,6 @@
             _.$slides.eq(i).removeAttr('tabindex');
           }
         }
-
         _.activateADA();
 
     };
