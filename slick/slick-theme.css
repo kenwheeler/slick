@@ -28,11 +28,11 @@
 
 /* Pause/Play Button*/
 .slick-pause { border: none; background: transparent; display: inline-block; width: 20px; height: 20px; padding: 0; cursor: pointer; position: absolute; top: 100%; left: 16px; margin-top: calc(0.5em + 5px); z-index: 10; }
-.slick-pause.slick--playing { overflow: hidden; }
-.slick-pause.slick--playing:after { content: ''; display: block; position: absolute; left: 4px; top: 2px; border-left: 14px solid #000; border-right: 14px solid transparent; border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
-.slick-pause.slick--paused:before, .slick-pause.slick--paused:after { content: ''; width: 6px; height: 16px; background: #000; display: block; position: absolute; top: 2px; }
-.slick-pause.slick--paused:before { left: 2px; }
-.slick-pause.slick--paused:after { right: 2px; }
+.slick-pause.slick--paused { overflow: hidden; }
+.slick-pause.slick--paused:after { content: ''; display: block; position: absolute; left: 4px; top: 2px; border-left: 14px solid #000; border-right: 14px solid transparent; border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
+.slick-pause.slick--playing:before, .slick-pause.slick--playing:after { content: ''; width: 4px; height: 14px; background: #000; display: block; position: absolute; top: 3px; }
+.slick-pause.slick--playing:before { left: 4px; }
+.slick-pause.slick--playing:after { right: 4px; }
 
 /* Dots */
 .slick-dotted.slick-slider { margin-bottom: 30px; }

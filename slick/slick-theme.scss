@@ -161,7 +161,7 @@ $slick-opacity-not-active: 0.25 !default;
     left: 16px;
     margin-top: calc(0.5em + 5px);
     z-index: 10;
-    &.slick--playing {
+    &.slick--paused {
         overflow: hidden;
         &:after {
             content: '';
@@ -175,22 +175,22 @@ $slick-opacity-not-active: 0.25 !default;
             border-bottom: 8px solid transparent;
         }
     }
-    &.slick--paused {
+    &.slick--playing {
         &:before,
         &:after {
             content: '';
-            width: 6px;
-            height: 16px;
+            width: 4px;
+            height: 14px;
             background: #000;
             display: block;
             position: absolute;
-            top: 2px;
+            top: 3px;
         }
         &:before {
-            left: 2px;
+            left: 4px;
         }
         &:after {
-            right: 2px;
+            right: 4px;
         }
     }
 }
