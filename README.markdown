@@ -81,6 +81,7 @@ centerMode | boolean | false | Enables centered view with partial prev/next slid
 centerPadding | string | '50px' | Side padding when in center mode. (px or %)
 cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
+customPagingADALabel | function | n/a | Custom aria-label for paging dots. See source for use example.
 dots | boolean | false | Current slide indicator dots
 dotsClass | string | 'slick-dots' | Class for slide indicator dots container
 draggable | boolean | true | Enables desktop dragging
