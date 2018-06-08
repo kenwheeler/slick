@@ -2014,6 +2014,10 @@
         _.$slideTrack.children(this.options.slide).detach();
 
         _.$slideTrack.append(_.$slides);
+         
+         _.$slides.each(function(index, element) {
+            $(element).attr('data-slick-index', index);
+        });
 
         _.$slidesCache = _.$slides;
 
