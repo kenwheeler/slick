@@ -68,7 +68,7 @@
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnFocus: true,
-                pauseOnDotsHover: false,
+                pauseOnDotsHover: true,
                 respondTo: 'window',
                 responsive: null,
                 rows: 1,
@@ -442,8 +442,8 @@
 
         if (_.options.arrows === true ) {
 
-            _.$prevArrow = $(_.options.prevArrow).addClass('slick-arrow');
-            _.$nextArrow = $(_.options.nextArrow).addClass('slick-arrow');
+            _.$prevArrow = $(_.options.prevArrow).addClass('slick-arrow slick-control');
+            _.$nextArrow = $(_.options.nextArrow).addClass('slick-arrow slick-control');
 
             if( _.slideCount > _.options.slidesToShow ) {
 
@@ -481,7 +481,7 @@
         if (_.options.accessibility && _.options.autoplay) {
 
             _.$pauseButton = $('<button />', {
-                'class': 'slick-pause slick--playing',
+                'class': 'slick-pause slick-control slick--playing',
                 'data-action': 'stop',
                 'html': '<span class="visually-hidden">Stop Animation</span>'
             });
@@ -753,6 +753,8 @@
                 _.slideHandler(_.checkNavigable(index), false, dontAnimate, forceFocus);
                 if (!_.options.accessibility) {
                     $target.children().trigger('focus');
+                } else if (!_.paused) {
+                  _.slickPause();
                 }
                 break;
 
@@ -788,7 +790,7 @@
 
         var _ = this;
 
-        if (_.options.dots && _.$dots !== null) {
+        if ((_.options.dots || _.options.accessibility) && _.$dots !== null) {
 
             $('li', _.$dots)
                 .off('click.slick', _.changeSlide)
@@ -814,6 +816,10 @@
 
         if (_.options.accessibility && _.options.autoplay) {
             _.$pauseButton.off('click.slick');
+
+            $('.slick-control')
+                .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
+                .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
         }
 
         _.$list.off('touchstart.slick mousedown.slick', _.swipeHandler);
@@ -1371,7 +1377,7 @@
 
     Slick.prototype.initADA = function() {
         var _ = this,
-                numDotGroups = _.slideCount,
+                numDotGroups = (_.options.centerMode) ? _.slideCount : Math.ceil(_.slideCount / _.options.slidesToShow),
                 tabControlIndexes = _.getNavigableIndexes().filter(function(val) {
                     return (val >= 0) && (val < _.slideCount);
                 });
@@ -1462,27 +1468,23 @@
             if (typeof _.$pauseButton !== 'undefined') {
                 _.$pauseButton
                     .off('click.slick')
-                    .on('click.slick', (e) => {
+                    .on('click.slick', function(e) {
                         switch ($(e.target).attr('data-action')) {
                             case 'stop':
                                 _.slickPause();
-                                $(e.target).attr('data-action', 'play')
-                                    .toggleClass('slick--playing slick--paused')
-                                    .find('.visually-hidden')
-                                    .html('Start Animation');
                             break;
                             case 'play':
                                 _.slickPlay();
-                                $(e.target).attr('data-action', 'stop')
-                                    .toggleClass('slick--playing slick--paused')
-                                    .find('.visually-hidden')
-                                    .html('Stop Animation');
                             break;
                             case 'default':
                             break;
                         }
                     });
             }
+
+            $('.slick-control')
+                .on('mouseenter.slick', $.proxy(_.interrupt, _, true))
+                .on('mouseleave.slick', $.proxy(_.interrupt, _, false));
         }
 
     };
@@ -1499,15 +1501,16 @@
             if (_.options.accessibility === true) {
                 _.$dots.on('keydown.slick', _.keyHandler);
             }
+
+            if (_.options.pauseOnDotsHover === true || _.options.accessibility === true) {
+
+                $('li', _.$dots)
+                    .on('mouseenter.slick', $.proxy(_.interrupt, _, true))
+                    .on('mouseleave.slick', $.proxy(_.interrupt, _, false));
+
+            }
         }
 
-        if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.slideCount > _.options.slidesToShow) {
-
-            $('li', _.$dots)
-                .on('mouseenter.slick', $.proxy(_.interrupt, _, true))
-                .on('mouseleave.slick', $.proxy(_.interrupt, _, false));
-
-        }
 
     };
 
@@ -1766,6 +1769,13 @@
         _.autoPlayClear();
         _.paused = true;
 
+        if (_.options.accessibility && _.options.autoplay) {
+            _.$pauseButton.attr('data-action', 'play')
+                .toggleClass('slick--playing slick--paused')
+                .find('.visually-hidden')
+                .html('Start Animation');
+        }
+
     };
 
     Slick.prototype.play = Slick.prototype.slickPlay = function() {
@@ -1778,9 +1788,16 @@
         _.focussed = false;
         _.interrupted = false;
 
+        if (_.options.accessibility && _.options.autoplay) {
+            _.$pauseButton.attr('data-action', 'play')
+                .toggleClass('slick--playing slick--paused')
+                .find('.visually-hidden')
+                .html('Start Animation');
+        }
+
     };
 
-    Slick.prototype.postSlide = function(index, forceFocus = false, announce = false) {
+    Slick.prototype.postSlide = function(index, forceFocus, announce) {
 
         var _ = this;
 
@@ -2571,7 +2588,7 @@
 
     };
 
-    Slick.prototype.slideHandler = function(index, sync, dontAnimate, forceFocus = false, announce = false) {
+    Slick.prototype.slideHandler = function(index, sync, dontAnimate, forceFocus, announce) {
 
         var targetSlide, animSlide, oldSlide, slideLeft, targetLeft = null,
             _ = this, navTarget;
