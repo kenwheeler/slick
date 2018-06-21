@@ -482,7 +482,7 @@
 
             _.$pauseButton = $('<button />', {
                 'class': 'slick-pause slick-control slick--playing',
-                'data-action': 'stop',
+                'data-action': 'pause',
                 'html': '<span class="visually-hidden">Stop Animation</span>'
             });
 
@@ -1470,7 +1470,7 @@
                     .off('click.slick')
                     .on('click.slick', function(e) {
                         switch ($(e.target).attr('data-action')) {
-                            case 'stop':
+                            case 'pause':
                                 _.slickPause();
                             break;
                             case 'play':
@@ -1789,7 +1789,7 @@
         _.interrupted = false;
 
         if (_.options.accessibility && _.options.autoplay) {
-            _.$pauseButton.attr('data-action', 'play')
+            _.$pauseButton.attr('data-action', 'pause')
                 .toggleClass('slick--playing slick--paused')
                 .find('.visually-hidden')
                 .html('Start Animation');
