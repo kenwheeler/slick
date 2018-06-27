@@ -1848,7 +1848,7 @@
 
         } else {
 
-	          _.updateArrows()
+            _.updateArrows()
             _.$slider.trigger('allImagesLoaded', [ _ ]);
 
         }
@@ -2991,7 +2991,7 @@
                 var sliderOffsetRight = ($(window).width() - (_.$slider.offset().left + _.$slider.outerWidth()));
                 var lastSlideOffsetSlider = lastSlideOffsetRight - sliderOffsetRight;
 
-	              if (lastSlideOffsetSlider > -1) {
+                if (lastSlideOffsetSlider > -1) {
                     _.$nextArrow.addClass('slick-disabled').attr('aria-disabled', 'true')
                     _.touchObject.edgeHit = true
                     if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
@@ -3001,10 +3001,10 @@
                             _.$nextArrow && _.$nextArrow.off('keydown.slick', _.keyHandler)
                         }
                     }
-	              }
-	              else {
-		                _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false')
-		                if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
+                }
+                else {
+                    _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false')
+                    if (_.options.arrows === true && _.slideCount > _.options.slidesToShow) {
                         _.$nextArrow
                         .off('click.slick')
                         .on('click.slick', {
@@ -3014,8 +3014,8 @@
                         if (_.options.accessibility === true) {
                             _.$nextArrow.on('keydown.slick', _.keyHandler)
                         }
-		                }
-	              }
+                    }
+                }
             }
         }
 
