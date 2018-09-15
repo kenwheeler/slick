@@ -2419,7 +2419,43 @@
     Slick.prototype.setupInfinite = function() {
 
         var _ = this,
-            i, infiniteCount;
+            i, infiniteCount, curSlide;
+
+        var copyCanvasData = function(slide, clone) {
+            var canvases = slide.find('canvas');
+            var cloneCanvases = clone.find('canvas');
+
+            cloneCanvases.each(function(index, cloneCanvas) {
+                var canvas = canvases[index];
+                var ctx = canvas.getContext('2d');
+                var cloneCtx = cloneCanvas.getContext('2d');
+                var imageData = ctx.getImageData(
+                    0,
+                    0,
+                    canvas.width, canvas.height
+                );
+
+                cloneCtx.putImageData(imageData, 0, 0);
+            });
+        };
+
+        var createClone = function(slide, index, doPrepend) {
+            var clone = slide.clone(true);
+
+            clone
+                .attr('id', '')
+                .attr('data-slick-index', index)
+                .insertBefore(_.$slides[0])
+                .addClass('slick-cloned');
+
+            copyCanvasData(slide, clone);
+
+            if (doPrepend) {
+                clone.insertBefore(_.$slides[0]);
+            } else {
+                clone.appendTo(_.$slideTrack);
+            }
+        };
 
         if (_.options.fade === true) {
             _.options.centerMode = false;
@@ -2437,23 +2473,13 @@
 
                 for (i = 0; i < _.slideCount; i++) {
 
+                    curSlide = $(_.$slides[i]);
+
                     if (i >= _.slideCount - infiniteCount) {
-                        $(_.$slides[i])
-                            .clone(true)
-                            .attr('id', '')
-                            .attr('data-slick-index', i - _.slideCount)
-                            .insertBefore(_.$slides[0])
-                            .addClass('slick-cloned');
+                        createClone(curSlide, i - _.slideCount, true);
                     }
 
-                    if (i < _.slideCount) {
-                        $(_.$slides[i])
-                            .clone(true)
-                            .attr('id', '')
-                            .attr('data-slick-index', i + _.slideCount)
-                            .appendTo(_.$slideTrack)
-                            .addClass('slick-cloned');
-                    }
+                    createClone(curSlide, i + _.slideCount, false);
 
                 }
 
