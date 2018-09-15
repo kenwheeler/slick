@@ -2419,15 +2419,13 @@
     Slick.prototype.setupInfinite = function() {
 
         var _ = this,
-            i, slideIndex, infiniteCount;
+            i, infiniteCount;
 
         if (_.options.fade === true) {
             _.options.centerMode = false;
         }
 
         if (_.options.infinite === true && _.options.fade === false) {
-
-            slideIndex = null;
 
             if (_.slideCount > _.options.slidesToShow) {
 
@@ -2437,22 +2435,27 @@
                     infiniteCount = _.options.slidesToShow;
                 }
 
-                for (i = _.slideCount; i > (_.slideCount -
-                        infiniteCount); i -= 1) {
-                    slideIndex = i - 1;
-                    $(_.$slides[slideIndex]).clone(true).attr('id', '')
-                        .attr('data-slick-index', slideIndex - _.slideCount)
-                        .prependTo(_.$slideTrack).addClass('slick-cloned');
+                for (i = 0; i < _.slideCount; i++) {
+
+                    if (i >= _.slideCount - infiniteCount) {
+                        $(_.$slides[i])
+                            .clone(true)
+                            .attr('id', '')
+                            .attr('data-slick-index', i - _.slideCount)
+                            .insertBefore(_.$slides[0])
+                            .addClass('slick-cloned');
+                    }
+
+                    if (i < _.slideCount) {
+                        $(_.$slides[i])
+                            .clone(true)
+                            .attr('id', '')
+                            .attr('data-slick-index', i + _.slideCount)
+                            .appendTo(_.$slideTrack)
+                            .addClass('slick-cloned');
+                    }
+
                 }
-                for (i = 0; i < infiniteCount  + _.slideCount; i += 1) {
-                    slideIndex = i;
-                    $(_.$slides[slideIndex]).clone(true).attr('id', '')
-                        .attr('data-slick-index', slideIndex + _.slideCount)
-                        .appendTo(_.$slideTrack).addClass('slick-cloned');
-                }
-                _.$slideTrack.find('.slick-cloned').find('[id]').each(function() {
-                    $(this).attr('id', '');
-                });
 
             }
 
