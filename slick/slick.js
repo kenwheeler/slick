@@ -1147,9 +1147,23 @@
         }
 
         if (_.options.vertical === false) {
-            targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
+              targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
-            targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+            verticalOffset = 0;
+
+            for (let i = 0; i < slideIndex; i++) {
+                verticalOffset += _.$slides.eq(i).outerHeight(true);
+            }
+
+            if (_.options.infinite === true) {
+                Array.from(_.$slideTrack[0].children).forEach((slide) => {
+                    if (slide.dataset.slickIndex < 0) {
+                        verticalOffset += $(slide).outerHeight(true);
+                    }
+                });
+            }
+
+            targetLeft = verticalOffset * -1;
         }
 
         if (_.options.variableWidth === true) {
