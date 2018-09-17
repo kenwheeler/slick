@@ -6,12 +6,16 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
+Forked from:
  Version: 1.9.0
   Author: Ken Wheeler
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
+  
+  Forked by: CB Ash
+  Current: https://github.com/CBairdAsh/slick
 
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
