@@ -1,58 +1,301 @@
 @charset "UTF-8";
-.visually-hidden { position: absolute; height: 1px; width: 1px; overflow: hidden; word-wrap: normal; clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); }
+.visually-hidden {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  word-wrap: normal;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
 
 /* Slider */
-.slick-loading .slick-list { background: #fff url('ajax-loader.gif?1525181467') center center no-repeat; }
+.slick-loading .slick-list {
+  background: #fff url("./ajax-loader.gif") center center no-repeat;
+}
 
 /* Icons */
-@font-face { font-family: "slick"; src: url('fonts/slick.eot?1525181467'); src: url('fonts/slick.eot?&1525181467#iefix') format("embedded-opentype"), url('fonts/slick.woff?1525181467') format("woff"), url('fonts/slick.ttf?1525181467') format("truetype"), url('fonts/slick.svg?1525181467#slick') format("svg"); font-weight: normal; font-style: normal; }
+@font-face {
+  font-family: "slick";
+  src: url("./fonts/slick.eot");
+  src: url("./fonts/slick.eot?#iefix") format("embedded-opentype"), url("./fonts/slick.woff") format("woff"), url("./fonts/slick.ttf") format("truetype"), url("./fonts/slick.svg#slick") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Arrows */
-.slick-controls { list-style: none; margin: 0; padding: 0; }
+.slick-controls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-.slick-arrow { border: none; background: transparent; display: block; width: 20px; height: 20px; padding: 0; cursor: pointer; position: absolute; line-height: 0px; font-size: 0px; color: transparent; top: 50%; -webkit-transform: translate(0, -50%); -ms-transform: translate(0, -50%); transform: translate(0, -50%); }
-.slick-arrow:hover, .slick-arrow:focus { background: transparent; color: transparent; }
-.slick-arrow:hover:before, .slick-arrow:focus:before { opacity: 0.75; }
-.slick-initialized:not(.slick-accessible) .slick-arrow:hover, .slick-initialized:not(.slick-accessible) .slick-arrow:focus { outline: none; }
-.slick-arrow.slick-disabled:before { opacity: 0.25; }
-.slick-arrow:before { font-family: "slick"; font-size: 20px; line-height: 1; color: white; opacity: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.slick-arrow {
+  border: none;
+  background: transparent;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  line-height: 0px;
+  font-size: 0px;
+  color: transparent;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+}
 
-.slick-prev { left: -25px; }
-[dir="rtl"] .slick-prev { left: auto; right: -25px; }
-.slick-prev:before { content: "←"; }
-[dir="rtl"] .slick-prev:before { content: "→"; }
+.slick-arrow:hover, .slick-arrow:focus {
+  background: transparent;
+  color: transparent;
+}
 
-.slick-next { right: -25px; }
-[dir="rtl"] .slick-next { left: -25px; right: auto; }
-.slick-next:before { content: "→"; }
-[dir="rtl"] .slick-next:before { content: "←"; }
+.slick-arrow:hover:before, .slick-arrow:focus:before {
+  opacity: 0.75;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-arrow:hover, .slick-initialized:not(.slick-accessible) .slick-arrow:focus {
+  outline: none;
+}
+
+.slick-arrow.slick-disabled:before {
+  opacity: 0.25;
+}
+
+.slick-arrow:before {
+  font-family: "slick";
+  font-size: 20px;
+  line-height: 1;
+  color: white;
+  opacity: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev {
+  left: -25px;
+}
+
+[dir="rtl"] .slick-prev {
+  left: auto;
+  right: -25px;
+}
+
+.slick-prev:before {
+  content: "←";
+}
+
+[dir="rtl"] .slick-prev:before {
+  content: "→";
+}
+
+.slick-next {
+  right: -25px;
+}
+
+[dir="rtl"] .slick-next {
+  left: -25px;
+  right: auto;
+}
+
+.slick-next:before {
+  content: "→";
+}
+
+[dir="rtl"] .slick-next:before {
+  content: "←";
+}
 
 /* Pause/Play Button*/
-.slick-pause { border: none; background: transparent; display: inline-block; width: 20px; height: 20px; padding: 0; cursor: pointer; position: absolute; top: 100%; left: 16px; margin-top: calc(0.5em + 5px); z-index: 10; }
-.slick-pause.slick--paused { overflow: hidden; }
-.slick-pause.slick--paused:after { content: ''; display: block; position: absolute; left: 4px; top: 2px; border-left: 14px solid #000; border-right: 14px solid transparent; border-top: 8px solid transparent; border-bottom: 8px solid transparent; }
-.slick-pause.slick--playing:before, .slick-pause.slick--playing:after { content: ''; width: 4px; height: 14px; background: #000; display: block; position: absolute; top: 3px; }
-.slick-pause.slick--playing:before { left: 4px; }
-.slick-pause.slick--playing:after { right: 4px; }
+.slick-pause {
+  border: none;
+  background: transparent;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: 100%;
+  left: 16px;
+  margin-top: calc(0.5em + 5px);
+  z-index: 10;
+}
+
+.slick-pause.slick--paused {
+  overflow: hidden;
+}
+
+.slick-pause.slick--paused:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 4px;
+  top: 2px;
+  border-left: 14px solid #000;
+  border-right: 14px solid transparent;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+.slick-pause.slick--playing:before, .slick-pause.slick--playing:after {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: #000;
+  display: block;
+  position: absolute;
+  top: 3px;
+}
+
+.slick-pause.slick--playing:before {
+  left: 4px;
+}
+
+.slick-pause.slick--playing:after {
+  right: 4px;
+}
 
 /* Dots */
-.slick-dotted.slick-slider { margin-bottom: 30px; }
+.slick-dotted.slick-slider {
+  margin-bottom: 30px;
+}
 
-.slick-dots { position: absolute; list-style: none; display: block; text-align: center; width: 100%; margin: 0; }
+.slick-dots {
+  position: absolute;
+  list-style: none;
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
 
-.slick-initialized:not(.slick-accessible) .slick-dots { bottom: -25px; padding: 0; }
-.slick-initialized:not(.slick-accessible) .slick-dot { border: none; background: transparent; display: inline-block; width: 20px; height: 20px; padding: 0; cursor: pointer; position: relative; display: inline-block; height: 20px; width: 20px; margin: 0 5px; padding: 0; cursor: pointer; }
-.slick-initialized:not(.slick-accessible) .slick-dot button { border: 0; background: transparent; display: block; height: 20px; width: 20px; outline: none; line-height: 0px; font-size: 0px; color: transparent; padding: 5px; cursor: pointer; }
-.slick-initialized:not(.slick-accessible) .slick-dot button:hover, .slick-initialized:not(.slick-accessible) .slick-dot button:focus { outline: none; }
-.slick-initialized:not(.slick-accessible) .slick-dot button:hover:before, .slick-initialized:not(.slick-accessible) .slick-dot button:focus:before { opacity: 0.75; }
-.slick-initialized:not(.slick-accessible) .slick-dot button:before { position: absolute; top: 0; left: 0; content: "•"; width: 20px; height: 20px; font-family: "slick"; font-size: 6px; line-height: 20px; text-align: center; color: #767676; opacity: 0.25; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-.slick-initialized:not(.slick-accessible) .slick-dot.slick-active button:before { color: #767676; opacity: 1; }
+.slick-initialized:not(.slick-accessible) .slick-dots {
+  bottom: -25px;
+  padding: 0;
+}
 
-.slick-accessible .slick-dots { top: 100%; padding: 0 25px; margin-top: 0.5em; }
-.slick-accessible .slick-dot { position: relative; display: inline-block; margin: 0 5px; padding: 0; cursor: pointer; }
-.slick-accessible .slick-dot:not(.slick-active):hover { opacity: 0.75; }
-.slick-accessible .slick-dot:not(.slick-active) button:focus { border-color: #767676; opacity: 0.75; }
-.slick-accessible .slick-dot button { border: 3px solid transparent; border-radius: 4em; position: relative; cursor: pointer; padding: 0; }
-.slick-initialized:not(.slick-accessible) .slick-accessible .slick-dot button { outline: none; }
-.slick-accessible .slick-dot-content { display: inline-block; font-size: 0.75rem; line-height: 1.5rem; min-width: 1.5rem; min-height: 1.5rem; background: #ddd; border-radius: 4em; color: #000; }
-.slick-accessible .slick-dot-count { position: absolute; height: 1px; width: 1px; overflow: hidden; word-wrap: normal; clip: rect(1px 1px 1px 1px); clip: rect(1px, 1px, 1px, 1px); }
-.slick-accessible .slick-active button { opacity: 1; border-color: #767676; }
+.slick-initialized:not(.slick-accessible) .slick-dot {
+  border: none;
+  background: transparent;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  margin: 0 5px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-dot button {
+  border: 0;
+  background: transparent;
+  display: block;
+  height: 20px;
+  width: 20px;
+  outline: none;
+  line-height: 0px;
+  font-size: 0px;
+  color: transparent;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-dot button:hover, .slick-initialized:not(.slick-accessible) .slick-dot button:focus {
+  outline: none;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-dot button:hover:before, .slick-initialized:not(.slick-accessible) .slick-dot button:focus:before {
+  opacity: 0.75;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-dot button:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "•";
+  width: 20px;
+  height: 20px;
+  font-family: "slick";
+  font-size: 6px;
+  line-height: 20px;
+  text-align: center;
+  color: #767676;
+  opacity: 0.25;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-dot.slick-active button:before {
+  color: #767676;
+  opacity: 1;
+}
+
+.slick-accessible .slick-dots {
+  top: 100%;
+  padding: 0 25px;
+  margin-top: 0.5em;
+}
+
+.slick-accessible .slick-dot {
+  position: relative;
+  display: inline-block;
+  margin: 0 5px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.slick-accessible .slick-dot:not(.slick-active):hover {
+  opacity: 0.75;
+}
+
+.slick-accessible .slick-dot:not(.slick-active) button:focus {
+  border-color: #767676;
+  opacity: 0.75;
+}
+
+.slick-accessible .slick-dot button {
+  border: 3px solid transparent;
+  border-radius: 4em;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+}
+
+.slick-initialized:not(.slick-accessible) .slick-accessible .slick-dot button {
+  outline: none;
+}
+
+.slick-accessible .slick-dot-content {
+  display: inline-block;
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  background: #ddd;
+  border-radius: 4em;
+  color: #000;
+}
+
+.slick-accessible .slick-dot-count {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  word-wrap: normal;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.slick-accessible .slick-active button {
+  opacity: 1;
+  border-color: #767676;
+}
