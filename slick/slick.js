@@ -69,6 +69,8 @@
                 pauseOnHover: true,
                 pauseOnFocus: true,
                 pauseOnDotsHover: true,
+                playLabel: 'Start Animation',
+                pauseLabel: 'Stop Animation',
                 respondTo: 'window',
                 responsive: null,
                 rows: 1,
@@ -1773,7 +1775,7 @@
             _.$pauseButton.attr('data-action', 'play')
                 .toggleClass('slick--playing slick--paused')
                 .find('.visually-hidden')
-                .html('Start Animation');
+                .html(_.options.playLabel);
         }
 
     };
@@ -1792,7 +1794,7 @@
             _.$pauseButton.attr('data-action', 'pause')
                 .toggleClass('slick--playing slick--paused')
                 .find('.visually-hidden')
-                .html('Start Animation');
+                .html(_.options.pauseLabel);
         }
 
     };
