@@ -44,8 +44,12 @@
                 appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
-                prevArrow: '<button class="slick-prev" type="button">Previous Slide</button>',
-                nextArrow: '<button class="slick-next" type="button">Next Slide</button>',
+                labelPrev: 'Previous',
+                labelNext: 'Next',
+                labelPrevInfinite: 'Previous (go to the last item)',
+                labelNextInfinite: 'Next (go to the first item)',
+                prevArrow: '<button class="slick-prev" type="button">Previous</button>',
+                nextArrow: '<button class="slick-next" type="button">Next</button>',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
@@ -69,6 +73,8 @@
                 pauseOnHover: true,
                 pauseOnFocus: true,
                 pauseOnDotsHover: true,
+                pauseLabel: 'Stop animation',
+                playLabel: 'Start animation',
                 respondTo: 'window',
                 responsive: null,
                 rows: 1,
@@ -483,10 +489,10 @@
             _.$pauseButton = $('<button />', {
                 'class': 'slick-pause slick-control slick--playing',
                 'data-action': 'pause',
-                'html': '<span class="visually-hidden">Stop Animation</span>'
+                'html': '<span class="visually-hidden">' + _.options.pauseLabel + '</span>'
             });
 
-            _.$pauseButton.appendTo($slideControls).wrapAll('<li></li>');
+            _.$pauseButton.prependTo(_.$slider);
 
         }
 
@@ -715,6 +721,7 @@
             $target = $(event.currentTarget),
             indexOffset, slideOffset, unevenOffset;
         var announce = (typeof event.data.announce === 'undefined') ? false : true;
+        var forceFocus = (_.options.accessibility) ? true : false;
 
         // If target is a link, prevent default action.
         if($target.is('a')) {
@@ -734,21 +741,20 @@
             case 'previous':
                 slideOffset = indexOffset === 0 ? _.options.slidesToScroll : _.options.slidesToShow - indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
-                    _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate, false, announce);
+                    _.slideHandler(_.currentSlide - slideOffset, false, dontAnimate, forceFocus, announce);
                 }
                 break;
 
             case 'next':
                 slideOffset = indexOffset === 0 ? _.options.slidesToScroll : indexOffset;
                 if (_.slideCount > _.options.slidesToShow) {
-                    _.slideHandler(_.currentSlide + slideOffset, false, dontAnimate, false, announce);
+                    _.slideHandler(_.currentSlide + slideOffset, false, dontAnimate, forceFocus, announce);
                 }
                 break;
 
             case 'index':
                 var index = event.data.index === 0 ? 0 :
                     event.data.index || $target.index() * _.options.slidesToScroll;
-                var forceFocus = (_.options.accessibility) ? true : false;
 
                 _.slideHandler(_.checkNavigable(index), false, dontAnimate, forceFocus);
                 if (!_.options.accessibility) {
@@ -792,7 +798,7 @@
 
         if ((_.options.dots || _.options.accessibility) && _.$dots !== null) {
 
-            $('li', _.$dots)
+            $('li button', _.$dots)
                 .off('click.slick', _.changeSlide)
                 .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
                 .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
@@ -1412,19 +1418,15 @@
                 var mappedSlideIndex = tabControlIndexes[i];
                 var $buttonContent = $('<span />', { 'class': 'slick-dot-content', 'html': ++i })
                     .append($('<span />', { 'class': 'slick-dot-count', 'html': ' of ' + numDotGroups }));
+                var $thisTrigger = $(this).find(':first-child');
                 var $thisButton = $(this).find('button');
                 $thisButton.first().attr({
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
-                    'aria-expanded': false,
                 });
-                if (!$thisButton.find('.slick-dot-content').length) {
-                    $thisButton.append($buttonContent);
+                if (!$thisTrigger.find('.slick-dot-content').length) {
+                    $thisTrigger.append($buttonContent);
                 }
-
-            }).eq(_.currentSlide).find('button').attr({
-                'aria-expanded': 'true',
-                'tabindex': '0'
             }).end();
         }
 
@@ -1494,7 +1496,7 @@
         var _ = this;
 
         if (_.options.dots === true && _.slideCount > _.options.slidesToShow) {
-            $('li', _.$dots).on('click.slick', {
+            $('li button', _.$dots).on('click.slick', {
                 message: 'index'
             }, _.changeSlide);
 
@@ -1504,7 +1506,7 @@
 
             if (_.options.pauseOnDotsHover === true || _.options.accessibility === true) {
 
-                $('li', _.$dots)
+                $('li button', _.$dots)
                     .on('mouseenter.slick', $.proxy(_.interrupt, _, true))
                     .on('mouseleave.slick', $.proxy(_.interrupt, _, false));
 
@@ -1773,7 +1775,7 @@
             _.$pauseButton.attr('data-action', 'play')
                 .toggleClass('slick--playing slick--paused')
                 .find('.visually-hidden')
-                .html('Start Animation');
+                .html(_.options.playLabel);
         }
 
     };
@@ -1792,7 +1794,7 @@
             _.$pauseButton.attr('data-action', 'pause')
                 .toggleClass('slick--playing slick--paused')
                 .find('.visually-hidden')
-                .html('Start Animation');
+                .html(_.options.pauseLabel);
         }
 
     };
@@ -3044,6 +3046,24 @@
 
         if ( _.options.arrows === true &&
             _.slideCount > _.options.slidesToShow &&
+            _.options.infinite ) {
+
+            if (_.currentSlide === 0) {
+               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrevInfinite);
+            } else if (_.$prevArrow.find('.visually-hidden').text() === _.options.labelPrevInfinite) {
+               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrev);
+            }
+
+            if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
+                _.$nextArrow.find('.visually-hidden').text(_.options.labelNextInfinite);
+            } else if (_.$nextArrow.find('.visually-hidden').text() === _.options.labelNextInfinite) {
+               _.$nextArrow.find('.visually-hidden').text(_.options.labelNext);
+            }
+
+        }
+
+        if ( _.options.arrows === true &&
+            _.slideCount > _.options.slidesToShow &&
             !_.options.infinite ) {
 
             _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
@@ -3120,7 +3140,7 @@
         for (i = 0; i < l; i++) {
             if (typeof opt == 'object' || typeof opt == 'undefined')
                 _[i].slick = new Slick(_[i], opt);
-            else
+            else          
                 ret = _[i].slick[opt].apply(_[i].slick, args);
             if (typeof ret != 'undefined') return ret;
         }
