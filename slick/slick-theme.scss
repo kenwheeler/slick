@@ -19,22 +19,23 @@ $slick-opacity-on-hover: 0.75 !default;
 $slick-opacity-not-active: 0.25 !default;
 
 @function slick-image-url($url) {
-    @if function-exists(image-url) {
-        @return image-url($url);
-    }
-    @else {
-        @return url($slick-loader-path + $url);
-    }
+  @if function-exists(image-url) {
+    @return image-url($url);
+  }
+
+  @else {
+    @return url($slick-loader-path + $url);
+  }
 }
 
 @mixin reset-button($display: inline-block) {
-    border: none;
-    background: transparent;
-    display: $display;
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    cursor:pointer;
+  border: none;
+  background: transparent;
+  display: $display;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  cursor: pointer;
 }
 
 @mixin visually-hidden {
@@ -43,21 +44,23 @@ $slick-opacity-not-active: 0.25 !default;
   width: 1px;
   overflow: hidden;
   word-wrap: normal;
+
   @if support-legacy-browser(ie, "7") {
     clip: rect(1px 1px 1px 1px); // IE6 and IE7 use the wrong syntax.
   }
+
   clip: rect(1px, 1px, 1px, 1px);
 }
 
 .visually-hidden {
-    @include visually-hidden();
+  @include visually-hidden();
 }
 
 .slick-slide {
   margin: 0px 1em;
   transition: all ease-in-out .3s;
   opacity: .2;
-  
+
   img {
     width: 100%;
   }
@@ -68,174 +71,234 @@ $slick-opacity-not-active: 0.25 !default;
 }
 
 .slick-list {
-    .slick-loading & {
-        background: $white slick-image-url("ajax-loader.gif") center center no-repeat;
-    }
+  .slick-loading & {
+    background: $white slick-image-url("ajax-loader.gif") center center no-repeat;
+  }
 }
 
 /* Arrows */
 .slick-controls {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .slick-arrow {
-    @include reset-button(block);
-    position: absolute;
-    top: 50%;
-    width: 30px;
-    height: 30px;
-    background: $black;
-    color: $white;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
-    transform: translate(0, -50%);
-    transition: all ease-in-out .3s;
-    &:hover, &:focus {
-        background: $white;
-        border-color: $black;
-        .ico {
-          fill: $black;
-        }
-    }
-    &[aria-disabled="true"] {
-      opacity: .6;
-    }
+  @include reset-button(block);
+  position: absolute;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  background: $black;
+  color: $white;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  transition: all ease-in-out .3s;
+
+  &:hover,
+  &:focus {
+    background: $white;
+    border-color: $black;
+
     .ico {
-      fill: $white;
+      fill: $black;
     }
+  }
+
+  &[aria-disabled="true"] {
+    opacity: .6;
+  }
+
+  .ico {
+    fill: $white;
+  }
 }
 
 .slick-prev {
-    left: -25px;
-    [dir="rtl"] & {
-        left: auto;
-        right: -25px;
-    }
+  left: -25px;
+
+  [dir="rtl"] & {
+    left: auto;
+    right: -25px;
+  }
 }
 
 .slick-next {
-    right: -25px;
-    [dir="rtl"] & {
-        left: -25px;
-        right: auto;
-    }
+  right: -25px;
+
+  [dir="rtl"] & {
+    left: -25px;
+    right: auto;
+  }
 }
 
 /* Pause/Play Button*/
 .slick-pause {
-    @include reset-button(inline-block);
-    position: absolute;
-    top: 100%;
-    left: 16px;
-    margin-top: calc(0.5em + 5px);
-    z-index: 10;
-    &.slick--paused {
-        overflow: hidden;
-        &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 4px;
-            top: 2px;
-            border-left: 14px solid $black;
-            border-right: 14px solid transparent;
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-        }
+  @include reset-button(inline-block);
+  position: absolute;
+  top: 100%;
+  left: 16px;
+  margin-top: calc(0.5em + 5px);
+  z-index: 10;
+
+  &.slick--paused {
+    overflow: hidden;
+
+    &:hover,
+    &:focus {
+      &:after {
+        border-color: #666;
+      }
     }
-    &.slick--playing {
-        &:before,
-        &:after {
-            content: '';
-            width: 4px;
-            height: 14px;
-            background: $black;
-            display: block;
-            position: absolute;
-            top: 3px;
-        }
-        &:before {
-            left: 4px;
-        }
-        &:after {
-            right: 4px;
-        }
+
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 4px;
+      top: 2px;
+      border-left: 14px solid $black;
+      border-right: 14px solid transparent;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      transition: all ease-in-out .3s;
     }
+  }
+
+  &.slick--playing {
+
+    &:hover,
+    &:focus {
+      &:before,
+      &:after {
+        background: #666;
+      }
+    }
+
+    &:before,
+    &:after {
+      content: '';
+      width: 4px;
+      height: 14px;
+      background: $black;
+      display: block;
+      position: absolute;
+      top: 3px;
+      transition: all ease-in-out .3s;
+    }
+
+    &:before {
+      left: 4px;
+    }
+
+    &:after {
+      right: 4px;
+    }
+  }
 }
 
 /* Dots */
 .slick-dotted.slick-slider {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 .slick-dots {
-    position: absolute;
-    list-style: none;
-    display: block;
-    text-align: center;
-    width: 100%;
-    margin: 0;
+  position: absolute;
+  list-style: none;
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin: 0;
 }
 
 .slick-accessible {
-    .slick-dots {
-        top: 100%;
-        padding: 0 25px;
-        margin-top: 0.5em;
+  .slick-dots {
+    top: 100%;
+    padding: 0 25px;
+    margin-top: 0.5em;
+  }
+
+  .slick-dot {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0;
+
+    &.slick-active>span {
+      border-color: $black;
+      .slick-dot-content {
+        background: #ccc;
+        color: $black;
+      }
     }
-    .slick-dot {
-        position: relative;
-        display: inline-block;
-        margin: 0 5px;
-        padding: 0;
-        &.slick-active > span {
-          border-color: $slick-dot-color;
-        }
-        &:not(.slick-active) {
-            button:hover {
-                opacity: $slick-opacity-on-hover;
-            }
-            button:focus {
-                border-color: $slick-dot-color;
-                opacity: $slick-opacity-on-hover;
-            }
-        }
-        > span,
-        button {
-            display: block;
-            border: 3px solid transparent;
-            border-radius: 4em;
-            position: relative;
-            padding: 0;
-            .slick-initialized:not(.slick-accessible) & {
-                outline: none;
-            }
-        }
-        button {
-          cursor: pointer;
-        }
-    }
-    .slick-dot-content {
-        display: inline-block;
-        font-size: 0.75rem;
-        line-height: 1.5rem;
-        min-width: 1.5rem;
-        min-height: 1.5rem;
-        background: #ddd;
+
+    button:hover,
+    button:focus {
+      transition: all ease-in-out .3s;
+      border-color: $black;
+
+      .slick-dot-content {
+        background: $white;
         border-radius: 4em;
         color: $black;
+      }
     }
-    .slick-dot-count {
-        @include visually-hidden();
+
+    >span,
+    button {
+      display: block;
+      border: 3px solid transparent;
+      border-radius: 4em;
+      position: relative;
+      padding: 0;
+
+      .slick-initialized:not(.slick-accessible) & {
+        outline: none;
+      }
     }
-    .slick-active {
-        button {
-            opacity: $slick-opacity-default;
-            border-color: $slick-dot-color;
-        }
+
+    button {
+      cursor: pointer;
     }
+
+    span .slick-dot-content {
+      text-indent: -9999px;
+      min-width: auto;
+      min-height: auto;
+      display: block;
+      width: .5rem;
+      height: .5rem;
+    }
+
+  }
+
+  .slick-dot-content {
+    display: inline-block;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+    background: $black;
+    border-radius: 4em;
+    color: $white;
+    transition: all ease-in-out .3s;
+  }
+
+  .slick-dot-count {
+    @include visually-hidden();
+  }
+
+  .slick-active {
+    button {
+      border-color: $black;
+
+      .slick-dot-content {
+        background: #ccc;
+        color: $black;
+      }
+    }
+  }
 }
