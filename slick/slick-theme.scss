@@ -196,7 +196,7 @@ $slick-opacity-not-active: 0.25 !default;
           border-color: $slick-dot-color;
         }
         &:not(.slick-active) {
-            &:hover {
+            button:hover {
                 opacity: $slick-opacity-on-hover;
             }
             button:focus {

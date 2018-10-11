@@ -48,6 +48,8 @@
                 labelNext: 'Next',
                 labelPrevInfinite: 'Previous (go to the last item)',
                 labelNextInfinite: 'Next (go to the first item)',
+                labelPrevFirst: 'First item',
+                labelNextFirst: 'Last item',
                 prevArrow: '<button class="slick-prev" type="button">Previous</button>',
                 nextArrow: '<button class="slick-next" type="button">Next</button>',
                 autoplay: false,
@@ -70,8 +72,8 @@
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
                 mobileFirst: false,
-                pauseOnHover: true,
-                pauseOnFocus: true,
+                pauseOnHover: false,
+                pauseOnFocus: false,
                 pauseOnDotsHover: true,
                 pauseLabel: 'Stop animation',
                 playLabel: 'Start animation',
@@ -3068,6 +3070,18 @@
 
             _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
             _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
+
+            if (_.currentSlide === 0) {
+               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrevFirst);
+            } else if (_.$prevArrow.find('.visually-hidden').text() === _.options.labelPrevFirst) {
+               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrev);
+            }
+
+            if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
+                _.$nextArrow.find('.visually-hidden').text(_.options.labelNextFirst);
+            } else if (_.$nextArrow.find('.visually-hidden').text() === _.options.labelNextFirst) {
+               _.$nextArrow.find('.visually-hidden').text(_.options.labelNext);
+            }
 
             if (_.currentSlide === 0) {
 
