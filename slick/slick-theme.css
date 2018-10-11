@@ -157,7 +157,7 @@
 .slick-accessible .slick-dot.slick-active > span {
   border-color: #767676;
 }
-.slick-accessible .slick-dot:not(.slick-active):hover {
+.slick-accessible .slick-dot:not(.slick-active) button:hover {
   opacity: 0.75;
 }
 .slick-accessible .slick-dot:not(.slick-active) button:focus {
