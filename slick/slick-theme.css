@@ -106,9 +106,6 @@
 .slick-pause.slick--paused {
   overflow: hidden;
 }
-.slick-pause.slick--paused:hover:after, .slick-pause.slick--paused:focus:after {
-  border-color: #666;
-}
 .slick-pause.slick--paused:after {
   content: "";
   display: block;
@@ -119,10 +116,6 @@
   border-right: 14px solid transparent;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
-  transition: all ease-in-out 0.3s;
-}
-.slick-pause.slick--playing:hover:before, .slick-pause.slick--playing:hover:after, .slick-pause.slick--playing:focus:before, .slick-pause.slick--playing:focus:after {
-  background: #666;
 }
 .slick-pause.slick--playing:before, .slick-pause.slick--playing:after {
   content: "";
@@ -132,7 +125,6 @@
   display: block;
   position: absolute;
   top: 3px;
-  transition: all ease-in-out 0.3s;
 }
 .slick-pause.slick--playing:before {
   left: 4px;
