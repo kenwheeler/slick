@@ -152,13 +152,6 @@ $slick-opacity-not-active: 0.25 !default;
   &.slick--paused {
     overflow: hidden;
 
-    &:hover,
-    &:focus {
-      &:after {
-        border-color: #666;
-      }
-    }
-
     &:after {
       content: '';
       display: block;
@@ -169,19 +162,10 @@ $slick-opacity-not-active: 0.25 !default;
       border-right: 14px solid transparent;
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
-      transition: all ease-in-out .3s;
     }
   }
 
   &.slick--playing {
-
-    &:hover,
-    &:focus {
-      &:before,
-      &:after {
-        background: #666;
-      }
-    }
 
     &:before,
     &:after {
@@ -192,7 +176,6 @@ $slick-opacity-not-active: 0.25 !default;
       display: block;
       position: absolute;
       top: 3px;
-      transition: all ease-in-out .3s;
     }
 
     &:before {
