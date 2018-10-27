@@ -11,7 +11,7 @@ _the last carousel you'll ever need_
 
 #### CDN
 
-To start working with Slick right away, there's a couple of CDN choices availabile
+To start working with Slick right away, there's a couple of CDN choices available
 to serve the files as close, and fast as possible to your users:
 
 - https://cdnjs.com/libraries/slick-carousel
@@ -185,15 +185,14 @@ Event | Params | Description
 afterChange | event, slick, currentSlide | After slide change callback
 beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
 breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
-destroy | event, slick | When slider is destroyed, or unslicked.
-edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
+destroy | event, slick | When a slider is destroyed, or unslicked.
+edge | event, slick, direction | Fires when an edge is over scrolled in non-infinite mode.
 init | event, slick | When Slick initializes for the first time callback. Note that this event should be defined before initializing the slider.
 reInit | event, slick | Every time Slick (re-)initializes callback
-setPosition | event, slick | Every time Slick recalculates position
+setPosition | event, slick | Every time Slick recalculates the position
 swipe | event, slick, direction | Fires after swipe/drag
 lazyLoaded | event, slick, image, imageSource | Fires after image loads lazily
 lazyLoadError | event, slick, image, imageSource | Fires after image fails to load
-
 
 #### Methods
 
