@@ -29,15 +29,6 @@
     'use strict';
     var Slick = window.Slick || {};
 
-    $.fn.setImage = function(source_url) { // jquery method that sets an image
-        if (this.is('img')) {
-           this.attr('src', source_url);
-        } else {
-           this.css('background-image', 'url("' + source_url + '")').trigger('load');
-        }
-        return this;
-    };
-
     Slick = (function() {
 
         var instanceUid = 0;
@@ -190,6 +181,15 @@
 
             _.registerBreakpoints();
             _.init(true);
+             
+           $.fn.setImage = function(source_url) { // jquery method that sets an image
+              if (this.is('img')) {
+                 this.attr('src', source_url);
+              } else {
+                 this.css('background-image', 'url("' + source_url + '")').trigger('load');
+              }
+              return this;
+           };
 
         }
 
