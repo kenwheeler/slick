@@ -2344,8 +2344,13 @@
                 } else {
 
                     indexOffset = _.options.slidesToShow + index;
+
+                    var sliceRangeStart = evenCoef ? indexOffset - centerOffset + evenCoef : indexOffset - centerOffset + 1 + evenCoef;
+
+                    var sliceRangeEnd = evenCoef ? indexOffset + centerOffset + 1 : indexOffset + centerOffset + 2;
+
                     allSlides
-                        .slice(indexOffset - centerOffset + 1 + evenCoef, indexOffset + centerOffset + 2)
+                        .slice(sliceRangeStart, sliceRangeEnd)
                         .addClass('slick-active')
                         .attr('aria-hidden', 'false');
 
