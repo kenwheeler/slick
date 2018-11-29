@@ -1002,7 +1002,7 @@
 
             _.$slideTrack.children(this.options.slide).detach();
 
-            _.$slidesCache.filter(filter).appendTo(_.$slideTrack);
+            _.$slidesCache.clone(true, true).filter(filter).appendTo(_.$slideTrack);
 
             _.reinit();
 
