@@ -11,7 +11,7 @@ _the last carousel you'll ever need_
 
 #### CDN
 
-To start working with Slick right away, there's a couple of CDN choices availabile
+To start working with Slick right away, there's a couple of CDN choices available
 to serve the files as close, and fast as possible to your users:
 
 - https://cdnjs.com/libraries/slick-carousel
