@@ -1,4 +1,4 @@
-slick
+slick-slider
 -------
 
 [1]: <https://github.com/kenwheeler/slick>
