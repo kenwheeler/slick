@@ -1,7 +1,7 @@
 {
-  "name": "slick-carousel",
+  "name": "@infoprojects-local/slick-carousel",
   "version": "1.9.0",
-  "description": "the last carousel you'll ever need",
+  "description": "the lastest carousel you'll ever need, now with beforeChange event.preventDefault();",
   "main": "slick/slick.js",
   "repository": {
     "type": "git",
@@ -12,7 +12,8 @@
     "slick",
     "responsive",
     "js",
-    "slider"
+    "slider",
+    "preventDefault"
   ],
   "author": "Ken Wheeler <ken_wheeler@me.com>",
   "contributors": [

@@ -5,6 +5,14 @@ slick
 
 _the last carousel you'll ever need_
 
+#### InfoProjects
+This fork implements event.preventDefault() on the slick beforeChange event.
+
+See the following pull-request by boylett @ github.
+https://github.com/kenwheeler/slick/pull/3511
+
+Original readme below:
+
 #### Demo
 
 [http://kenwheeler.github.io/slick](http://kenwheeler.github.io/slick/)
