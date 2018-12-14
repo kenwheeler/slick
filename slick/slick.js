@@ -2336,8 +2336,14 @@
             if (_.options.infinite === true) {
 
                 if (index >= centerOffset && index <= (_.slideCount - 1) - centerOffset) {
+
+
+                    var sliceStart = evenCoef ? index - centerOffset : index - centerOffset + evenCoef;
+
+                    var sliceEnd = evenCoef ? index + centerOffset : index + centerOffset + 1;
+
                     _.$slides
-                        .slice(index - centerOffset + evenCoef, index + centerOffset + 1)
+                        .slice(sliceStart, sliceEnd)
                         .addClass('slick-active')
                         .attr('aria-hidden', 'false');
 
