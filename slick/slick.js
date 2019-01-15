@@ -2514,6 +2514,11 @@
             _.asNavFor(index);
         }
 
+        if(_.options.infinite === false && index < 0) {
+          _.currentSlide = 0;
+          _.updateArrows();
+        }
+
         targetSlide = index;
         targetLeft = _.getLeft(targetSlide);
         slideLeft = _.getLeft(_.currentSlide);
