@@ -32,10 +32,12 @@
 {
     outline: none;
 }
-.slick-list.dragging
-{
+.slick-list.draggable {
     cursor: pointer;
     cursor: grab;
+}
+.slick-list.dragging {
+    cursor: grabbing;
 }
 
 .slick-slider .slick-track,

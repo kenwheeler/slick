@@ -25,9 +25,13 @@
         outline: none;
     }
 
-    &.dragging {
+    &.draggable {
         cursor: pointer;
         cursor: grab;
+    }
+
+    &.dragging {
+        cursor: grabbing;
     }
 }
 .slick-slider .slick-track,
