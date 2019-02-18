@@ -1189,7 +1189,7 @@
                 }
 
                 targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
-            } else if (_.options.outerEdgeLimit) {
+            } else if (_.options.outerEdgeLimit && _.options.centerMode === false) {
                 var lastSlide,
                     lastLeft,
                     outerEdgeLimit;
@@ -1229,9 +1229,6 @@
             var slideOuterWidth, slideOffset, slideRightBoundary;
             slideOuterWidth = $(slide).outerWidth();
             slideOffset = slide.offsetLeft;
-            if (_.options.centerMode !== true) {
-                slideOffset += (slideOuterWidth / 2);
-            }
 
             slideRightBoundary = slideOffset + (slideOuterWidth);
 
@@ -2557,7 +2554,7 @@
             _.asNavFor(index);
         }
 
-        if (_.options.outerEdgeLimit) {
+        if (_.options.outerEdgeLimit && _.options.centerMode === false) {
             outerEdgeSlideNumber = _.getOuterEdgeSlideNumber();
 
             if (outerEdgeSlideNumber < index) {
@@ -3023,13 +3020,26 @@
                 _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
             }
-            if (_.options.outerEdgeLimit){
+            if (_.options.outerEdgeLimit === true && _.options.centerMode === false) {
 
-                var lastSlide = _.$slides.last();
-                var lastSlideOffsetRight = ($(window).width() - (lastSlide.offset().left + lastSlide.outerWidth()));
-                var sliderOffsetRight = ($(window).width() - (_.$slider.offset().left + _.$slider.outerWidth()));
+                var lastSlide = _.$slides.last(),
+                    windowWidth = $(window).width();
+
+                // sliderOffsetLeft is the left margin of the whole slider
+                var sliderOffsetLeft = _.$slider.offset().left;
+                // sliderOffsetRight is the right margin of the whole slider
+                var sliderOffsetRight = windowWidth - (sliderOffsetLeft + _.$slider.outerWidth());
+
+                // lastSlideOffsetRight is the right margin of the last slide
+                var lastSlideOffsetRight = windowWidth - (lastSlide.offset().left + lastSlide.outerWidth());
+
                 var lastSlideOffsetSlider = lastSlideOffsetRight - sliderOffsetRight;
+                // if window is smaller than the last element, then we use only the offset as a measure
+                if (lastSlide.outerWidth() + sliderOffsetLeft + sliderOffsetRight > windowWidth) {
+                    lastSlideOffsetSlider = -lastSlide.offset().left + sliderOffsetLeft;
+                }
 
+                // Check if we've reached the right edge
                 if (lastSlideOffsetSlider > -1) {
                     _.$nextArrow.addClass('slick-disabled').attr('aria-disabled', 'true');
                     _.touchObject.edgeHit = true;
