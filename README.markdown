@@ -79,6 +79,7 @@ autoplay | boolean | false | Enables auto play of slides
 autoplaySpeed | int  | 3000 | Auto play change interval
 centerMode | boolean | false | Enables centered view with partial prev/next slides. Use with odd numbered slidesToShow counts.
 centerPadding | string | '50px' | Side padding when in center mode. (px or %)
+classNamePrefix | string | '' | Appends prefix to all slick's classNames.
 cssEase | string |  'ease' | CSS3 easing
 customPaging | function | n/a | Custom paging templates. See source for use example.
 dots | boolean | false | Current slide indicator dots
