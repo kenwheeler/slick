@@ -1189,7 +1189,7 @@
                 }
 
                 targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
-            } else if (_.options.outerEdgeLimit && _.options.centerMode === false) {
+            } else if (_.options.outerEdgeLimit === true && _.options.centerMode === false && _.options.infinite === false) {
                 var lastSlide,
                     lastLeft,
                     outerEdgeLimit;
@@ -2554,12 +2554,17 @@
             _.asNavFor(index);
         }
 
-        if (_.options.outerEdgeLimit && _.options.centerMode === false) {
+        if (_.options.outerEdgeLimit === true && _.options.centerMode === false && _.options.infinite === false) {
             outerEdgeSlideNumber = _.getOuterEdgeSlideNumber();
 
             if (outerEdgeSlideNumber < index) {
                 index = outerEdgeSlideNumber
             }
+        }
+
+        // If given index is below zero but infinite is false then reset to first index
+        if (_.options.infinite === false && index < 0) {
+            index = 0;
         }
 
         targetSlide = index;
@@ -3020,7 +3025,7 @@
                 _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
             }
-            if (_.options.outerEdgeLimit === true && _.options.centerMode === false) {
+            if (_.options.outerEdgeLimit === true && _.options.centerMode === false && _.options.infinite === false) {
 
                 var lastSlide = _.$slides.last(),
                     windowWidth = $(window).width();
