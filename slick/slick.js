@@ -50,6 +50,8 @@
                 labelNextInfinite: 'Next (go to the first item)',
                 labelPrevFirst: 'First item',
                 labelNextFirst: 'Last item',
+                labelAnnouncement: 'Slide {currentItem} of {totalItems}',
+                labelPaginatioSeparator: 'of',
                 prevArrow: '<button class="slick-prev" type="button">Previous</button>',
                 nextArrow: '<button class="slick-next" type="button">Next</button>',
                 autoplay: false,
@@ -111,6 +113,7 @@
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
+                $slideControls: null,
                 $nextArrow: null,
                 $prevArrow: null,
                 scrolling: false,
@@ -446,7 +449,7 @@
     Slick.prototype.buildArrows = function() {
 
         var _ = this;
-        var $slideControls = $('<ul />', { 'class': 'slick-controls'});
+        _.$slideControls = $('<ul />', { 'class': 'slick-controls'});
 
         if (_.options.arrows === true ) {
 
@@ -459,11 +462,11 @@
                 _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
 
                 if (_.htmlExpr.test(_.options.prevArrow)) {
-                    _.$prevArrow.appendTo($slideControls).wrapAll('<li></li>');
+                    _.$prevArrow.appendTo(_.$slideControls).wrapAll('<li></li>');
                 }
 
                 if (_.htmlExpr.test(_.options.nextArrow)) {
-                    _.$nextArrow.appendTo($slideControls).wrapAll('<li></li>');
+                    _.$nextArrow.appendTo(_.$slideControls).wrapAll('<li></li>');
                 }
 
                 if (_.options.infinite !== true) {
@@ -491,15 +494,15 @@
             _.$pauseButton = $('<button />', {
                 'class': 'slick-pause slick-control slick--playing',
                 'data-action': 'pause',
-                'html': '<span class="visually-hidden">' + _.options.pauseLabel + '</span>'
+                'html': '<span class="slick-visually-hidden">' + _.options.pauseLabel + '</span>'
             });
 
             _.$pauseButton.prependTo(_.$slider);
 
         }
 
-        if ($slideControls.find('li').length) {
-            $slideControls.appendTo(_.options.appendArrows);
+        if (_.$slideControls.find('li').length) {
+            _.$slideControls.appendTo(_.options.appendArrows);
         }
 
         if (_.options.accessibility) {
@@ -507,7 +510,7 @@
             _.$liveRegion = $('<div />', {
                 'aria-live': 'polite',
                 'aria-atomic': 'true',
-                'class': 'live-region visually-hidden',
+                'class': 'live-region slick-visually-hidden',
             });
 
             _.$liveRegion.appendTo(_.options.appendArrows);
@@ -916,6 +919,7 @@
                 .css('display','');
 
             if ( _.htmlExpr.test( _.options.prevArrow )) {
+                _.$slideControls.remove();
                 _.$prevArrow.remove();
             }
         }
@@ -928,6 +932,7 @@
                 .css('display','');
 
             if ( _.htmlExpr.test( _.options.nextArrow )) {
+                _.$slideControls.remove();
                 _.$nextArrow.remove();
             }
         }
@@ -1419,7 +1424,7 @@
             _.$dots.find('li').each(function(i) {
                 var mappedSlideIndex = tabControlIndexes[i];
                 var $buttonContent = $('<span />', { 'class': 'slick-dot-content', 'html': ++i })
-                    .append($('<span />', { 'class': 'slick-dot-count', 'html': ' of ' + numDotGroups }));
+                    .append($('<span />', { 'class': 'slick-dot-count', 'html': ' '+ _.options.labelPaginatioSeparator +' ' + numDotGroups }));
                 var $thisTrigger = $(this).find(':first-child');
                 var $thisButton = $(this).find('button');
                 $thisButton.first().attr({
@@ -1776,7 +1781,7 @@
         if (_.options.accessibility && _.options.autoplay) {
             _.$pauseButton.attr('data-action', 'play')
                 .toggleClass('slick--playing slick--paused')
-                .find('.visually-hidden')
+                .find('.slick-visually-hidden')
                 .html(_.options.playLabel);
         }
 
@@ -1795,7 +1800,7 @@
         if (_.options.accessibility && _.options.autoplay) {
             _.$pauseButton.attr('data-action', 'pause')
                 .toggleClass('slick--playing slick--paused')
-                .find('.visually-hidden')
+                .find('.slick-visually-hidden')
                 .html(_.options.pauseLabel);
         }
 
@@ -1829,7 +1834,7 @@
                     $currentSlide.attr('tabindex', 0).focus();
                 }
                 if (announce) {
-                    var announceItem = 'Slide ' + ++index + ' of ' + _.slideCount;
+                    var announceItem = _.options.labelAnnouncement.replace("{currentItem}", ++index).replace("{totalItems}", _.slideCount);
                     _.$liveRegion.html(announceItem);
                 }
             }
@@ -3051,15 +3056,15 @@
             _.options.infinite ) {
 
             if (_.currentSlide === 0) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrevInfinite);
-            } else if (_.$prevArrow.find('.visually-hidden').text() === _.options.labelPrevInfinite) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrev);
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrevInfinite);
+            } else if (_.$prevArrow.find('.slick-visually-hidden').text() === _.options.labelPrevInfinite) {
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrev);
             }
 
             if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-                _.$nextArrow.find('.visually-hidden').text(_.options.labelNextInfinite);
-            } else if (_.$nextArrow.find('.visually-hidden').text() === _.options.labelNextInfinite) {
-               _.$nextArrow.find('.visually-hidden').text(_.options.labelNext);
+                _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNextInfinite);
+            } else if (_.$nextArrow.find('.slick-visually-hidden').text() === _.options.labelNextInfinite) {
+               _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNext);
             }
 
         }
@@ -3072,15 +3077,15 @@
             _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
             if (_.currentSlide === 0) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrevFirst);
-            } else if (_.$prevArrow.find('.visually-hidden').text() === _.options.labelPrevFirst) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrev);
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrevFirst);
+            } else if (_.$prevArrow.find('.slick-visually-hidden').text() === _.options.labelPrevFirst) {
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrev);
             }
 
             if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-                _.$nextArrow.find('.visually-hidden').text(_.options.labelNextFirst);
-            } else if (_.$nextArrow.find('.visually-hidden').text() === _.options.labelNextFirst) {
-               _.$nextArrow.find('.visually-hidden').text(_.options.labelNext);
+                _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNextFirst);
+            } else if (_.$nextArrow.find('.slick-visually-hidden').text() === _.options.labelNextFirst) {
+               _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNext);
             }
 
             if (_.currentSlide === 0) {
