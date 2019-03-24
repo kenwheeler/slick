@@ -493,7 +493,7 @@
             _.$pauseButton = $('<button />', {
                 'class': 'slick-pause slick-control slick--playing',
                 'data-action': 'pause',
-                'html': '<span class="visually-hidden">' + _.options.pauseLabel + '</span>'
+                'html': '<span class="slick-visually-hidden">' + _.options.pauseLabel + '</span>'
             });
 
             _.$pauseButton.prependTo(_.$slider);
@@ -509,7 +509,7 @@
             _.$liveRegion = $('<div />', {
                 'aria-live': 'polite',
                 'aria-atomic': 'true',
-                'class': 'live-region visually-hidden',
+                'class': 'live-region slick-visually-hidden',
             });
 
             _.$liveRegion.appendTo(_.options.appendArrows);
@@ -1780,7 +1780,7 @@
         if (_.options.accessibility && _.options.autoplay) {
             _.$pauseButton.attr('data-action', 'play')
                 .toggleClass('slick--playing slick--paused')
-                .find('.visually-hidden')
+                .find('.slick-visually-hidden')
                 .html(_.options.playLabel);
         }
 
@@ -1799,7 +1799,7 @@
         if (_.options.accessibility && _.options.autoplay) {
             _.$pauseButton.attr('data-action', 'pause')
                 .toggleClass('slick--playing slick--paused')
-                .find('.visually-hidden')
+                .find('.slick-visually-hidden')
                 .html(_.options.pauseLabel);
         }
 
@@ -3055,15 +3055,15 @@
             _.options.infinite ) {
 
             if (_.currentSlide === 0) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrevInfinite);
-            } else if (_.$prevArrow.find('.visually-hidden').text() === _.options.labelPrevInfinite) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrev);
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrevInfinite);
+            } else if (_.$prevArrow.find('.slick-visually-hidden').text() === _.options.labelPrevInfinite) {
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrev);
             }
 
             if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-                _.$nextArrow.find('.visually-hidden').text(_.options.labelNextInfinite);
-            } else if (_.$nextArrow.find('.visually-hidden').text() === _.options.labelNextInfinite) {
-               _.$nextArrow.find('.visually-hidden').text(_.options.labelNext);
+                _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNextInfinite);
+            } else if (_.$nextArrow.find('.slick-visually-hidden').text() === _.options.labelNextInfinite) {
+               _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNext);
             }
 
         }
@@ -3076,15 +3076,15 @@
             _.$nextArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
             if (_.currentSlide === 0) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrevFirst);
-            } else if (_.$prevArrow.find('.visually-hidden').text() === _.options.labelPrevFirst) {
-               _.$prevArrow.find('.visually-hidden').text(_.options.labelPrev);
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrevFirst);
+            } else if (_.$prevArrow.find('.slick-visually-hidden').text() === _.options.labelPrevFirst) {
+               _.$prevArrow.find('.slick-visually-hidden').text(_.options.labelPrev);
             }
 
             if (_.currentSlide >= _.slideCount - _.options.slidesToShow) {
-                _.$nextArrow.find('.visually-hidden').text(_.options.labelNextFirst);
-            } else if (_.$nextArrow.find('.visually-hidden').text() === _.options.labelNextFirst) {
-               _.$nextArrow.find('.visually-hidden').text(_.options.labelNext);
+                _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNextFirst);
+            } else if (_.$nextArrow.find('.slick-visually-hidden').text() === _.options.labelNextFirst) {
+               _.$nextArrow.find('.slick-visually-hidden').text(_.options.labelNext);
             }
 
             if (_.currentSlide === 0) {
