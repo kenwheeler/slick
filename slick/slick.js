@@ -111,6 +111,7 @@
                 listWidth: null,
                 listHeight: null,
                 loadIndex: 0,
+                $slideControls: null,
                 $nextArrow: null,
                 $prevArrow: null,
                 scrolling: false,
@@ -446,7 +447,7 @@
     Slick.prototype.buildArrows = function() {
 
         var _ = this;
-        var $slideControls = $('<ul />', { 'class': 'slick-controls'});
+        _.$slideControls = $('<ul />', { 'class': 'slick-controls'});
 
         if (_.options.arrows === true ) {
 
@@ -459,11 +460,11 @@
                 _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
 
                 if (_.htmlExpr.test(_.options.prevArrow)) {
-                    _.$prevArrow.appendTo($slideControls).wrapAll('<li></li>');
+                    _.$prevArrow.appendTo(_.$slideControls).wrapAll('<li></li>');
                 }
 
                 if (_.htmlExpr.test(_.options.nextArrow)) {
-                    _.$nextArrow.appendTo($slideControls).wrapAll('<li></li>');
+                    _.$nextArrow.appendTo(_.$slideControls).wrapAll('<li></li>');
                 }
 
                 if (_.options.infinite !== true) {
@@ -498,8 +499,8 @@
 
         }
 
-        if ($slideControls.find('li').length) {
-            $slideControls.appendTo(_.options.appendArrows);
+        if (_.$slideControls.find('li').length) {
+            _.$slideControls.appendTo(_.options.appendArrows);
         }
 
         if (_.options.accessibility) {
@@ -916,6 +917,7 @@
                 .css('display','');
 
             if ( _.htmlExpr.test( _.options.prevArrow )) {
+                _.$slideControls.remove();
                 _.$prevArrow.remove();
             }
         }
@@ -928,6 +930,7 @@
                 .css('display','');
 
             if ( _.htmlExpr.test( _.options.nextArrow )) {
+                _.$slideControls.remove();
                 _.$nextArrow.remove();
             }
         }
