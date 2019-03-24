@@ -50,6 +50,7 @@
                 labelNextInfinite: 'Next (go to the first item)',
                 labelPrevFirst: 'First item',
                 labelNextFirst: 'Last item',
+                labelAnnouncement: 'Slide {currentItem} of {totalItems}',
                 prevArrow: '<button class="slick-prev" type="button">Previous</button>',
                 nextArrow: '<button class="slick-next" type="button">Next</button>',
                 autoplay: false,
@@ -1832,7 +1833,7 @@
                     $currentSlide.attr('tabindex', 0).focus();
                 }
                 if (announce) {
-                    var announceItem = 'Slide ' + ++index + ' of ' + _.slideCount;
+                    var announceItem = _.options.labelAnnouncement.replace("{currentItem}", ++index).replace("{totalItems}", _.slideCount);
                     _.$liveRegion.html(announceItem);
                 }
             }
