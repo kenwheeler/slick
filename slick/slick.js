@@ -51,6 +51,7 @@
                 labelPrevFirst: 'First item',
                 labelNextFirst: 'Last item',
                 labelAnnouncement: 'Slide {currentItem} of {totalItems}',
+                labelPaginatioSeparator: 'of',
                 prevArrow: '<button class="slick-prev" type="button">Previous</button>',
                 nextArrow: '<button class="slick-next" type="button">Next</button>',
                 autoplay: false,
@@ -1423,7 +1424,7 @@
             _.$dots.find('li').each(function(i) {
                 var mappedSlideIndex = tabControlIndexes[i];
                 var $buttonContent = $('<span />', { 'class': 'slick-dot-content', 'html': ++i })
-                    .append($('<span />', { 'class': 'slick-dot-count', 'html': ' of ' + numDotGroups }));
+                    .append($('<span />', { 'class': 'slick-dot-count', 'html': ' '+ _.options.labelPaginatioSeparator +' ' + numDotGroups }));
                 var $thisTrigger = $(this).find(':first-child');
                 var $thisButton = $(this).find('button');
                 $thisButton.first().attr({
