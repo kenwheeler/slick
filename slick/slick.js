@@ -2058,6 +2058,11 @@
 
         _.checkResponsive(false, true);
 
+        if (_.options.accessibility === true) {
+            $(_.$slider).addClass('slick-accessible');
+            _.initADA();
+        }
+
         if (_.options.focusOnSelect === true) {
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
