@@ -61,7 +61,7 @@
                 edgeFriction: 0.35,
                 fade: false,
                 focusOnSelect: false,
-                focusOnChange: false,
+                focusOnChange: true,
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
