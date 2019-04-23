@@ -13,6 +13,8 @@
     Repo: http://github.com/kenwheeler/slick
   Issues: http://github.com/kenwheeler/slick/issues
 
+  04/2019: Updated by Bryan Garaventa (https://github.com/accdc) to enhance automatic accessibility by default for screen reader and keyboard-only users.
+
  */
 /* global window, document, define, jQuery, setInterval, clearInterval */
 ;(function(factory) {
