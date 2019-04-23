@@ -1389,6 +1389,16 @@
 
         _.activateADA();
 
+        _.$slider.attr({
+            'role': 'region',
+            'aria-label': 'carousel'
+        });
+
+        _.$slideTrack.attr({
+            'role': 'region',
+            'aria-label': 'slides'
+        });
+
     };
 
     Slick.prototype.initArrowEvents = function() {
