@@ -1334,7 +1334,10 @@
 
         _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
             'aria-hidden': 'true',
-            'tabindex': '-1'
+            'tabindex': '-1',
+            // BG: Added role and region for standard slides to allow for proper boundary information to be conveyed to screen reader users.
+            'role': 'region',
+            'aria-label': 'Slide'
         }).find('a, input, button, select').attr({
             'tabindex': '-1'
         });
@@ -1394,11 +1397,6 @@
         _.$slider.attr({
             'role': 'region',
             'aria-label': 'carousel'
-        });
-
-        _.$slideTrack.attr({
-            'role': 'region',
-            'aria-label': 'slides'
         });
 
     };
