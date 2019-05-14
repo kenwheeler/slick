@@ -1041,7 +1041,7 @@
                     var $sf = $(this);
 
                     // When a blur occurs on any elements within the slider we become unfocused
-                    if( _.options.pauseOnFocus ) {
+                    if( _.options.pauseOnFocus || (_.options.focusOnChange && _.focussed)) {
                         _.focussed = false;
                         _.autoPlay();
                     }
