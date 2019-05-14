@@ -1353,7 +1353,7 @@
                    var ariaButtonControl = 'slick-slide-control' + _.instanceUid + slideControlIndex
                    if ($('#' + ariaButtonControl).length) {
                      $(this).attr({
-                         'aria-label': ariaButtonControl
+                         'aria-label': 'Slide' + (slideControlIndex + 1) // BG: Changed to provide more accurate name for screen reader users when using the arrow keys.
                      });
                    }
                 }
