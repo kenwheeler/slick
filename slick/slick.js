@@ -1334,7 +1334,7 @@
             'aria-hidden': 'true',
             'tabindex': '-1'
         }).find('a, input, button, select').attr({
-            'tabindex': '-1'
+            'tabindex': '0'
         });
 
         if (_.$dots !== null) {
