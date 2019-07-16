@@ -450,7 +450,7 @@
                 _.$nextArrow.removeClass('slick-hidden').removeAttr('aria-hidden tabindex');
 
                 if (_.htmlExpr.test(_.options.prevArrow)) {
-                    _.$prevArrow.prependTo(_.options.appendArrows);
+                    _.$prevArrow.appendTo(_.options.appendArrows);
                 }
 
                 if (_.htmlExpr.test(_.options.nextArrow)) {
