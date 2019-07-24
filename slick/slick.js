@@ -88,7 +88,8 @@
                 vertical: false,
                 verticalSwiping: false,
                 waitForAnimate: true,
-                zIndex: 1000
+                zIndex: 1000,
+	            resizeDelay: 50
             };
 
             _.initials = {
@@ -1994,7 +1995,7 @@
                      _.checkResponsive();
                      _.setPosition(); 
                 }
-            }, 50);
+            }, _.options.resizeDelay);
         }
     };
 
