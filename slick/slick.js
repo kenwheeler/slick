@@ -801,6 +801,11 @@
         $(window).off('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange);
 
         $(window).off('resize.slick.slick-' + _.instanceUid, _.resize);
+         
+        // clear resize timeout
+	   if(_.windowDelay) {
+             clearTimeout(_.windowDelay);
+        }
 
         $('[draggable!=true]', _.$slideTrack).off('dragstart', _.preventDefault);
 
@@ -1846,6 +1851,11 @@
     Slick.prototype.refresh = function( initializing ) {
 
         var _ = this, currentSlide, lastVisibleIndex;
+         
+        // prevent if the element is unslicked
+        if(_.unslicked) {
+            return;
+        }
 
         lastVisibleIndex = _.slideCount - _.options.slidesToShow;
 
@@ -1980,8 +1990,10 @@
             clearTimeout(_.windowDelay);
             _.windowDelay = window.setTimeout(function() {
                 _.windowWidth = $(window).width();
-                _.checkResponsive();
-                if( !_.unslicked ) { _.setPosition(); }
+                if( !_.unslicked ) {
+                     _.checkResponsive();
+                     _.setPosition(); 
+                }
             }, 50);
         }
     };
