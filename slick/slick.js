@@ -828,7 +828,9 @@
         var _ = this, originalSlides;
 
         if(_.options.rows > 0) {
-            originalSlides = _.$slides.children().children();
+            // keep event listeners with clone
+            // https://stackoverflow.com/questions/38183104/how-to-prevent-slick-plugin-from-removing-event-listeners/40369879#40369879
+            originalSlides = _.$slides.children().children().clone(true);
             originalSlides.removeAttr('style');
             _.$slider.empty().append(originalSlides);
         }
