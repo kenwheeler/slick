@@ -229,7 +229,7 @@
             }
         }
 
-        _.$slides = _.$slideTrack.children(this.options.slide);
+        _.$slides = _.$slideTrack.children(this.options.slide).clone(true);
 
         _.$slideTrack.children(this.options.slide).detach();
 
@@ -2024,7 +2024,7 @@
             _.$slideTrack.children(this.options.slide).eq(index).remove();
         }
 
-        _.$slides = _.$slideTrack.children(this.options.slide);
+        _.$slides = _.$slideTrack.children(this.options.slide).clone(true);
 
         _.$slideTrack.children(this.options.slide).detach();
 
