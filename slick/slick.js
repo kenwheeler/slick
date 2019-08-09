@@ -535,7 +535,7 @@
             _.options.slidesToScroll = 1;
         }
 
-        $('img[_.options.lazyLoadSrcAttr]', _.$slider).not('[src]').addClass('slick-loading');
+        $('img['+_.options.lazyLoadSrcAttr+']', _.$slider).not('[src]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1547,11 +1547,11 @@
 
         function loadImages(imagesScope) {
 
-            $('img[_.options.lazyLoadSrcAttr]', imagesScope).each(function() {
+            $('img['+_.options.lazyLoadSrcAttr+']', imagesScope).each(function() {
 
                 var image = $(this),
-                    imageSource = $(this).attr('_.options.lazyLoadSrcAttr'),
-                    imageSrcSet = $(this).attr('_.options.lazyLoadSrcsetAttr'),
+                    imageSource = $(this).attr(_.options.lazyLoadSrcAttr),
+                    imageSrcSet = $(this).attr(_.options.lazyLoadSrcsetAttr),
                     imageSizes  = $(this).attr('data-sizes') || _.$slider.attr('data-sizes'),
                     imageToLoad = document.createElement('img');
 
@@ -1585,7 +1585,7 @@
                 imageToLoad.onerror = function() {
 
                     image
-                        .removeAttr( '_.options.lazyLoadSrcAttr' )
+                        .removeAttr( _.options.lazyLoadSrcAttr)
                         .removeClass( 'slick-loading' )
                         .addClass( 'slick-lazyload-error' );
 
@@ -1766,7 +1766,7 @@
         tryCount = tryCount || 1;
 
         var _ = this,
-            $imgsToLoad = $( 'img[_.options.lazyLoadSrcAttr]', _.$slider ),
+            $imgsToLoad = $( 'img['+_.options.lazyLoadSrcAttr+']', _.$slider ),
             image,
             imageSource,
             imageSrcSet,
@@ -1776,8 +1776,8 @@
         if ( $imgsToLoad.length ) {
 
             image = $imgsToLoad.first();
-            imageSource = image.attr('_.options.lazyLoadSrcAttr');
-            imageSrcSet = image.attr('_.options.lazyLoadSrcsetAttr');
+            imageSource = image.attr(_.options.lazyLoadSrcAttr);
+            imageSrcSet = image.attr(_.options.lazyLoadSrcsetAttr);
             imageSizes  = image.attr('data-sizes') || _.$slider.attr('data-sizes');
             imageToLoad = document.createElement('img');
 
@@ -1823,7 +1823,7 @@
                 } else {
 
                     image
-                        .removeAttr( '_.options.lazyLoadSrcAttr' )
+                        .removeAttr( _.options.lazyLoadSrcAttr)
                         .removeClass( 'slick-loading' )
                         .addClass( 'slick-lazyload-error' );
 
