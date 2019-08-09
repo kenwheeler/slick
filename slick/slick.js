@@ -65,8 +65,8 @@
                 infinite: true,
                 initialSlide: 0,
                 lazyLoad: 'ondemand',
-                lazyLoadSrcAttr: 'data-lazy',
-                lazyLoadSrcsetAttr: 'data-srcset',
+                lazyLoadSrcAttr: "data-lazy",
+                lazyLoadSrcsetAttr: "data-srcset",
                 mobileFirst: false,
                 pauseOnHover: true,
                 pauseOnFocus: true,
@@ -535,7 +535,7 @@
             _.options.slidesToScroll = 1;
         }
 
-        $('img['+_.options.lazyLoadSrcAttr+']', _.$slider).not('[src]').addClass('slick-loading');
+        $('"img['+_.options.lazyLoadSrcAttr+']"', _.$slider).not('[src]').addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1547,7 +1547,7 @@
 
         function loadImages(imagesScope) {
 
-            $('img['+_.options.lazyLoadSrcAttr+']', imagesScope).each(function() {
+            $('"img['+_.options.lazyLoadSrcAttr+']"', imagesScope).each(function() {
 
                 var image = $(this),
                     imageSource = $(this).attr(_.options.lazyLoadSrcAttr),
@@ -1766,7 +1766,7 @@
         tryCount = tryCount || 1;
 
         var _ = this,
-            $imgsToLoad = $( 'img['+_.options.lazyLoadSrcAttr+']', _.$slider ),
+            $imgsToLoad = $('"img['+_.options.lazyLoadSrcAttr+']"', _.$slider),
             image,
             imageSource,
             imageSrcSet,
