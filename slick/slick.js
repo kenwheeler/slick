@@ -558,6 +558,7 @@
 		var _ = this, a, b, c, newSlides, numOfSlides, originalSlides,slidesPerSection;
 
 		newSlides = document.createDocumentFragment();
+		_.$slider.children().addClass('slick-original-node'); // modif max used in buildRows and cleanUpRows
 		originalSlides = _.$slider.children();
 
 		if(_.options.rows > 0) {
@@ -574,13 +575,16 @@
 					for(c = 0; c < _.options.slidesPerRow; c++) {
 						var target = (a * slidesPerSection + ((b * _.options.slidesPerRow) + c));
 						if (originalSlides.get(target)) {
-							row.appendChild(originalSlides.get(target));
+							row.append(originalSlides.get(target));
 						}
 					}
-					slide.appendChild(row);
+					slide.append(row);
 				}
 				newSlides.appendChild(slide);
 			}
+			console.log(newSlides.children)
+
+			// console.log(newSlides)
 
 			// Calling empty here would remove the original nodes data => https://github.com/jquery/jquery/blob/438b1a3e8a52d3e4efd8aba45498477038849c97/src/manipulation.js
 			// We don't want that ! Since every children will be appended,
@@ -588,7 +592,7 @@
 			// will be kept and in the right place
 			// @see https://developer.mozilla.org/fr/docs/Web/API/Node/appendChild
 			// _.$slider.empty().append(newSlides);
-			_.$slider.get(0).innerHTML = ''
+			_.$slider.get(0).innerHTML = '';
 			_.$slider.append(newSlides);
 
 			_.$slider.children().children().children()
@@ -596,6 +600,7 @@
 					'width':(100 / _.options.slidesPerRow) + '%',
 					'display': 'inline-block'
 				});
+
 
 		}
 
@@ -836,17 +841,20 @@
 		var _ = this, originalSlides;
 
 		if(_.options.rows > 0) {
-			originalSlides = _.$slides.children().children()
+			originalSlides = _.$slides.find('.slick-original-node')//.children().children().children()
 			originalSlides.removeAttr('style');
+			originalSlides.removeClass('slick-original-node')
 			// https://stackoverflow.com/questions/170004/how-to-remove-only-the-parent-element-and-not-its-child-elements-in-javascript
 			// keep event listeners by removing direct children without removing original nodes (same principle as in buildRows)
-			var fragment = document.createDocumentFragment();
-			_.$slides.children().each(function(i, element) {
+			_.$slider.get(0).innerHTML = ''
+			_.$slider.append(originalSlides)
+			/*var fragment = document.createDocumentFragment();
+			_.$slides.children().children().each(function(i, element) {
 				while(element.firstChild) {
 					fragment.appendChild(element.firstChild);
 				}
 				element.parentNode.replaceChild(fragment, element);
-			})
+			})*/
 		}
 
 	};
