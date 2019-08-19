@@ -592,6 +592,7 @@
 			// will be kept and in the right place
 			// @see https://developer.mozilla.org/fr/docs/Web/API/Node/appendChild
 			// _.$slider.empty().append(newSlides);
+			// Do not directly call .html('') cause the behaviour is the same as empty(), it cleans jquery data !
 			_.$slider.get(0).innerHTML = '';
 			_.$slider.append(newSlides);
 
