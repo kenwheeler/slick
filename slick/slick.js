@@ -40,6 +40,8 @@
             _.defaults = {
                 accessibility: true,
                 adaptiveHeight: false,
+                // add alternative adaptive height option
+                alternativeAdaptiveHeight: false,
                 appendArrows: $(element),
                 appendDots: $(element),
                 arrows: true,
@@ -2086,6 +2088,23 @@
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
         if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+
+        // adds top padding to center picture
+        if (_.options.alternativeAdaptiveHeight === true) {
+            var newTopPadding = 0;
+            // adds top padding to center picture for all images except first image
+            if (_.currentSlide !== 0) {
+                newTopPadding = Math.ceil((_.listHeight - _.$slides.eq([_.currentSlide]).height()) / 2);
+                // adds arrow size if image is padded
+                if (newTopPadding !== 0) {
+                    newTopPadding += _.$nextArrow.height()
+                }
+                // adds padding
+                _.$slides.eq([_.currentSlide]).css({
+                    'padding-top': newTopPadding + 'px',
+                });
+            }
+        }
 
     };
 
