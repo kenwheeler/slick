@@ -2972,7 +2972,9 @@
                 _.$prevArrow.removeClass('slick-disabled').attr('aria-disabled', 'false');
 
             }
-
+          
+          _.$slider.trigger('arrowsUpdated');
+          
         }
 
     };
