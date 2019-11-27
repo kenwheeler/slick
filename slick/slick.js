@@ -2318,8 +2318,7 @@
         var _ = this,
             centerOffset, allSlides, indexOffset, remainder;
 
-        allSlides = _.$slider
-            .find('.slick-slide')
+        allSlides = _.$slider.children('.slick-slide')
             .removeClass('slick-active slick-center slick-current')
             .attr('aria-hidden', 'true');
 
