@@ -148,7 +148,7 @@
 
             _.options = $.extend({}, _.defaults, settings, dataSettings);
 
-            _.currentSlide = _.options.initialSlide;
+            _.currentSlide = parseInt(_.options.initialSlide);
 
             _.originalSettings = _.options;
 
@@ -639,7 +639,7 @@
                                 _.breakpointSettings[
                                     targetBreakpoint]);
                             if (initial === true) {
-                                _.currentSlide = _.options.initialSlide;
+                                _.currentSlide = parseInt(_.options.initialSlide);
                             }
                             _.refresh(initial);
                         }
@@ -654,7 +654,7 @@
                             _.breakpointSettings[
                                 targetBreakpoint]);
                         if (initial === true) {
-                            _.currentSlide = _.options.initialSlide;
+                            _.currentSlide = parseInt(_.options.initialSlide);
                         }
                         _.refresh(initial);
                     }
@@ -665,7 +665,7 @@
                     _.activeBreakpoint = null;
                     _.options = _.originalSettings;
                     if (initial === true) {
-                        _.currentSlide = _.options.initialSlide;
+                        _.currentSlide = parseInt(_.options.initialSlide);
                     }
                     _.refresh(initial);
                     triggerBreakpoint = targetBreakpoint;
