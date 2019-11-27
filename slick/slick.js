@@ -529,7 +529,7 @@
             '<div class="slick-list"/>').parent();
         _.$slideTrack.css('opacity', 0);
 
-        if (_.options.centerMode === true || _.options.swipeToSlide === true) {
+        if (_.options.centerMode === true) {
             _.options.slidesToScroll = 1;
         }
 
@@ -729,12 +729,17 @@
 
     };
 
-    Slick.prototype.checkNavigable = function(index) {
+    Slick.prototype.checkNavigable = function(index, slidesToScroll) {
 
         var _ = this,
             navigables, prevNavigable;
 
-        navigables = _.getNavigableIndexes();
+
+        if (typeof slidesToScroll === 'undefined') {
+            slidesToScroll = _.options.slidesToScroll;
+        }
+
+        navigables = _.getNavigableIndexes(slidesToScroll);
         prevNavigable = 0;
         if (index > navigables[navigables.length - 1]) {
             index = navigables[navigables.length - 1];
@@ -1203,7 +1208,7 @@
 
     };
 
-    Slick.prototype.getNavigableIndexes = function() {
+    Slick.prototype.getNavigableIndexes = function(slidesToScroll) {
 
         var _ = this,
             breakPoint = 0,
@@ -1214,15 +1219,15 @@
         if (_.options.infinite === false) {
             max = _.slideCount;
         } else {
-            breakPoint = _.options.slidesToScroll * -1;
-            counter = _.options.slidesToScroll * -1;
+            breakPoint = slidesToScroll * -1;
+            counter = slidesToScroll * -1;
             max = _.slideCount * 2;
         }
 
         while (breakPoint < max) {
             indexes.push(breakPoint);
-            breakPoint = counter + _.options.slidesToScroll;
-            counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
+            breakPoint = counter + slidesToScroll;
+            counter += slidesToScroll <= _.options.slidesToShow ? slidesToScroll : _.options.slidesToShow;
         }
 
         return indexes;
@@ -1326,7 +1331,7 @@
     Slick.prototype.initADA = function() {
         var _ = this,
                 numDotGroups = Math.ceil(_.slideCount / _.options.slidesToShow),
-                tabControlIndexes = _.getNavigableIndexes().filter(function(val) {
+                tabControlIndexes = _.getNavigableIndexes(_.options.slidesToScroll).filter(function(val) {
                     return (val >= 0) && (val < _.slideCount);
                 });
 
@@ -2706,7 +2711,7 @@
 
                     slideCount =
                         _.options.swipeToSlide ?
-                            _.checkNavigable( _.currentSlide + _.getSlideCount() ) :
+                            _.checkNavigable( _.currentSlide + _.getSlideCount(), 1 ) :
                             _.currentSlide + _.getSlideCount();
 
                     _.currentDirection = 0;
@@ -2718,7 +2723,7 @@
 
                     slideCount =
                         _.options.swipeToSlide ?
-                            _.checkNavigable( _.currentSlide - _.getSlideCount() ) :
+                            _.checkNavigable( _.currentSlide - _.getSlideCount(), 1 ) :
                             _.currentSlide - _.getSlideCount();
 
                     _.currentDirection = 1;
