@@ -72,6 +72,10 @@
                 respondTo: 'window',
                 responsive: null,
                 rows: 1,
+                rowElement: 'div',
+                rowClass: 'row',
+                rowGroupElement: 'div',
+                rowGroupClass: 'row-group',
                 rtl: false,
                 slide: '',
                 slidesPerRow: 1,
@@ -567,9 +571,11 @@
             );
 
             for(a = 0; a < numOfSlides; a++){
-                var slide = document.createElement('div');
+                var slide = document.createElement(_.options.rowElement);
+                slide.className = _.options.rowClass;
                 for(b = 0; b < _.options.rows; b++) {
-                    var row = document.createElement('div');
+                    var row = document.createElement(_.options.rowGroupElement);
+                    row.className = _.options.rowGroupClass;
                     for(c = 0; c < _.options.slidesPerRow; c++) {
                         var target = (a * slidesPerSection + ((b * _.options.slidesPerRow) + c));
                         if (originalSlides.get(target)) {
