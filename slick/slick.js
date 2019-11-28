@@ -92,6 +92,7 @@
             };
 
             _.initials = {
+                alignment: 0,
                 animating: false,
                 dragging: false,
                 autoPlayTimer: null,
@@ -105,6 +106,8 @@
                 loadIndex: 0,
                 $nextArrow: null,
                 $prevArrow: null,
+                oldAlignment: 0,
+                oldSlide: 0,
                 scrolling: false,
                 slideCount: null,
                 slideWidth: null,
@@ -313,7 +316,30 @@
                 targetLeft = Math.ceil(targetLeft);
 
                 if (_.options.vertical === false) {
-                    animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
+                    if (_.options.centerMode === true && _.options.infinite === false) {
+
+                        var centerPadding = _.options.centerPadding;
+
+                        if (_.alignment !== _.oldAlignment) {
+                            if (_.currentSlide === 0 && _.oldAlignment === 1) {
+                                targetLeft = 'calc(' + targetLeft + 'px - ' + centerPadding + ')';
+                            } else if (_.currentSlide + 1 === _.slideCount && _.oldAlignment === 0) {
+                                targetLeft = 'calc(' + targetLeft + 'px + ' + centerPadding + ')';
+                            } else if (_.currentSlide > _.oldSlide) {
+                                targetLeft = 'calc(' + targetLeft + 'px - ' + centerPadding + ')';
+                            } else if (_.currentSlide < _.oldSlide) {
+                                targetLeft = 'calc(' + targetLeft + 'px + ' + centerPadding + ')';
+                            } else {
+                                targetLeft = targetLeft + 'px';
+                            }
+                        } else {
+                            targetLeft = targetLeft + 'px';
+                        }
+                    } else {
+                        targetLeft = targetLeft + 'px';
+                    }
+
+                    animProps[_.animType] = 'translate3d(' + targetLeft + ', 0px, 0px)';
                 } else {
                     animProps[_.animType] = 'translate3d(0px,' + targetLeft + 'px, 0px)';
                 }
@@ -2030,9 +2056,31 @@
 
         if (_.options.vertical === false) {
             if (_.options.centerMode === true) {
-                _.$list.css({
-                    padding: ('0px ' + _.options.centerPadding)
-                });
+                if (_.options.infinite === true) {
+                    _.$list.css({
+                        padding: ('0px ' + _.options.centerPadding)
+                    });
+                } else {
+                    if (this.currentSlide + 1 === this.slideCount) {
+                        _.$list.css({
+                            padding: ('0px 0px 0px ' + _.options.centerPadding)
+                        });
+                    } else if (this.currentSlide === 0) {
+                        _.$list.css({
+                            padding: ('0px ' + _.options.centerPadding + ' 0px 0px')
+                        });
+                    } else {
+                        if (this.oldSlide > this.currentSlide) {
+                            _.$list.css({
+                                padding: ('0px 0px 0px ' + _.options.centerPadding)
+                            });
+                        } else if (this.oldSlide < this.currentSlide) {
+                            _.$list.css({
+                                padding: ('0px ' + _.options.centerPadding + ' 0px 0px')
+                            });
+                        }
+                    }
+                }
             }
         } else {
             _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
@@ -2510,6 +2558,15 @@
             if (_.options.fade === false) {
                 targetSlide = _.currentSlide;
                 if (dontAnimate !== true && _.slideCount > _.options.slidesToShow) {
+                    _.oldSlide = _.currentSlide;
+                    _.oldAlignment = _.alignment;
+
+                    if (index < 0) {
+                        _.alignment = 0;
+                    } else if (index > (_.slideCount - _.options.slidesToScroll)) {
+                        _.alignment = 1;
+                    }
+
                     _.animateSlide(slideLeft, function() {
                         _.postSlide(targetSlide);
                     });
@@ -2580,6 +2637,21 @@
         }
 
         if (dontAnimate !== true && _.slideCount > _.options.slidesToShow) {
+            if (_.options.centerMode === true && _.options.infinite === false) {
+                _.oldSlide = oldSlide;
+                _.oldAlignment = _.alignment;
+
+                if (_.currentSlide + 1 === _.slideCount) {
+                    _.alignment = 1;
+                } else if (_.currentSlide === 0) {
+                    _.alignment = 0;
+                } else if (oldSlide < _.currentSlide) {
+                    _.alignment = 0;
+                } else if (oldSlide > _.currentSlide) {
+                    _.alignment = 1;
+                }
+            }
+
             _.animateSlide(targetLeft, function() {
                 _.postSlide(animSlide);
             });
