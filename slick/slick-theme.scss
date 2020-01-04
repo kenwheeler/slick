@@ -55,6 +55,7 @@ $slick-opacity-not-active: 0.25 !default;
         src: slick-font-url("slick.eot?#iefix") format("embedded-opentype"), slick-font-url("slick.woff") format("woff"), slick-font-url("slick.ttf") format("truetype"), slick-font-url("slick.svg#slick") format("svg");
         font-weight: normal;
         font-style: normal;
+        font-display: swap;
     }
 }
 
