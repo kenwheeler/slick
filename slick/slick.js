@@ -2323,7 +2323,10 @@
         allSlides = _.$slider
             .find('.slick-slide')
             .removeClass('slick-active slick-center slick-current')
-            .attr('aria-hidden', 'true');
+            .attr({
+                'aria-hidden': 'true', 
+                'tabindex': '-1'
+            });
 
         _.$slides
             .eq(index)
