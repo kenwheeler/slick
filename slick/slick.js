@@ -320,7 +320,11 @@
                 _.$slideTrack.css(animProps);
 
                 if (callback) {
-                    setTimeout(function() {
+                    if (_.currentTimeout) {
+                        clearTimeout(_.currentTimeout);
+                    }
+                    _.currentTimeout = setTimeout(function() {
+                        _.currentTimeout = null;
 
                         _.disableTransition();
 
@@ -1019,7 +1023,7 @@
             .off('focus.slick blur.slick')
             .on(
                 'focus.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
@@ -1034,7 +1038,7 @@
                 }
             ).on(
                 'blur.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
