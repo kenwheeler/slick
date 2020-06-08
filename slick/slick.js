@@ -1209,7 +1209,8 @@
             breakPoint = 0,
             counter = 0,
             indexes = [],
-            max;
+            max,
+            interval;
 
         if (_.options.infinite === false) {
             max = _.slideCount;
@@ -1219,11 +1220,15 @@
             max = _.slideCount * 2;
         }
 
-        while (breakPoint < max) {
-            indexes.push(breakPoint);
-            breakPoint = counter + _.options.slidesToScroll;
-            counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;
-        }
+        interval = setInterval(function() {
+            if (breakPoint < max) {
+                indexes.push(breakPoint);
+                breakPoint = counter + _.options.slidesToScroll;
+                counter += _.options.slidesToScroll <= _.options.slidesToShow ? _.options.slidesToScroll : _.options.slidesToShow;    
+            } else {
+                clearInterval(interval);
+            }
+        }, 1);
 
         return indexes;
 
