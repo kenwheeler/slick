@@ -27,6 +27,21 @@
 
 }(function($) {
     'use strict';
+
+    // Before we do anything: One-fits-all solution to bind passive event listeners, if possible, to improve performance
+    // https://stackoverflow.com/questions/46094912/added-non-passive-event-listener-to-a-scroll-blocking-touchstart-event?rq=1
+    if (typeof EventTarget !== "undefined") {
+        let func = EventTarget.prototype.addEventListener;
+        EventTarget.prototype.addEventListener = function(type, fn, capture) {
+            this.func = func;
+            if (typeof capture !== "boolean") {
+                capture = capture || {};
+                capture.passive = false;
+            }
+            this.func(type, fn, capture);
+        };
+    }
+
     var Slick = window.Slick || {};
 
     Slick = (function() {
@@ -1019,7 +1034,7 @@
             .off('focus.slick blur.slick')
             .on(
                 'focus.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
@@ -1034,7 +1049,7 @@
                 }
             ).on(
                 'blur.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
@@ -1452,36 +1467,6 @@
 
     };
 
-
-    // do we have touch enabled (be careful of windows desktop clients)
-    Slick.prototype.isTouch = function() {
-        return (
-            !!(typeof window !== 'undefined' &&
-            ('ontouchstart' in window ||
-            (window.DocumentTouch &&
-            typeof document !== 'undefined' &&
-            document instanceof window.DocumentTouch))) ||
-            !!(typeof navigator !== 'undefined' &&
-            (navigator.maxTouchPoints || navigator.msMaxTouchPoints))
-        );
-    };
-
-    // Test via a getter in the options object to see if the passive property is accessed
-    Slick.prototype.canListenPassive = function() {
-        var supportsPassive = false;
-        try {
-            var opts = Object.defineProperty({}, 'passive', {
-                get: function() {
-                    supportsPassive = true;
-                }
-            });
-            window.addEventListener("testPassive", null, opts);
-            window.removeEventListener("testPassive", null, opts);
-        } catch (e) {}
-
-        return supportsPassive;
-    };
-
     Slick.prototype.initializeEvents = function() {
 
         var _ = this;
@@ -1491,37 +1476,18 @@
         _.initDotEvents();
         _.initSlideEvents();
 
-        _.$list[0].addEventListener('touchstart.slick mousedown.slick', function (e) {
-            _.swipeHandler($.extend({}, e, {
-                data: {
-                    action: 'start'
-                }
-            }))
-        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
-
-        _.$list[0].addEventListener('touchmove.slick mousemove.slick', function (e) {
-            _.swipeHandler($.extend({}, e, {
-                data: {
-                    action: 'move'
-                }
-            }))
-        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
-
-
-        _.$list[0].addEventListener('touchend.slick mouseup.slick', function (e) {
-            _.swipeHandler($.extend({}, e, {
-                data: {
-                    action: 'end'
-                }
-            }))
-        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
-        _.$list[0].addEventListener('touchcancel.slick mouseleave.slick', function (e) {
-            _.swipeHandler($.extend({}, e, {
-                data: {
-                    action: 'end'
-                }
-            }))
-        }, _.isTouch && _.canListenPassive ? {passive: true} : false);
+        _.$list.on('touchstart.slick mousedown.slick', {
+            action: 'start'
+        }, _.swipeHandler);
+        _.$list.on('touchmove.slick mousemove.slick', {
+            action: 'move'
+        }, _.swipeHandler);
+        _.$list.on('touchend.slick mouseup.slick', {
+            action: 'end'
+        }, _.swipeHandler);
+        _.$list.on('touchcancel.slick mouseleave.slick', {
+            action: 'end'
+        }, _.swipeHandler);
 
         _.$list.on('click.slick', _.clickHandler);
 
