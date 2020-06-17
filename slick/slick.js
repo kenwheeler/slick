@@ -29,18 +29,17 @@
     'use strict';
 
     // Before we do anything: One-fits-all solution to bind passive event listeners, if possible, to improve performance
-    // https://stackoverflow.com/questions/46094912/added-non-passive-event-listener-to-a-scroll-blocking-touchstart-event?rq=1
-    if (typeof EventTarget !== "undefined") {
-        let func = EventTarget.prototype.addEventListener;
-        EventTarget.prototype.addEventListener = function(type, fn, capture) {
-            this.func = func;
-            if (typeof capture !== "boolean") {
-                capture = capture || {};
-                capture.passive = false;
-            }
-            this.func(type, fn, capture);
-        };
-    }
+    jQuery.event.special.touchstart = {
+        setup: function(_, ns, handle) {
+            this.addEventListener('touchstart', handle, {passive: (ns.includes('noPreventDefault') ? true : false)});
+        }
+    };
+
+    jQuery.event.special.touchmove = {
+        setup: function(_, ns, handle) {
+            this.addEventListener('touchmove', handle, {passive: (ns.includes('noPreventDefault') ? true : false)});
+        }
+    };
 
     var Slick = window.Slick || {};
 
