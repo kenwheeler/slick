@@ -1516,26 +1516,46 @@
 
     };
 
-    Slick.prototype.keyHandler = function(event) {
-
+    Slick.prototype.keyHandler = function (event) {
         var _ = this;
-         //Dont slide if the cursor is inside the form fields and arrow keys are pressed
-        if(!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
+        //Dont slide if the cursor is inside the form fields and arrow keys are pressed
+        if (!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
             if (event.keyCode === 37 && _.options.accessibility === true) {
+                var $dotsContainer = $(event.currentTarget).closest('.' + _.options.dotsClass);
+                var dotIsFocused = $dotsContainer.length === 1;
+
+                var message = _.options.rtl === true ? 'next' : 'previous';
+
                 _.changeSlide({
                     data: {
-                        message: _.options.rtl === true ? 'next' :  'previous'
+                        message: message
                     }
                 });
+
+                if (dotIsFocused) {
+                    $dotsContainer.find('li.slick-active button')
+                        .attr({ 'aria-selected': 'true' })
+                        .focus();
+                }
             } else if (event.keyCode === 39 && _.options.accessibility === true) {
+                var $dotsContainer = $(event.currentTarget).closest('.' + _.options.dotsClass);
+                var dotIsFocused = $dotsContainer.length === 1;
+
+                var message = _.options.rtl === true ? 'previous' : 'next';
+
                 _.changeSlide({
                     data: {
-                        message: _.options.rtl === true ? 'previous' : 'next'
+                        message: message
                     }
                 });
+
+                if (dotIsFocused) {
+                    $dotsContainer.find('li.slick-active button')
+                        .attr({ 'aria-selected': 'true' })
+                        .focus();
+                }
             }
         }
-
     };
 
     Slick.prototype.lazyLoad = function() {
@@ -2324,7 +2344,7 @@
             .find('.slick-slide')
             .removeClass('slick-active slick-center slick-current')
             .attr({
-                'aria-hidden': 'true', 
+                'aria-hidden': 'true',
                 'tabindex': '-1'
             });
 
