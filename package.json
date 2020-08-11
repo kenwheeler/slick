@@ -45,6 +45,6 @@
     "url": "https://github.com/kenwheeler/slick/issues"
   },
   "peerDependencies": {
-    "jquery": ">=1.8.0"
+    "jquery": ">=3.4"
   }
 }

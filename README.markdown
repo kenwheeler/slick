@@ -1,6 +1,10 @@
 slick
 -------
 
+Modified to work with version 3.4 of jQuery by changing the following:
+* Changing all values passed through `.css()` to strings - https://github.com/jquery/jquery-migrate/blob/master/warnings.md#jqmigrate-use-of-number-typed-values-is-deprecated-in-jqueryfncss
+* Removing the deprecated `jQuery.type` method - https://api.jquery.com/jQuery.type/
+
 [1]: <https://github.com/kenwheeler/slick>
 
 _the last carousel you'll ever need_
@@ -281,7 +285,7 @@ Slick works on IE8+ in addition to other modern browsers such as Chrome, Firefox
 
 #### Dependencies
 
-jQuery 1.7
+jQuery 3.4
 
 #### License
 
