@@ -527,7 +527,7 @@
 
         _.$list = _.$slideTrack.wrap(
             '<div class="slick-list"/>').parent();
-        _.$slideTrack.css('opacity', 0);
+        _.$slideTrack.css('opacity', '0');
 
         if (_.options.centerMode === true || _.options.swipeToSlide === true) {
             _.options.slidesToScroll = 1;
@@ -937,7 +937,7 @@
         if (_.cssTransitions === false) {
 
             _.$slides.eq(slideIndex).css({
-                zIndex: _.options.zIndex
+                zIndex: _.options.zIndex.toString()
             });
 
             _.$slides.eq(slideIndex).animate({
@@ -950,7 +950,7 @@
 
             _.$slides.eq(slideIndex).css({
                 opacity: 1,
-                zIndex: _.options.zIndex
+                zIndex: _.options.zIndex.toString()
             });
 
             if (callback) {
@@ -973,8 +973,8 @@
         if (_.cssTransitions === false) {
 
             _.$slides.eq(slideIndex).animate({
-                opacity: 0,
-                zIndex: _.options.zIndex - 2
+                opacity: '0',
+                zIndex: (_.options.zIndex - 2).toString()
             }, _.options.speed, _.options.easing);
 
         } else {
@@ -982,8 +982,8 @@
             _.applyTransition(slideIndex);
 
             _.$slides.eq(slideIndex).css({
-                opacity: 0,
-                zIndex: _.options.zIndex - 2
+                opacity: '0',
+                zIndex: (_.options.zIndex - 2).toString()
             });
 
         }
@@ -1653,7 +1653,7 @@
         _.setPosition();
 
         _.$slideTrack.css({
-            opacity: 1
+            opacity: '1'
         });
 
         _.$slider.removeClass('slick-loading');
@@ -1887,7 +1887,7 @@
         var _ = this, breakpoint, currentBreakpoint, l,
             responsiveSettings = _.options.responsive || null;
 
-        if ( $.type(responsiveSettings) === 'array' && responsiveSettings.length ) {
+        if ( Array.isArray(responsiveSettings) && responsiveSettings.length ) {
 
             _.respondTo = _.options.respondTo || 'window';
 
@@ -2099,25 +2099,25 @@
             if (_.options.rtl === true) {
                 $(element).css({
                     position: 'relative',
-                    right: targetLeft,
-                    top: 0,
-                    zIndex: _.options.zIndex - 2,
-                    opacity: 0
+                    right: targetLeft.toString(),
+                    top: '0',
+                    zIndex: (_.options.zIndex - 2).toString(),
+                    opacity: '0'
                 });
             } else {
                 $(element).css({
                     position: 'relative',
-                    left: targetLeft,
-                    top: 0,
-                    zIndex: _.options.zIndex - 2,
-                    opacity: 0
+                    left: targetLeft.toString(),
+                    top: '0',
+                    zIndex: (_.options.zIndex - 2).toString(),
+                    opacity: '0'
                 });
             }
         });
 
         _.$slides.eq(_.currentSlide).css({
-            zIndex: _.options.zIndex - 1,
-            opacity: 1
+            zIndex: (_.options.zIndex - 1).toString(),
+            opacity: '1'
         });
 
     };
@@ -2128,7 +2128,7 @@
 
         if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
-            _.$list.css('height', targetHeight);
+            _.$list.css('height', targetHeight.toString());
         }
 
     };
@@ -2151,13 +2151,13 @@
 
         var _ = this, l, item, option, value, refresh = false, type;
 
-        if( $.type( arguments[0] ) === 'object' ) {
+        if( typeof arguments[0] === 'object' && arguments[0] !== null ) {
 
             option =  arguments[0];
             refresh = arguments[1];
             type = 'multiple';
 
-        } else if ( $.type( arguments[0] ) === 'string' ) {
+        } else if ( typeof arguments[0] === 'string' ) {
 
             option =  arguments[0];
             value = arguments[1];
@@ -2193,7 +2193,7 @@
 
             for ( item in value ) {
 
-                if( $.type( _.options.responsive ) !== 'array' ) {
+                if( !Array.isArray( _.options.responsive ) ) {
 
                     _.options.responsive = [ value[item] ];
 
