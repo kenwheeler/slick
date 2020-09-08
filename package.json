@@ -1,6 +1,6 @@
 {
   "name": "slick-carousel",
-  "version": "1.8.2",
+  "version": "1.8.22",
   "description": "the last carousel you'll ever need",
   "main": "slick/slick.js",
   "repository": {
@@ -16,6 +16,7 @@
   ],
   "author": "Ken Wheeler <ken_wheeler@me.com>",
   "contributors": [
+    
     {
       "name": "ken wheeler",
       "email": "ken_wheeler@me.com",
