@@ -1,2 +1,7 @@
+# Editors
+.idea
+.idea_modules/
+*.iml
+
 .sass-cache
 node_modules
