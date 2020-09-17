@@ -46,6 +46,7 @@
                 asNavFor: null,
                 prevArrow: '<button class="slick-prev" aria-label="Previous" type="button">Previous</button>',
                 nextArrow: '<button class="slick-next" aria-label="Next" type="button">Next</button>',
+                dotButtonLabel: 'Slide {0} of {1}',
                 autoplay: false,
                 autoplaySpeed: 3000,
                 centerMode: false,
@@ -1342,7 +1343,6 @@
                 var slideControlIndex = tabControlIndexes.indexOf(i);
 
                 $(this).attr({
-                    'role': 'tabpanel',
                     'id': 'slick-slide' + _.instanceUid + i,
                     'tabindex': -1
                 });
@@ -1357,18 +1357,13 @@
                 }
             });
 
-            _.$dots.attr('role', 'tablist').find('li').each(function(i) {
+            _.$dots.find('li').each(function(i) {
                 var mappedSlideIndex = tabControlIndexes[i];
 
-                $(this).attr({
-                    'role': 'presentation'
-                });
-
                 $(this).find('button').first().attr({
-                    'role': 'tab',
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
-                    'aria-label': (i + 1) + ' of ' + numDotGroups,
+                    'aria-label': _.options.dotButtonLabel.replace('{0}', i + 1).replace('{1}', numDotGroups),
                     'aria-selected': null,
                     'tabindex': '-1'
                 });
