@@ -47,5 +47,13 @@
   "license": "MIT",
   "peerDependencies": {
     "jquery": ">=1.8.0"
+  },
+  "scripts": {
+    "build": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-rename": "^2.0.0",
+    "gulp-uglify": "^3.0.2"
   }
 }
