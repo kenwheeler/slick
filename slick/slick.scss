@@ -65,6 +65,8 @@
     float: left;
     height: 100%;
     min-height: 1px;
+    // Delete line black 
+    outline: none;
     [dir="rtl"] & {
         float: right;
     }
