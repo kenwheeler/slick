@@ -201,9 +201,9 @@
 
     Slick.prototype.addSlide = Slick.prototype.slickAdd = function(markup, index, addBefore) {
 
-        var _ = this;
+        var _ = this, originalSlides, emptyChildDiv = false;
 
-        if (typeof(index) === 'boolean') {
+        if (typeof (index) === 'boolean') {
             addBefore = index;
             index = null;
         } else if (index < 0 || (index >= _.slideCount)) {
@@ -212,7 +212,9 @@
 
         _.unload();
 
-        if (typeof(index) === 'number') {
+        originalSlides = _.$slider.children();
+
+        if (typeof (index) === 'number') {
             if (index === 0 && _.$slides.length === 0) {
                 $(markup).appendTo(_.$slideTrack);
             } else if (addBefore) {
@@ -224,7 +226,29 @@
             if (addBefore === true) {
                 $(markup).prependTo(_.$slideTrack);
             } else {
-                $(markup).appendTo(_.$slideTrack);
+                // $(markup).appendTo(_.$slideTrack);
+                if (_.options.rows > 0) {
+                    for (let index = 0; index < _.$slideTrack[0].lastChild.children.length; index++) {
+                        const element = _.$slideTrack[0].lastChild.children[index];
+                        if ($(element).children().length == 0) {
+                            _.$slideTrack[0].lastChild.children[index].append(markup);
+                            emptyChildDiv = true;
+                            break;
+                        }
+                    }
+                    if (!emptyChildDiv) {
+                        var row = document.createElement('div');
+                        let firstSlide = document.createElement('div');
+                        firstSlide.append(markup);
+                        row.append(firstSlide);
+                        for (let c = 1; c < _.options.rows; c++) {
+                            var slideDiv = document.createElement('div');
+                            row.appendChild(slideDiv);
+                        }
+                        emptyChildDiv = false;
+                        $(row).appendTo(_.$slideTrack);
+                    }
+                }
             }
         }
 
@@ -234,11 +258,19 @@
 
         _.$slideTrack.append(_.$slides);
 
-        _.$slides.each(function(index, element) {
+        _.$slider.children().children().children()
+            .css({
+                'width': (100 / _.options.slidesPerRow) + '%',
+                'display': 'inline-block'
+            });
+
+        _.$slides.each(function (index, element) {
             $(element).attr('data-slick-index', index);
         });
 
         _.$slidesCache = _.$slides;
+
+        _.$slider.trigger('afterChange', [_, index]);
 
         _.reinit();
 
@@ -1988,16 +2020,21 @@
 
     Slick.prototype.removeSlide = Slick.prototype.slickRemove = function(index, removeBefore, removeAll) {
 
-        var _ = this;
+        var _ = this, slideCountParent;
 
-        if (typeof(index) === 'boolean') {
+        slideCountParent = $(this.$slideTrack[0].parentElement)[0].parentElement.getAttribute("slideslength");
+        if (slideCountParent) {
+            _.slideCount = slideCountParent;
+        }
+
+        if (typeof (index) === 'boolean') {
             removeBefore = index;
             index = removeBefore === true ? 0 : _.slideCount - 1;
         } else {
             index = removeBefore === true ? --index : index;
         }
 
-        if (_.slideCount < 1 || index < 0 || index > _.slideCount - 1) {
+        if (_.slideCount < 1 || index < 0 || index > _.slideCount) {
             return false;
         }
 
@@ -2006,7 +2043,35 @@
         if (removeAll === true) {
             _.$slideTrack.children().remove();
         } else {
-            _.$slideTrack.children(this.options.slide).eq(index).remove();
+
+            if (_.options.rows > 1) {
+                let a = index, b = _.slideCount, c = _.options.rows;
+                let numRowLocation;
+                let numColumnLocation;
+
+                for (let i = 1; i <= _.$slideTrack[0].childElementCount; i++) {
+                    if (index <= c * i) {
+                        numColumnLocation = i - 1;
+                    }
+                }
+
+                let rest = (index + 1) % c;
+                if (rest == 0) {
+                    numRowLocation = c - 1;
+                }
+                else {
+                    numRowLocation = rest - 1;
+                }
+
+                _.$slideTrack[0].children[numColumnLocation].children[numRowLocation].firstElementChild.remove();
+                if (numRowLocation === 0) {
+                    _.$slideTrack[0].children[numColumnLocation].remove();
+                }
+            }
+            else {
+                _.$slideTrack.children(this.options.slide).eq(index).remove();
+            }
+
         }
 
         _.$slides = _.$slideTrack.children(this.options.slide);
@@ -2016,7 +2081,7 @@
         _.$slideTrack.append(_.$slides);
 
         _.$slidesCache = _.$slides;
-
+        _.$slider.trigger('afterChange', [_, index]);
         _.reinit();
 
     };
