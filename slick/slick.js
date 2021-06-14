@@ -1362,14 +1362,11 @@
 
                 $(this).find('button').first().attr({
                     'id': 'slick-slide-control' + _.instanceUid + i,
-                    'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
                     'aria-label': _.options.dotButtonLabel.replace('{0}', i + 1).replace('{1}', numDotGroups),
-                    'aria-selected': null,
                     'tabindex': '-1'
                 });
 
             }).eq(_.currentSlide).find('button').attr({
-                'aria-selected': 'true',
                 'tabindex': '0'
             }).end();
         }
@@ -1529,7 +1526,6 @@
 
                 if (dotIsFocused) {
                     $dotsContainer.find('li.slick-active button')
-                        .attr({ 'aria-selected': 'true' })
                         .focus();
                 }
             } else if (event.keyCode === 39 && _.options.accessibility === true) {
@@ -1546,7 +1542,6 @@
 
                 if (dotIsFocused) {
                     $dotsContainer.find('li.slick-active button')
-                        .attr({ 'aria-selected': 'true' })
                         .focus();
                 }
             }
