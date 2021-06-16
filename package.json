@@ -1,6 +1,6 @@
 {
   "name": "@infoprojects/slick-carousel",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "the lastest carousel you'll ever need (forked from https://github.com/kenwheeler/slick.git), now with beforeChange event.preventDefault();",
   "main": "slick/slick.js",
   "repository": {
