@@ -290,3 +290,5 @@ Copyright (c) 2017 Ken Wheeler
 Licensed under the MIT license.
 
 Free as in Bacon.
+
+#### Thank you for downloading!
