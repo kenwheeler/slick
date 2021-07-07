@@ -2502,7 +2502,7 @@
 
         sync = sync || false;
 
-        if (_.animating === true && _.options.waitForAnimate === true) {
+        if (_.animating === true && _.options.waitForAnimate === true && !dontAnimate) {
             return;
         }
 
