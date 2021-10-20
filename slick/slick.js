@@ -6,7 +6,7 @@
 |___/_|_|\___|_|\_(_)/ |___/
                    |__/
 
- Version: 1.8.12
+ Version: 1.8.13
   Author: Ken Wheeler - Fix dot by Somethumb
  Website: http://kenwheeler.github.io
     Docs: http://kenwheeler.github.io/slick
