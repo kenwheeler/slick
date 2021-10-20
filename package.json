@@ -1,11 +1,11 @@
 {
   "name": "slick-carousel",
-  "version": "1.8.1",
+  "version": "1.8.12",
   "description": "the last carousel you'll ever need",
   "main": "slick/slick.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kenwheeler/slick.git"
+    "url": "https://github.com/somethumb/slick.git"
   },
   "keywords": [
     "carousel",
@@ -38,6 +38,11 @@
     {
       "name": "ashley mcknight",
       "email": "ash@sharpteef.net"
+    },
+    {
+      "name": "somethumb",
+      "email": "info@somethumb.com",
+      "url": "http://www.somethumb.com"
     }
   ],
   "license": "MIT",
