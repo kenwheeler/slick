@@ -26,7 +26,7 @@ $slick-opacity-not-active: 0.25 !default;
         @return image-url($url);
     }
     @else {
-        @return url($slick-loader-path + $url);
+        @return url(#{$slick-font-path}#{$url});
     }
 }
 
@@ -35,7 +35,7 @@ $slick-opacity-not-active: 0.25 !default;
         @return font-url($url);
     }
     @else {
-        @return url($slick-font-path + $url);
+        @return url(#{$slick-font-path}#{$url});
     }
 }
 
