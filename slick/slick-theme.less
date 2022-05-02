@@ -11,6 +11,7 @@
 @slick-prev-character: "←";
 @slick-next-character: "→";
 @slick-dot-character: "•";
+@slick-active-dot-character: "•";
 @slick-dot-size: 6px;
 @slick-opacity-default: 0.75;
 @slick-opacity-on-hover: 1;
@@ -163,6 +164,10 @@
         &.slick-active button:before {
             color: @slick-dot-color-active;
             opacity: @slick-opacity-default;
+
+            &:before {
+                content: @slick-active-dot-character;
+            }
         }
     }
 }
