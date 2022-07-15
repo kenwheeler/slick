@@ -50,7 +50,7 @@ PLEASE review CONTRIBUTING.markdown prior to requesting a feature, filing a pull
 
 ### Data Attribute Settings
 
-In slick 1.5 you can now add settings using the data-slick attribute. You still need to call $(element).slick() to initialize slick on the element.
+In slick 1.5 you can now add settings using the data-slick attribute. You still need to call `$(element).slick()` to initialize slick on the element.
 
 Example:
 
