@@ -1653,7 +1653,7 @@
         _.setPosition();
 
         _.$slideTrack.css({
-            opacity: 1
+            opacity: '1'
         });
 
         _.$slider.removeClass('slick-loading');
@@ -1887,7 +1887,7 @@
         var _ = this, breakpoint, currentBreakpoint, l,
             responsiveSettings = _.options.responsive || null;
 
-        if ( $.type(responsiveSettings) === 'array' && responsiveSettings.length ) {
+        if ( Array.isArray(responsiveSettings) && responsiveSettings.length ) {
 
             _.respondTo = _.options.respondTo || 'window';
 
@@ -2100,24 +2100,24 @@
                 $(element).css({
                     position: 'relative',
                     right: targetLeft,
-                    top: 0,
+                    top: '0',
                     zIndex: _.options.zIndex - 2,
-                    opacity: 0
+                    opacity: '0'
                 });
             } else {
                 $(element).css({
                     position: 'relative',
                     left: targetLeft,
-                    top: 0,
+                    top: '0',
                     zIndex: _.options.zIndex - 2,
-                    opacity: 0
+                    opacity: '0'
                 });
             }
         });
 
         _.$slides.eq(_.currentSlide).css({
             zIndex: _.options.zIndex - 1,
-            opacity: 1
+            opacity: '1'
         });
 
     };
@@ -2128,7 +2128,7 @@
 
         if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
-            _.$list.css('height', targetHeight);
+            _.$list.css('height', targetHeight + 'px');
         }
 
     };
@@ -2151,19 +2151,19 @@
 
         var _ = this, l, item, option, value, refresh = false, type;
 
-        if( $.type( arguments[0] ) === 'object' ) {
+        if( $.isPlainObject( arguments[0] ) ) {
 
             option =  arguments[0];
             refresh = arguments[1];
             type = 'multiple';
 
-        } else if ( $.type( arguments[0] ) === 'string' ) {
+        } else if ( typeof arguments[0] === 'string' ) {
 
             option =  arguments[0];
             value = arguments[1];
             refresh = arguments[2];
 
-            if ( arguments[0] === 'responsive' && $.type( arguments[1] ) === 'array' ) {
+            if ( arguments[0] === 'responsive' && Array.isArray( arguments[1] ) ) {
 
                 type = 'responsive';
 
@@ -2193,7 +2193,7 @@
 
             for ( item in value ) {
 
-                if( $.type( _.options.responsive ) !== 'array' ) {
+                if( !Array.isArray( _.options.responsive ) ) {
 
                     _.options.responsive = [ value[item] ];
 
