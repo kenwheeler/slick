@@ -1733,7 +1733,7 @@
 
                 if (_.options.focusOnChange) {
                     var $currentSlide = $(_.$slides.get(_.currentSlide));
-                    $currentSlide.attr('tabindex', 0).focus();
+                    $currentSlide.attr('tabindex', 0).trigger('focus');
                 }
             }
 
