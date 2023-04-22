@@ -44,6 +44,7 @@
                 appendDots: $(element),
                 arrows: true,
                 asNavFor: null,
+                slideMargin: null,
                 prevArrow: '<button class="slick-prev" aria-label="Previous" type="button">Previous</button>',
                 nextArrow: '<button class="slick-next" aria-label="Next" type="button">Next</button>',
                 autoplay: false,
@@ -2074,7 +2075,10 @@
 
 
         if (_.options.vertical === false && _.options.variableWidth === false) {
-            _.slideWidth = Math.ceil(_.listWidth / _.options.slidesToShow);
+            _.slideWidth = (_.listWidth / _.options.slidesToShow);
+            if(_.options.slideMargin != 'null') {
+                _.slideWidth += (_.options.slideMargin / _.options.slidesToShow);
+            } 
             _.$slideTrack.width(Math.ceil((_.slideWidth * _.$slideTrack.children('.slick-slide').length)));
 
         } else if (_.options.variableWidth === true) {
@@ -2085,7 +2089,13 @@
         }
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
-        if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+        if ( _.options.variableWidth === false ) {
+            if(_.options.slideMargin != 'null') {
+                _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset).css({marginRight:_.options.slideMargin} );
+            } else {
+                _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
+            }
+        }
 
     };
 
