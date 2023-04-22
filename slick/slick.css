@@ -6,10 +6,10 @@
     display: block;
     box-sizing: border-box;
 
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    -webkit-user-select: text;
+       -moz-user-select: text;
+        -ms-user-select: text;
+            user-select: text;
 
     -webkit-touch-callout: none;
     -khtml-user-select: none;
@@ -36,6 +36,14 @@
 {
     cursor: pointer;
     cursor: hand;
+}
+.slick-list.draggable
+{
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 .slick-slider .slick-track,
