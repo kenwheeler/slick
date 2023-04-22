@@ -1098,7 +1098,12 @@
             coef;
 
         _.slideOffset = 0;
-        verticalHeight = _.$slides.first().outerHeight(true);
+        // verticalHeight = _.$slides.first().outerHeight(true);
+        /*
+        * Gets the higher parent class
+        */
+       _.$slideTrack.css('display', 'block');
+       verticalHeight = _.$slideTrack.parent().outerHeight();
 
         if (_.options.infinite === true) {
             if (_.slideCount > _.options.slidesToShow) {
@@ -2061,7 +2066,12 @@
                 });
             }
         } else {
-            _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+            // _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+            /*
+            * Ignore the height of 0, and add the 1px border.
+            */
+            var _height = _$.slides.first().outerHeight();
+            (_height > 2) && _.$list.height(_height * _.options.slidesToShow);
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
@@ -2069,8 +2079,13 @@
             }
         }
 
-        _.listWidth = _.$list.width();
-        _.listHeight = _.$list.height();
+        // _.listWidth = _.$list.width();
+        // _.listHeight = _.$list.height();
+        /* 
+        * Gets the higher parent class.
+        */
+        _.listWidth = _.$list.parent().width();
+        _.listHeight = _.$list.parent().height();
 
 
         if (_.options.vertical === false && _.options.variableWidth === false) {
@@ -2081,7 +2096,9 @@
             _.$slideTrack.width(5000 * _.slideCount);
         } else {
             _.slideWidth = Math.ceil(_.listWidth);
-            _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
+            // _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
+            var _height = _.$slides.first().outerHeight();
+            (_height > 2) && _.$slideTrack.height(Math.ceil(_height * _.$slideTrack.children('.slick-slide').length));
         }
 
         var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
