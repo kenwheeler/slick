@@ -3034,4 +3034,6 @@
         return _;
     };
 
+    return Slick;
+
 }));
