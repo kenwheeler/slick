@@ -615,13 +615,21 @@
 
             for (breakpoint in _.breakpoints) {
                 if (_.breakpoints.hasOwnProperty(breakpoint)) {
-                    if (_.originalSettings.mobileFirst === false) {
-                        if (respondToWidth < _.breakpoints[breakpoint]) {
-                            targetBreakpoint = _.breakpoints[breakpoint];
+                    if (typeof( _.breakpoints[ breakpoint ] ) === 'string') {
+                        if (matchMedia( _.breakpoints[ breakpoint ] ).matches) {
+                            targetBreakpoint = _.breakpoints[ breakpoint ];
+                            break;
                         }
-                    } else {
-                        if (respondToWidth > _.breakpoints[breakpoint]) {
-                            targetBreakpoint = _.breakpoints[breakpoint];
+                    }
+                    else {
+                        if (_.originalSettings.mobileFirst === false) {
+                            if (respondToWidth < _.breakpoints[breakpoint]) {
+                                targetBreakpoint = _.breakpoints[breakpoint];
+                            }
+                        } else {
+                            if (respondToWidth > _.breakpoints[breakpoint]) {
+                                targetBreakpoint = _.breakpoints[breakpoint];
+                            }
                         }
                     }
                 }
