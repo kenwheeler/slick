@@ -58,14 +58,14 @@
     margin-left: auto;
     margin-right: auto;
 }
-.slick-track:before,
-.slick-track:after
+.slick-track::before,
+.slick-track::after
 {
     display: table;
 
     content: '';
 }
-.slick-track:after
+.slick-track::after
 {
     clear: both;
 }
