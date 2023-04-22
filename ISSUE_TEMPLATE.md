@@ -1,5 +1,5 @@
 
-> short description of the bug / issue, provide more detail below.
+> short description of the bug/issue, provide more detail below.
 
 ====================================================================
 
