@@ -181,6 +181,15 @@
 
             _.registerBreakpoints();
             _.init(true);
+             
+           $.fn.setImage = function(source_url) { // jquery method that sets an image
+              if (this.is('img')) {
+                 this.attr('src', source_url);
+              } else {
+                 this.css('background-image', 'url("' + source_url + '")').trigger('load');
+              }
+              return this;
+           };
 
         }
 
@@ -506,6 +515,10 @@
 
         var _ = this;
 
+        var noBackgroundImage = function(index, element){
+            return $(element).css('background-image') === "none";
+        };
+
         _.$slides =
             _.$slider
                 .children( _.options.slide + ':not(.slick-cloned)')
@@ -533,7 +546,7 @@
             _.options.slidesToScroll = 1;
         }
 
-        $('img[data-lazy]', _.$slider).not('[src]').addClass('slick-loading');
+        $('[data-lazy]', _.$slider).not('[src]').filter(noBackgroundImage).addClass('slick-loading');
 
         _.setupInfinite();
 
@@ -1545,7 +1558,7 @@
 
         function loadImages(imagesScope) {
 
-            $('img[data-lazy]', imagesScope).each(function() {
+            $('[data-lazy]', imagesScope).each(function() {
 
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
@@ -1569,7 +1582,7 @@
                             }
 
                             image
-                                .attr('src', imageSource)
+                                .setImage(imageSource)
                                 .animate({ opacity: 1 }, 200, function() {
                                     image
                                         .removeAttr('data-lazy data-srcset data-sizes')
@@ -1590,7 +1603,6 @@
                     _.$slider.trigger('lazyLoadError', [ _, image, imageSource ]);
 
                 };
-
                 imageToLoad.src = imageSource;
 
             });
@@ -1764,7 +1776,7 @@
         tryCount = tryCount || 1;
 
         var _ = this,
-            $imgsToLoad = $( 'img[data-lazy]', _.$slider ),
+            $imgsToLoad = $( '[data-lazy]', _.$slider ),
             image,
             imageSource,
             imageSrcSet,
@@ -1792,7 +1804,7 @@
                 }
 
                 image
-                    .attr( 'src', imageSource )
+                    .setImage(imageSource)
                     .removeAttr('data-lazy data-srcset data-sizes')
                     .removeClass('slick-loading');
 
