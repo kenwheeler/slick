@@ -595,9 +595,15 @@
     Slick.prototype.checkResponsive = function(initial, forceUpdate) {
 
         var _ = this,
-            breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
-        var sliderWidth = _.$slider.width();
-        var windowWidth = window.innerWidth || $(window).width();
+            breakpoint, targetBreakpoint, respondToWidth, sliderWidth, windowWidth, triggerBreakpoint = false;
+
+        if (_.unslicked) {
+            // This could occur if unslick is called in an external window.resize handler
+            return;
+        }
+
+        sliderWidth = _.$slider.width();
+        windowWidth = window.innerWidth || $(window).width();
 
         if (_.respondTo === 'window') {
             respondToWidth = windowWidth;
