@@ -1273,10 +1273,18 @@
     };
 
     Slick.prototype.goTo = Slick.prototype.slickGoTo = function(slide, dontAnimate) {
-
-        var _ = this;
-
-        _.changeSlide({
+        
+        if (!this.options.infinite && !this.options.centerMode && this.options.slidesToShow > 1) {
+            const rows = Math.ceil(this.slideCount / this.options.slidesToShow);
+            const lastRowStartIndex = (rows - 1) * this.options.slidesToShow;
+            
+            if (slide >= lastRowStartIndex) {
+              const remainingItems = this.slideCount - slide;
+              slide = Math.max(slide - (this.options.slidesToShow - remainingItems), 0);
+            }
+        }
+        
+        this.changeSlide({
             data: {
                 message: 'index',
                 index: parseInt(slide)
