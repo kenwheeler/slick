@@ -2,15 +2,20 @@
 
 // Default Variables
 
+// Slick icon entity codes outputs the following
+// "\2190" outputs ascii character "←"
+// "\2192" outputs ascii character "→"
+// "\2022" outputs ascii character "•"
+
 $slick-font-path: "./fonts/" !default;
 $slick-font-family: "slick" !default;
 $slick-loader-path: "./" !default;
 $slick-arrow-color: white !default;
 $slick-dot-color: black !default;
 $slick-dot-color-active: $slick-dot-color !default;
-$slick-prev-character: "←" !default;
-$slick-next-character: "→" !default;
-$slick-dot-character: "•" !default;
+$slick-prev-character: "\2190" !default;
+$slick-next-character: "\2192" !default;
+$slick-dot-character: "\2022" !default;
 $slick-dot-size: 6px !default;
 $slick-opacity-default: 0.75 !default;
 $slick-opacity-on-hover: 1 !default;
@@ -67,7 +72,9 @@ $slick-opacity-not-active: 0.25 !default;
     background: transparent;
     color: transparent;
     top: 50%;
-    margin-top: -10px;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
     padding: 0;
     border: none;
     outline: none;
@@ -82,16 +89,15 @@ $slick-opacity-not-active: 0.25 !default;
     &.slick-disabled:before {
         opacity: $slick-opacity-not-active;
     }
-}
-
-.slick-prev:before, .slick-next:before {
-    font-family: $slick-font-family;
-    font-size: 20px;
-    line-height: 1;
-    color: $slick-arrow-color;
-    opacity: $slick-opacity-default;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    &:before {
+        font-family: $slick-font-family;
+        font-size: 20px;
+        line-height: 1;
+        color: $slick-arrow-color;
+        opacity: $slick-opacity-default;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
 .slick-prev {
@@ -124,17 +130,18 @@ $slick-opacity-not-active: 0.25 !default;
 
 /* Dots */
 
-.slick-slider {
+.slick-dotted.slick-slider {
     margin-bottom: 30px;
 }
 
 .slick-dots {
     position: absolute;
-    bottom: -45px;
+    bottom: -25px;
     list-style: none;
     display: block;
     text-align: center;
     padding: 0;
+    margin: 0;
     width: 100%;
     li {
         position: relative;
