@@ -1361,19 +1361,14 @@
                 var mappedSlideIndex = tabControlIndexes[i];
 
                 $(this).attr({
-                    'role': 'presentation'
-                });
-
-                $(this).find('button').first().attr({
                     'role': 'tab',
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
                     'aria-label': (i + 1) + ' of ' + numDotGroups,
                     'aria-selected': null,
-                    'tabindex': '-1'
+                    'tabindex': '-1'    
                 });
-
-            }).eq(_.currentSlide).find('button').attr({
+            }).eq(_.currentSlide).attr({
                 'aria-selected': 'true',
                 'tabindex': '0'
             }).end();
