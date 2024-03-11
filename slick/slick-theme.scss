@@ -16,6 +16,7 @@ $slick-dot-color-active: $slick-dot-color !default;
 $slick-prev-character: "\2190" !default;
 $slick-next-character: "\2192" !default;
 $slick-dot-character: "\2022" !default;
+$slick-active-dot-character: "\2022" !default;
 $slick-dot-size: 6px !default;
 $slick-opacity-default: 0.75 !default;
 $slick-opacity-on-hover: 1 !default;
@@ -189,6 +190,9 @@ $slick-opacity-not-active: 0.25 !default;
         &.slick-active button:before {
             color: $slick-dot-color-active;
             opacity: $slick-opacity-default;
+            &:before {
+                content: $slick-active-dot-character;
+            }
         }
     }
 }
