@@ -1,4 +1,4 @@
-@charset 'UTF-8';
+@charset "UTF-8";
 /* Slider */
 .slick-loading .slick-list
 {
@@ -11,6 +11,8 @@
     font-family: 'slick';
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
+
     src: url('./fonts/slick.eot');
     src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
     font-display: swap;
