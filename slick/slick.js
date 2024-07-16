@@ -88,7 +88,8 @@
                 vertical: false,
                 verticalSwiping: false,
                 waitForAnimate: true,
-                zIndex: 1000
+                zIndex: 1000,
+                maxHeight: null
             };
 
             _.initials = {
@@ -117,7 +118,8 @@
                 $list: null,
                 touchObject: {},
                 transformsEnabled: false,
-                unslicked: false
+                unslicked: false,
+                listHeightFromSlides: 0,
             };
 
             $.extend(_, _.initials);
@@ -1132,6 +1134,10 @@
             }
         }
 
+        if (_.options.maxHeight !== null && _.listHeightFromSlides > _.options.maxHeight) {
+            verticalOffset = -((verticalHeight * _.options.slidesToShow) + (_.listHeightFromSlides - _.options.maxHeight) / 2);
+        }
+
         if (_.slideCount <= _.options.slidesToShow) {
             _.slideOffset = 0;
             verticalOffset = 0;
@@ -2061,7 +2067,8 @@
                 });
             }
         } else {
-            _.$list.height(_.$slides.first().outerHeight(true) * _.options.slidesToShow);
+            _.listHeightFromSlides = _.$slides.first().outerHeight(true) * _.options.slidesToShow;
+            _.$list.height(_.options.maxHeight !== null && _.listHeightFromSlides > _.options.maxHeight ? _.options.maxHeight : _.listHeightFromSlides);
             if (_.options.centerMode === true) {
                 _.$list.css({
                     padding: (_.options.centerPadding + ' 0px')
