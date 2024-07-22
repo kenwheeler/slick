@@ -325,7 +325,7 @@
                         _.disableTransition();
 
                         callback.call();
-                    }, _.options.speed);
+                    }, _.options.speed * 1.5);
                 }
 
             }
