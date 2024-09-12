@@ -829,6 +829,18 @@
 
     };
 
+    Slick.prototype.cleanUpCloned = function() {
+
+        var _ = this,
+            $cloned = $('.slick-cloned', _.$slider);
+
+        if(_.options.slide != ""){
+            $cloned = $cloned.filter(_.options.slide);
+        }
+
+        $cloned.remove();
+    };
+
     Slick.prototype.clickHandler = function(event) {
 
         var _ = this;
@@ -851,7 +863,7 @@
 
         _.cleanUpEvents();
 
-        $('.slick-cloned', _.$slider).detach();
+        _.cleanUpCloned();
 
         if (_.$dots) {
             _.$dots.remove();
@@ -2913,7 +2925,7 @@
 
         var _ = this;
 
-        $('.slick-cloned', _.$slider).remove();
+        _.cleanUpCloned();
 
         if (_.$dots) {
             _.$dots.remove();
