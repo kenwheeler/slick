@@ -1708,13 +1708,15 @@
 
     };
 
-    Slick.prototype.postSlide = function(index) {
+    Slick.prototype.postSlide = function(index, defaultPrevented) {
 
         var _ = this;
 
-        if( !_.unslicked ) {
+        if ( !_.unslicked ) {
 
-            _.$slider.trigger('afterChange', [_, index]);
+            if ( defaultPrevented === undefined ) {
+                _.$slider.trigger('afterChange', [_, index]);
+            }
 
             _.animating = false;
 
@@ -2568,7 +2570,25 @@
 
         _.animating = true;
 
-        _.$slider.trigger('beforeChange', [_, _.currentSlide, animSlide]);
+        var beforeChangeEvent = jQuery.Event('beforeChange');
+        _.$slider.trigger(beforeChangeEvent, [_, _.currentSlide, animSlide]);
+
+        if (beforeChangeEvent.isDefaultPrevented()) {
+            _.animating = false;
+            if (dontAnimate !== true) {
+                _.animateSlide(slideLeft, function() {
+                    _.postSlide(_.currentSlide, true);
+                });
+            } else {
+                _.postSlide(_.currentSlide, true);
+            }
+
+            return;
+        }
+
+        if (sync === false) {
+            _.asNavFor(index);
+        }
 
         oldSlide = _.currentSlide;
         _.currentSlide = animSlide;
