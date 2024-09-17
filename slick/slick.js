@@ -2391,7 +2391,7 @@
                 remainder = _.slideCount % _.options.slidesToShow;
                 indexOffset = _.options.infinite === true ? _.options.slidesToShow + index : index;
 
-                if (_.options.slidesToShow == _.options.slidesToScroll && (_.slideCount - index) < _.options.slidesToShow) {
+                if ((_.slideCount - index) < _.options.slidesToShow) {
 
                     allSlides
                         .slice(indexOffset - (_.options.slidesToShow - remainder), indexOffset + remainder)
