@@ -52,7 +52,7 @@
                 centerPadding: '50px',
                 cssEase: 'ease',
                 customPaging: function(slider, i) {
-                    return $('<button type="button" />').text(i + 1);
+                    return $('<button type="button"></button>').text(i + 1);
                 },
                 dots: false,
                 dotsClass: 'slick-dots',
@@ -488,10 +488,10 @@
 
             _.$slider.addClass('slick-dotted');
 
-            dot = $('<ul />').addClass(_.options.dotsClass);
+            dot = $('<ul></ul>').addClass(_.options.dotsClass);
 
             for (i = 0; i <= _.getDotCount(); i += 1) {
-                dot.append($('<li />').append(_.options.customPaging.call(this, _, i)));
+                dot.append($('<li></li>').append(_.options.customPaging.call(this, _, i)));
             }
 
             _.$dots = dot.appendTo(_.options.appendDots);
@@ -522,11 +522,11 @@
         _.$slider.addClass('slick-slider');
 
         _.$slideTrack = (_.slideCount === 0) ?
-            $('<div class="slick-track"/>').appendTo(_.$slider) :
-            _.$slides.wrapAll('<div class="slick-track"/>').parent();
+            $('<div class="slick-track"></div>').appendTo(_.$slider) :
+            _.$slides.wrapAll('<div class="slick-track"></div>').parent();
 
         _.$list = _.$slideTrack.wrap(
-            '<div class="slick-list"/>').parent();
+            '<div class="slick-list"></div>').parent();
         _.$slideTrack.css('opacity', 0);
 
         if (_.options.centerMode === true || _.options.swipeToSlide === true) {
@@ -822,7 +822,8 @@
         var _ = this, originalSlides;
 
         if(_.options.rows > 0) {
-            originalSlides = _.$slides.children().children();
+            // Get the original slides and clone them to prevent the events from being removed in empty() call below:
+            originalSlides = _.$slides.children().children().clone(true, true);
             originalSlides.removeAttr('style');
             _.$slider.empty().append(originalSlides);
         }
@@ -1653,7 +1654,7 @@
         _.setPosition();
 
         _.$slideTrack.css({
-            opacity: 1
+            opacity: '1'
         });
 
         _.$slider.removeClass('slick-loading');
@@ -1733,7 +1734,7 @@
 
                 if (_.options.focusOnChange) {
                     var $currentSlide = $(_.$slides.get(_.currentSlide));
-                    $currentSlide.attr('tabindex', 0).focus();
+                    $currentSlide.attr('tabindex', 0).trigger('focus');
                 }
             }
 
@@ -1887,7 +1888,7 @@
         var _ = this, breakpoint, currentBreakpoint, l,
             responsiveSettings = _.options.responsive || null;
 
-        if ( $.type(responsiveSettings) === 'array' && responsiveSettings.length ) {
+        if ( Array.isArray(responsiveSettings) && responsiveSettings.length ) {
 
             _.respondTo = _.options.respondTo || 'window';
 
@@ -2100,24 +2101,24 @@
                 $(element).css({
                     position: 'relative',
                     right: targetLeft,
-                    top: 0,
+                    top: '0',
                     zIndex: _.options.zIndex - 2,
-                    opacity: 0
+                    opacity: '0'
                 });
             } else {
                 $(element).css({
                     position: 'relative',
                     left: targetLeft,
-                    top: 0,
+                    top: '0',
                     zIndex: _.options.zIndex - 2,
-                    opacity: 0
+                    opacity: '0'
                 });
             }
         });
 
         _.$slides.eq(_.currentSlide).css({
             zIndex: _.options.zIndex - 1,
-            opacity: 1
+            opacity: '1'
         });
 
     };
@@ -2128,7 +2129,7 @@
 
         if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
-            _.$list.css('height', targetHeight);
+            _.$list.css('height', targetHeight + 'px');
         }
 
     };
@@ -2151,19 +2152,19 @@
 
         var _ = this, l, item, option, value, refresh = false, type;
 
-        if( $.type( arguments[0] ) === 'object' ) {
+        if( $.isPlainObject( arguments[0] ) ) {
 
             option =  arguments[0];
             refresh = arguments[1];
             type = 'multiple';
 
-        } else if ( $.type( arguments[0] ) === 'string' ) {
+        } else if ( typeof arguments[0] === 'string' ) {
 
             option =  arguments[0];
             value = arguments[1];
             refresh = arguments[2];
 
-            if ( arguments[0] === 'responsive' && $.type( arguments[1] ) === 'array' ) {
+            if ( arguments[0] === 'responsive' && Array.isArray( arguments[1] ) ) {
 
                 type = 'responsive';
 
@@ -2193,7 +2194,7 @@
 
             for ( item in value ) {
 
-                if( $.type( _.options.responsive ) !== 'array' ) {
+                if( !Array.isArray( _.options.responsive ) ) {
 
                     _.options.responsive = [ value[item] ];
 
