@@ -50,6 +50,39 @@
 </head>
 <body>
 
+<section class="vertical-center-max-height slider">
+  <div>
+    <img src="http://placehold.it/350x100?text=1">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=2">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=3">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=4">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=5">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=6">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=7">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=8">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=9">
+  </div>
+  <div>
+    <img src="http://placehold.it/350x100?text=10">
+  </div>
+</section>
+
   <section class="vertical-center-4 slider">
     <div>
       <img src="http://placehold.it/350x100?text=1">
@@ -312,6 +345,15 @@
   <script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).on('ready', function() {
+        $(".vertical-center-max-height").slick({
+            dots: true,
+            vertical: true,
+            verticalSwiping: true,
+            centerMode: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            maxHeight: 250
+        });
       $(".vertical-center-4").slick({
         dots: true,
         vertical: true,
