@@ -2365,6 +2365,26 @@
 
                 }
 
+            } else {
+                 _.$slides
+                     .slice(index - centerOffset + evenCoef, index + centerOffset + 1)
+                     .addClass('slick-active')
+                     .attr('aria-hidden', 'false');
+
+
+                if (index === 0) {
+
+                    allSlides
+                        .eq( _.options.slidesToShow + _.slideCount + 1 )
+                        .addClass('slick-center');
+
+                } else if (index === _.slideCount - 1) {
+
+                    allSlides
+                        .eq(_.options.slidesToShow)
+                        .addClass('slick-center');
+
+                }
             }
 
             _.$slides
