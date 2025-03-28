@@ -281,7 +281,7 @@ Slick works on IE8+ in addition to other modern browsers such as Chrome, Firefox
 
 #### Dependencies
 
-jQuery 1.7
+jQuery 1.8
 
 #### License
 
