@@ -54,6 +54,9 @@
                 customPaging: function(slider, i) {
                     return $('<button type="button"></button>').text(i + 1);
                 },
+                customPagingADALabel: function(slider, i, numDotGroups, slide) {
+                    return i + ' of ' + numDotGroups;
+                },
                 dots: false,
                 dotsClass: 'slick-dots',
                 draggable: true,
@@ -1369,7 +1372,7 @@
                     'role': 'tab',
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
-                    'aria-label': (i + 1) + ' of ' + numDotGroups,
+                    'aria-label': _.options.customPagingADALabel.call(this, _, (i + 1), numDotGroups, _.$slides[mappedSlideIndex]),
                     'aria-selected': null,
                     'tabindex': '-1'
                 });
