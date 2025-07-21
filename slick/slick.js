@@ -1104,13 +1104,13 @@
         if (_.options.infinite === true) {
             if (_.slideCount > _.options.slidesToShow) {
                 _.slideOffset = (_.slideWidth * _.options.slidesToShow) * -1;
-                coef = -1
+                coef = -1;
 
                 if (_.options.vertical === true && _.options.centerMode === true) {
                     if (_.options.slidesToShow === 2) {
                         coef = -1.5;
                     } else if (_.options.slidesToShow === 1) {
-                        coef = -2
+                        coef = -2;
                     }
                 }
                 verticalOffset = (verticalHeight * _.options.slidesToShow) * coef;
@@ -1349,7 +1349,7 @@
                 });
 
                 if (slideControlIndex !== -1) {
-                   var ariaButtonControl = 'slick-slide-control' + _.instanceUid + slideControlIndex
+                   var ariaButtonControl = 'slick-slide-control' + _.instanceUid + slideControlIndex;
                    if ($('#' + ariaButtonControl).length) {
                      $(this).attr({
                          'aria-describedby': ariaButtonControl
