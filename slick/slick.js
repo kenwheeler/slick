@@ -823,7 +823,8 @@
         var _ = this, originalSlides;
 
         if(_.options.rows > 0) {
-            originalSlides = _.$slides.children().children();
+            // Get the original slides and clone them to prevent the events from being removed in empty() call below:
+            originalSlides = _.$slides.children().children().clone(true, true);
             originalSlides.removeAttr('style');
             _.$slider.empty().append(originalSlides);
         }
