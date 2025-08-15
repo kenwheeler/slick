@@ -14,7 +14,7 @@
     -webkit-touch-callout: none;
     -khtml-user-select: none;
     -ms-touch-action: pan-y;
-        touch-action: pan-y;
+        touch-action: pan-y pinch-zoom;
     -webkit-tap-highlight-color: transparent;
 }
 
