@@ -1370,9 +1370,12 @@
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
                     'aria-label': (i + 1) + ' of ' + numDotGroups,
-                    'aria-selected': null,
-                    'tabindex': '-1'
+                    'aria-selected': null
                 });
+
+                if ($(this).find('button').is(':focus')) {
+                    $(this).parent('.slick-dots').find('.slick-active').find('button').focus();
+                }
 
             }).eq(_.currentSlide).find('button').attr({
                 'aria-selected': 'true',
