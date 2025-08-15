@@ -1333,9 +1333,6 @@
 
         _.$slides.add(_.$slideTrack.find('.slick-cloned')).attr({
             'aria-hidden': 'true',
-            'tabindex': '-1'
-        }).find('a, input, button, select').attr({
-            'tabindex': '-1'
         });
 
         if (_.$dots !== null) {
@@ -1481,6 +1478,7 @@
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
+            _.$list.on('focusin a, button, input, select', $.proxy(_.focusSlideHandler, _));
         }
 
         if (_.options.focusOnSelect === true) {
@@ -1537,6 +1535,15 @@
             }
         }
 
+    };
+
+    Slick.prototype.focusSlideHandler = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        var _ = this,
+            slide = $(event.target).closest('.slick-slide'),
+            index = slide.data('slick-index');
+        _.slideHandler(index);
     };
 
     Slick.prototype.lazyLoad = function() {
