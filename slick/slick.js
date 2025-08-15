@@ -1578,6 +1578,8 @@
                                 });
                             _.$slider.trigger('lazyLoaded', [_, image, imageSource]);
                         });
+                     
+                     $('.slick-cloned [data-lazy="' + imageSource  + '"]').attr('src', imageSource).removeAttr('data-lazy data-srcset data-sizes');
 
                 };
 
