@@ -1370,7 +1370,7 @@
                     'id': 'slick-slide-control' + _.instanceUid + i,
                     'aria-controls': 'slick-slide' + _.instanceUid + mappedSlideIndex,
                     'aria-label': (i + 1) + ' of ' + numDotGroups,
-                    'aria-selected': null,
+                    'aria-selected': 'false',
                     'tabindex': '-1'
                 });
 
