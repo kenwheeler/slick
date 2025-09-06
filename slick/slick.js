@@ -1031,7 +1031,7 @@
             .off('focus.slick blur.slick')
             .on(
                 'focus.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
@@ -1046,7 +1046,7 @@
                 }
             ).on(
                 'blur.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
@@ -1161,7 +1161,11 @@
         if (_.options.vertical === false) {
             targetLeft = ((slideIndex * _.slideWidth) * -1) + _.slideOffset;
         } else {
-            targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+            if (_.slideCount <= _.options.slidesToShow) {
+                targetLeft = 0;
+            } else {
+                targetLeft = ((slideIndex * verticalHeight) * -1) + verticalOffset;
+            }
         }
 
         if (_.options.variableWidth === true) {
