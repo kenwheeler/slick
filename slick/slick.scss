@@ -6,7 +6,7 @@
     box-sizing: border-box;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    user-select: none;
+    user-select: text;
     -ms-touch-action: pan-y;
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
@@ -25,6 +25,7 @@
     &.draggable {
         cursor: pointer;
         cursor: grab;
+        user-select: none;
     }
 
     &.dragging {
