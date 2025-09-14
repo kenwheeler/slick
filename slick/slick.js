@@ -85,6 +85,7 @@
                 rows: 1,
                 rtl: false,
                 slide: '',
+                sliderContainer: '',
                 slidesPerRow: 1,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -170,6 +171,8 @@
                 _.hidden = 'webkitHidden';
                 _.visibilityChange = 'webkitvisibilitychange';
             }
+
+            _.$sliderContainer = _.options.sliderContainer ? $(element).find(_.options.sliderContainer) : $(element);
 
             _.autoPlay = $.proxy(_.autoPlay, _);
             _.autoPlayClear = $.proxy(_.autoPlayClear, _);
@@ -519,7 +522,7 @@
         var _ = this;
 
         _.$slides =
-            _.$slider
+            _.$sliderContainer
                 .children( _.options.slide + ':not(.slick-cloned)')
                 .addClass('slick-slide');
 
@@ -569,7 +572,7 @@
         var _ = this, a, b, c, newSlides, numOfSlides, originalSlides,slidesPerSection;
 
         newSlides = document.createDocumentFragment();
-        originalSlides = _.$slider.children();
+        originalSlides = _.$sliderContainer.children();
 
         if(_.options.rows > 0) {
 
@@ -593,8 +596,8 @@
                 newSlides.appendChild(slide);
             }
 
-            _.$slider.empty().append(newSlides);
-            _.$slider.children().children().children()
+            _.$sliderContainer.empty().append(newSlides);
+            _.$sliderContainer.children().children().children()
                 .css({
                     'width':(100 / _.options.slidesPerRow) + '%',
                     'display': 'inline-block'
@@ -836,7 +839,7 @@
         if(_.options.rows > 0) {
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
-            _.$slider.empty().append(originalSlides);
+            _.$sliderContainer.empty().append(originalSlides);
         }
 
     };
@@ -910,7 +913,7 @@
 
             _.$list.detach();
 
-            _.$slider.append(_.$slides);
+            _.$sliderContainer.append(_.$slides);
         }
 
         _.cleanUpRows();
