@@ -3,6 +3,7 @@
     "main": [
         "slick/slick.js",
         "slick/slick.css",
+        "slick/slick.styl",
         "slick/slick.less",
         "slick/slick.scss"
     ],
