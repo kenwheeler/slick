@@ -178,12 +178,30 @@ $('.your-element').on('edge', function(event, slick, direction){
 $('.your-element').on('beforeChange', function(event, slick, currentSlide, nextSlide){
   console.log(nextSlide);
 });
+
+// On swipe start
+$('.your-element').on('swipeStart', function(event, slick){
+  console.log('swipeStart');
+});
+
+// On swipe move
+$('.your-element').on('swipeMove', function(event, slick){
+  console.log('swipeMove');
+});
+
+// On swipe end
+$('.your-element').on('swipeEnd', function(event, slick){
+  console.log('swipeEnd');
+});
 ```
 
 Event | Params | Description
 ------ | -------- | -----------
 afterChange | event, slick, currentSlide | After slide change callback
 beforeChange | event, slick, currentSlide, nextSlide | Before slide change callback
+swipeStart | event, slick | Fires when a swipe starts
+swipeMove | event, slick | Fires on each movement during swipe
+swipeEnd | event, slick | Fires when a swipe ends
 breakpoint | event, slick, breakpoint | Fires after a breakpoint is hit
 destroy | event, slick | When slider is destroyed, or unslicked.
 edge | event, slick, direction | Fires when an edge is overscrolled in non-infinite mode.
