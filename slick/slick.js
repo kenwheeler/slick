@@ -2788,14 +2788,17 @@
 
             case 'start':
                 _.swipeStart(event);
+                _.$slider.trigger('swipeStart', [_]);
                 break;
 
             case 'move':
                 _.swipeMove(event);
+                _.$slider.trigger('swipeMove', [_]);
                 break;
 
             case 'end':
                 _.swipeEnd(event);
+                _.$slider.trigger('swipeEnd', [_]);
                 break;
 
         }
