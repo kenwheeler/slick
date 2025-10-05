@@ -549,12 +549,11 @@
 
         _.setupInfinite();
 
-        _.buildArrows();
-
         _.buildDots();
 
         _.updateDots();
 
+        _.buildArrows();
 
         _.setSlideClasses(typeof _.currentSlide === 'number' ? _.currentSlide : 0);
 
@@ -1311,8 +1310,8 @@
             _.startLoad();
             _.loadSlider();
             _.initializeEvents();
-            _.updateArrows();
             _.updateDots();
+            _.updateArrows();
             _.checkResponsive(true);
             _.focusHandler();
 
@@ -1957,12 +1956,12 @@
 
         _.setProps();
         _.setupInfinite();
-        _.buildArrows();
-        _.updateArrows();
-        _.initArrowEvents();
         _.buildDots();
         _.updateDots();
+        _.buildArrows();
+        _.updateArrows();
         _.initDotEvents();
+        _.initArrowEvents();
         _.cleanUpSlideEvents();
         _.initSlideEvents();
 
