@@ -8,7 +8,7 @@
     user-select: text;
     -webkit-touch-callout: none;
     -ms-touch-action: pan-y;
-        touch-action: pan-y;
+        touch-action: pan-y pinch-zoom;
     -webkit-tap-highlight-color: transparent;
 }
 
