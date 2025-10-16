@@ -2341,9 +2341,15 @@
 
         if (_.options.centerMode === true) {
 
-            var evenCoef = _.options.slidesToShow % 2 === 0 ? 1 : 0;
+            var evenCoef;
 
-            centerOffset = Math.floor(_.options.slidesToShow / 2);
+            if (_.options.slidesToShow >= _.$slides.length) {
+                evenCoef = -1;
+                centerOffset = _.options.slidesToShow = _.$slides.length;
+            } else {
+                evenCoef = _.options.slidesToShow % 2 === 0 ? 1 : 0;
+                centerOffset = Math.floor(_.options.slidesToShow / 2);
+            }
 
             if (_.options.infinite === true) {
 
