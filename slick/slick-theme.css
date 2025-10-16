@@ -74,9 +74,6 @@
 
     opacity: .75;
     color: white;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 .slick-prev
@@ -195,9 +192,6 @@
 
     opacity: .25;
     color: black;
-
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 .slick-dots li.slick-active button:before
 {
