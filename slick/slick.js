@@ -159,7 +159,11 @@
 
             _.options = $.extend({}, _.defaults, settings, dataSettings);
 
-            _.currentSlide = _.options.initialSlide;
+            if (!_.options.centerMode && _.options.initialSlide > 0) {
+                _.currentSlide = Math.floor(_.options.initialSlide / _.options.slidesToShow) * _.options.slidesToShow;
+            } else {
+                _.currentSlide = _.options.initialSlide;
+            }
 
             _.originalSettings = _.options;
 
