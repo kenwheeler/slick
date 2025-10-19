@@ -3052,4 +3052,6 @@
         return _;
     };
 
+    return Slick;
+
 }));
