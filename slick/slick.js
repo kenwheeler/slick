@@ -2793,7 +2793,6 @@
 
             case 'move':
                 _.swipeMove(event);
-                _.$slider.trigger('swipeMove', [_]);
                 break;
 
             case 'end':
@@ -2881,6 +2880,7 @@
 
         _.setCSS(_.swipeLeft);
 
+        _.$slider.trigger('swipeMove', [_]);
     };
 
     Slick.prototype.swipeStart = function(event) {
