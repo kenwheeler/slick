@@ -2364,7 +2364,8 @@
                 if (index === 0) {
 
                     allSlides
-                        .eq( _.options.slidesToShow + _.slideCount + 1 )
+                        .eq(allSlides.length - 1 - _.options.slidesToShow - (_.slideCount - 1 - _.options.slidesToShow))
+
                         .addClass('slick-center');
 
                 } else if (index === _.slideCount - 1) {
