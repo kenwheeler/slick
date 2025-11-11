@@ -163,16 +163,16 @@
 
             _.originalSettings = _.options;
 
-            _.autoPlay = $.proxy(_.autoPlay, _);
-            _.autoPlayClear = $.proxy(_.autoPlayClear, _);
-            _.autoPlayIterator = $.proxy(_.autoPlayIterator, _);
-            _.changeSlide = $.proxy(_.changeSlide, _);
-            _.clickHandler = $.proxy(_.clickHandler, _);
-            _.selectHandler = $.proxy(_.selectHandler, _);
-            _.setPosition = $.proxy(_.setPosition, _);
-            _.swipeHandler = $.proxy(_.swipeHandler, _);
-            _.dragHandler = $.proxy(_.dragHandler, _);
-            _.keyHandler = $.proxy(_.keyHandler, _);
+            _.autoPlay = _.autoPlay.bind(_);
+            _.autoPlayClear = _.autoPlayClear.bind(_);
+            _.autoPlayIterator = _.autoPlayIterator.bind(_);
+            _.changeSlide = _.changeSlide.bind(_);
+            _.clickHandler = _.clickHandler.bind(_);
+            _.selectHandler = _.selectHandler.bind(_);
+            _.setPosition = _.setPosition.bind(_);
+            _.swipeHandler = _.swipeHandler.bind(_);
+            _.dragHandler = _.dragHandler.bind(_);
+            _.keyHandler = _.keyHandler.bind(_);
 
             _.instanceUid = instanceUid++;
 
@@ -763,8 +763,8 @@
 
             $('li', _.$dots)
                 .off('click.slick', _.changeSlide)
-                .off('mouseenter.slick', $.proxy(_.interrupt, _, true))
-                .off('mouseleave.slick', $.proxy(_.interrupt, _, false));
+                .off('mouseenter.slick', (e) => _.interrupt(true, e))
+                .off('mouseleave.slick', (e) => _.interrupt(false, e));
 
             if (_.options.accessibility === true) {
                 _.$dots.off('keydown.slick', _.keyHandler);
@@ -816,8 +816,8 @@
 
         var _ = this;
 
-        _.$list.off('mouseenter.slick', $.proxy(_.interrupt, _, true));
-        _.$list.off('mouseleave.slick', $.proxy(_.interrupt, _, false));
+        _.$list.off('mouseenter.slick', (e) => _.interrupt(true, e));
+        _.$list.off('mouseleave.slick', (e) => _.interrupt(false, e));
 
     };
 
@@ -1436,8 +1436,8 @@
         if (_.options.dots === true && _.options.pauseOnDotsHover === true && _.slideCount > _.options.slidesToShow) {
 
             $('li', _.$dots)
-                .on('mouseenter.slick', $.proxy(_.interrupt, _, true))
-                .on('mouseleave.slick', $.proxy(_.interrupt, _, false));
+                .on('mouseenter.slick', (e) => _.interrupt(true, e))
+                .on('mouseleave.slick', (e) => _.interrupt(false, e));
 
         }
 
@@ -1449,8 +1449,8 @@
 
         if ( _.options.pauseOnHover ) {
 
-            _.$list.on('mouseenter.slick', $.proxy(_.interrupt, _, true));
-            _.$list.on('mouseleave.slick', $.proxy(_.interrupt, _, false));
+            _.$list.on('mouseenter.slick', (e) => _.interrupt(true, e));
+            _.$list.on('mouseleave.slick', (e) => _.interrupt(false, e));
 
         }
 
@@ -1480,7 +1480,7 @@
 
         _.$list.on('click.slick', _.clickHandler);
 
-        $(document).on(_.visibilityChange, $.proxy(_.visibility, _));
+        $(document).on(_.visibilityChange, _.visibility.bind(_));
 
         if (_.options.accessibility === true) {
             _.$list.on('keydown.slick', _.keyHandler);
@@ -1490,9 +1490,9 @@
             $(_.$slideTrack).children().on('click.slick', _.selectHandler);
         }
 
-        $(window).on('orientationchange.slick.slick-' + _.instanceUid, $.proxy(_.orientationChange, _));
+        $(window).on('orientationchange.slick.slick-' + _.instanceUid, _.orientationChange.bind(_));
 
-        $(window).on('resize.slick.slick-' + _.instanceUid, $.proxy(_.resize, _));
+        $(window).on('resize.slick.slick-' + _.instanceUid, _.resize.bind(_));
 
         $('[draggable!=true]', _.$slideTrack).on('dragstart', _.preventDefault);
 
