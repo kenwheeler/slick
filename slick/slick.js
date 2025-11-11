@@ -2850,9 +2850,16 @@
         _.touchObject.edgeHit = false;
 
         if (_.options.infinite === false) {
-            if ((_.currentSlide === 0 && swipeDirection === 'right') || (_.currentSlide >= _.getDotCount() && swipeDirection === 'left')) {
-                swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
-                _.touchObject.edgeHit = true;
+            if(_.options.vertical === false) {
+                if ((_.currentSlide === 0 && swipeDirection === 'right') || (_.currentSlide >= _.getDotCount() && swipeDirection === 'left')) {
+                    swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
+                    _.touchObject.edgeHit = true;
+                }
+            } else {
+                if ((_.currentSlide === 0 && swipeDirection === 'up') || (_.currentSlide >= _.getDotCount() && swipeDirection === 'down')) {
+                    swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
+                    _.touchObject.edgeHit = true;
+                }
             }
         }
 
