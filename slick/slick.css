@@ -78,6 +78,7 @@
 
     height: 100%;
     min-height: 1px;
+    outline-width: 0;
 }
 [dir='rtl'] .slick-slide
 {
