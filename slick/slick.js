@@ -893,7 +893,15 @@
                 .removeAttr('aria-hidden')
                 .removeAttr('data-slick-index')
                 .each(function(){
-                    $(this).attr('style', $(this).data('originalStyling'));
+                    var originalStyling = $(this).data('originalStyling');
+                    if (originalStyling) {
+                        $(this).attr('style', originalStyling);
+                    } else {
+                        var style = this.style;
+                        for(var i=style.length-1; i>=0; i--) {
+                            style.removeProperty(style.item(i));
+                        }
+                    }
                 });
 
             _.$slideTrack.children(this.options.slide).detach();
