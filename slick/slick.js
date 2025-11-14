@@ -171,7 +171,6 @@
             _.selectHandler = _.selectHandler.bind(_);
             _.setPosition = _.setPosition.bind(_);
             _.swipeHandler = _.swipeHandler.bind(_);
-            _.dragHandler = _.dragHandler.bind(_);
             _.keyHandler = _.keyHandler.bind(_);
 
             _.instanceUid = instanceUid++;
