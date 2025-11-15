@@ -1526,12 +1526,14 @@
          //Dont slide if the cursor is inside the form fields and arrow keys are pressed
         if(!event.target.tagName.match('TEXTAREA|INPUT|SELECT')) {
             if (event.keyCode === 37 && _.options.accessibility === true) {
+                event.stopPropagation();
                 _.changeSlide({
                     data: {
                         message: _.options.rtl === true ? 'next' :  'previous'
                     }
                 });
             } else if (event.keyCode === 39 && _.options.accessibility === true) {
+                event.stopPropagation();
                 _.changeSlide({
                     data: {
                         message: _.options.rtl === true ? 'previous' : 'next'
