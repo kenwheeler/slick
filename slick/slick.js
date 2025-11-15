@@ -2454,7 +2454,7 @@
                         .attr('data-slick-index', slideIndex - _.slideCount)
                         .prependTo(_.$slideTrack).addClass('slick-cloned');
                 }
-                for (i = 0; i < infiniteCount  + _.slideCount; i += 1) {
+                for (i = 0; i < infiniteCount; i += 1) {
                     slideIndex = i;
                     $(_.$slides[slideIndex]).clone(true).removeAttr('id')
                         .attr('data-slick-index', slideIndex + _.slideCount)
