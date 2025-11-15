@@ -500,7 +500,7 @@
 
             _.$dots = dot.appendTo(_.options.appendDots);
 
-            _.$dots.find('li').first().addClass('slick-active');
+            _.$dots.find('li:first-child').addClass('slick-active');
 
         }
 
@@ -2999,8 +2999,7 @@
                     .end();
 
             _.$dots
-                .find('li')
-                .eq(Math.floor(_.currentSlide / _.options.slidesToScroll))
+                .find('li:nth-child(' + (Math.floor(_.currentSlide / _.options.slidesToScroll) + 1) + ')')
                 .addClass('slick-active');
 
         }
