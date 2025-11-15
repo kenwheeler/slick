@@ -214,6 +214,79 @@
       <img src="https://placehold.co/350x100?text=10">
     </div>
   </section>
+
+  <section class="vertical-swipe-beyond-edges-1 slider">
+    <div>
+      <img src="http://placehold.it/350x300?text=1">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=2">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=3">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=4">
+    </div>
+  </section>
+
+  <section class="vertical-swipe-beyond-edges-2 slider">
+    <div>
+      <img src="http://placehold.it/350x300?text=1">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=2">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=3">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=4">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=5">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=6">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=7">
+    </div>
+  </section>
+  
+  <section class="vertical-swipe-beyond-edges-3 slider">
+    <div>
+      <img src="http://placehold.it/350x300?text=1">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=2">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=3">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=4">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=5">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=6">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=7">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=8">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=9">
+    </div>
+    <div>
+      <img src="http://placehold.it/350x300?text=10">
+    </div>
+  </section>
+
   <section class="regular slider">
     <div>
       <img src="https://placehold.co/350x300?text=1">
@@ -343,6 +416,34 @@
         vertical: true,
         slidesToShow: 3,
         slidesToScroll: 3
+      });      
+      $(".vertical-swipe-beyond-edges-1").slick({
+        vertical: true,
+        verticalSwiping: true,
+        edgeFriction: 0,
+        infinite: false,
+        slidesToShow: 1,
+        arrows: false,
+        dots: true
+      });
+      $(".vertical-swipe-beyond-edges-2").slick({
+        vertical: true,
+        verticalSwiping: true,
+        edgeFriction: 0,
+        infinite: false,
+        slidesToShow: 2,
+        arrows: false,
+        dots: true
+      });
+      $(".vertical-swipe-beyond-edges-3").slick({
+        vertical: true,
+        verticalSwiping: true,
+        edgeFriction: 0,
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        arrows: false,
+        dots: true
       });
       $(".regular").slick({
         dots: true,
@@ -365,7 +466,7 @@
       $(".lazy").slick({
         lazyLoad: 'ondemand', // ondemand progressive anticipated
         infinite: true
-      });
+      });      
     });
 </script>
 

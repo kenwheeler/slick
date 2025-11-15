@@ -2834,6 +2834,14 @@
 
         swipeDirection = _.swipeDirection();
 
+        if (_.options.edgeFriction === 0 && _.options.infinite === false && _.options.variableWidth === false && _.options.centerMode === false &&
+            _.options.verticalSwiping === true && _.options.verticalSwiping === true && (
+            swipeDirection === 'up' && _.getCurrent() === 0 ||
+            swipeDirection === 'down' && _.getCurrent() >= _.$slides.length - _.options.slidesToShow
+        )) {
+            return false;
+        }
+
         if (event.originalEvent !== undefined && _.touchObject.swipeLength > 4) {
             _.swiping = true;
             event.preventDefault();
