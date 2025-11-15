@@ -82,7 +82,7 @@
                 pauseOnDotsHover: false,
                 respondTo: 'window',
                 responsive: null,
-                rows: 1,
+                rows: 0,
                 rtl: false,
                 slide: '',
                 slidesPerRow: 1,
@@ -563,7 +563,7 @@
         newSlides = document.createDocumentFragment();
         originalSlides = _.$slider.children();
 
-        if(_.options.rows > 0) {
+        if(_.options.rows > 1) {
 
             slidesPerSection = _.options.slidesPerRow * _.options.rows;
             numOfSlides = Math.ceil(
@@ -574,6 +574,9 @@
                 var slide = document.createElement('div');
                 for(b = 0; b < _.options.rows; b++) {
                     var row = document.createElement('div');
+                    
+                    row.classList.add('slick-row');
+                    
                     for(c = 0; c < _.options.slidesPerRow; c++) {
                         var target = (a * slidesPerSection + ((b * _.options.slidesPerRow) + c));
                         if (originalSlides.get(target)) {
@@ -825,7 +828,7 @@
 
         var _ = this, originalSlides;
 
-        if(_.options.rows > 0) {
+        if(_.options.rows > 1) {
             originalSlides = _.$slides.children().children();
             originalSlides.removeAttr('style');
             _.$slider.empty().append(originalSlides);
