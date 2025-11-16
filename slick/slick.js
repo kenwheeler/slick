@@ -2817,11 +2817,9 @@
         _.touchObject.curX = touches !== undefined ? touches[0].pageX : event.clientX;
         _.touchObject.curY = touches !== undefined ? touches[0].pageY : event.clientY;
 
-        _.touchObject.swipeLength = Math.round(Math.sqrt(
-            Math.pow(_.touchObject.curX - _.touchObject.startX, 2)));
+        _.touchObject.swipeLength = Math.abs(_.touchObject.curX - _.touchObject.startX);
 
-        verticalSwipeLength = Math.round(Math.sqrt(
-            Math.pow(_.touchObject.curY - _.touchObject.startY, 2)));
+        verticalSwipeLength = Math.abs(_.touchObject.curY - _.touchObject.startY);
 
         if (!_.options.verticalSwiping && !_.swiping && verticalSwipeLength > 4) {
             _.scrolling = true;
