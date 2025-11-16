@@ -2088,7 +2088,9 @@
             _.$slideTrack.height(Math.ceil((_.$slides.first().outerHeight(true) * _.$slideTrack.children('.slick-slide').length)));
         }
 
-        var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
+        // Firefox can't handle getComputedStyle. So we compensate.
+        //var offset = _.$slides.first().outerWidth(true) - _.$slides.first().width();
+        var offset = _.$slides.first()[0].offsetWidth - _.$slides.first().width();
         if (_.options.variableWidth === false) _.$slideTrack.children('.slick-slide').width(_.slideWidth - offset);
 
     };
