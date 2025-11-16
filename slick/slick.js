@@ -2834,7 +2834,7 @@
 
         swipeDirection = _.swipeDirection();
 
-        if (event.originalEvent !== undefined && _.touchObject.swipeLength > 4) {
+        if (event.originalEvent !== undefined && _.touchObject.swipeLength > 4 && event.cancelable) {
             _.swiping = true;
             event.preventDefault();
         }
