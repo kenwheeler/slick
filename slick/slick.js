@@ -1192,6 +1192,20 @@
                 }
 
                 targetLeft += (_.$list.width() - targetSlide.outerWidth()) / 2;
+                
+                if (_.options.infinite === false) {
+                    var children = _.$slideTrack.children('.slick-slide');
+                    var sum = 0;
+                    for (var i=0; i<children.length; i++){
+                        sum += children[i].clientWidth;
+                    }
+                    if (targetLeft > 0) {
+                        targetLeft = 0;
+                    }
+                    if (targetLeft < sum*(-1) + _.$list.width()) {
+                        targetLeft = sum*(-1) + _.$list.width();
+                    }
+                }
             }
         }
 
