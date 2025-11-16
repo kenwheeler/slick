@@ -1465,18 +1465,20 @@
         _.initDotEvents();
         _.initSlideEvents();
 
-        _.$list.on('touchstart.slick mousedown.slick', {
-            action: 'start'
-        }, _.swipeHandler);
-        _.$list.on('touchmove.slick mousemove.slick', {
-            action: 'move'
-        }, _.swipeHandler);
-        _.$list.on('touchend.slick mouseup.slick', {
-            action: 'end'
-        }, _.swipeHandler);
-        _.$list.on('touchcancel.slick mouseleave.slick', {
-            action: 'end'
-        }, _.swipeHandler);
+        if (_.options.touchMove) {
+             _.$list.on('touchstart.slick mousedown.slick', {
+                 action: 'start'
+             }, _.swipeHandler);
+             _.$list.on('touchmove.slick mousemove.slick', {
+                 action: 'move'
+             }, _.swipeHandler);
+             _.$list.on('touchend.slick mouseup.slick', {
+                 action: 'end'
+             }, _.swipeHandler);
+             _.$list.on('touchcancel.slick mouseleave.slick', {
+                 action: 'end'
+             }, _.swipeHandler);
+        }
 
         _.$list.on('click.slick', _.clickHandler);
 
