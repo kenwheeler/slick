@@ -3044,4 +3044,6 @@
         return _;
     };
 
+    return Slick;
+
 }));
