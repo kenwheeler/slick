@@ -12,6 +12,8 @@
 @slick-next-character: "→";
 @slick-dot-character: "•";
 @slick-dot-size: 6px;
+@slick-dot-width: 20px;
+@slick-dot-height: @slick-dot-width;
 @slick-opacity-default: 0.75;
 @slick-opacity-on-hover: 1;
 @slick-opacity-not-active: 0.25;
@@ -119,8 +121,8 @@
     li {
         position: relative;
         display: inline-block;
-        height: 20px;
-        width: 20px;
+        height: @slick-dot-height;
+        width: @slick-dot-width;
         margin: 0 5px;
         padding: 0;
         cursor: pointer;
@@ -128,8 +130,8 @@
             border: 0;
             background: transparent;
             display: block;
-            height: 20px;
-            width: 20px;
+            height: @slick-dot-height;
+            width: @slick-dot-width;
             outline: none;
             line-height: 0px;
             font-size: 0px;
@@ -147,11 +149,11 @@
                 top: 0;
                 left: 0;
                 content: @slick-dot-character;
-                width: 20px;
-                height: 20px;
+                width: @slick-dot-height;
+                height: @slick-dot-width;
                 font-family: @slick-font-family;
                 font-size: @slick-dot-size;
-                line-height: 20px;
+                line-height: @slick-dot-height;
                 text-align: center;
                 color: @slick-dot-color;
                 opacity: @slick-opacity-not-active;
