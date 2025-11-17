@@ -2585,13 +2585,17 @@
 
         _.setSlideClasses(_.currentSlide);
 
-        if ( _.options.asNavFor ) {
+        if (_.options.asNavFor) {
 
             navTarget = _.getNavTarget();
-            navTarget = navTarget.slick('getSlick');
 
-            if ( navTarget.slideCount <= navTarget.options.slidesToShow ) {
-                navTarget.setSlideClasses(_.currentSlide);
+            if (navTarget !== null && typeof navTarget === 'object') {
+                navTarget.each(function () {
+                    var navTarget = $(this).slick('getSlick');
+                    if (navTarget.slideCount <= navTarget.options.slidesToShow) {
+                        navTarget.setSlideClasses(_.currentSlide);
+                    }
+                });
             }
 
         }
