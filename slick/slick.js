@@ -2017,6 +2017,12 @@
 
         _.$slideTrack.children(this.options.slide).detach();
 
+        _.$slides.each(function(index, element) {
+          $(element)
+            .attr('data-slick-index', index)
+            .data('originalStyling', $(element).attr('style') || '');
+        });
+
         _.$slideTrack.append(_.$slides);
 
         _.$slidesCache = _.$slides;
