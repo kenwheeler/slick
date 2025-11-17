@@ -1218,8 +1218,8 @@
         if (_.options.infinite === false) {
             max = _.slideCount;
         } else {
-            breakPoint = _.options.slidesToScroll * -1;
-            counter = _.options.slidesToScroll * -1;
+            breakPoint = (_.slideCount * -1) + 1;
+            counter = (_.slideCount * -1) + 1;
             max = _.slideCount * 2;
         }
 
