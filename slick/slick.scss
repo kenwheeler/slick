@@ -5,7 +5,7 @@
     display: block;
     box-sizing: border-box;
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
+    -webkit-user-select: text;
     user-select: text;
     -ms-touch-action: pan-y;
     touch-action: pan-y;
@@ -23,7 +23,6 @@
     }
 
     &.draggable {
-        cursor: pointer;
         cursor: grab;
         user-select: none;
     }
