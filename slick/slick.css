@@ -4,7 +4,7 @@
     position: relative;
     display: block;
     box-sizing: border-box;
-    -webkit-user-select: none;
+    -webkit-user-select: text;
     user-select: text;
     -webkit-touch-callout: none;
     -ms-touch-action: pan-y;
@@ -27,7 +27,6 @@
     outline: none;
 }
 .slick-list.draggable {
-    cursor: pointer;
     cursor: grab;
     user-select: none;
 }
