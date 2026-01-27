@@ -295,12 +295,10 @@
                     step: function(now) {
                         now = Math.ceil(now);
                         if (_.options.vertical === false) {
-                            animProps[_.animType] = 'translate(' +
-                                now + 'px, 0)';
+                            animProps[_.animType] = 'translate(' + now + 'px, 0)';
                             _.$slideTrack.css(animProps);
                         } else {
-                            animProps[_.animType] = 'translate(0,' +
-                                now + 'px)';
+                            animProps[_.animType] = 'translate(0, ' + now + 'px)';
                             _.$slideTrack.css(animProps);
                         }
                     },
@@ -319,7 +317,7 @@
                 if (_.options.vertical === false) {
                     animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0, 0)';
                 } else {
-                    animProps[_.animType] = 'translate3d(0,' + targetLeft + 'px, 0)';
+                    animProps[_.animType] = 'translate3d(0, ' + targetLeft + 'px, 0)';
                 }
                 _.$slideTrack.css(animProps);
 
