@@ -296,10 +296,10 @@
                         now = Math.ceil(now);
                         if (_.options.vertical === false) {
                             animProps[_.animType] = 'translate(' +
-                                now + 'px, 0px)';
+                                now + 'px, 0)';
                             _.$slideTrack.css(animProps);
                         } else {
-                            animProps[_.animType] = 'translate(0px,' +
+                            animProps[_.animType] = 'translate(0,' +
                                 now + 'px)';
                             _.$slideTrack.css(animProps);
                         }
@@ -317,9 +317,9 @@
                 targetLeft = Math.ceil(targetLeft);
 
                 if (_.options.vertical === false) {
-                    animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0px, 0px)';
+                    animProps[_.animType] = 'translate3d(' + targetLeft + 'px, 0, 0)';
                 } else {
-                    animProps[_.animType] = 'translate3d(0px,' + targetLeft + 'px, 0px)';
+                    animProps[_.animType] = 'translate3d(0,' + targetLeft + 'px, 0)';
                 }
                 _.$slideTrack.css(animProps);
 
@@ -2034,8 +2034,8 @@
         if (_.options.rtl === true) {
             position = -position;
         }
-        x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0px';
-        y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0px';
+        x = _.positionProp == 'left' ? Math.ceil(position) + 'px' : '0';
+        y = _.positionProp == 'top' ? Math.ceil(position) + 'px' : '0';
 
         positionProps[_.positionProp] = position;
 
@@ -2047,7 +2047,7 @@
                 positionProps[_.animType] = 'translate(' + x + ', ' + y + ')';
                 _.$slideTrack.css(positionProps);
             } else {
-                positionProps[_.animType] = 'translate3d(' + x + ', ' + y + ', 0px)';
+                positionProps[_.animType] = 'translate3d(' + x + ', ' + y + ', 0)';
                 _.$slideTrack.css(positionProps);
             }
         }
