@@ -683,6 +683,8 @@
     };
 
     Slick.prototype.changeSlide = function(event, dontAnimate) {
+    
+        event.stopPropagation();
 
         var _ = this,
             $target = $(event.currentTarget),
