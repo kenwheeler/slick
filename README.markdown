@@ -17,20 +17,20 @@ to serve the files as close, and fast as possible to your users:
 - https://cdnjs.com/libraries/slick-carousel
 - [https://cdn.jsdelivr.net/gh/kenwheeler/slick/](https://cdn.jsdelivr.net/gh/kenwheeler/slick/)
 
-##### Example using jsDelivr
+##### Example using (master) from jsDelivr
 
 Just add a link to the css file in your `<head>`:
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@master/slick/slick.css"/>
 <!-- Add the slick-theme.css if you want default styling -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick-theme.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/kenwheeler/slick@master/slick/slick-theme.css"/>
 ```
 
 Then, before your closing ```<body>``` tag add:
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kenwheeler/slick@1.8.1/slick/slick.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/kenwheeler/slick@master/slick/slick.min.js"></script>
 ```
 
 #### Package Managers
