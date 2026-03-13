@@ -39,6 +39,9 @@
 .slick-slider .slick-list
 {
             transform: translate3d(0, 0, 0);
+
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
 }
 
 .slick-track
