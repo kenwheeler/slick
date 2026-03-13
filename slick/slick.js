@@ -2565,7 +2565,9 @@
                 animSlide = _.slideCount + targetSlide;
             }
         } else if (targetSlide >= _.slideCount) {
-            if (_.slideCount % _.options.slidesToScroll !== 0) {
+            if (_.options.slidesToScroll == 1) {
+                animSlide = 0;
+            } else if (_.slideCount % _.options.slidesToScroll !== 0) {
                 animSlide = 0;
             } else {
                 animSlide = targetSlide - _.slideCount;
