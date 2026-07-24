@@ -5,6 +5,10 @@ slick
 
 _the last carousel you'll ever need_
 
+#### Version 2.0
+
+Version 2.0 is compatible with jQuery 4.
+
 #### Demo
 
 [http://kenwheeler.github.io/slick](http://kenwheeler.github.io/slick/)
