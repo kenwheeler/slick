@@ -27,6 +27,31 @@ Please use these forums as an area to discuss Slick and any issues you may have.
 If you would like to request or propose a feature, please do so in the the Slick subreddit or gitter chat:  
 [reddit.com/r/slickcarousel](http://www.reddit.com/r/slickcarousel/) / [gitter.im/kenwheeler/slick](https://gitter.im/kenwheeler/slick).
 
+## Building
+
+If your change touches `slick/slick.js` or the SCSS files, please rebuild the
+generated assets so they stay in sync with the source.
+
+### Minifying the JavaScript
+
+`slick/slick.min.js` is produced from `slick/slick.js` with [esbuild](https://esbuild.github.io/):
+
+```sh
+npx esbuild slick/slick.js --minify --outfile=slick/slick.min.js
+```
+
+`npx` will fetch esbuild on demand, so there's nothing to install first.
+
+### Compiling the SCSS
+
+The stylesheets are compiled from `slick/slick.scss` and `slick/slick-theme.scss`
+with [Dart Sass](https://sass-lang.com/dart-sass). Compile without source maps:
+
+```sh
+sass slick/slick.scss slick/slick.css --no-source-map
+sass slick/slick-theme.scss slick/slick-theme.css --no-source-map
+```
+
 ## Pull requests
 
 **Contributions are welcome**! That said, please *be prepared to edit* your pull request at request, and provide a jsFiddle of your fork working interoperably with every "mode" that Slick supports, and with varying numbers of slides, slidesToShow & slidesToScroll. Failure to do so will result in your pull request being closed.
