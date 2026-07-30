@@ -523,6 +523,10 @@
 
         _.$slider.addClass('slick-slider');
 
+        if (_.options.rtl === true) {
+            _.$slider.attr('dir', 'rtl');
+        }
+
         _.$slideTrack = (_.slideCount === 0) ?
             $('<div class="slick-track"></div>').appendTo(_.$slider) :
             _.$slides.wrapAll('<div class="slick-track"></div>').parent();
