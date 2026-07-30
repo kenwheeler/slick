@@ -22,21 +22,11 @@ $slick-opacity-on-hover: 1 !default;
 $slick-opacity-not-active: 0.25 !default;
 
 @function slick-image-url($url) {
-    @if function-exists(image-url) {
-        @return image-url($url);
-    }
-    @else {
-        @return url(#{$slick-loader-path}#{$url});
-    }
+    @return url(#{$slick-loader-path}#{$url});
 }
 
 @function slick-font-url($url) {
-    @if function-exists(font-url) {
-        @return font-url($url);
-    }
-    @else {
-        @return url(#{$slick-font-path}#{$url});
-    }
+    @return url(#{$slick-font-path}#{$url});
 }
 
 /* Slider */
