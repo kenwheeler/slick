@@ -1367,7 +1367,7 @@
                 var mappedSlideIndex = tabControlIndexes[i];
 
                 $(this).attr({
-                    'role': 'presentation'
+                    'role': 'tab'
                 });
 
                 $(this).find('button').first().attr({
