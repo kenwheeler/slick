@@ -61,9 +61,6 @@ bower install --save slick-carousel
 npm install slick-carousel
 ```
 
-> [!NOTE]
-> Version 2.0.0 of Slick is currently not available via Bower or NPM. Please use the CDN links above to get the latest version.
-
 #### Contributing
 
 PLEASE review CONTRIBUTING.markdown prior to requesting a feature, filing a pull request or filing an issue.
@@ -255,7 +252,6 @@ Method | Argument | Description
  | `"responsive", [{ breakpoint: n, settings: {} }, ... ], refresh` | change or add [whole sets of responsive options](#responsive-option-example)
  | `{ option: value, option: value, ... }, refresh` | change  [multiple `option`s](https://github.com/kenwheeler/slick#settings) to corresponding `value`s.
 
-
 #### Example
 
 Initialize with:
@@ -278,7 +274,6 @@ Destroy with:
 ```javascript
 $(element).slick('unslick');
 ```
-
 
 #### Sass Variables
 
