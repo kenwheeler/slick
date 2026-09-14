@@ -243,8 +243,14 @@ Licensed under the MIT License. See LICENSE file for details.
         });
 
         _.$slidesCache = _.$slides;
-
-        _.reinit();
+        
+        if(addBefore){
+        	_.reinit(1);
+        }
+        else{
+        	_.reinit();
+        }
+        
 
     };
 
@@ -1928,7 +1934,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
     };
 
-    Slick.prototype.reinit = function() {
+    Slick.prototype.reinit = function(index) {
 
         var _ = this;
 
@@ -1945,6 +1951,10 @@ Licensed under the MIT License. See LICENSE file for details.
 
         if (_.slideCount <= _.options.slidesToShow) {
             _.currentSlide = 0;
+        }
+        
+        if(index!==undefined){
+        	_.currentSlide = index;
         }
 
         _.registerBreakpoints();
