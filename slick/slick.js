@@ -2604,9 +2604,8 @@ Licensed under the MIT License. See LICENSE file for details.
         if (_.options.fade === true) {
             if (dontAnimate !== true) {
 
-                _.fadeSlideOut(oldSlide);
-
                 _.fadeSlide(animSlide, function() {
+                    _.fadeSlideOut(oldSlide);
                     _.postSlide(animSlide);
                 });
 
