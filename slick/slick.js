@@ -154,6 +154,7 @@ Licensed under the MIT License. See LICENSE file for details.
             _.visibilityChange = 'visibilitychange';
             _.windowWidth = 0;
             _.windowTimer = null;
+            _.isTriggeredAutomatically = false;
 
             dataSettings = $(element).data('slick') || {};
 
@@ -400,6 +401,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         var _ = this;
 
+        _.isTriggeredAutomatically = false;
+
         if (_.autoPlayTimer) {
             clearInterval(_.autoPlayTimer);
         }
@@ -410,6 +413,8 @@ Licensed under the MIT License. See LICENSE file for details.
 
         var _ = this,
             slideTo = _.currentSlide + _.options.slidesToScroll;
+
+        _.isTriggeredAutomatically = true;
 
         if ( !_.paused && !_.interrupted && !_.focussed ) {
 
