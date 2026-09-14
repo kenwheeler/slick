@@ -1,14 +1,15 @@
 /* Slider */
-.slick-slider {
-  position: relative;
-  display: block;
-  box-sizing: border-box;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: text;
-  -ms-touch-action: pan-y;
-  touch-action: pan-y;
-  -webkit-tap-highlight-color: transparent;
+.slick-slider
+{
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: text;
+    user-select: text;
+    -webkit-touch-callout: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .slick-list {
@@ -22,9 +23,8 @@
   outline: none;
 }
 .slick-list.draggable {
-  cursor: pointer;
-  cursor: grab;
-  user-select: none;
+    cursor: grab;
+    user-select: none;
 }
 .slick-list.dragging {
   cursor: grabbing;

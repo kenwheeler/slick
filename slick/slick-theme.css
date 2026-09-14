@@ -5,13 +5,15 @@
 }
 
 /* Icons */
-@font-face {
-  font-family: "slick";
-  src: url(./fonts/slick.eot);
-  src: url(./fonts/slick.eot?#iefix) format("embedded-opentype"), url(./fonts/slick.woff2) format("woff2"), url(./fonts/slick.woff) format("woff"), url(./fonts/slick.ttf) format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+@font-face
+{
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+
+    src: url('./fonts/slick.woff2') format('woff2'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype');
+    font-display: swap;
 }
 /* Arrows */
 .slick-prev,
