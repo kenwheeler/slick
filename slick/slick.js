@@ -38,6 +38,20 @@ Licensed under the MIT License. See LICENSE file for details.
 
 }(function($) {
     'use strict';
+
+    // Before we do anything: One-fits-all solution to bind passive event listeners, if possible, to improve performance
+    jQuery.event.special.touchstart = {
+        setup: function(_, ns, handle) {
+            this.addEventListener('touchstart', handle, {passive: (ns.includes('noPreventDefault') ? true : false)});
+        }
+    };
+
+    jQuery.event.special.touchmove = {
+        setup: function(_, ns, handle) {
+            this.addEventListener('touchmove', handle, {passive: (ns.includes('noPreventDefault') ? true : false)});
+        }
+    };
+
     var Slick = window.Slick || {};
 
     Slick = (function() {
@@ -1025,7 +1039,7 @@ Licensed under the MIT License. See LICENSE file for details.
             .off('focus.slick blur.slick')
             .on(
                 'focus.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
@@ -1040,7 +1054,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 }
             ).on(
                 'blur.slick',
-                '*', 
+                '*',
                 function(event) {
                     var $sf = $(this);
 
