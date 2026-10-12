@@ -1260,7 +1260,8 @@ Licensed under the MIT License. See LICENSE file for details.
                     slideOffset += (slideOuterWidth / 2);
                 }
 
-                slideRightBoundary = slideOffset + (slideOuterWidth);
+                slideRightBoundary = slide.offsetLeft + (_.options.centerMode === true ? slideOuterWidth : slideOuterWidth / 2);
+
 
                 if (swipeTarget < slideRightBoundary) {
                     swipedSlide = slide;
