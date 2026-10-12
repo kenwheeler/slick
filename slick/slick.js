@@ -171,7 +171,6 @@ Licensed under the MIT License. See LICENSE file for details.
             _.selectHandler = $.proxy(_.selectHandler, _);
             _.setPosition = $.proxy(_.setPosition, _);
             _.swipeHandler = $.proxy(_.swipeHandler, _);
-            _.dragHandler = $.proxy(_.dragHandler, _);
             _.keyHandler = $.proxy(_.keyHandler, _);
 
             _.instanceUid = instanceUid++;
