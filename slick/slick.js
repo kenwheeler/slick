@@ -687,6 +687,8 @@ Licensed under the MIT License. See LICENSE file for details.
     };
 
     Slick.prototype.changeSlide = function(event, dontAnimate) {
+    
+        event.stopPropagation();
 
         var _ = this,
             $target = $(event.currentTarget),
