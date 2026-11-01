@@ -1939,8 +1939,12 @@ Licensed under the MIT License. See LICENSE file for details.
 
         _.slideCount = _.$slides.length;
 
+        _.$slides.each(function(index, element){
+            $(element).attr('data-slick-index', index);
+        });
+
         if (_.currentSlide >= _.slideCount && _.currentSlide !== 0) {
-            _.currentSlide = _.currentSlide - _.options.slidesToScroll;
+            _.currentSlide = _.slideCount - 1;
         }
 
         if (_.slideCount <= _.options.slidesToShow) {
