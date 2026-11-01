@@ -2378,6 +2378,13 @@ Licensed under the MIT License. See LICENSE file for details.
                 }
 
             }
+            
+            if (allSlides.length <= _.options.slidesToShow) {
+                allSlides
+                    .addClass('slick-active')
+                    .attr('aria-hidden', 'false');
+
+            }
 
             _.$slides
                 .eq(index)
