@@ -603,7 +603,7 @@ Licensed under the MIT License. See LICENSE file for details.
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
         var sliderWidth = _.$slider.width();
-        var windowWidth = window.innerWidth || $(window).width();
+        var windowWidth = $(window).width();
 
         if (_.respondTo === 'window') {
             respondToWidth = windowWidth;
