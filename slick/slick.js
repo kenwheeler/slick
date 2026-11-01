@@ -1081,7 +1081,7 @@ Licensed under the MIT License. See LICENSE file for details.
         } else if (_.options.centerMode === true) {
             pagerQty = _.slideCount;
         } else if(!_.options.asNavFor) {
-            pagerQty = 1 + Math.ceil((_.slideCount - _.options.slidesToShow) / _.options.slidesToScroll);
+            pagerQty = Math.ceil(_.slideCount / _.options.slidesToScroll);
         }else {
             while (breakPoint < _.slideCount) {
                 ++pagerQty;
