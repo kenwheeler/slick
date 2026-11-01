@@ -2006,7 +2006,9 @@ Licensed under the MIT License. See LICENSE file for details.
         if (_.slideCount < 1 || index < 0 || index > _.slideCount - 1) {
             return false;
         }
-
+        
+        _.currentSlide = _.currentSlide-1;
+         
         _.unload();
 
         if (removeAll === true) {
