@@ -327,7 +327,7 @@ Licensed under the MIT License. See LICENSE file for details.
                         _.disableTransition();
 
                         callback.call();
-                    }, _.options.speed);
+                    }, _.options.speed * 1.5);
                 }
 
             }
