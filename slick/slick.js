@@ -1367,7 +1367,7 @@ Licensed under the MIT License. See LICENSE file for details.
                 var mappedSlideIndex = tabControlIndexes[i];
 
                 $(this).attr({
-                    'role': 'presentation'
+                    'role': 'tab'
                 });
 
                 $(this).find('button').first().attr({
