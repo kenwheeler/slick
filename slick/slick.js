@@ -565,7 +565,7 @@ Licensed under the MIT License. See LICENSE file for details.
         newSlides = document.createDocumentFragment();
         originalSlides = _.$slider.children();
 
-        if(_.options.rows > 0) {
+        if(_.options.rows > 0 && _.options.slidesPerRow > 0) {
 
             slidesPerSection = _.options.slidesPerRow * _.options.rows;
             numOfSlides = Math.ceil(
