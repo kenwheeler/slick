@@ -1583,6 +1583,8 @@ Licensed under the MIT License. See LICENSE file for details.
                                 });
                             _.$slider.trigger('lazyLoaded', [_, image, imageSource]);
                         });
+                     
+                     $('.slick-cloned [data-lazy="' + imageSource  + '"]').attr('src', imageSource).removeAttr('data-lazy data-srcset data-sizes');
 
                 };
 
