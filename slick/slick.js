@@ -2337,7 +2337,7 @@ Licensed under the MIT License. See LICENSE file for details.
 
             var evenCoef;
 
-            if (_.options.slidesToShow >= _.$slides.length) {
+            if (_.$slides.length > 0 && _.options.slidesToShow >= _.$slides.length) {
                 evenCoef = -1;
                 centerOffset = _.options.slidesToShow = _.$slides.length;
             } else {
