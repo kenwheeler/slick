@@ -3038,7 +3038,9 @@ Licensed under the MIT License. See LICENSE file for details.
             ret;
         for (i = 0; i < l; i++) {
             if (typeof opt == 'object' || typeof opt == 'undefined')
-                _[i].slick = new Slick(_[i], opt);
+                if (!$(_[i]).hasClass('slick-initialized')) {
+                    _[i].slick = new Slick(_[i], opt);
+                }
             else
                 ret = _[i].slick[opt].apply(_[i].slick, args);
             if (typeof ret != 'undefined') return ret;
